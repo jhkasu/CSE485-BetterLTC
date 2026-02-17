@@ -2,5 +2,5 @@
 ### ========== ###
 
 # These are created your machine when the program is compiled/run
-backend/bin/*
-backend/obj/*
+./backend/bin/
+./backend/obj/
