@@ -1,6 +1,6 @@
 namespace backend.Models;
 
-public class UserProfileModel
+public class ProfileModel
 {
 
 }
