@@ -1,5 +1,0 @@
-### GIT IGNORE ###
-### ========== ###
-
-./backend/bin/*
-./backend/obj/*
