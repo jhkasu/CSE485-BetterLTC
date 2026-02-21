@@ -14,13 +14,13 @@
 
 .pillar-card img {
   width: 100%;
-  height: 220px;
+  height: 280px;
   object-fit: cover;
 }
 
 .pillar-card h3 {
   font-family: 'Oswald', sans-serif;
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 700;
   margin: 24px 0 12px 0;
   letter-spacing: 1px;
@@ -28,7 +28,7 @@
 
 .pillar-card p {
   font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   margin-bottom: 24px;
   padding: 0 20px;
   color: #555;
@@ -40,7 +40,7 @@
   padding: 14px 32px;
   cursor: pointer;
   font-family: 'Oswald', sans-serif;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   margin-bottom: 28px;
   letter-spacing: 1px;
