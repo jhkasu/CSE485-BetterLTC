@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SignupForm.css';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -23,56 +24,46 @@ const SignupForm = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', border: '1px solid #ccc' }}>
-      <h2>Create Account</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        
-        {/* Email Input */}
-        <label>
-          Email:
+    <div className="signup-container">
+      <div className="signup-box">
+        <h2>Create Account</h2>
+        <form onSubmit={handleSubmit}>
+
+          <label>Email</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="Enter your email"
           />
-        </label>
 
-        {/* Password Input */}
-        <label>
-          Password:
+          <label>Password</label>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            placeholder="Enter your password"
           />
-        </label>
 
-        {/* Task #10: Role Selection Dropdown */}
-        <label>
-          Role:
+          <label>Role</label>
           <select
             name="role"
             value={formData.role}
             onChange={handleChange}
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
           >
             <option value="volunteer">Volunteer</option>
             <option value="manager">Manager</option>
             <option value="admin">Admin</option>
           </select>
-        </label>
 
-        <button type="submit" style={{ padding: '10px', background: '#007bff', color: '#fff', border: 'none', cursor: 'pointer' }}>
-          Sign Up
-        </button>
+          <button type="submit">Sign Up</button>
 
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
