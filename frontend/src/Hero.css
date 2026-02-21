@@ -3,11 +3,11 @@
   background-size: cover;
   background-position: center;
   padding: 160px 60px;
-  min-height: 92vh;
+  min-height: 70vh;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .hero::before {
