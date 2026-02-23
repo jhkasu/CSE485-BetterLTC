@@ -1,62 +1,78 @@
 nav {
-    background-color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 28px 60px;
-  }
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 60px;
+  position: relative;
+  flex-wrap: wrap;
+}
 
-  nav span {
-    color: white;
-    font-family: 'Oswald', sans-serif;
-    font-size: 42px;
-    font-weight: 700;
-    letter-spacing: 2px;
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+nav ul li {
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  color: #e63946;
+}
+
+.donate-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 42px;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (max-width: 1024px) {
+  .hamburger {
+    display: block;
   }
 
   nav ul {
-    list-style: none;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  nav ul.open {
     display: flex;
-    gap: 48px;
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
-  nav ul li {
-    color: white;
-    font-family: 'Oswald', sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
+  .donate-btn {
+    display: none;
   }
-
-  nav ul li:hover {
-    color: #e63946;
-  }
-
-  nav button {
-    flex-shrink: 0;
-    white-space: nowrap;
-    background-color: #e63946;
-    color: white;
-    border: none;
-    padding: 18px 40px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-  }
-
-  nav .signup-btn {
-    background-color: white;
-    color: #1a1a1a;
-    border: none;
-    padding: 10px 20px;
-    font-family: 'Open Sans', sans-serif;
-    cursor: pointer;
-    margin-right: 10px;
-  }
+}
