@@ -3,10 +3,14 @@ import './SignupForm.css';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
-    role: 'volunteer' // Default role
+    confirmPassword: '',
   });
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,8 +20,24 @@ const SignupForm = () => {
     }));
   };
 
+  const validate = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(formData.email))
+      newErrors.email = 'Please enter a valid email address.';
+    if (formData.password.length < 8)
+      newErrors.password = 'Password must be at least 8 characters.';
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = 'Passwords do not match.';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validate()) return;
     // TODO: Connect to backend API later
     console.log('Submitted Data:', formData);
     alert('Check console for data structure');
@@ -29,6 +49,30 @@ const SignupForm = () => {
         <h2>Create Account</h2>
         <form onSubmit={handleSubmit}>
 
+          <label>First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            placeholder="Enter your first name"
+            pattern="[A-Za-z\s\-']+"
+            title="Please use English letters only"
+          />
+
+          <label>Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            placeholder="Enter your last name"
+            pattern="[A-Za-z\s\-']+"
+            title="Please use English letters only"
+          />
+
           <label>Email</label>
           <input
             type="email"
@@ -38,6 +82,7 @@ const SignupForm = () => {
             required
             placeholder="Enter your email"
           />
+          {errors.email && <p className="error">{errors.email}</p>}
 
           <label>Password</label>
           <input
@@ -48,17 +93,18 @@ const SignupForm = () => {
             required
             placeholder="Enter your password"
           />
+          {errors.password && <p className="error">{errors.password}</p>}
 
-          <label>Role</label>
-          <select
-            name="role"
-            value={formData.role}
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
             onChange={handleChange}
-          >
-            <option value="volunteer">Volunteer</option>
-            <option value="manager">Manager</option>
-            <option value="admin">Admin</option>
-          </select>
+            required
+            placeholder="Re-enter your password"
+          />
+          {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
           <button type="submit">Sign Up</button>
 
