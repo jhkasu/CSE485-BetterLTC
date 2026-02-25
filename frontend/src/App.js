@@ -5,6 +5,7 @@ import Hero from './Hero';
 import Pillars from './Pillars';
 import VolunteerList from './VolunteerList';
 import SignupForm from './SignupForm';
+import SigninForm from './SigninForm';
 
 function Home() {
   return (
@@ -34,6 +35,15 @@ function SignupPage() {
   );
 }
 
+function SigninPage() {
+  return (
+    <div>
+      <Navbar />
+      <SigninForm />
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -41,6 +51,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/volunteer" element={<VolunteerPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/signin" element={<SigninPage />} />
       </Routes>
     </BrowserRouter>
   );

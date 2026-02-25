@@ -9,9 +9,8 @@ function Hero() {
       <h1>CARE. CONNECT. COMMUNITY.</h1>
       <p>Join us in making a difference in the lives of Canadian seniors and communities.</p>
       <div>
-        <button className="hero-primary" onClick={() => navigate('/signup')}>Sign Up</button>
-        <button className="hero-secondary" onClick={() => navigate('/volunteer')}>Volunteer</button>
-        <button className="hero-donate">Donate Now</button>
+        <button className="hero-primary" onClick={() => navigate('/volunteer')}>Volunteer Now</button>
+        <button className="hero-secondary">Learn More</button>
       </div>
     </div>
   );
