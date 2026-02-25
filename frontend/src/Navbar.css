@@ -31,6 +31,46 @@ nav ul li:hover {
   color: #e63946;
 }
 
+.signin-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background-color: transparent;
+  color: white;
+  border: 3px solid white;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.signin-btn:hover {
+  background-color: white;
+  color: #1a1a1a;
+}
+
+.signup-nav-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background-color: white;
+  color: #1a1a1a;
+  border: 3px solid white;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.signup-nav-btn:hover {
+  background-color: transparent;
+  color: white;
+}
+
 .donate-btn {
   flex-shrink: 0;
   white-space: nowrap;

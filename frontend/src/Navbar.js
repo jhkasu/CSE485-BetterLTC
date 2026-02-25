@@ -18,6 +18,8 @@ function Navbar() {
         <li onClick={() => navigate('/volunteer')}>Volunteer</li>
         <li>Our Work</li>
       </ul>
+      <button className="signin-btn" onClick={() => navigate('/signin')}>Sign In</button>
+      <button className="signup-nav-btn" onClick={() => navigate('/signup')}>Sign Up</button>
       <button className="donate-btn">Donate now</button>
     </nav>
   );
