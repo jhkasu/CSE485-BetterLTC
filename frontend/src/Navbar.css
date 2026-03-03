@@ -85,6 +85,52 @@ nav ul li:hover {
   cursor: pointer;
 }
 
+.user-menu {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.user-menu-btn {
+  background-color: transparent;
+  color: white;
+  border: 3px solid white;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.user-menu-btn:hover {
+  background-color: white;
+  color: #1a1a1a;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 12px;
+  background-color: #1a1a1a;
+  border: 2px solid #333;
+  min-width: 180px;
+  z-index: 100;
+}
+
+.user-dropdown div {
+  padding: 16px 24px;
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.user-dropdown div:hover {
+  background-color: #e63946;
+}
+
 .hamburger {
   display: none;
   background: none;

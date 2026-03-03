@@ -1,11 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import Pillars from './Pillars';
 import VolunteerList from './VolunteerList';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
+import Dashboard from './Dashboard';
+
+// 로그인 안 된 상태면 /signin으로 리다이렉트
+function PrivateRoute({ children }) {
+  const user = localStorage.getItem('currentUser');
+  return user ? children : <Navigate to="/signin" />;
+}
 
 function Home() {
   return (
@@ -52,6 +59,14 @@ function App() {
         <Route path="/volunteer" element={<VolunteerPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

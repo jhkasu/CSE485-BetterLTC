@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import mockUsers from './mockUsers';
 import './SignupForm.css';
 
 const SigninForm = () => {
@@ -35,9 +36,22 @@ const SigninForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    // TODO: Connect to backend API later
-    console.log('Submitted Data:', formData);
-    alert('Check console for data structure');
+
+    // TODO: Replace with real API call when backend is ready
+    const user = mockUsers.find(
+      (u) => u.email === formData.email && u.password === formData.password
+    );
+
+    if (!user) {
+      setErrors({ auth: 'Invalid email or password.' });
+      return;
+    }
+
+    // Save user info to localStorage (excluding password)
+    const { password, ...safeUser } = user;
+    localStorage.setItem('currentUser', JSON.stringify(safeUser));
+
+    navigate('/dashboard');
   };
 
   return (
@@ -67,6 +81,8 @@ const SigninForm = () => {
             placeholder="Enter your password"
           />
           {errors.password && <p className="error">{errors.password}</p>}
+
+          {errors.auth && <p className="error">{errors.auth}</p>}
 
           <p className="forgot-password" onClick={() => navigate('/forgot-password')}>
             Forgot Password?
