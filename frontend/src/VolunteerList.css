@@ -1,0 +1,98 @@
+.volunteer-section {
+  padding: 60px;
+  background-color: white;
+}
+
+.volunteer-section h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  border-bottom: 4px solid #e63946;
+  display: inline-block;
+  padding-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.volunteer-content {
+  display: flex;
+  gap: 60px;
+}
+
+.filters {
+  min-width: 220px;
+}
+
+.filters h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 24px 0 12px 0;
+}
+
+.filters label {
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.filters input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.volunteer-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.volunteer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #ddd;
+  padding: 32px;
+}
+
+.card-info h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.card-info p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  color: #555;
+}
+
+.card-meta {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+}
+
+.card-meta button {
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  cursor: pointer;
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.card-meta button:hover {
+  background-color: #e63946;
+}

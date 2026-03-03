@@ -1,0 +1,118 @@
+nav {
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 60px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+nav ul li {
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  color: #e63946;
+}
+
+.signin-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background-color: transparent;
+  color: white;
+  border: 3px solid white;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.signin-btn:hover {
+  background-color: white;
+  color: #1a1a1a;
+}
+
+.signup-nav-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background-color: white;
+  color: #1a1a1a;
+  border: 3px solid white;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.signup-nav-btn:hover {
+  background-color: transparent;
+  color: white;
+}
+
+.donate-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 18px 40px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 42px;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (max-width: 1024px) {
+  .hamburger {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  nav ul.open {
+    display: flex;
+  }
+
+  .donate-btn {
+    display: none;
+  }
+}
