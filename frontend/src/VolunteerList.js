@@ -1,7 +1,24 @@
 import React from 'react';
+import mockUsers from './mockUsers';
 import './VolunteerList.css';
 
 function VolunteerList() {
+  const handleRegister = () => {
+    const stored = localStorage.getItem('currentUser');
+    if (!stored) {
+      alert('Please sign in to register.');
+      return;
+    }
+    const currentUser = JSON.parse(stored);
+    const user = mockUsers.find(u => u.email === currentUser.email);
+
+    if (user && user.backgroundCheckApproved) {
+      alert('You have been registered successfully!');
+    } else {
+      alert('Your background check is currently in progress. You will be able to register once it is approved.');
+    }
+  };
+
   return (
     <div className="volunteer-section">
       <h2>Find a Volunteer Opportunity</h2>
@@ -25,7 +42,7 @@ function VolunteerList() {
             <div className="card-meta">
               <span><strong>Locations</strong><br />Toronto</span>
               <span><strong>Days & times</strong><br />Flexible</span>
-              <button>Register</button>
+              <button onClick={handleRegister}>Register</button>
             </div>
           </div>
           <div className="volunteer-card">
@@ -36,7 +53,7 @@ function VolunteerList() {
             <div className="card-meta">
               <span><strong>Locations</strong><br />Vancouver</span>
               <span><strong>Days & times</strong><br />Weekends</span>
-              <button>Register</button>
+              <button onClick={handleRegister}>Register</button>
             </div>
           </div>
         </div>

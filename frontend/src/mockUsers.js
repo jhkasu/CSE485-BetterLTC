@@ -7,6 +7,7 @@ const mockUsers = [
     email: 'jooho@test.com',
     password: 'password123',
     role: 'volunteer',
+    backgroundCheckApproved: false,
   },
   {
     id: 2,

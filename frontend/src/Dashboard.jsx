@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdDashboard, MdPerson, MdCalendarToday, MdHistory, MdCardMembership, MdLogout } from 'react-icons/md';
 import Navbar from './Navbar';
+import mockUsers from './mockUsers';
 import './Dashboard.css';
 
 const NAV_ITEMS = [
@@ -15,7 +16,29 @@ const NAV_ITEMS = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('currentUser'));
+  const mockUser = mockUsers.find(u => u.email === user?.email);
   const [activeSection, setActiveSection] = useState('overview');
+
+  const [profileForm, setProfileForm] = useState({
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    address: user?.address || '',
+  });
+  const [profileSaved, setProfileSaved] = useState(false);
+
+  const handleProfileChange = (e) => {
+    setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
+    setProfileSaved(false);
+  };
+
+  const handleProfileSave = (e) => {
+    e.preventDefault();
+    const updated = { ...user, ...profileForm };
+    localStorage.setItem('currentUser', JSON.stringify(updated));
+    setProfileSaved(true);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('currentUser');
@@ -38,10 +61,48 @@ const Dashboard = () => {
         return (
           <>
             <h2 className="dashboard-section-title">Profile Settings</h2>
-            <div className="dashboard-placeholder">
-              {/* TODO: Profile settings form — password, address, photo (#56) */}
-              Profile Settings form coming soon
-            </div>
+            <form className="profile-form" onSubmit={handleProfileSave}>
+
+              <div className="profile-row">
+                <div className="profile-field">
+                  <label>First Name</label>
+                  <input name="firstName" value={profileForm.firstName} onChange={handleProfileChange} />
+                </div>
+                <div className="profile-field">
+                  <label>Last Name</label>
+                  <input name="lastName" value={profileForm.lastName} onChange={handleProfileChange} />
+                </div>
+              </div>
+
+              <div className="profile-row">
+                <div className="profile-field">
+                  <label>Email</label>
+                  <input name="email" value={profileForm.email} disabled className="input-disabled" />
+                </div>
+                <div className="profile-field">
+                  <label>Phone Number</label>
+                  <input name="phone" value={profileForm.phone} onChange={handleProfileChange} placeholder="e.g. 416-555-0123" />
+                </div>
+              </div>
+
+              <div className="profile-field full-width">
+                <label>Address</label>
+                <input name="address" value={profileForm.address} onChange={handleProfileChange} placeholder="e.g. 123 Main St, Toronto, ON" />
+              </div>
+
+              <div className="profile-field full-width">
+                <label>Background Check Status</label>
+                <div className={`bg-check-badge ${mockUser?.backgroundCheckApproved ? 'approved' : 'pending'}`}>
+                  {mockUser?.backgroundCheckApproved ? 'Approved' : 'Pending'}
+                </div>
+              </div>
+
+              <div className="profile-actions">
+                {profileSaved && <span className="profile-saved-msg">Saved!</span>}
+                <button type="submit" className="profile-save-btn">Save Changes</button>
+              </div>
+
+            </form>
           </>
         );
       case 'shifts':
