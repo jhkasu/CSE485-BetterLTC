@@ -8,7 +8,6 @@ import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import Dashboard from './Dashboard';
 
-// 로그인 안 된 상태면 /signin으로 리다이렉트
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
   return user ? children : <Navigate to="/signin" />;
