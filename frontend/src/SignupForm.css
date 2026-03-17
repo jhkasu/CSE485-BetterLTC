@@ -108,3 +108,27 @@
   margin-top: -20px;
   margin-bottom: 16px;
 }
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 70px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-70%);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #e63946;
+  cursor: pointer;
+  user-select: none;
+}

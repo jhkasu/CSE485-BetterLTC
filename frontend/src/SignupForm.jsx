@@ -11,6 +11,8 @@ const SignupForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,25 +90,35 @@ const SignupForm = () => {
           {errors.email && <p className="error">{errors.email}</p>}
 
           <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            placeholder="Enter your password"
-          />
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+            <span className="toggle-password" onClick={() => setShowPassword(prev => !prev)}>
+              {showPassword ? 'Hide' : 'Show'}
+            </span>
+          </div>
           {errors.password && <p className="error">{errors.password}</p>}
 
           <label>Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-            placeholder="Re-enter your password"
-          />
+          <div className="password-wrapper">
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              placeholder="Re-enter your password"
+            />
+            <span className="toggle-password" onClick={() => setShowConfirmPassword(prev => !prev)}>
+              {showConfirmPassword ? 'Hide' : 'Show'}
+            </span>
+          </div>
           {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
           <button type="submit">Sign Up</button>

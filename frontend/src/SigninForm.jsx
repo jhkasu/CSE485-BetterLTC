@@ -11,6 +11,7 @@ const SigninForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,14 +73,19 @@ const SigninForm = () => {
           {errors.email && <p className="error">{errors.email}</p>}
 
           <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            placeholder="Enter your password"
-          />
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+            <span className="toggle-password" onClick={() => setShowPassword(prev => !prev)}>
+              {showPassword ? 'Hide' : 'Show'}
+            </span>
+          </div>
           {errors.password && <p className="error">{errors.password}</p>}
 
           {errors.auth && <p className="error">{errors.auth}</p>}

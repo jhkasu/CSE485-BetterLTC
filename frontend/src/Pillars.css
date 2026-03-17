@@ -10,6 +10,16 @@
   background-color: white;
   text-align: center;
   overflow: hidden;
+
+  /* 애니메이션 초기 상태 */
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.pillar-card.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .pillar-card img {
