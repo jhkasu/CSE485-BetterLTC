@@ -7,6 +7,7 @@ import VolunteerList from './VolunteerList';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import Dashboard from './Dashboard';
+import Footer from './Footer';
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
@@ -19,6 +20,7 @@ function Home() {
       <Navbar />
       <Hero />
       <Pillars />
+      <Footer />
     </div>
   );
 }
@@ -28,6 +30,7 @@ function VolunteerPage() {
     <div>
       <Navbar />
       <VolunteerList />
+      <Footer />
     </div>
   );
 }
@@ -37,6 +40,7 @@ function SignupPage() {
     <div>
       <Navbar />
       <SignupForm />
+      <Footer />
     </div>
   );
 }
@@ -46,6 +50,7 @@ function SigninPage() {
     <div>
       <Navbar />
       <SigninForm />
+      <Footer />
     </div>
   );
 }
