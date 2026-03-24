@@ -1,6 +1,7 @@
 .footer {
-  background-color: #1a1a1a;
-  color: white;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e8e8e8;
+  color: #222222;
   padding: 60px 60px 0;
   font-family: 'Oswald', sans-serif;
 }
@@ -11,20 +12,20 @@
   gap: 40px;
   flex-wrap: wrap;
   padding-bottom: 48px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .footer-logo {
   font-size: 36px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #e63946;
+  color: #222222;
   margin: 0 0 12px 0;
 }
 
 .footer-tagline {
   font-size: 16px;
-  color: #aaa;
+  color: #777;
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.5px;
@@ -34,7 +35,7 @@
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #e63946;
+  color: #222222;
   margin: 0 0 16px 0;
   text-transform: uppercase;
 }
@@ -42,7 +43,7 @@
 .footer-contact p {
   margin: 6px 0;
   font-size: 16px;
-  color: #ccc;
+  color: #555;
   font-weight: 300;
   letter-spacing: 0.5px;
 }
@@ -51,7 +52,7 @@
   margin-top: 12px !important;
   font-size: 18px !important;
   font-weight: 700 !important;
-  color: white !important;
+  color: #222222 !important;
 }
 
 .social-links {
@@ -61,14 +62,14 @@
 }
 
 .social-links a {
-  color: #ccc;
+  color: #777;
   transition: color 0.2s ease;
   display: flex;
   align-items: center;
 }
 
 .social-links a:hover {
-  color: #e63946;
+  color: #222222;
 }
 
 .footer-bottom {
@@ -78,7 +79,7 @@
 
 .footer-bottom p {
   font-size: 14px;
-  color: #666;
+  color: #999;
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.5px;

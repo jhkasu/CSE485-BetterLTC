@@ -16,7 +16,7 @@ function Navbar() {
 
   return (
     <nav>
-      <img src="/logo2.png" alt="BetterLTC" style={{height: '150px', cursor: 'pointer'}} onClick={() => navigate('/')} />
+      <img src="/logo.png" alt="BetterLTC" style={{height: '180px', cursor: 'pointer', flexShrink: 0}} onClick={() => navigate('/')} />
       <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         ☰
       </button>
