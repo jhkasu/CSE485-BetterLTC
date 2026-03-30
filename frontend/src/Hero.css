@@ -61,14 +61,14 @@
 }
 
 .hero-primary {
-  background-color: #222222;
+  background-color: #E8A020;
   color: white;
-  border: 3px solid #222222;
+  border: 3px solid #E8A020;
 }
 
 .hero-secondary {
   background-color: white;
-  color: #222222;
+  color: #333333;
   border: 3px solid white;
 }
 

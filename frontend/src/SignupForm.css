@@ -18,10 +18,10 @@
   font-family: 'Oswald', sans-serif;
   font-size: 42px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   margin-bottom: 40px;
   letter-spacing: 1px;
-  border-left: 6px solid #222222;
+  border-left: 6px solid #333333;
   padding-left: 16px;
 }
 
@@ -30,7 +30,7 @@
   font-family: 'Oswald', sans-serif;
   font-size: 20px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   margin-bottom: 8px;
   letter-spacing: 1px;
 }
@@ -49,13 +49,13 @@
 .signup-box input:focus,
 .signup-box select:focus {
   outline: none;
-  border-color: #222222;
+  border-color: #333333;
 }
 
 .signup-box button {
   width: 100%;
   padding: 20px;
-  background-color: #222222;
+  background-color: #333333;
   color: white;
   border: none;
   font-family: 'Oswald', sans-serif;
@@ -73,7 +73,7 @@
 .forgot-password {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
-  color: #222222;
+  color: #333333;
   cursor: pointer;
   text-align: right;
   margin-bottom: 20px;
@@ -92,7 +92,7 @@
 }
 
 .redirect-signup span {
-  color: #222222;
+  color: #333333;
   cursor: pointer;
   font-weight: 700;
 }
@@ -102,7 +102,7 @@
 }
 
 .error {
-  color: #222222;
+  color: #333333;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   margin-top: -20px;
@@ -128,7 +128,7 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   cursor: pointer;
   user-select: none;
 }

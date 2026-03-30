@@ -15,7 +15,7 @@
   width: 320px;
   min-width: 320px;
   flex-shrink: 0;
-  background-color: #222222;
+  background-color: #1B4E8C;
   padding: 40px 0;
   display: flex;
   flex-direction: column;
@@ -74,13 +74,13 @@
 
 .sidebar-nav-item:hover {
   color: white;
-  background-color: #333333;
+  background-color: #163F73;
 }
 
 .sidebar-nav-item.active {
   color: white;
-  border-left: 4px solid #222222;
-  background-color: #333333;
+  border-left: 4px solid #E8A020;
+  background-color: #163F73;
 }
 
 .sidebar-nav-item .nav-icon {
@@ -104,7 +104,7 @@
 }
 
 .sidebar-logout:hover {
-  color: #222222;
+  color: #E8A020;
 }
 
 /* ── Main Content ── */
@@ -118,9 +118,9 @@
   font-family: 'Oswald', sans-serif;
   font-size: 44px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   letter-spacing: 1px;
-  border-left: 6px solid #222222;
+  border-left: 6px solid #333333;
   padding-left: 16px;
   margin-bottom: 36px;
 }
@@ -180,13 +180,13 @@
   border-radius: 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
-  color: #222222;
+  color: #333333;
   transition: border-color 0.15s;
 }
 
 .profile-field input:not([type="checkbox"]):focus {
   outline: none;
-  border-color: #222222;
+  border-color: #333333;
 }
 
 .input-disabled {
@@ -214,7 +214,7 @@
 .checkbox-label input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: #222222;
+  accent-color: #333333;
   cursor: pointer;
 }
 
@@ -248,7 +248,7 @@
 
 .profile-save-btn {
   padding: 16px 40px;
-  background-color: #222222;
+  background-color: #1B4E8C;
   color: white;
   border: none;
   border-radius: 6px;
@@ -278,7 +278,7 @@
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 16px;
-  background-color: #222222;
+  background-color: #1B4E8C;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -350,13 +350,13 @@
 }
 
 .upload-area:hover {
-  border-color: #222222;
+  border-color: #333333;
   background-color: #f5f5f5;
 }
 
 .upload-icon {
   font-size: 48px;
-  color: #222222;
+  color: #333333;
 }
 
 .upload-area-text {
@@ -367,7 +367,7 @@
 
 .upload-submit-btn {
   padding: 14px 36px;
-  background-color: #222222;
+  background-color: #1B4E8C;
   color: white;
   border: none;
   border-radius: 6px;
@@ -406,8 +406,8 @@
 }
 
 .upload-remove-btn:hover {
-  border-color: #222222;
-  color: #222222;
+  border-color: #333333;
+  color: #333333;
 }
 
 .upload-submitted-row {
@@ -450,7 +450,7 @@
   height: 96px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #222222;
+  background-color: #1B4E8C;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -473,19 +473,19 @@
 
 .profile-pic-btn {
   padding: 12px 28px;
-  border: 2px solid #222222;
+  border: 2px solid #333333;
   border-radius: 6px;
   font-family: 'Oswald', sans-serif;
   font-size: 17px;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #222222;
+  color: #333333;
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .profile-pic-btn:hover {
-  background-color: #222222;
+  background-color: #1B4E8C;
   color: white;
 }
 
@@ -499,9 +499,9 @@
   font-family: 'Oswald', sans-serif;
   font-size: 28px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   letter-spacing: 0.5px;
-  border-left: 5px solid #222222;
+  border-left: 5px solid #333333;
   padding-left: 14px;
   margin-bottom: 20px;
 }
@@ -553,7 +553,7 @@
   font-family: 'Oswald', sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   letter-spacing: 0.5px;
   margin-bottom: 10px;
 }
@@ -575,7 +575,7 @@
 
 .shift-meta-icon {
   font-size: 17px;
-  color: #222222;
+  color: #333333;
   flex-shrink: 0;
 }
 
@@ -587,10 +587,10 @@
   display: flex;
   align-items: center;
   padding: 12px 24px;
-  border: 2px solid #222222;
+  border: 2px solid #333333;
   border-radius: 6px;
   background: transparent;
-  color: #222222;
+  color: #333333;
   font-family: 'Oswald', sans-serif;
   font-size: 17px;
   font-weight: 600;
@@ -600,7 +600,7 @@
 }
 
 .cancel-shift-btn:hover {
-  background-color: #222222;
+  background-color: #1B4E8C;
   color: white;
 }
 
@@ -620,7 +620,7 @@
 
 .cancel-yes-btn {
   padding: 10px 20px;
-  background-color: #222222;
+  background-color: #1B4E8C;
   color: white;
   border: none;
   border-radius: 6px;
@@ -654,7 +654,7 @@
 
 /* ── Volunteer history (#60) ── */
 .history-summary {
-  background: #222222;
+  background: #333333;
   border-radius: 8px;
   padding: 28px 36px;
   max-width: 300px;
@@ -680,7 +680,7 @@
   font-family: 'Oswald', sans-serif;
   font-size: 56px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   line-height: 1;
 }
 
@@ -718,7 +718,7 @@
   font-family: 'Oswald', sans-serif;
   font-size: 22px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   margin-bottom: 8px;
 }
 
@@ -726,7 +726,7 @@
   font-family: 'Oswald', sans-serif;
   font-size: 22px;
   font-weight: 700;
-  color: #222222;
+  color: #333333;
   white-space: nowrap;
 }
 
@@ -735,7 +735,7 @@
   display: flex;
   gap: 0;
   margin-bottom: 28px;
-  border: 2px solid #222222;
+  border: 2px solid #333333;
   border-radius: 6px;
   overflow: hidden;
   width: fit-content;
@@ -749,17 +749,17 @@
   font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  color: #222222;
+  color: #333333;
   cursor: pointer;
   transition: background-color 0.15s, color 0.15s;
 }
 
 .shift-view-btn + .shift-view-btn {
-  border-left: 2px solid #222222;
+  border-left: 2px solid #333333;
 }
 
 .shift-view-btn.active {
-  background-color: #222222;
+  background-color: #1B4E8C;
   color: white;
 }
 
@@ -797,15 +797,15 @@
 }
 
 .cal-nav-btn:hover {
-  border-color: #222222;
-  color: #222222;
+  border-color: #333333;
+  color: #333333;
 }
 
 .cal-nav-label {
   font-family: 'Oswald', sans-serif;
   font-size: 20px;
   font-weight: 600;
-  color: #222222;
+  color: #333333;
   letter-spacing: 0.5px;
 }
 
@@ -844,7 +844,7 @@
 
 .cal-day-header.today .cal-day-name,
 .cal-day-header.today .cal-day-date {
-  color: #222222;
+  color: #333333;
 }
 
 .cal-day-name {
@@ -926,7 +926,7 @@
   position: absolute;
   left: 3px;
   right: 3px;
-  background-color: #222222;
+  background-color: #1B4E8C;
   border-radius: 5px;
   padding: 5px 7px;
   overflow: hidden;

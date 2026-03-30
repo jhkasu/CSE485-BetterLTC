@@ -7,7 +7,7 @@ function Footer() {
       <div className="footer-container">
 
         <div className="footer-brand">
-          <h2 className="footer-logo">BetterLTC</h2>
+          <h2 className="footer-logo">VolunteerConnect Saskatchewan</h2>
           <p className="footer-tagline">Connecting communities through care.</p>
         </div>
 
@@ -16,7 +16,7 @@ function Footer() {
           <p>123 Placeholder St, Suite 100</p>
           <p>Phoenix, AZ 85001</p>
           <p className="footer-phone">(555) 000-0000</p>
-          <p>info@betterltc.org</p>
+          <p>info@volunteerconnect.ca</p>
         </div>
 
         <div className="footer-social">
@@ -53,7 +53,7 @@ function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} BetterLTC. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} VolunteerConnect Saskatchewan. All rights reserved.</p>
       </div>
     </footer>
   );
