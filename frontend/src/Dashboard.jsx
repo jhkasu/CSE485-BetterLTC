@@ -496,13 +496,6 @@ const Dashboard = () => {
       <>
         <h2 className="dashboard-section-title">Volunteer History</h2>
 
-        <div className="history-summary">
-          <div className="history-summary-label">Total Hours Volunteered</div>
-          <div className="history-summary-hours-row">
-            <span className="history-summary-hours">{totalHours}</span>
-            <span className="history-summary-unit">hrs</span>
-          </div>
-        </div>
 
         {history.length === 0 ? (
           <div className="dashboard-placeholder">No volunteer history yet.</div>

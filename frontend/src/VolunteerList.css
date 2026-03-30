@@ -8,7 +8,7 @@
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 40px;
-  border-bottom: 4px solid #e63946;
+  border-bottom: 4px solid #333333;
   display: inline-block;
   padding-bottom: 8px;
   letter-spacing: 1px;
@@ -82,7 +82,7 @@
 }
 
 .card-meta button {
-  background-color: #1a1a1a;
+  background-color: #333333;
   color: white;
   border: none;
   padding: 16px 32px;
@@ -94,5 +94,5 @@
 }
 
 .card-meta button:hover {
-  background-color: #e63946;
+  background-color: #333333;
 }

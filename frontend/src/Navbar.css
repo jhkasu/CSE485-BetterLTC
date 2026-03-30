@@ -1,88 +1,95 @@
 nav {
-  background-color: #1a1a1a;
+  background-color: white;
+  border-bottom: 1px solid #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 60px;
+  padding: 18px 40px;
   position: relative;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  gap: 48px;
-  margin: 0;
+  gap: 28px;
+  margin: 0 0 0 48px;
   padding: 0;
   white-space: nowrap;
   flex-shrink: 0;
+  flex: 1;
 }
 
 nav ul li {
-  color: white;
+  color: #333333;
   font-family: 'Oswald', sans-serif;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
 }
 
 nav ul li:hover {
-  color: #e63946;
+  color: #1B4E8C;
 }
 
 .signin-btn {
   flex-shrink: 0;
   white-space: nowrap;
   background-color: transparent;
-  color: white;
-  border: 3px solid white;
-  padding: 18px 40px;
+  color: #333333;
+  border: 2px solid #333333;
+  padding: 10px 24px;
   font-family: 'Oswald', sans-serif;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .signin-btn:hover {
-  background-color: white;
-  color: #1a1a1a;
+  background-color: #333333;
+  color: white;
 }
 
 .signup-nav-btn {
   flex-shrink: 0;
   white-space: nowrap;
-  background-color: white;
-  color: #1a1a1a;
-  border: 3px solid white;
-  padding: 18px 40px;
+  background-color: #333333;
+  color: white;
+  border: 2px solid #333333;
+  padding: 10px 24px;
   font-family: 'Oswald', sans-serif;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .signup-nav-btn:hover {
-  background-color: transparent;
-  color: white;
+  background-color: #333333;
+  border-color: #333333;
 }
 
 .donate-btn {
   flex-shrink: 0;
   white-space: nowrap;
-  background-color: #e63946;
+  background-color: #E8A020;
   color: white;
-  border: none;
-  padding: 18px 40px;
+  border: 2px solid #E8A020;
+  padding: 10px 24px;
   font-family: 'Oswald', sans-serif;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
+}
+
+.donate-btn:hover {
+  background-color: #C4830F;
+  border-color: #C4830F;
 }
 
 .user-menu {
@@ -92,35 +99,36 @@ nav ul li:hover {
 
 .user-menu-btn {
   background-color: transparent;
-  color: white;
-  border: 3px solid white;
-  padding: 18px 40px;
+  color: #333333;
+  border: 2px solid #333333;
+  padding: 12px 28px;
   font-family: 'Oswald', sans-serif;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .user-menu-btn:hover {
-  background-color: white;
-  color: #1a1a1a;
+  background-color: #333333;
+  color: white;
 }
 
 .user-dropdown {
   position: absolute;
   top: 100%;
   right: 12px;
-  background-color: #1a1a1a;
-  border: 2px solid #333;
+  background-color: white;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
   min-width: 180px;
   z-index: 100;
 }
 
 .user-dropdown div {
   padding: 16px 24px;
-  color: white;
+  color: #333333;
   font-family: 'Oswald', sans-serif;
   font-size: 20px;
   cursor: pointer;
@@ -128,14 +136,15 @@ nav ul li:hover {
 }
 
 .user-dropdown div:hover {
-  background-color: #e63946;
+  background-color: #f5f5f5;
+  color: #333333;
 }
 
 .hamburger {
   display: none;
   background: none;
   border: none;
-  color: white;
+  color: #333333;
   font-size: 42px;
   cursor: pointer;
   padding: 0;

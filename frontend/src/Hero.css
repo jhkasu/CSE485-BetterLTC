@@ -1,24 +1,36 @@
 .hero {
-  background-image: url('https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1400');
-  background-size: cover;
-  background-position: center;
-  padding: 160px 60px;
-  min-height: 70vh;
   position: relative;
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 
-.hero::before {
-  content: '';
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(0, 0, 0, 0.65);
+  z-index: 1;
 }
 
-.hero h1, .hero p, .hero div {
+.hero-content {
   position: relative;
+  z-index: 2;
+  padding: 160px 60px;
 }
 
 .hero h1 {
@@ -49,14 +61,14 @@
 }
 
 .hero-primary {
-  background-color: #e63946;
+  background-color: #E8A020;
   color: white;
-  border: 3px solid #e63946;
+  border: 3px solid #E8A020;
 }
 
 .hero-secondary {
   background-color: white;
-  color: #1a1a1a;
+  color: #333333;
   border: 3px solid white;
 }
 
