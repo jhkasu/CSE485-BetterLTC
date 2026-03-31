@@ -1,36 +1,120 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './MissionPage.css';
 
 function MissionPage() {
+  const [mission, setMission] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const isAdmin = currentUser?.role === 'admin';
+
+  useEffect(() => {
+    fetch('http://localhost:3001/mission')
+      .then((res) => res.json())
+      .then((data) => {
+        setMission(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const handleEdit = () => {
+    setEditData({ ...mission });
+    setEditMode(true);
+  };
+
+  const handleCancel = () => {
+    setEditMode(false);
+    setEditData(null);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch('http://localhost:3001/mission', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editData),
+      });
+      const updated = await res.json();
+      setMission(updated);
+      setEditMode(false);
+      setEditData(null);
+    } catch (e) {
+      alert('Failed to save. Is the server running?');
+    }
+    setSaving(false);
+  };
+
+  const handleChange = (field, value) => {
+    setEditData(prev => ({ ...prev, [field]: value }));
+  };
+
+  if (loading) return <div><Navbar /><div className="mission-page"><p>Loading...</p></div><Footer /></div>;
+  if (!mission) return <div><Navbar /><div className="mission-page"><p>Failed to load content.</p></div><Footer /></div>;
+
   return (
     <div>
       <Navbar />
+
+      <div className="mission-banner">
+        <img src="/missionVision.png" alt="Mission & Vision" />
+        <div className="mission-banner-overlay">
+          <h1 className="mission-banner-title">Mission &amp; Vision</h1>
+        </div>
+      </div>
+
       <div className="mission-page">
 
-        {/* Hero headline */}
-        <section className="mission-hero">
-          <p className="mission-label">Our Mission</p>
-          <h1 className="mission-headline">
-            Dedicated to transforming the health<br />
-            and well-being of older adults.
-          </h1>
-        </section>
+        {isAdmin && !editMode && (
+          <div className="mission-admin-bar">
+            <button className="mission-edit-btn" onClick={handleEdit}>Edit Page</button>
+          </div>
+        )}
 
-        <div className="mission-divider-bar" />
+        {editMode && (
+          <div className="mission-admin-bar">
+            <button className="mission-save-btn" onClick={handleSave} disabled={saving}>
+              {saving ? 'Saving...' : 'Save'}
+            </button>
+            <button className="mission-cancel-btn" onClick={handleCancel}>Cancel</button>
+          </div>
+        )}
 
-        {/* Mission body */}
-        <section className="mission-section">
-          <p className="mission-body">
-            BetterLTC – a non-profit charitable organization – is dedicated to transforming the health and well-being with older adults. By fostering innovation and collaboration, and using an asset-based approach the platform connects people with essential resources, cutting-edge research, and strategic insights to address the evolving needs of an aging population.
-          </p>
-          <p className="mission-body">
-            This commitment ensures collaborative, high-quality care, and resources that support dignity and interdependence. The website serves as a vital hub for sharing knowledge, promoting best practices, and driving meaningful change.
-          </p>
-          <p className="mission-body">
-            BetterLTC enhances the capacity to deliver compassionate and effective care. The platform prioritizes well-being by equipping users with the tools, training, and knowledge necessary to navigate the complexities of growing older. By addressing challenges such as resource accessibility and availability, workforce development, and evolving care standards — BetterLTC contributes to a resilient and adaptive system.
-          </p>
+        <div style={{ width: '100%', marginBottom: '30px' }}>
+          <img src="/care1.png" alt="Care" style={{ width: '100%', height: 'auto', objectFit: 'cover', maxHeight: '500px' }} />
+        </div>
+
+        <section className="mission-section" style={{ textAlign: 'left', maxWidth: '800px', margin: '0 auto', paddingBottom: '50px' }}>
+          <h2 className="mission-section-title">Our <span className="mission-script">Mission</span></h2>
+          {editMode ? (
+            <>
+              <textarea
+                className="mission-edit-textarea mission-edit-tagline"
+                value={editData.headline}
+                onChange={(e) => handleChange('headline', e.target.value)}
+                style={{ textAlign: 'left', width: '100%', marginBottom: '15px' }}
+              />
+              <textarea
+                className="mission-edit-textarea mission-edit-body"
+                value={editData.body}
+                onChange={(e) => handleChange('body', e.target.value)}
+                style={{ textAlign: 'left', width: '100%', minHeight: '150px' }}
+              />
+            </>
+          ) : (
+            <>
+              <p className="mission-tagline" style={{ marginBottom: '25px', fontWeight: 'bold' }}>{mission.headline}</p>
+              {mission.body.split('\n\n').map((para, i) => (
+                <p key={i} className="mission-body" style={{ marginBottom: '15px' }}>{para}</p>
+              ))}
+            </>
+          )}
         </section>
 
         <div className="mission-color-rule">
@@ -41,20 +125,35 @@ function MissionPage() {
           <span style={{ background: '#82a840' }} />
         </div>
 
-        {/* Vision section */}
-        <section className="mission-section">
-          <h2 className="mission-section-title">
-            Our <span className="mission-script">Vision</span>
-          </h2>
-          <p className="mission-body">
-            At BetterLTC, we envision a transformative future for caring with older adults and their close ones that goes beyond traditional models to embrace a comprehensive, relational approach. Our aspiration is to create a world where care is not confined to facilities but extends to fostering environments that genuinely enhance the well-being, dignity, and autonomy of every older adult.
-          </p>
-          <p className="mission-body">
-            We believe growing older should be celebrated. This includes creating spaces that respect individuality, promote community, and honor the unique preferences and needs of each person. Our vision includes fostering meaningful connections, encouraging active participation, and ensuring that every older adult feels valued and supported.
-          </p>
-          <p className="mission-body">
-            By prioritizing innovation and collaboration, we aim to empower older adults, their close ones, care partners and communities with the tools and resources to thrive. Founded by Dr. Roslyn M. Compton, BetterLTC is committed to transforming older adult care through innovative initiatives and collaborative partnerships.
-          </p>
+        <div style={{ width: '100%', marginTop: '50px', marginBottom: '30px' }}>
+          <img src="/care2.png" alt="Community" style={{ width: '100%', height: 'auto', objectFit: 'cover', maxHeight: '500px' }} />
+        </div>
+
+        <section className="mission-section" style={{ textAlign: 'left', maxWidth: '800px', margin: '0 auto', paddingBottom: '50px' }}>
+          <h2 className="mission-section-title">Our <span className="mission-script">Vision</span></h2>
+          {editMode ? (
+            <>
+              <textarea
+                className="mission-edit-textarea mission-edit-tagline"
+                value={editData.visionTagline || ''}
+                onChange={(e) => handleChange('visionTagline', e.target.value)}
+                style={{ textAlign: 'left', width: '100%', marginBottom: '15px' }}
+              />
+              <textarea
+                className="mission-edit-textarea mission-edit-body"
+                value={editData.visionBody}
+                onChange={(e) => handleChange('visionBody', e.target.value)}
+                style={{ textAlign: 'left', width: '100%', minHeight: '150px' }}
+              />
+            </>
+          ) : (
+            <>
+              <p className="mission-tagline" style={{ marginBottom: '25px', fontWeight: 'bold' }}>{mission.visionTagline || ''}</p>
+              {mission.visionBody.split('\n\n').map((para, i) => (
+                <p key={i} className="mission-body" style={{ marginBottom: '15px' }}>{para}</p>
+              ))}
+            </>
+          )}
         </section>
 
         <div className="mission-color-rule">
