@@ -6,6 +6,7 @@ function Navbar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -22,7 +23,21 @@ function Navbar() {
       </button>
       <ul className={menuOpen ? 'open' : ''}>
         <li>Get Help</li>
-        <li>About Us</li>
+        <li
+          className="about-nav-item"
+          onMouseEnter={() => setAboutOpen(true)}
+          onMouseLeave={() => setAboutOpen(false)}
+          onClick={() => navigate('/about')}
+        >
+          About Us
+          {aboutOpen && (
+            <div className="about-dropdown">
+              <div onClick={(e) => { e.stopPropagation(); navigate('/about/mission'); setAboutOpen(false); }}>Mission &amp; Vision</div>
+              <div onClick={(e) => { e.stopPropagation(); navigate('/about/history'); setAboutOpen(false); }}>Our History</div>
+              <div onClick={(e) => { e.stopPropagation(); navigate('/about/team'); setAboutOpen(false); }}>Our Team</div>
+            </div>
+          )}
+        </li>
         <li onClick={() => navigate('/volunteer')}>Volunteer</li>
         <li>Our Work</li>
       </ul>

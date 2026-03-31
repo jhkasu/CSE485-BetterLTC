@@ -30,7 +30,7 @@ nav ul li {
 }
 
 nav ul li:hover {
-  color: #1B4E8C;
+  color: #82a840;
 }
 
 .signin-btn {
@@ -56,9 +56,9 @@ nav ul li:hover {
 .signup-nav-btn {
   flex-shrink: 0;
   white-space: nowrap;
-  background-color: #333333;
+  background-color: #1a2f4e;
   color: white;
-  border: 2px solid #333333;
+  border: 2px solid #1a2f4e;
   padding: 10px 24px;
   font-family: 'Oswald', sans-serif;
   font-size: 28px;
@@ -69,8 +69,8 @@ nav ul li:hover {
 }
 
 .signup-nav-btn:hover {
-  background-color: #333333;
-  border-color: #333333;
+  background-color: #111e33;
+  border-color: #111e33;
 }
 
 .donate-btn {
@@ -90,6 +90,39 @@ nav ul li:hover {
 .donate-btn:hover {
   background-color: #C4830F;
   border-color: #C4830F;
+}
+
+/* About Us dropdown */
+.about-nav-item {
+  position: relative;
+}
+
+.about-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  min-width: 200px;
+  z-index: 100;
+  margin-top: 8px;
+}
+
+.about-dropdown div {
+  padding: 14px 24px;
+  color: #333;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.about-dropdown div:hover {
+  background-color: #f5f5f5;
+  color: #1a2f4e;
 }
 
 .user-menu {

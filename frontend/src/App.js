@@ -8,6 +8,8 @@ import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import Dashboard from './Dashboard';
 import Footer from './Footer';
+import MissionPage from './MissionPage';
+import AboutPage from './AboutPage';
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
@@ -63,6 +65,8 @@ function App() {
         <Route path="/volunteer" element={<VolunteerPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/about/mission" element={<MissionPage />} />
         <Route
           path="/dashboard"
           element={
