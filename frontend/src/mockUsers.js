@@ -40,9 +40,9 @@ const mockUsers = [
   },
   {
     id: 2,
-    firstName: 'Jane',
-    lastName: 'Doe',
-    email: 'jane@test.com',
+    firstName: 'Kim',
+    lastName: '',
+    email: 'kim@test.com',
     password: 'password123',
     role: 'admin',
     backgroundCheckApproved: true,

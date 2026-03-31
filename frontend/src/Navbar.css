@@ -30,7 +30,7 @@ nav ul li {
 }
 
 nav ul li:hover {
-  color: #82a840;
+  color: #E8A020;
 }
 
 .signin-btn {
@@ -95,6 +95,7 @@ nav ul li:hover {
 /* About Us dropdown */
 .about-nav-item {
   position: relative;
+  padding-bottom: 8px;
 }
 
 .about-dropdown {
@@ -106,7 +107,6 @@ nav ul li:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.10);
   min-width: 200px;
   z-index: 100;
-  margin-top: 8px;
 }
 
 .about-dropdown div {
