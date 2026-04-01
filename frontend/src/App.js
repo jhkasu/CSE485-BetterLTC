@@ -10,6 +10,8 @@ import Dashboard from './Dashboard';
 import Footer from './Footer';
 import MissionPage from './MissionPage';
 import AboutPage from './AboutPage';
+import OurTeamPage from './OurTeamPage';
+import OurHistoryPage from './OurHistory';
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
@@ -67,6 +69,8 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/about/mission" element={<MissionPage />} />
+        <Route path="/about/team" element={<OurTeamPage />} />
+        <Route path="/about/history" element={<OurHistoryPage />} />
         <Route
           path="/dashboard"
           element={
