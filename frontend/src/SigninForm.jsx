@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import mockUsers from './mockUsers';
 import './SignupForm.css';
 
 const SigninForm = () => {
@@ -10,6 +11,7 @@ const SigninForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,9 +37,22 @@ const SigninForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    // TODO: Connect to backend API later
-    console.log('Submitted Data:', formData);
-    alert('Check console for data structure');
+
+    // TODO: Replace with real API call when backend is ready
+    const user = mockUsers.find(
+      (u) => u.email === formData.email && u.password === formData.password
+    );
+
+    if (!user) {
+      setErrors({ auth: 'Invalid email or password.' });
+      return;
+    }
+
+    // Save user info to localStorage (excluding password)
+    const { password, ...safeUser } = user;
+    localStorage.setItem('currentUser', JSON.stringify(safeUser));
+
+    navigate('/dashboard');
   };
 
   return (
@@ -58,15 +73,22 @@ const SigninForm = () => {
           {errors.email && <p className="error">{errors.email}</p>}
 
           <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            placeholder="Enter your password"
-          />
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+            <span className="toggle-password" onClick={() => setShowPassword(prev => !prev)}>
+              {showPassword ? 'Hide' : 'Show'}
+            </span>
+          </div>
           {errors.password && <p className="error">{errors.password}</p>}
+
+          {errors.auth && <p className="error">{errors.auth}</p>}
 
           <p className="forgot-password" onClick={() => navigate('/forgot-password')}>
             Forgot Password?
