@@ -1,5 +1,9 @@
 ### GIT IGNORE ###
 ### ========== ###
 
-backend/bin/
-backend/obj/
+.backend-old/bin/
+.backend-old/obj/
+Backend/Backend/bin/
+Backend/Backend/obj/
+Backend/Backend/Test/
+Backend/Backend/*.db
