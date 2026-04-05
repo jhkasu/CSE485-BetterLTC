@@ -48,11 +48,14 @@ const SigninForm = () => {
       return;
     }
 
-    // Save user info to localStorage (excluding password)
     const { password, ...safeUser } = user;
     localStorage.setItem('currentUser', JSON.stringify(safeUser));
 
-    navigate('/dashboard');
+    if (safeUser.role === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   return (
