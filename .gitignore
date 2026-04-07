@@ -1,6 +1,9 @@
 ### GIT IGNORE ###
 ### ========== ###
 
-# These are created your machine when the program is compiled/run
-./backend/bin/
-./backend/obj/
+.backend-old/bin/
+.backend-old/obj/
+Backend/Backend/bin/
+Backend/Backend/obj/
+Backend/Backend/Test/
+Backend/Backend/*.db
