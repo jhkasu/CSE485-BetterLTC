@@ -2,7 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-// Services
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy(policy => {
+        policy.SetIsOriginAllowed(origin => origin.StartsWith("http://localhost"))
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 builder.Services.AddControllers();
 
 string usersDbConn = builder.Configuration.GetConnectionString("UsersDb")
@@ -15,9 +21,15 @@ builder.Services.AddDbContext<ListingsDbContext>(op => op.UseSqlite(listingsDbCo
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+if (app.Environment.IsDevelopment()) {
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<UsersDbContext>().Database.Migrate();
+    scope.ServiceProvider.GetRequiredService<ListingsDbContext>().Database.Migrate();
+}
 
-// Middlewares
+app.UseCors();
+app.UseStaticFiles();
+app.MapGet("/", () => "Hello World!");
 app.MapControllers();
 
 app.Run();

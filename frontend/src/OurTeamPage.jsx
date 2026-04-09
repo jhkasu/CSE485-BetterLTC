@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurTeamPage.css';
 
-const mockData = [
-  { id: 1, name: 'Firstname Lastname', photo: '/fig1.png' },
-  { id: 2, name: 'Firstname Lastname', photo: '/fig2.png' },
-  { id: 3, name: 'Firstname Lastname', photo: '/fig3.png' },
-];
+const API_BASE = 'http://localhost:5184';
 
 function OurTeamPage() {
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/team-members`)
+      .then(res => res.json())
+      .then(data => setMembers(data))
+      .catch(() => setMembers([]));
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -23,10 +28,13 @@ function OurTeamPage() {
 
       <div className="ourteam-content">
         <div className="team-grid">
-          {mockData.map(member => (
+          {members.map(member => (
             <div key={member.id} className="team-card">
-              <img src={member.photo} alt={member.name} />
-              <p>{member.name}</p>
+              {member.imagePath
+                ? <img src={`${API_BASE}${member.imagePath}`} alt={member.name} />
+                : <div className="team-card-placeholder">{member.name.charAt(0)}</div>}
+              <p className="team-card-name">{member.name}</p>
+              <p className="team-card-position">{member.position}</p>
             </div>
           ))}
         </div>

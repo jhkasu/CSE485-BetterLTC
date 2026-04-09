@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  MdDashboard, MdPeople, MdGroup, MdWork,
+  MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
   MdClose, MdVolunteerActivism, MdOpenInNew,
 } from 'react-icons/md';
 import mockUsers from './mockUsers';
 import './AdminDashboard.css';
 
-const INIT_TEAM = [
-  { id: 1, name: 'Firstname Lastname', title: 'Executive Director', photo: '/fig1.png' },
-  { id: 2, name: 'Firstname Lastname', title: 'Program Manager', photo: '/fig2.png' },
-  { id: 3, name: 'Firstname Lastname', title: 'Volunteer Coordinator', photo: '/fig3.png' },
-];
+const API_BASE = 'http://localhost:5184';
+
 
 const INIT_OPPORTUNITIES = [
   { id: 1, title: 'Senior Companionship Program', description: 'Provide friendship and support to isolated seniors in long-term care facilities.', location: 'Toronto', days: 'Flexible' },
@@ -36,7 +33,7 @@ const INIT_HELP = [
 const NAV_ITEMS = [
   { id: 'overview',       label: 'Overview',                icon: <MdDashboard /> },
   { id: 'users',          label: 'Users',                   icon: <MdPeople /> },
-  { id: 'team',           label: 'Our Team',                icon: <MdGroup /> },
+  { id: 'team',           label: 'Our Team',                icon: <MdGroups /> },
   { id: 'opportunities',  label: 'Volunteer Opportunities', icon: <MdVolunteerActivism /> },
   { id: 'work',           label: 'Our Work',                icon: <MdWork /> },
   { id: 'help',           label: 'Get Help',                icon: <MdHelpCenter /> },
@@ -73,10 +70,18 @@ function AdminDashboard() {
 
   const [users, setUsers] = useState(mockUsers.map(({ password, ...u }) => u));
 
-  const [team, setTeam] = useState(INIT_TEAM);
+  const [team, setTeam] = useState([]);
   const [teamModal, setTeamModal] = useState(null);
-  const [teamForm, setTeamForm] = useState({ name: '', title: '', photo: '' });
+  const [teamForm, setTeamForm] = useState({ name: '', position: '', bio: '', imagePath: '' });
+  const [teamImageUploading, setTeamImageUploading] = useState(false);
   const [teamDeleteId, setTeamDeleteId] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/team-members`)
+      .then(res => res.json())
+      .then(data => setTeam(data))
+      .catch(() => {});
+  }, []);
 
   const [opportunities, setOpportunities] = useState(INIT_OPPORTUNITIES);
   const [oppModal, setOppModal] = useState(null);
@@ -104,14 +109,45 @@ function AdminDashboard() {
     setUsers(users.map(u => u.id === id ? { ...u, backgroundCheckApproved: !u.backgroundCheckApproved } : u));
   };
 
-  const openTeamAdd = () => { setTeamForm({ name: '', title: '', photo: '' }); setTeamModal({ mode: 'add' }); };
-  const openTeamEdit = (item) => { setTeamForm({ name: item.name, title: item.title, photo: item.photo }); setTeamModal({ mode: 'edit', item }); };
-  const saveTeam = () => {
-    if (teamModal.mode === 'add') setTeam([...team, { id: nextId(team), ...teamForm }]);
-    else setTeam(team.map(t => t.id === teamModal.item.id ? { ...t, ...teamForm } : t));
-    setTeamModal(null);
+  const openTeamAdd = () => { setTeamForm({ name: '', position: '', bio: '', imagePath: '' }); setTeamModal({ mode: 'add' }); };
+  const openTeamEdit = (item) => { setTeamForm({ name: item.name, position: item.position, bio: item.bio, imagePath: item.imagePath }); setTeamModal({ mode: 'edit', item }); };
+  const handleTeamImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const data = new FormData();
+    data.append('file', file);
+    setTeamImageUploading(true);
+    fetch(`${API_BASE}/api/team-members/upload`, { method: 'POST', body: data })
+      .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+      .then(({ imagePath }) => { setTeamForm(f => ({ ...f, imagePath })); setTeamImageUploading(false); })
+      .catch(err => { console.error('Upload failed:', err); setTeamImageUploading(false); });
   };
-  const deleteTeam = (id) => { setTeam(team.filter(t => t.id !== id)); setTeamDeleteId(null); };
+  const saveTeam = () => {
+    if (teamModal.mode === 'add') {
+      fetch(`${API_BASE}/api/team-members`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(teamForm),
+      })
+        .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+        .then(created => { setTeam([...team, created]); setTeamModal(null); })
+        .catch(err => console.error('POST team-member failed:', err));
+    } else {
+      fetch(`${API_BASE}/api/team-members/${teamModal.item.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(teamForm),
+      })
+        .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+        .then(updated => { setTeam(team.map(t => t.id === updated.id ? updated : t)); setTeamModal(null); })
+        .catch(err => console.error('PUT team-member failed:', err));
+    }
+  };
+  const deleteTeam = (id) => {
+    fetch(`${API_BASE}/api/team-members/${id}`, { method: 'DELETE' })
+      .then(() => { setTeam(team.filter(t => t.id !== id)); setTeamDeleteId(null); })
+      .catch(() => {});
+  };
 
   const openOppAdd = () => { setOppForm({ title: '', description: '', location: '', days: '' }); setOppModal({ mode: 'add' }); };
   const openOppEdit = (item) => { setOppForm({ title: item.title, description: item.description, location: item.location, days: item.days }); setOppModal({ mode: 'edit', item }); };
@@ -185,7 +221,7 @@ function AdminDashboard() {
               <td><span className={`role-badge ${u.role}`}>{u.role}</span></td>
               <td><span className={`bg-badge ${u.backgroundCheckApproved ? 'approved' : 'pending'}`}>{u.backgroundCheckApproved ? 'Approved' : 'Pending'}</span></td>
               <td>
-                <button className="admin-action-btn approve" onClick={() => toggleBgCheck(u.id)}>
+                <button className={`admin-action-btn ${u.backgroundCheckApproved ? 'revoke' : 'approve'}`} onClick={() => toggleBgCheck(u.id)}>
                   {u.backgroundCheckApproved ? 'Revoke' : 'Approve'}
                 </button>
               </td>
@@ -207,16 +243,20 @@ function AdminDashboard() {
           <tr>
             <th>Photo</th>
             <th>Name</th>
-            <th>Title</th>
+            <th>Position</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {team.map(t => (
             <tr key={t.id}>
-              <td><img src={t.photo} alt={t.name} className="admin-team-photo" /></td>
+              <td>
+                {t.imagePath
+                  ? <img src={`${API_BASE}${t.imagePath}`} alt={t.name} className="admin-team-photo" />
+                  : <div className="admin-team-photo-placeholder">{t.name.charAt(0)}</div>}
+              </td>
               <td>{t.name}</td>
-              <td>{t.title}</td>
+              <td>{t.position}</td>
               <td>
                 <div className="admin-action-cell">
                   {teamDeleteId === t.id ? (
@@ -238,10 +278,14 @@ function AdminDashboard() {
           <div className="admin-form">
             <label>Name</label>
             <input value={teamForm.name} onChange={e => setTeamForm({ ...teamForm, name: e.target.value })} placeholder="Full name" />
-            <label>Title</label>
-            <input value={teamForm.title} onChange={e => setTeamForm({ ...teamForm, title: e.target.value })} placeholder="Job title" />
-            <label>Photo URL</label>
-            <input value={teamForm.photo} onChange={e => setTeamForm({ ...teamForm, photo: e.target.value })} placeholder="/photo.png" />
+            <label>Position</label>
+            <input value={teamForm.position} onChange={e => setTeamForm({ ...teamForm, position: e.target.value })} placeholder="Job title" />
+            <label>Bio</label>
+            <textarea value={teamForm.bio} onChange={e => setTeamForm({ ...teamForm, bio: e.target.value })} placeholder="Short bio" rows={3} />
+            <label>Photo</label>
+            <input type="file" accept="image/*" onChange={handleTeamImageChange} />
+            {teamImageUploading && <span style={{ fontSize: 12, color: '#888' }}>Uploading...</span>}
+            {teamForm.imagePath && <img src={`${API_BASE}${teamForm.imagePath}`} alt="preview" style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', marginTop: 6 }} />}
             <div className="admin-form-actions">
               <button className="admin-save-btn" onClick={saveTeam}>Save</button>
               <button className="admin-cancel-btn" onClick={() => setTeamModal(null)}>Cancel</button>
@@ -457,7 +501,7 @@ function AdminDashboard() {
             <div className="admin-sidebar-title">Admin Panel</div>
             <div className="admin-sidebar-user">{user?.firstName} {user?.lastName}</div>
           </div>
-          <nav className="admin-sidebar-nav">
+          <div className="admin-sidebar-nav">
             {NAV_ITEMS.map(item => (
               <div
                 key={item.id}
@@ -468,7 +512,7 @@ function AdminDashboard() {
                 {item.label}
               </div>
             ))}
-          </nav>
+          </div>
           <div className="admin-sidebar-viewsite" onClick={() => navigate('/')}>
             <MdOpenInNew /> View Site
           </div>
