@@ -9,4 +9,5 @@ public class UsersDbContext : DbContext {
 
     public DbSet<Volunteer> Volunteers { get; set; }
     public DbSet<Organization> Organizations { get; set; }
+    public DbSet<TeamMember> TeamMembers { get; set; }
 }

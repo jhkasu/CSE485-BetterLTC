@@ -12,10 +12,18 @@ import MissionPage from './MissionPage';
 import AboutPage from './AboutPage';
 import OurTeamPage from './OurTeamPage';
 import OurHistoryPage from './OurHistory';
+import AdminDashboard from './AdminDashboard';
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
   return user ? children : <Navigate to="/signin" />;
+}
+
+function AdminRoute({ children }) {
+  const stored = localStorage.getItem('currentUser');
+  if (!stored) return <Navigate to="/signin" />;
+  const user = JSON.parse(stored);
+  return user.role === 'admin' ? children : <Navigate to="/dashboard" />;
 }
 
 function Home() {
@@ -77,6 +85,14 @@ function App() {
             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
           }
         />
       </Routes>

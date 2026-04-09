@@ -49,7 +49,7 @@ function Navbar() {
           </button>
           {dropdownOpen && (
             <div className="user-dropdown">
-              <div onClick={() => { navigate('/dashboard'); setDropdownOpen(false); }}>Dashboard</div>
+              <div onClick={() => { navigate(currentUser.role === 'admin' ? '/admin' : '/dashboard'); setDropdownOpen(false); }}>Dashboard</div>
               <div onClick={handleLogout}>Log Out</div>
             </div>
           )}
