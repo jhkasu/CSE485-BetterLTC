@@ -39,7 +39,7 @@ function Navbar() {
           )}
         </li>
         <li onClick={() => navigate('/volunteer')}>Volunteer</li>
-        <li>Our Work</li>
+        <li onClick={() => navigate('/our-work')}>Our Work</li>
       </ul>
 
       {currentUser ? (
