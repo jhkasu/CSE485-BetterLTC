@@ -31,6 +31,33 @@ namespace Backend.Migrations
                     b.ToTable("Organizations");
                 });
 
+            modelBuilder.Entity("Backend.Models.OurWork", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OurWorks");
+                });
+
             modelBuilder.Entity("Backend.Models.TeamMember", b =>
                 {
                     b.Property<int>("Id")

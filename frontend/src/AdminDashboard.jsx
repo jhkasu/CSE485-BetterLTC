@@ -6,6 +6,7 @@ import {
   MdClose, MdVolunteerActivism, MdOpenInNew,
 } from 'react-icons/md';
 import mockUsers from './mockUsers';
+import RichTextEditor from './RichTextEditor';
 import './AdminDashboard.css';
 
 const API_BASE = 'http://localhost:5184';
@@ -18,11 +19,6 @@ const INIT_OPPORTUNITIES = [
   { id: 4, title: 'Transportation Volunteer', description: 'Drive seniors to medical appointments and community events.', location: 'Calgary', days: 'Flexible' },
 ];
 
-const INIT_WORK = [
-  { id: 1, title: 'Winter Warmth Campaign', description: 'Delivered warm clothing and meals to 500+ seniors across Ontario.', category: 'Campaign', date: '2026-01' },
-  { id: 2, title: 'Memory Care Initiative', description: 'Launched a new dementia-friendly activity program in 12 LTC facilities.', category: 'Program', date: '2025-09' },
-  { id: 3, title: 'Annual Fundraiser Gala', description: 'Raised $200,000 to support long-term care improvement projects.', category: 'Event', date: '2025-11' },
-];
 
 const INIT_HELP = [
   { id: 1, title: 'Emergency Support Line', description: 'Immediate assistance for seniors in crisis situations.', contact: '1-800-555-0100', type: 'Hotline' },
@@ -39,10 +35,10 @@ const NAV_ITEMS = [
   { id: 'help',           label: 'Get Help',                icon: <MdHelpCenter /> },
 ];
 
-function Modal({ title, onClose, children }) {
+function Modal({ title, onClose, children, wide }) {
   return (
-    <div className="admin-modal-overlay" onClick={onClose}>
-      <div className="admin-modal" onClick={e => e.stopPropagation()}>
+    <div className="admin-modal-overlay" onClick={onClose || undefined}>
+      <div className={`admin-modal${wide ? ' admin-modal-wide' : ''}`} onClick={e => e.stopPropagation()}>
         <div className="admin-modal-header">
           <h3>{title}</h3>
           <button className="admin-modal-close" onClick={onClose}><MdClose /></button>
@@ -88,10 +84,17 @@ function AdminDashboard() {
   const [oppForm, setOppForm] = useState({ title: '', description: '', location: '', days: '' });
   const [oppDeleteId, setOppDeleteId] = useState(null);
 
-  const [work, setWork] = useState(INIT_WORK);
+  const [work, setWork] = useState([]);
   const [workModal, setWorkModal] = useState(null);
-  const [workForm, setWorkForm] = useState({ title: '', description: '', category: '', date: '' });
+  const [workForm, setWorkForm] = useState({ title: '', content: '', category: '', date: '' });
   const [workDeleteId, setWorkDeleteId] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/our-work`)
+      .then(res => res.json())
+      .then(data => setWork(data))
+      .catch(() => {});
+  }, []);
 
   const [help, setHelp] = useState(INIT_HELP);
   const [helpModal, setHelpModal] = useState(null);
@@ -158,14 +161,34 @@ function AdminDashboard() {
   };
   const deleteOpp = (id) => { setOpportunities(opportunities.filter(o => o.id !== id)); setOppDeleteId(null); };
 
-  const openWorkAdd = () => { setWorkForm({ title: '', description: '', category: '', date: '' }); setWorkModal({ mode: 'add' }); };
-  const openWorkEdit = (item) => { setWorkForm({ title: item.title, description: item.description, category: item.category, date: item.date }); setWorkModal({ mode: 'edit', item }); };
+  const openWorkAdd = () => { setWorkForm({ title: '', content: '', category: '', date: '' }); setWorkModal({ mode: 'add' }); };
+  const openWorkEdit = (item) => { setWorkForm({ title: item.title, content: item.content, category: item.category, date: item.date }); setWorkModal({ mode: 'edit', item }); };
   const saveWork = () => {
-    if (workModal.mode === 'add') setWork([...work, { id: nextId(work), ...workForm }]);
-    else setWork(work.map(w => w.id === workModal.item.id ? { ...w, ...workForm } : w));
-    setWorkModal(null);
+    if (workModal.mode === 'add') {
+      fetch(`${API_BASE}/api/our-work`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(workForm),
+      })
+        .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+        .then(created => { setWork([created, ...work]); setWorkModal(null); })
+        .catch(err => console.error('POST our-work failed:', err));
+    } else {
+      fetch(`${API_BASE}/api/our-work/${workModal.item.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(workForm),
+      })
+        .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
+        .then(updated => { setWork(work.map(w => w.id === updated.id ? updated : w)); setWorkModal(null); })
+        .catch(err => console.error('PUT our-work failed:', err));
+    }
   };
-  const deleteWork = (id) => { setWork(work.filter(w => w.id !== id)); setWorkDeleteId(null); };
+  const deleteWork = (id) => {
+    fetch(`${API_BASE}/api/our-work/${id}`, { method: 'DELETE' })
+      .then(() => { setWork(work.filter(w => w.id !== id)); setWorkDeleteId(null); })
+      .catch(err => console.error('DELETE our-work failed:', err));
+  };
 
   const openHelpAdd = () => { setHelpForm({ title: '', description: '', contact: '', type: '' }); setHelpModal({ mode: 'add' }); };
   const openHelpEdit = (item) => { setHelpForm({ title: item.title, description: item.description, contact: item.contact, type: item.type }); setHelpModal({ mode: 'edit', item }); };
@@ -358,7 +381,7 @@ function AdminDashboard() {
     <div>
       <div className="admin-section-header">
         <h2 className="admin-section-title">Our Work</h2>
-        <button className="admin-add-btn" onClick={openWorkAdd}><MdAdd /> Add Item</button>
+        <button className="admin-add-btn" onClick={openWorkAdd}><MdAdd /> Add Post</button>
       </div>
       <table className="admin-table">
         <thead>
@@ -392,12 +415,10 @@ function AdminDashboard() {
         </tbody>
       </table>
       {workModal && (
-        <Modal title={workModal.mode === 'add' ? 'Add Work Item' : 'Edit Work Item'} onClose={() => setWorkModal(null)}>
+        <Modal title={workModal.mode === 'add' ? 'New Post' : 'Edit Post'} onClose={null} wide>
           <div className="admin-form">
             <label>Title</label>
-            <input value={workForm.title} onChange={e => setWorkForm({ ...workForm, title: e.target.value })} placeholder="Title" />
-            <label>Description</label>
-            <textarea value={workForm.description} onChange={e => setWorkForm({ ...workForm, description: e.target.value })} placeholder="Description" rows={3} />
+            <input value={workForm.title} onChange={e => setWorkForm({ ...workForm, title: e.target.value })} placeholder="Post title" />
             <label>Category</label>
             <select value={workForm.category} onChange={e => setWorkForm({ ...workForm, category: e.target.value })}>
               <option value="">Select category</option>
@@ -407,9 +428,14 @@ function AdminDashboard() {
               <option>Initiative</option>
             </select>
             <label>Date</label>
-            <input type="month" value={workForm.date} onChange={e => setWorkForm({ ...workForm, date: e.target.value })} />
+            <input type="date" value={workForm.date} onChange={e => setWorkForm({ ...workForm, date: e.target.value })} />
+            <label>Content</label>
+            <RichTextEditor
+              content={workForm.content}
+              onChange={html => setWorkForm(f => ({ ...f, content: html }))}
+            />
             <div className="admin-form-actions">
-              <button className="admin-save-btn" onClick={saveWork}>Save</button>
+              <button className="admin-save-btn" onClick={saveWork}>Post</button>
               <button className="admin-cancel-btn" onClick={() => setWorkModal(null)}>Cancel</button>
             </div>
           </div>

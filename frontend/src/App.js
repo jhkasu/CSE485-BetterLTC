@@ -13,6 +13,7 @@ import AboutPage from './AboutPage';
 import OurTeamPage from './OurTeamPage';
 import OurHistoryPage from './OurHistory';
 import AdminDashboard from './AdminDashboard';
+import OurWorkPage from './OurWorkPage';
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
@@ -79,6 +80,7 @@ function App() {
         <Route path="/about/mission" element={<MissionPage />} />
         <Route path="/about/team" element={<OurTeamPage />} />
         <Route path="/about/history" element={<OurHistoryPage />} />
+        <Route path="/our-work" element={<OurWorkPage />} />
         <Route
           path="/dashboard"
           element={
