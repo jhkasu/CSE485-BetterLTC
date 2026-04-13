@@ -22,7 +22,7 @@ function Navbar() {
         ☰
       </button>
       <ul className={menuOpen ? 'open' : ''}>
-        <li>Get Help</li>
+        <li onClick={() => navigate('/get-help')}>Get Help</li>
         <li
           className="about-nav-item"
           onMouseEnter={() => setAboutOpen(true)}
