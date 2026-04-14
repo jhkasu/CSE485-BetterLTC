@@ -3,6 +3,8 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './GetHelpPage.css';
 
+const API_BASE = 'http://localhost:5184';
+
 const HELP_TYPES = [
   'Senior Care Support',
   'Meal Assistance',
@@ -24,15 +26,28 @@ function GetHelpPage() {
   });
   const [status, setStatus] = useState(null);
 
+  const formatPhone = (value) => {
+    const digits = value.replace(/\D/g, '').slice(0, 10);
+    if (digits.length < 4) return digits;
+    if (digits.length < 7) return `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+  };
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: name === 'phone' ? formatPhone(value) : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const res = await fetch(`${API_BASE}/api/help-requests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
       setStatus('success');
       setForm({ firstName: '', lastName: '', email: '', phone: '', helpType: '', description: '' });
     } catch {
