@@ -20,11 +20,6 @@ const INIT_OPPORTUNITIES = [
 ];
 
 
-const INIT_HELP = [
-  { id: 1, title: 'Emergency Support Line', description: 'Immediate assistance for seniors in crisis situations.', contact: '1-800-555-0100', type: 'Hotline' },
-  { id: 2, title: 'Legal Aid Clinic', description: 'Free legal consultation for LTC residents and families.', contact: 'legal@betterltc.org', type: 'Service' },
-  { id: 3, title: 'Family Resource Guide', description: 'Comprehensive guide for families navigating long-term care.', contact: 'resources@betterltc.org', type: 'Resource' },
-];
 
 const NAV_ITEMS = [
   { id: 'overview',       label: 'Overview',                icon: <MdDashboard /> },
@@ -96,10 +91,15 @@ function AdminDashboard() {
       .catch(() => {});
   }, []);
 
-  const [help, setHelp] = useState(INIT_HELP);
-  const [helpModal, setHelpModal] = useState(null);
-  const [helpForm, setHelpForm] = useState({ title: '', description: '', contact: '', type: '' });
+  const [helpRequests, setHelpRequests] = useState([]);
   const [helpDeleteId, setHelpDeleteId] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/help-requests`)
+      .then(res => res.json())
+      .then(data => setHelpRequests(data))
+      .catch(() => {});
+  }, []);
 
   const nextId = (list) => Math.max(0, ...list.map(i => i.id)) + 1;
 
@@ -190,14 +190,11 @@ function AdminDashboard() {
       .catch(err => console.error('DELETE our-work failed:', err));
   };
 
-  const openHelpAdd = () => { setHelpForm({ title: '', description: '', contact: '', type: '' }); setHelpModal({ mode: 'add' }); };
-  const openHelpEdit = (item) => { setHelpForm({ title: item.title, description: item.description, contact: item.contact, type: item.type }); setHelpModal({ mode: 'edit', item }); };
-  const saveHelp = () => {
-    if (helpModal.mode === 'add') setHelp([...help, { id: nextId(help), ...helpForm }]);
-    else setHelp(help.map(h => h.id === helpModal.item.id ? { ...h, ...helpForm } : h));
-    setHelpModal(null);
+  const deleteHelpRequest = (id) => {
+    fetch(`${API_BASE}/api/help-requests/${id}`, { method: 'DELETE' })
+      .then(() => { setHelpRequests(helpRequests.filter(r => r.id !== id)); setHelpDeleteId(null); })
+      .catch(() => {});
   };
-  const deleteHelp = (id) => { setHelp(help.filter(h => h.id !== id)); setHelpDeleteId(null); };
 
   const renderOverview = () => (
     <div>
@@ -446,63 +443,42 @@ function AdminDashboard() {
 
   const renderHelp = () => (
     <div>
-      <div className="admin-section-header">
-        <h2 className="admin-section-title">Get Help Resources</h2>
-        <button className="admin-add-btn" onClick={openHelpAdd}><MdAdd /> Add Resource</button>
-      </div>
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Contact</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {help.map(h => (
-            <tr key={h.id}>
-              <td>{h.title}</td>
-              <td>{h.type}</td>
-              <td>{h.contact}</td>
-              <td>
-                <div className="admin-action-cell">
-                  {helpDeleteId === h.id ? (
-                    <DeleteConfirm onConfirm={() => deleteHelp(h.id)} onCancel={() => setHelpDeleteId(null)} />
-                  ) : (
-                    <>
-                      <button className="admin-action-btn edit" onClick={() => openHelpEdit(h)}><MdEdit /></button>
-                      <button className="admin-action-btn delete" onClick={() => setHelpDeleteId(h.id)}><MdDelete /></button>
-                    </>
-                  )}
-                </div>
-              </td>
+      <h2 className="admin-section-title">Help Requests</h2>
+      {helpRequests.length === 0 ? (
+        <p style={{ color: '#888', marginTop: 20 }}>No requests submitted yet.</p>
+      ) : (
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Help Type</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Submitted</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {helpModal && (
-        <Modal title={helpModal.mode === 'add' ? 'Add Help Resource' : 'Edit Help Resource'} onClose={() => setHelpModal(null)}>
-          <div className="admin-form">
-            <label>Title</label>
-            <input value={helpForm.title} onChange={e => setHelpForm({ ...helpForm, title: e.target.value })} placeholder="Resource title" />
-            <label>Description</label>
-            <textarea value={helpForm.description} onChange={e => setHelpForm({ ...helpForm, description: e.target.value })} placeholder="Description" rows={3} />
-            <label>Contact</label>
-            <input value={helpForm.contact} onChange={e => setHelpForm({ ...helpForm, contact: e.target.value })} placeholder="Phone number or email" />
-            <label>Type</label>
-            <select value={helpForm.type} onChange={e => setHelpForm({ ...helpForm, type: e.target.value })}>
-              <option value="">Select type</option>
-              <option>Hotline</option>
-              <option>Service</option>
-              <option>Resource</option>
-            </select>
-            <div className="admin-form-actions">
-              <button className="admin-save-btn" onClick={saveHelp}>Save</button>
-              <button className="admin-cancel-btn" onClick={() => setHelpModal(null)}>Cancel</button>
-            </div>
-          </div>
-        </Modal>
+          </thead>
+          <tbody>
+            {helpRequests.map(r => (
+              <tr key={r.id}>
+                <td>{r.firstName} {r.lastName}</td>
+                <td>{r.helpType}</td>
+                <td>{r.email}</td>
+                <td>{r.phone ? r.phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : '—'}</td>
+                <td>{new Date(r.submittedAt).toLocaleDateString()}</td>
+                <td>
+                  <div className="admin-action-cell">
+                    {helpDeleteId === r.id ? (
+                      <DeleteConfirm onConfirm={() => deleteHelpRequest(r.id)} onCancel={() => setHelpDeleteId(null)} />
+                    ) : (
+                      <button className="admin-action-btn delete" onClick={() => setHelpDeleteId(r.id)}><MdDelete /></button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

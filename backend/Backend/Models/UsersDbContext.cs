@@ -11,4 +11,5 @@ public class UsersDbContext : DbContext {
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<TeamMember> TeamMembers { get; set; }
     public DbSet<OurWork> OurWorks { get; set; }
+    public DbSet<HelpRequest> HelpRequests { get; set; }
 }
