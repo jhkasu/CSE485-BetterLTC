@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Hero from './Hero';
-import Pillars from './Pillars';
+import RecentOpportunities from './RecentOpportunities';
+import NewsSection from './NewsSection';
 import VolunteerList from './VolunteerList';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
@@ -15,6 +16,7 @@ import OurHistoryPage from './OurHistory';
 import AdminDashboard from './AdminDashboard';
 import OurWorkPage from './OurWorkPage';
 import GetHelpPage from './GetHelpPage';
+import VolunteerDetail from './VolunteerDetail';
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('currentUser');
@@ -33,7 +35,8 @@ function Home() {
     <div>
       <Navbar />
       <Hero />
-      <Pillars />
+      <RecentOpportunities />
+      <NewsSection />
       <Footer />
     </div>
   );
@@ -47,6 +50,10 @@ function VolunteerPage() {
       <Footer />
     </div>
   );
+}
+
+function VolunteerDetailPage() {
+  return <VolunteerDetail />;
 }
 
 function SignupPage() {
@@ -75,6 +82,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/volunteer" element={<VolunteerPage />} />
+        <Route path="/volunteer/:id" element={<VolunteerDetailPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/about" element={<AboutPage />} />

@@ -1,0 +1,138 @@
+.recent-opp {
+  padding: 60px 40px;
+  background-color: #f5f5f5;
+}
+
+.recent-opp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.recent-opp-header h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a2f4e;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.recent-opp-viewall {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #E8A020;
+  text-decoration: none;
+}
+
+.recent-opp-viewall:hover {
+  text-decoration: underline;
+}
+
+.recent-opp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.opp-card {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid #E8A020;
+  padding: 28px;
+  min-height: 240px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.opp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.opp-card-body {
+  flex: 1;
+}
+
+.opp-status {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #82a840;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.opp-card-body h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a2f4e;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.opp-org {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #888;
+  margin: 0 0 14px 0;
+}
+
+.opp-desc {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.opp-card-footer {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.opp-tags {
+  display: flex;
+  gap: 8px;
+}
+
+.opp-tag {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #1a2f4e;
+  background-color: #eef2f8;
+  padding: 5px 12px;
+}
+
+.opp-view-detail {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #E8A020;
+}
+
+@media (max-width: 900px) {
+  .recent-opp-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .recent-opp {
+    padding: 40px 20px;
+  }
+  .recent-opp-grid {
+    grid-template-columns: 1fr;
+  }
+}

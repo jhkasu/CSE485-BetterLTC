@@ -7,28 +7,36 @@ const VOLUNTEER_OPPORTUNITIES = [
   {
     id: 1,
     title: 'Senior Companionship Program',
-    description: 'Provide friendship and support to isolated seniors in long-term care facilities.',
+    organization: 'Sunrise Care Foundation',
+    status: 'Is Ongoing',
+    description: 'Provide friendship and support to isolated seniors in long-term care facilities. Volunteers visit residents weekly to share conversation, play games, read together, or simply offer a caring presence.',
     location: 'Toronto',
     days: 'Flexible',
   },
   {
     id: 2,
     title: 'Community Food Drive Support',
-    description: 'Help sort and pack food donations for local families in need.',
+    organization: 'Vancouver Community Aid',
+    status: 'Is Ongoing',
+    description: 'Help sort and pack food donations for local families in need. Volunteers assist with organizing donations, preparing food hampers, and supporting distribution events at our warehouse.',
     location: 'Vancouver',
     days: 'Weekends',
   },
   {
     id: 3,
     title: 'Memory Care Activities Assistant',
-    description: 'Lead engaging activities for seniors living with dementia in care homes.',
+    organization: 'Montreal Memory Care Society',
+    status: 'Is Ongoing',
+    description: 'Lead engaging activities for seniors living with dementia in care homes. Volunteers facilitate music sessions, art projects, and reminiscing groups designed to support cognitive wellbeing.',
     location: 'Montreal',
     days: 'Weekdays',
   },
   {
     id: 4,
     title: 'Transportation Volunteer',
-    description: 'Drive seniors to medical appointments and community events.',
+    organization: 'Calgary Seniors Services',
+    status: 'Is Ongoing',
+    description: 'Drive seniors to medical appointments and community events. Volunteers use their own vehicles to provide safe, friendly transportation for seniors who no longer drive.',
     location: 'Calgary',
     days: 'Flexible',
   },
@@ -88,15 +96,15 @@ function VolunteerList() {
             <p className="no-results">No opportunities found for the selected location.</p>
           ) : (
             filtered.map(opportunity => (
-              <div className="volunteer-card" key={opportunity.id}>
+              <div className="volunteer-card" key={opportunity.id} onClick={() => navigate(`/volunteer/${opportunity.id}`)} style={{ cursor: 'pointer' }}>
                 <div className="card-info">
+                  <span className="card-status">{opportunity.status}</span>
                   <h4>{opportunity.title}</h4>
-                  <p>{opportunity.description}</p>
+                  <p className="card-org">{opportunity.organization}</p>
                 </div>
                 <div className="card-meta">
-                  <span><strong>Locations</strong><br />{opportunity.location}</span>
+                  <span><strong>Location</strong><br />{opportunity.location}</span>
                   <span><strong>Days & times</strong><br />{opportunity.days}</span>
-                  <button onClick={handleRegister}>Register</button>
                 </div>
               </div>
             ))
