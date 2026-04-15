@@ -1,0 +1,115 @@
+.vdetail-page {
+  padding: 60px;
+  background-color: white;
+  min-height: 60vh;
+}
+
+.vdetail-back {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color: #E8A020;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 32px;
+}
+
+.vdetail-back:hover {
+  text-decoration: underline;
+}
+
+.vdetail-card {
+  max-width: 800px;
+}
+
+.vdetail-status {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #82a840;
+}
+
+.vdetail-card h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #1a2f4e;
+  margin: 12px 0 8px 0;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.vdetail-org {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 32px;
+}
+
+.vdetail-meta {
+  display: flex;
+  gap: 48px;
+  padding: 24px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 32px;
+}
+
+.vdetail-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vdetail-meta-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+}
+
+.vdetail-meta-value {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: #1a2f4e;
+  font-weight: 600;
+}
+
+.vdetail-description {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: #444;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.vdetail-register {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 16px 48px;
+  background-color: #E8A020;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.vdetail-register:hover {
+  background-color: #1a2f4e;
+}
+
+.vdetail-not-found {
+  padding: 80px 60px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+}
+
+.vdetail-not-found a {
+  color: #E8A020;
+  text-decoration: none;
+}

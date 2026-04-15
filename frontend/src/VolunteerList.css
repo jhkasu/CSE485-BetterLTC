@@ -60,17 +60,29 @@
   padding: 32px;
 }
 
+.card-status {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #82a840;
+  display: block;
+  margin-bottom: 8px;
+}
+
 .card-info h4 {
   font-family: 'Oswald', sans-serif;
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
-.card-info p {
+.card-org {
   font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
-  color: #555;
+  font-size: 16px;
+  color: #888;
+  margin: 0;
 }
 
 .card-meta {
