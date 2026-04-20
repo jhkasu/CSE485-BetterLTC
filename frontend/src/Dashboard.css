@@ -125,6 +125,72 @@
   margin-bottom: 36px;
 }
 
+.applications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.application-card {
+  background: white;
+  border-radius: 8px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.application-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a2f4e;
+  margin-bottom: 4px;
+}
+
+.application-org {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.application-date {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.application-status-badge {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.application-status-badge.pending {
+  background: #fff8e1;
+  color: #7a5c00;
+  border: 1px solid #ffe082;
+}
+
+.application-status-badge.approved {
+  background: #e6f4ea;
+  color: #2d6a4f;
+  border: 1px solid #b7dfc5;
+}
+
+.application-status-badge.rejected {
+  background: #fdecea;
+  color: #b00020;
+  border: 1px solid #f5c6cb;
+}
+
 .dashboard-placeholder {
   background-color: white;
   border: 2px dashed #ddd;
