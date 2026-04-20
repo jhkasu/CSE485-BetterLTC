@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPerson, MdCalendarToday, MdHistory,
   MdLogout, MdCloudUpload, MdCheckCircle,
-  MdCancel, MdAccessTime, MdLocationOn,
+  MdCancel, MdAccessTime, MdLocationOn, MdAssignment,
 } from 'react-icons/md';
 import Navbar from './Navbar';
-import mockUsers from './mockUsers';
 import './Dashboard.css';
 
+const API_BASE = 'http://localhost:5184';
+
 const NAV_ITEMS = [
-  { id: 'overview', label: 'Overview',         icon: <MdDashboard /> },
-  { id: 'profile',  label: 'Profile Settings', icon: <MdPerson /> },
-  { id: 'shifts',   label: 'Upcoming Shifts',  icon: <MdCalendarToday /> },
-  { id: 'history',  label: 'Volunteer History',icon: <MdHistory /> },
+  { id: 'overview',      label: 'Overview',          icon: <MdDashboard /> },
+  { id: 'applications',  label: 'My Applications',   icon: <MdAssignment /> },
+  { id: 'profile',       label: 'Profile Settings',  icon: <MdPerson /> },
+  { id: 'shifts',        label: 'Upcoming Shifts',   icon: <MdCalendarToday /> },
+  { id: 'history',       label: 'Volunteer History', icon: <MdHistory /> },
 ];
 
 /* ── Calendar helpers ── */
@@ -52,10 +54,31 @@ function toDateString(d) {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const user     = JSON.parse(localStorage.getItem('currentUser'));
-  const mockUser = mockUsers.find(u => u.email === user?.email);
-
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('currentUser')));
+  const [applications, setApplications] = useState([]);
   const [activeSection, setActiveSection] = useState('overview');
+
+  useEffect(() => {
+    if (user?.id) {
+      fetch(`${API_BASE}/api/volunteers/${user.id}`)
+        .then(res => res.json())
+        .then(data => {
+          const updated = { ...user, backgroundCheckApproved: data.backgroundCheckApproved };
+          localStorage.setItem('currentUser', JSON.stringify(updated));
+          setUser(updated);
+        })
+        .catch(() => {});
+    }
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (user?.id) {
+      fetch(`${API_BASE}/api/registrations/volunteer/${user.id}`)
+        .then(res => res.json())
+        .then(data => setApplications(data))
+        .catch(() => {});
+    }
+  }, [user?.id]);
 
   /* ── Profile basic info ── */
   const [profileForm, setProfileForm] = useState({
@@ -79,7 +102,7 @@ const Dashboard = () => {
   const [bgDocUploaded,setBgDocUploaded]= useState(false);
 
   /* ── Upcoming shifts with cancellation (#60, #75) ── */
-  const [shifts,        setShifts]       = useState(mockUser?.upcomingShifts || []);
+  const [shifts,        setShifts]       = useState([]);
   const [cancelConfirm, setCancelConfirm]= useState(null); // shift id pending confirm
 
   /* ── Shift view (list / calendar) ── */
@@ -169,11 +192,11 @@ const Dashboard = () => {
       <div className="overview-card">
         <div className="overview-card-header">
           <span className="overview-card-label">Background Check Status</span>
-          <div className={`bg-check-badge ${mockUser?.backgroundCheckApproved ? 'approved' : 'pending'}`}>
-            {mockUser?.backgroundCheckApproved ? '✓  Approved' : '⏳  Pending Review'}
+          <div className={`bg-check-badge ${user?.backgroundCheckApproved ? 'approved' : 'pending'}`}>
+            {user?.backgroundCheckApproved ? '✓  Approved' : '⏳  Pending Review'}
           </div>
         </div>
-        {!mockUser?.backgroundCheckApproved && (
+        {!user?.backgroundCheckApproved && (
           <p className="overview-card-hint">
             Your background check is under review. Upload supporting documents below to speed up the process.
           </p>
@@ -341,34 +364,22 @@ const Dashboard = () => {
     </>
   );
 
+  const approvedApplications = applications.filter(a => a.status === 'Approved');
+
   /* ── 리스트 뷰 ── */
   const renderShiftList = () => (
-    shifts.length === 0
+    approvedApplications.length === 0
       ? <div className="dashboard-placeholder">No upcoming shifts scheduled.</div>
       : (
         <div className="shift-list">
-          {shifts.map((shift) => (
-            <div key={shift.id} className="shift-card">
+          {approvedApplications.map((app) => (
+            <div key={app.id} className="shift-card">
               <div className="shift-card-left">
-                <div className="shift-title">{shift.title}</div>
+                <div className="shift-title">{app.listingTitle}</div>
                 <div className="shift-meta">
-                  <span><MdCalendarToday className="shift-meta-icon" /> {shift.date}</span>
-                  <span><MdAccessTime   className="shift-meta-icon" /> {shift.time}</span>
-                  <span><MdLocationOn   className="shift-meta-icon" /> {shift.location}</span>
+                  <span><MdLocationOn className="shift-meta-icon" /> {app.orgName}</span>
+                  <span><MdCalendarToday className="shift-meta-icon" /> Approved: {app.registeredAt}</span>
                 </div>
-              </div>
-              <div className="shift-card-right">
-                {cancelConfirm === shift.id ? (
-                  <div className="cancel-confirm">
-                    <span className="cancel-confirm-text">Cancel this shift?</span>
-                    <button className="cancel-yes-btn" onClick={() => handleCancelShift(shift.id)}>Yes, Cancel</button>
-                    <button className="cancel-no-btn"  onClick={() => setCancelConfirm(null)}>Keep</button>
-                  </div>
-                ) : (
-                  <button className="cancel-shift-btn" onClick={() => setCancelConfirm(shift.id)}>
-                    <MdCancel style={{ marginRight: 6 }} /> Cancel Shift
-                  </button>
-                )}
               </div>
             </div>
           ))}
@@ -431,9 +442,9 @@ const Dashboard = () => {
             {/* 요일 컬럼들 */}
             <div className="cal-days">
               {weekDays.map((d, dayIdx) => {
-                const dateStr  = toDateString(d);
-                const dayShifts = shifts.filter(s => s.date === dateStr);
-                const isToday  = dateStr === todayStr;
+                const dateStr   = toDateString(d);
+                const dayShifts = approvedApplications.filter(a => a.registeredAt === dateStr);
+                const isToday   = dateStr === todayStr;
 
                 return (
                   <div
@@ -441,24 +452,17 @@ const Dashboard = () => {
                     className={`cal-day-col ${isToday ? 'today' : ''}`}
                     style={{ height: totalHeight }}
                   >
-                    {/* 시간 구분선 */}
                     {hours.map(h => (
                       <div key={h} className="cal-hour-line"
                         style={{ top: (h - CAL_START) * HOUR_HEIGHT }} />
                     ))}
 
-                    {/* 시프트 블록 */}
-                    {dayShifts.map(shift => {
-                      const { start, end } = parseShiftTime(shift.time);
-                      const top    = (start - CAL_START) * HOUR_HEIGHT;
-                      const height = Math.max((end - start) * HOUR_HEIGHT, 32);
-                      return (
-                        <div key={shift.id} className="cal-shift-block" style={{ top, height }}>
-                          <div className="cal-shift-title">{shift.title}</div>
-                          <div className="cal-shift-time">{shift.time}</div>
-                        </div>
-                      );
-                    })}
+                    {dayShifts.map((app, i) => (
+                      <div key={app.id} className="cal-shift-block" style={{ top: i * 80 + 8, height: 68 }}>
+                        <div className="cal-shift-title">{app.listingTitle}</div>
+                        <div className="cal-shift-time">{app.orgName}</div>
+                      </div>
+                    ))}
                   </div>
                 );
               })}
@@ -489,8 +493,32 @@ const Dashboard = () => {
     </>
   );
 
+  const renderApplications = () => (
+    <>
+      <h2 className="dashboard-section-title">My Applications</h2>
+      {applications.length === 0 ? (
+        <div className="dashboard-placeholder">You have not applied to any opportunities yet.</div>
+      ) : (
+        <div className="applications-list">
+          {applications.map(app => (
+            <div key={app.id} className="application-card">
+              <div className="application-card-left">
+                <div className="application-title">{app.listingTitle}</div>
+                <div className="application-org">{app.orgName}</div>
+                <div className="application-date">Applied: {app.registeredAt}</div>
+              </div>
+              <div className={`application-status-badge ${app.status.toLowerCase()}`}>
+                {app.status}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  );
+
   const renderHistory = () => {
-    const history    = mockUser?.volunteerHistory || [];
+    const history = [];
     const totalHours = history.reduce((sum, h) => sum + h.hours, 0);
     return (
       <>
@@ -521,10 +549,11 @@ const Dashboard = () => {
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'overview': return renderOverview();
-      case 'profile':  return renderProfile();
-      case 'shifts':   return renderShifts();
-      case 'history':  return renderHistory();
+      case 'overview':     return renderOverview();
+      case 'applications': return renderApplications();
+      case 'profile':      return renderProfile();
+      case 'shifts':       return renderShifts();
+      case 'history':      return renderHistory();
       default: return null;
     }
   };

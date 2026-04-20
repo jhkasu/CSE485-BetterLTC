@@ -13,6 +13,42 @@ public class VolunteerController : ControllerBase {
         this._context = context;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllVolunteers() {
+        try {
+            var volunteers = await _context.Volunteers.OrderByDescending(v => v.Id).ToListAsync();
+            return Ok(volunteers);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/approve-bgcheck")]
+    public async Task<IActionResult> ApproveBgCheck(int id) {
+        try {
+            var volunteer = await _context.Volunteers.FindAsync(id);
+            if (volunteer is null) return NotFound();
+            volunteer.BackgroundCheckApproved = true;
+            await _context.SaveChangesAsync();
+            return Ok(volunteer);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/revoke-bgcheck")]
+    public async Task<IActionResult> RevokeBgCheck(int id) {
+        try {
+            var volunteer = await _context.Volunteers.FindAsync(id);
+            if (volunteer is null) return NotFound();
+            volunteer.BackgroundCheckApproved = false;
+            await _context.SaveChangesAsync();
+            return Ok(volunteer);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddVolunteer(Volunteer volunteer) {
         try {
@@ -24,13 +60,23 @@ public class VolunteerController : ControllerBase {
         }
     }
 
+    [HttpPost("signin")]
+    public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
+        try {
+            var volunteer = await _context.Volunteers
+                .FirstOrDefaultAsync(v => v.Email == request.Email && v.Password == request.Password);
+            if (volunteer is null) return NotFound();
+            return Ok(volunteer);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetVolunteer(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
-            if (volunteer is null) {
-                return NotFound();
-            }
+            if (volunteer is null) return NotFound();
             return Ok(volunteer);
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
@@ -38,12 +84,10 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeletePerson(int id) {
+    public async Task<IActionResult> DeleteVolunteer(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
-            if (volunteer is null) {
-                return NotFound();
-            }
+            if (volunteer is null) return NotFound();
             _context.Volunteers.Remove(volunteer);
             await _context.SaveChangesAsync();
             return NoContent();
