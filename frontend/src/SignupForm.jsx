@@ -60,15 +60,20 @@ const SignupForm = () => {
         email: formData.email,
         password: formData.password,
       };
-      const res = await fetch(`${API_BASE}/api/volunteers`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        navigate('/signin', { state: { success: 'Account created successfully. Please sign in.' } });
-      } else {
-        setErrors({ submit: 'Sign up failed. Please try again.' });
+      try {
+        const res = await fetch(`${API_BASE}/api/volunteers`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          navigate('/signin', { state: { success: 'Account created successfully. Please sign in.' } });
+        } else {
+          const message = await res.text();
+          setErrors({ submit: message || 'Sign up failed. Please try again.' });
+        }
+      } catch (err) {
+        setErrors({ submit: 'Unable to reach the server. Please try again later.' });
       }
     } else {
       const payload = {
@@ -78,15 +83,20 @@ const SignupForm = () => {
         password: formData.password,
         isApproved: false,
       };
-      const res = await fetch(`${API_BASE}/api/organizations`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        navigate('/signin', { state: { success: 'Account created successfully. Please sign in.' } });
-      } else {
-        setErrors({ submit: 'Sign up failed. Please try again.' });
+      try {
+        const res = await fetch(`${API_BASE}/api/organizations`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          navigate('/signin', { state: { success: 'Account created successfully. Please sign in.' } });
+        } else {
+          const message = await res.text();
+          setErrors({ submit: message || 'Sign up failed. Please try again.' });
+        }
+      } catch (err) {
+        setErrors({ submit: 'Unable to reach the server. Please try again later.' });
       }
     }
   };

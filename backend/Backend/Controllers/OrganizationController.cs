@@ -38,6 +38,10 @@ public class OrganizationController : ControllerBase {
     [HttpPost]
     public async Task<IActionResult> AddOrganization(Organization org) {
         try {
+            
+            // Reject duplicate organization email before inserting
+            bool exists = await _context.Organizations.AnyAsync(o => o.Email == org.Email);
+            if (exists) return Conflict("Organization with this email already exists.");
             _context.Organizations.Add(org);
             await _context.SaveChangesAsync();
             return Ok(org);

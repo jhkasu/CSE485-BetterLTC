@@ -52,6 +52,10 @@ public class VolunteerController : ControllerBase {
     [HttpPost]
     public async Task<IActionResult> AddVolunteer(Volunteer volunteer) {
         try {
+
+            // Reject duplicate email before inserting 
+            bool exists = await _context.Volunteers.AnyAsync(v => v.Email == volunteer.Email);
+            if (exists) return Conflict("Volunteer with this email already exists.");
             _context.Volunteers.Add(volunteer);
             await _context.SaveChangesAsync();
             return Ok(volunteer);
