@@ -1,39 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './RecentOpportunities.css';
 
-const OPPORTUNITIES = [
-  {
-    id: 1,
-    title: 'Senior Companionship Program',
-    organization: 'Sunrise Care Foundation',
-    status: 'Is Ongoing',
-    description: 'Provide friendship and support to isolated seniors in long-term care facilities.',
-    location: 'Toronto',
-    days: 'Flexible',
-  },
-  {
-    id: 2,
-    title: 'Community Food Drive Support',
-    organization: 'Vancouver Community Aid',
-    status: 'Is Ongoing',
-    description: 'Help sort and pack food donations for local families in need.',
-    location: 'Vancouver',
-    days: 'Weekends',
-  },
-  {
-    id: 3,
-    title: 'Memory Care Activities Assistant',
-    organization: 'Montreal Memory Care Society',
-    status: 'Is Ongoing',
-    description: 'Lead engaging activities for seniors living with dementia in care homes.',
-    location: 'Montreal',
-    days: 'Weekdays',
-  },
-];
+const API_BASE = 'http://localhost:5184';
 
 function RecentOpportunities() {
   const navigate = useNavigate();
+  const [opportunities, setOpportunities] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/listings`)
+      .then(res => res.json())
+      .then(data => setOpportunities(data.slice(0, 3)))
+      .catch(() => setOpportunities([]));
+  }, []);
+
+  if (opportunities.length === 0) return null;
 
   return (
     <section className="recent-opp">
@@ -42,12 +24,12 @@ function RecentOpportunities() {
         <Link to="/volunteer" className="recent-opp-viewall">View All →</Link>
       </div>
       <div className="recent-opp-grid">
-        {OPPORTUNITIES.map(op => (
+        {opportunities.map(op => (
           <div key={op.id} className="opp-card" onClick={() => navigate(`/volunteer/${op.id}`)}>
             <div className="opp-card-body">
               <span className="opp-status">{op.status}</span>
-              <h3>{op.title}</h3>
-              <p className="opp-org">{op.organization}</p>
+              <h3>{op.listingTitle}</h3>
+              <p className="opp-org">{op.orgName}</p>
               <p className="opp-desc">{op.description}</p>
             </div>
             <div className="opp-card-footer">

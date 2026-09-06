@@ -1,12 +1,12 @@
 .vdetail-page {
-  padding: 60px;
-  background-color: white;
+  padding: 48px 60px 80px;
+  background-color: #f9f9f9;
   min-height: 60vh;
 }
 
 .vdetail-back {
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   color: #E8A020;
   text-decoration: none;
   display: inline-block;
@@ -17,90 +17,210 @@
   text-decoration: underline;
 }
 
-.vdetail-card {
-  max-width: 800px;
+.vdetail-layout {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.vdetail-main {
+  flex: 3;
+  background: white;
+  border-radius: 10px;
+  padding: 48px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.vdetail-sidebar {
+  flex: 2;
+  position: sticky;
+  top: 32px;
+}
+
+.vdetail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .vdetail-status {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #82a840;
-}
-
-.vdetail-card h1 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 48px;
-  font-weight: 700;
-  color: #1a2f4e;
-  margin: 12px 0 8px 0;
-  letter-spacing: 0.5px;
-  line-height: 1.2;
-}
-
-.vdetail-org {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
-  color: #777;
-  margin-bottom: 32px;
-}
-
-.vdetail-meta {
-  display: flex;
-  gap: 48px;
-  padding: 24px 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 32px;
-}
-
-.vdetail-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.vdetail-meta-label {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #999;
+  color: #2d6a4f;
+  background: #e6f4ea;
+  border: 1px solid #b7dfc5;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+.vdetail-category {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1a2f4e;
+  background: #e8f0fb;
+  border: 1px solid #c0d4f5;
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+.vdetail-main h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  color: #1a2f4e;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.vdetail-org {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 17px;
+  color: #888;
+  margin-bottom: 36px;
+}
+
+.vdetail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 36px;
+}
+
+.vdetail-meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.vdetail-meta-icon {
+  font-size: 22px;
+  color: #E8A020;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.vdetail-meta-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vdetail-meta-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
 }
 
 .vdetail-meta-value {
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   color: #1a2f4e;
   font-weight: 600;
 }
 
+.vdetail-description-section h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a2f4e;
+  margin-bottom: 14px;
+}
+
 .vdetail-description {
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
-  color: #444;
+  font-size: 17px;
+  color: #555;
   line-height: 1.8;
-  margin-bottom: 40px;
+  margin-bottom: 0;
+}
+
+.vdetail-register-wrap {
+  margin-top: 40px;
 }
 
 .vdetail-register {
   font-family: 'Oswald', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 1px;
-  padding: 16px 48px;
+  padding: 16px 52px;
   background-color: #E8A020;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .vdetail-register:hover {
   background-color: #1a2f4e;
+}
+
+.vdetail-register:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.vdetail-bgcheck-notice {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #7a5c00;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  padding: 14px 20px;
+}
+
+.vdetail-registered {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color: #2d6a4f;
+  background: #e6f4ea;
+  border: 1px solid #b7dfc5;
+  border-radius: 6px;
+  padding: 14px 20px;
+}
+
+.vdetail-map-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.vdetail-map-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a2f4e;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid #eee;
+}
+
+.vdetail-map-label svg {
+  color: #E8A020;
+  font-size: 18px;
+}
+
+.vdetail-map {
+  height: 340px;
+  width: 100%;
 }
 
 .vdetail-not-found {

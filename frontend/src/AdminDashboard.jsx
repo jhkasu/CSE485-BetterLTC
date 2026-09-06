@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
-  MdClose, MdVolunteerActivism, MdOpenInNew,
+  MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness,
 } from 'react-icons/md';
-import mockUsers from './mockUsers';
 import RichTextEditor from './RichTextEditor';
 import './AdminDashboard.css';
 
@@ -24,6 +23,7 @@ const INIT_OPPORTUNITIES = [
 const NAV_ITEMS = [
   { id: 'overview',       label: 'Overview',                icon: <MdDashboard /> },
   { id: 'users',          label: 'Users',                   icon: <MdPeople /> },
+  { id: 'organizations',  label: 'Organizations',           icon: <MdBusiness /> },
   { id: 'team',           label: 'Our Team',                icon: <MdGroups /> },
   { id: 'opportunities',  label: 'Volunteer Opportunities', icon: <MdVolunteerActivism /> },
   { id: 'work',           label: 'Our Work',                icon: <MdWork /> },
@@ -59,7 +59,23 @@ function AdminDashboard() {
   const user = JSON.parse(localStorage.getItem('currentUser'));
   const [activeSection, setActiveSection] = useState('overview');
 
-  const [users, setUsers] = useState(mockUsers.map(({ password, ...u }) => u));
+  const [volunteers, setVolunteers] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/volunteers`)
+      .then(res => res.json())
+      .then(data => setVolunteers(data))
+      .catch(() => {});
+  }, []);
+
+  const [organizations, setOrganizations] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/organizations`)
+      .then(res => res.json())
+      .then(data => setOrganizations(data))
+      .catch(() => {});
+  }, []);
 
   const [team, setTeam] = useState([]);
   const [teamModal, setTeamModal] = useState(null);
@@ -108,8 +124,14 @@ function AdminDashboard() {
     navigate('/signin');
   };
 
-  const toggleBgCheck = (id) => {
-    setUsers(users.map(u => u.id === id ? { ...u, backgroundCheckApproved: !u.backgroundCheckApproved } : u));
+  const toggleBgCheck = (volunteer) => {
+    const endpoint = volunteer.backgroundCheckApproved
+      ? `${API_BASE}/api/volunteers/${volunteer.id}/revoke-bgcheck`
+      : `${API_BASE}/api/volunteers/${volunteer.id}/approve-bgcheck`;
+    fetch(endpoint, { method: 'PUT' })
+      .then(res => res.json())
+      .then(updated => setVolunteers(volunteers.map(v => v.id === updated.id ? updated : v)))
+      .catch(() => {});
   };
 
   const openTeamAdd = () => { setTeamForm({ name: '', position: '', bio: '', imagePath: '' }); setTeamModal({ mode: 'add' }); };
@@ -201,12 +223,12 @@ function AdminDashboard() {
       <h2 className="admin-section-title">Overview</h2>
       <div className="admin-stats-grid">
         <div className="admin-stat-card">
-          <div className="admin-stat-number">{users.length}</div>
-          <div className="admin-stat-label">Total Users</div>
+          <div className="admin-stat-number">{volunteers.length}</div>
+          <div className="admin-stat-label">Total Volunteers</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-number">{users.filter(u => u.backgroundCheckApproved).length}</div>
-          <div className="admin-stat-label">Approved Volunteers</div>
+          <div className="admin-stat-number">{volunteers.filter(v => v.backgroundCheckApproved).length}</div>
+          <div className="admin-stat-label">Background Approved</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-number">{opportunities.length}</div>
@@ -222,33 +244,35 @@ function AdminDashboard() {
 
   const renderUsers = () => (
     <div>
-      <h2 className="admin-section-title">Users</h2>
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Background Check</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(u => (
-            <tr key={u.id}>
-              <td>{u.firstName} {u.lastName}</td>
-              <td>{u.email}</td>
-              <td><span className={`role-badge ${u.role}`}>{u.role}</span></td>
-              <td><span className={`bg-badge ${u.backgroundCheckApproved ? 'approved' : 'pending'}`}>{u.backgroundCheckApproved ? 'Approved' : 'Pending'}</span></td>
-              <td>
-                <button className={`admin-action-btn ${u.backgroundCheckApproved ? 'revoke' : 'approve'}`} onClick={() => toggleBgCheck(u.id)}>
-                  {u.backgroundCheckApproved ? 'Revoke' : 'Approve'}
-                </button>
-              </td>
+      <h2 className="admin-section-title">Volunteers</h2>
+      {volunteers.length === 0 ? (
+        <p style={{ color: '#888', marginTop: 20 }}>No volunteers registered yet.</p>
+      ) : (
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Background Check</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {volunteers.map(v => (
+              <tr key={v.id}>
+                <td>{v.firstName} {v.lastName}</td>
+                <td>{v.email}</td>
+                <td><span className={`bg-badge ${v.backgroundCheckApproved ? 'approved' : 'pending'}`}>{v.backgroundCheckApproved ? 'Approved' : 'Pending'}</span></td>
+                <td>
+                  <button className={`admin-action-btn ${v.backgroundCheckApproved ? 'revoke' : 'approve'}`} onClick={() => toggleBgCheck(v)}>
+                    {v.backgroundCheckApproved ? 'Revoke' : 'Approve'}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 
@@ -483,15 +507,69 @@ function AdminDashboard() {
     </div>
   );
 
+  const toggleOrgApproval = (org) => {
+    const endpoint = org.isApproved
+      ? `${API_BASE}/api/organizations/${org.id}/revoke`
+      : `${API_BASE}/api/organizations/${org.id}/approve`;
+    fetch(endpoint, { method: 'PUT' })
+      .then(res => res.json())
+      .then(updated => setOrganizations(organizations.map(o => o.id === updated.id ? updated : o)))
+      .catch(() => {});
+  };
+
+  const renderOrganizations = () => (
+    <div>
+      <h2 className="admin-section-title">Organizations</h2>
+      {organizations.length === 0 ? (
+        <p style={{ color: '#888', marginTop: 20 }}>No organizations registered yet.</p>
+      ) : (
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Organization</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {organizations.map(org => (
+              <tr key={org.id}>
+                <td>{org.orgName}</td>
+                <td>{org.contactName}</td>
+                <td>{org.email}</td>
+                <td>
+                  <span className={`bg-badge ${org.isApproved ? 'approved' : 'pending'}`}>
+                    {org.isApproved ? 'Approved' : 'Pending'}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    className={`admin-action-btn ${org.isApproved ? 'revoke' : 'approve'}`}
+                    onClick={() => toggleOrgApproval(org)}
+                  >
+                    {org.isApproved ? 'Revoke' : 'Approve'}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+
   const renderContent = () => {
     switch (activeSection) {
-      case 'overview':      return renderOverview();
-      case 'users':         return renderUsers();
-      case 'team':          return renderTeam();
-      case 'opportunities': return renderOpportunities();
-      case 'work':          return renderWork();
-      case 'help':          return renderHelp();
-      default:              return null;
+      case 'overview':       return renderOverview();
+      case 'users':          return renderUsers();
+      case 'organizations':  return renderOrganizations();
+      case 'team':           return renderTeam();
+      case 'opportunities':  return renderOpportunities();
+      case 'work':           return renderWork();
+      case 'help':           return renderHelp();
+      default:               return null;
     }
   };
 

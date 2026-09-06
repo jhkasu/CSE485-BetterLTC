@@ -17,10 +17,15 @@ import AdminDashboard from './AdminDashboard';
 import OurWorkPage from './OurWorkPage';
 import GetHelpPage from './GetHelpPage';
 import VolunteerDetail from './VolunteerDetail';
+import OrgDashboard from './OrgDashboard';
 
 function PrivateRoute({ children }) {
-  const user = localStorage.getItem('currentUser');
-  return user ? children : <Navigate to="/signin" />;
+  const stored = localStorage.getItem('currentUser');
+  if (!stored) return <Navigate to="/signin" />;
+  const user = JSON.parse(stored);
+  if (user.role === 'organization') return <Navigate to="/org-dashboard" />;
+  if (user.role === 'admin') return <Navigate to="/admin" />;
+  return children;
 }
 
 function AdminRoute({ children }) {
@@ -28,6 +33,13 @@ function AdminRoute({ children }) {
   if (!stored) return <Navigate to="/signin" />;
   const user = JSON.parse(stored);
   return user.role === 'admin' ? children : <Navigate to="/dashboard" />;
+}
+
+function OrgRoute({ children }) {
+  const stored = localStorage.getItem('currentUser');
+  if (!stored) return <Navigate to="/signin" />;
+  const user = JSON.parse(stored);
+  return user.role === 'organization' ? children : <Navigate to="/dashboard" />;
 }
 
 function Home() {
@@ -105,6 +117,14 @@ function App() {
             <AdminRoute>
               <AdminDashboard />
             </AdminRoute>
+          }
+        />
+        <Route
+          path="/org-dashboard"
+          element={
+            <OrgRoute>
+              <OrgDashboard />
+            </OrgRoute>
           }
         />
       </Routes>

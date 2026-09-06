@@ -8,4 +8,5 @@ public class ListingsDbContext : DbContext {
     }
 
     public DbSet<Listing> Listings { get; set; }
+    public DbSet<Registration> Registrations { get; set; }
 }
