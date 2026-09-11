@@ -334,6 +334,12 @@
   margin-top: 8px;
 }
 
+.org-form-error {
+  color: #c0392b;
+  font-size: 14px;
+  margin: 8px 0 0;
+}
+
 .org-save-btn {
   background-color: #E8A020;
   color: white;

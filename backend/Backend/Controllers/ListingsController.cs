@@ -58,6 +58,7 @@ public class ListingsController : ControllerBase {
             listing.Status = updated.Status;
             listing.StartDate = updated.StartDate;
             listing.EndDate = updated.EndDate;
+            listing.Category = updated.Category;
             await _context.SaveChangesAsync();
             return Ok(listing);
         } catch (Exception ex) {

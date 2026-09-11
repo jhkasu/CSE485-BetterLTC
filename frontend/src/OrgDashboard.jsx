@@ -61,6 +61,7 @@ function OrgDashboard() {
   const [registrations, setRegistrations] = useState([]);
   const [modal, setModal] = useState(null);
   const [form, setForm] = useState({ listingTitle: '', description: '', location: '', days: [], category: '', status: 'Is Ongoing', startDate: '', endDate: '' });
+  const [formError, setFormError] = useState('');
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
@@ -122,6 +123,12 @@ function OrgDashboard() {
   };
 
   const saveListing = () => {
+
+    if (!form.listingTitle.trim() || !form.category || !form.location) {
+      setFormError('Title, category, and location are required.');
+      return;
+    }
+    setFormError('');
     const payload = { ...form, days: form.days.join(', '), orgName: user?.orgName || '' };
     if (modal.mode === 'add') {
       fetch(`${API_BASE}/api/listings`, {
@@ -317,6 +324,7 @@ function OrgDashboard() {
             <input type="date" value={form.startDate} onChange={e => setForm({ ...form, startDate: e.target.value })} />
             <label>End Date</label>
             <input type="date" value={form.endDate} onChange={e => setForm({ ...form, endDate: e.target.value })} />
+            {formError && <p className="org-form-error">{formError}</p>}
             <div className="org-form-actions">
               <button className="org-save-btn" onClick={saveListing}>Save</button>
               <button className="org-cancel-btn" onClick={() => setModal(null)}>Cancel</button>
