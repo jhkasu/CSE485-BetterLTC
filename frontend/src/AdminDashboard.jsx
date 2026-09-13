@@ -7,8 +7,7 @@ import {
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
 import './AdminDashboard.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 
 const INIT_OPPORTUNITIES = [

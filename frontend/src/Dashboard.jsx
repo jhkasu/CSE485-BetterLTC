@@ -7,8 +7,7 @@ import {
 } from 'react-icons/md';
 import Navbar from './Navbar';
 import './Dashboard.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 const NAV_ITEMS = [
   { id: 'overview',      label: 'Overview',          icon: <MdDashboard /> },

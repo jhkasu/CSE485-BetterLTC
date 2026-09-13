@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './GetHelpPage.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 const HELP_TYPES = [
   'Senior Care Support',

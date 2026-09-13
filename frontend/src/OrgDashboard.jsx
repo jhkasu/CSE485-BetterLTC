@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople } from 'react-icons/md';
 import './OrgDashboard.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 const SK_CITIES = [
   'Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current',

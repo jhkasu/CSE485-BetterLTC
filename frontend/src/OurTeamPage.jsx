@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurTeamPage.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 function OurTeamPage() {
   const [members, setMembers] = useState([]);

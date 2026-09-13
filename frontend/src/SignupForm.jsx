@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignupForm.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 const SignupForm = () => {
   const navigate = useNavigate();
