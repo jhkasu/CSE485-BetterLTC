@@ -9,6 +9,7 @@ function VolunteerList() {
   const navigate = useNavigate();
   const [listings, setListings] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     fetch(`${API_BASE}/api/listings`)
@@ -23,9 +24,14 @@ function VolunteerList() {
     );
   };
 
-  const filtered = selectedCities.length === 0
-    ? listings
-    : listings.filter(l => selectedCities.includes(l.location));
+  const search = keyword.trim().toLowerCase();
+  const filtered = listings.filter(l => {
+    const cityOk = selectedCities.length === 0 || selectedCities.includes(l.location);
+    const textOk = search === '' ||
+      l.listingTitle.toLowerCase().includes(search) ||
+      (l.description || '').toLowerCase().includes(search);
+    return cityOk && textOk;
+  });
 
   return (
     <div>
@@ -37,6 +43,19 @@ function VolunteerList() {
         </div>
       </header>
       <div className="volunteer-content container">
+        <form className="search-box" onSubmit={e => e.preventDefault()}>
+          <label htmlFor="keyword">Search</label>
+          <div className="search-row">
+            <input
+              type="text"
+              id="keyword"
+              placeholder="Enter a keyword..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <button type="submit" className="btn btn-dark">Search</button>
+          </div>
+        </form>
         <div className="filters">
           <h3>Location</h3>
           {CITIES.map(city => (
@@ -52,7 +71,9 @@ function VolunteerList() {
         </div>
         <div className="volunteer-list">
           {filtered.length === 0 ? (
-            <p className="no-results">No opportunities found.</p>
+            <p className="no-results">
+              {search ? `No opportunities match "${keyword}".` : 'No opportunities found.'}
+            </p>
           ) : (
             filtered.map(listing => (
               <div className="volunteer-card" key={listing.id}>
