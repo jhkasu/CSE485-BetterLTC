@@ -1,53 +1,52 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Pillars.css';
 
+const PILLARS = [
+  {
+    title: 'Volunteer',
+    text: 'Give a few hours a month to a senior or a care home near you.',
+    image: '/care2.png',
+    link: '/volunteer',
+    cta: 'Browse opportunities',
+  },
+  {
+    title: 'Organizations',
+    text: 'Post your needs and connect with screened volunteers in your area.',
+    image: '/care1.png',
+    link: '/signup',
+    cta: 'Partner with us',
+  },
+  {
+    title: 'Community',
+    text: 'See the stories and results of the people who show up for each other.',
+    image: '/saskatchewan.jpg',
+    link: '/our-work',
+    cta: 'Read our work',
+  },
+];
+
 function Pillars() {
-  const pillarsRef = useRef(null);
-
-  useEffect(() => {
-    const cards = pillarsRef.current?.querySelectorAll('.pillar-card');
-    if (!cards) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const card = entry.target;
-            const delay = card.getAttribute('data-delay') || '0';
-            card.style.transitionDelay = delay;
-            card.classList.add('visible');
-            observer.unobserve(card);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-    return () => observer.disconnect();
-  }, []);
-
+  const navigate = useNavigate();
   return (
-    <div className="pillars" ref={pillarsRef}>
-      <div className="pillar-card" data-delay="0ms">
-        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600" alt="Volunteer" />
-        <h3>Volunteer</h3>
-        <p>Experience the joy of giving back.</p>
-        <button>Join Us</button>
+    <section className="section pillars">
+      <div className="container">
+        <span className="eyebrow">What we do</span>
+        <h2 className="section-title">Three ways to get involved</h2>
+        <div className="pillars-grid">
+          {PILLARS.map(p => (
+            <div key={p.title} className="pillar" onClick={() => navigate(p.link)}>
+              <div className="pillar-image">
+                <img src={p.image} alt={p.title} loading="lazy" />
+              </div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+              <span className="arrow-link">{p.cta} &rarr;</span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="pillar-card" data-delay="150ms">
-        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600" alt="Organizations" />
-        <h3>Organizations</h3>
-        <p>Connect with volunteers for your cause.</p>
-        <button>Partner with Us</button>
-      </div>
-      <div className="pillar-card" data-delay="300ms">
-        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600" alt="Community" />
-        <h3>Community</h3>
-        <p>Building a stronger, caring society.</p>
-        <button>Read Stories</button>
-      </div>
-    </div>
+    </section>
   );
 }
 

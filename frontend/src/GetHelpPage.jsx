@@ -59,95 +59,87 @@ function GetHelpPage() {
     <div>
       <Navbar />
 
-      <div className="gethelp-banner">
-        <img src="/getHelp.jpg" alt="Get Help" />
-        <div className="gethelp-banner-overlay">
-          <h1 className="gethelp-banner-title">Get Help</h1>
+      <header className="page-header page-header--plain gethelp-header">
+        <div className="page-header-text">
+          <span className="eyebrow">Get help</span>
+          <h1>We are here to help</h1>
+          <p>
+            Need support with meals, rides, home visits, or care for an older adult?
+            Tell us a little about your situation and a real person will call you back.
+          </p>
         </div>
-      </div>
+        <div className="page-header-side">
+          <a href="tel:5550000000">(555) 000-0000</a>
+          <a href="mailto:info@volunteerconnect.ca">info@volunteerconnect.ca</a>
+        </div>
+      </header>
 
-      <div className="gethelp-intro">
-        <h2 className="gethelp-intro-title">Here to <span className="script-accent">Help</span></h2>
-        <p className="gethelp-intro-text">
-          If you or someone you know needs support with senior care, meals, transportation,
-          or any other life challenge, BetterLTC is here for you. Fill out the form below
-          and our team will reach out as soon as possible.
-        </p>
-      </div>
-
-      <div className="gethelp-body">
-        <div className="gethelp-form-wrap">
-          {status === 'success' ? (
-            <div className="gethelp-success">
-              <h3>Thank you for reaching out!</h3>
-              <p>We have received your request and will get back to you soon.</p>
-              <button className="gethelp-btn" onClick={() => setStatus(null)}>Submit another request</button>
-            </div>
-          ) : (
-            <form className="gethelp-form" onSubmit={handleSubmit}>
-              <div className="gethelp-row">
-                <input
-                  name="firstName"
-                  placeholder="First Name"
-                  value={form.firstName}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  name="lastName"
-                  placeholder="Last Name"
-                  value={form.lastName}
-                  onChange={handleChange}
-                  required
-                />
+      <div className="overlap-card gethelp-card">
+        {status === 'success' ? (
+          <div className="gethelp-success">
+            <h2>Thank you for reaching out</h2>
+            <p>We have received your request and will get back to you within two business days.</p>
+            <button className="btn btn-outline" onClick={() => setStatus(null)}>Send another request</button>
+          </div>
+        ) : (
+          <form className="form-underline" onSubmit={handleSubmit}>
+            <div className="form-row">
+              <div>
+                <label htmlFor="firstName">First name</label>
+                <input id="firstName" name="firstName" value={form.firstName} onChange={handleChange} required />
               </div>
-              <input
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-              <input
-                name="phone"
-                type="tel"
-                placeholder="Phone"
-                value={form.phone}
-                onChange={handleChange}
-              />
-              <select
-                name="helpType"
-                value={form.helpType}
-                onChange={handleChange}
-                required
-              >
-                <option value="">How can we help? (Required)</option>
-                {HELP_TYPES.map((type) => (
-                  <option key={type} value={type}>{type}</option>
-                ))}
-              </select>
-              <textarea
-                name="description"
-                placeholder="Question or comment"
-                value={form.description}
-                onChange={handleChange}
-                rows={6}
-              />
-              {status === 'error' && (
-                <p className="gethelp-error">Something went wrong. Please try again.</p>
-              )}
-              <button className="gethelp-btn" type="submit" disabled={status === 'loading'}>
-                {status === 'loading' ? 'Sending...' : 'Send'}
-              </button>
-            </form>
-          )}
-        </div>
-
-        <div className="gethelp-image-wrap">
-          <img src="/getHelpForm.png" alt="Get Help" />
-        </div>
+              <div>
+                <label htmlFor="lastName">Last name</label>
+                <input id="lastName" name="lastName" value={form.lastName} onChange={handleChange} required />
+              </div>
+            </div>
+            <div className="form-row">
+              <div>
+                <label htmlFor="email">Email</label>
+                <input id="email" name="email" type="email" value={form.email} onChange={handleChange} required />
+              </div>
+              <div>
+                <label htmlFor="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} />
+              </div>
+            </div>
+            <label htmlFor="helpType">How can we help?</label>
+            <select id="helpType" name="helpType" value={form.helpType} onChange={handleChange} required>
+              <option value="">Choose one</option>
+              {HELP_TYPES.map((type) => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
+            <label htmlFor="description">Tell us more</label>
+            <textarea id="description" name="description" value={form.description} onChange={handleChange} rows={5} />
+            {status === 'error' && (
+              <p className="form-error">Something went wrong. Please try again.</p>
+            )}
+            <button className="btn btn-primary btn-lg" type="submit" disabled={status === 'loading'}>
+              {status === 'loading' ? 'Sending...' : 'Send request'}
+            </button>
+          </form>
+        )}
       </div>
+
+      <section className="section">
+        <div className="container">
+          <div className="split">
+            <div>
+              <span className="eyebrow">What to expect</span>
+              <h2>Simple, free, and local</h2>
+            </div>
+            <div className="split-body">
+              <ul className="check-list">
+                <li>A volunteer coordinator calls you back within two business days</li>
+                <li>Every volunteer has passed a background check</li>
+                <li>There is no cost to you or your family</li>
+                <li>You can pause or stop the help at any time</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

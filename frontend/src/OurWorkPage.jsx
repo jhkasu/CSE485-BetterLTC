@@ -54,13 +54,16 @@ function OurWorkPage() {
     return (
       <div>
         <Navbar />
-        <div className="ourwork-detail">
-          <button className="ourwork-back" onClick={() => setSelected(null)}>← Back</button>
-          <div className="ourwork-detail-meta">
-            {selected.category && <span className="ourwork-tag">{selected.category}</span>}
-            {selected.date && <span className="ourwork-date">{selected.date}</span>}
+        <header className="page-header page-header--plain">
+          <div className="page-header-text">
+            <button className="arrow-link ourwork-back" onClick={() => setSelected(null)}>← Back to our work</button>
+            <span className="eyebrow">
+              {selected.category}{selected.category && selected.date ? ' · ' : ''}{selected.date}
+            </span>
+            <h1>{selected.title}</h1>
           </div>
-          <h1 className="ourwork-detail-title">{selected.title}</h1>
+        </header>
+        <div className="overlap-card ourwork-detail">
           <div
             className="ourwork-detail-content"
             dangerouslySetInnerHTML={{ __html: selected.content }}
@@ -75,47 +78,43 @@ function OurWorkPage() {
     <div>
       <Navbar />
 
-      <div className="ourwork-banner">
-        <img src="/ourWork.png" alt="Our Work" />
-        <div className="ourwork-banner-overlay">
-          <h1 className="ourwork-banner-title">Our Work</h1>
+      <header className="page-header">
+        <div className="page-header-text">
+          <span className="eyebrow">Our work</span>
+          <h1>Stories from the community</h1>
         </div>
-      </div>
+        <div className="page-header-media">
+          <img src="/ourWork.png" alt="Our work" />
+        </div>
+      </header>
 
       <div className="ourwork-page">
-        <h1 className="ourwork-heading">Our Work</h1>
         {posts.length === 0 ? (
           <p className="ourwork-empty">No posts yet.</p>
         ) : (
-          <div className="ourwork-grid">
-            {posts.map(post => {
-              const { thumb, isYoutube } = extractMedia(post.content);
-              const preview = stripHtml(post.content);
-              return (
-                <div key={post.id} className="ourwork-card" onClick={() => setSelected(post)}>
-                  <div className={`ourwork-card-img${isYoutube && !thumb ? ' ourwork-card-img-youtube' : ''}`}>
-                    {thumb
-                      ? <img
-                          src={thumb}
-                          alt={post.title}
-                          onError={e => {
-                            e.target.style.display = 'none';
-                            e.target.parentElement.classList.add('ourwork-card-img-youtube');
-                          }}
-                        />
-                      : isYoutube
-                        ? <div className="ourwork-card-img-youtube" />
-                        : <div className="ourwork-card-img-empty" />}
-                  </div>
-                  <div className="ourwork-card-body">
-                    <h2 className="ourwork-card-title">{post.title}</h2>
-                    <p className="ourwork-card-preview">{preview}</p>
-                    <span className="ourwork-read-more">Read More →</span>
-                  </div>
+          posts.map(post => {
+            const { thumb } = extractMedia(post.content);
+            const preview = stripHtml(post.content);
+            return (
+              <div key={post.id} className="list-row">
+                <div className="list-row-text">
+                  {(post.category || post.date) && (
+                    <span className="eyebrow">
+                      {post.category}{post.category && post.date ? ' · ' : ''}{post.date}
+                    </span>
+                  )}
+                  <h3>{post.title}</h3>
+                  <p className="ourwork-preview">{preview}</p>
+                  <button className="btn btn-outline" onClick={() => setSelected(post)}>Read more</button>
                 </div>
-              );
-            })}
-          </div>
+                <div className="list-row-media">
+                  {thumb
+                    ? <img src={thumb} alt={post.title} loading="lazy" onError={e => { e.target.style.display = 'none'; }} />
+                    : null}
+                </div>
+              </div>
+            );
+          })
         )}
       </div>
       <Footer />

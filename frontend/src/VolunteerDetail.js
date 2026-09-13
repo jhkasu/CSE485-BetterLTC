@@ -123,17 +123,17 @@ function VolunteerDetail() {
   return (
     <div>
       <Navbar />
-      <div className="vdetail-page">
-        <Link to="/volunteer" className="vdetail-back">← Back to Opportunities</Link>
-
+      <header className="page-header page-header--plain">
+        <div className="page-header-text">
+          <Link to="/volunteer" className="arrow-link vdetail-back">← Back to opportunities</Link>
+          <span className="eyebrow">{listing.status}{listing.category ? ` · ${listing.category}` : ''}</span>
+          <h1>{listing.listingTitle}</h1>
+          <p className="vdetail-org">{listing.orgName}</p>
+        </div>
+      </header>
+      <div className="vdetail-page container">
         <div className="vdetail-layout">
           <div className="vdetail-main">
-            <div className="vdetail-header">
-              <span className="vdetail-status">{listing.status}</span>
-              {listing.category && <span className="vdetail-category">{listing.category}</span>}
-            </div>
-            <h1>{listing.listingTitle}</h1>
-            <p className="vdetail-org">{listing.orgName}</p>
 
             <div className="vdetail-meta">
               <div className="vdetail-meta-item">

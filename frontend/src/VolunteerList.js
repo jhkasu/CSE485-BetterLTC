@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './VolunteerList.css';
 
 const API_BASE = 'http://localhost:5184';
-const CITIES = ['Toronto', 'Vancouver', 'Montreal', 'Calgary'];
+const CITIES = ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current', 'Yorkton', 'North Battleford', 'Estevan', 'Weyburn', 'Lloydminster', 'Humboldt', 'Melfort', 'Melville', 'Kindersley', 'Tisdale', 'Other'];
 
 function VolunteerList() {
   const navigate = useNavigate();
@@ -28,9 +28,15 @@ function VolunteerList() {
     : listings.filter(l => selectedCities.includes(l.location));
 
   return (
-    <div className="volunteer-section">
-      <h2>Find a Volunteer Opportunity</h2>
-      <div className="volunteer-content">
+    <div>
+      <header className="page-header page-header--plain">
+        <div className="page-header-text">
+          <span className="eyebrow">Volunteer</span>
+          <h1>Find an opportunity near you</h1>
+          <p>Every listing comes from a verified organization. Pick a city to narrow the list.</p>
+        </div>
+      </header>
+      <div className="volunteer-content container">
         <div className="filters">
           <h3>Location</h3>
           {CITIES.map(city => (
@@ -49,21 +55,17 @@ function VolunteerList() {
             <p className="no-results">No opportunities found.</p>
           ) : (
             filtered.map(listing => (
-              <div
-                className="volunteer-card"
-                key={listing.id}
-                onClick={() => navigate(`/volunteer/${listing.id}`)}
-                style={{ cursor: 'pointer' }}
-              >
+              <div className="volunteer-card" key={listing.id}>
                 <div className="card-info">
-                  <span className="card-status">{listing.status}</span>
+                  <span className="eyebrow">{listing.status}{listing.category ? ` · ${listing.category}` : ''}</span>
                   <h4>{listing.listingTitle}</h4>
                   <p className="card-org">{listing.orgName}</p>
+                  <div className="card-meta">
+                    <span><strong>Location</strong>{listing.location}</span>
+                    <span><strong>Days</strong>{listing.days || 'Flexible'}</span>
+                  </div>
                 </div>
-                <div className="card-meta">
-                  <span><strong>Location</strong><br />{listing.location}</span>
-                  <span><strong>Days & times</strong><br />{listing.days}</span>
-                </div>
+                <button className="btn btn-outline" onClick={() => navigate(`/volunteer/${listing.id}`)}>View details</button>
               </div>
             ))
           )}

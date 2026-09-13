@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Hero from './Hero';
+import Pillars from './Pillars';
 import RecentOpportunities from './RecentOpportunities';
 import NewsSection from './NewsSection';
 import VolunteerList from './VolunteerList';
@@ -47,6 +48,7 @@ function Home() {
     <div>
       <Navbar />
       <Hero />
+      <Pillars />
       <RecentOpportunities />
       <NewsSection />
       <Footer />
