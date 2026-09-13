@@ -5,8 +5,7 @@ import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import Youtube from '@tiptap/extension-youtube';
 import './RichTextEditor.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 function MenuBar({ editor }) {
   if (!editor) return null;

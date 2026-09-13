@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurWorkPage.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 function extractYoutubeId(url) {
   const match = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);

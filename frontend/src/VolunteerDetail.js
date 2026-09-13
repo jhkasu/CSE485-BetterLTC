@@ -7,6 +7,7 @@ import { MdLocationOn, MdCalendarToday, MdSchedule, MdCategory } from 'react-ico
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './VolunteerDetail.css';
+import API_BASE from './config';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -14,8 +15,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
-
-const API_BASE = 'http://localhost:5184';
 
 const CITY_COORDS = {
   'Saskatoon':       [52.1332, -106.6700],

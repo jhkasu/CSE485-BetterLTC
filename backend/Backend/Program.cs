@@ -2,9 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+string[] allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? [];
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(policy => {
-        policy.SetIsOriginAllowed(origin => origin.StartsWith("http://localhost"))
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

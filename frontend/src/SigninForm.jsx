@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import mockUsers from './mockUsers';
 import './SignupForm.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 const SigninForm = () => {
   const navigate = useNavigate();

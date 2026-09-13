@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './RecentOpportunities.css';
-
-const API_BASE = 'http://localhost:5184';
+import API_BASE from './config';
 
 function RecentOpportunities() {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './VolunteerList.css';
+import API_BASE from './config';
 
-const API_BASE = 'http://localhost:5184';
 const CITIES = ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current', 'Yorkton', 'North Battleford', 'Estevan', 'Weyburn', 'Lloydminster', 'Humboldt', 'Melfort', 'Melville', 'Kindersley', 'Tisdale', 'Other'];
 
 function VolunteerList() {
