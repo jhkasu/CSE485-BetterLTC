@@ -32,7 +32,7 @@
 }
 
 .rte-menubar button.active {
-  background: #1a1a2e;
+  background: var(--color-text);
   color: #fff;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .rte-content .tiptap blockquote {
-  border-left: 3px solid #1a1a2e;
+  border-left: 3px solid var(--color-text);
   padding-left: 14px;
   color: #555;
   margin: 10px 0;

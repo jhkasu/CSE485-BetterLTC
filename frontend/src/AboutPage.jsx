@@ -4,49 +4,66 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './AboutPage.css';
 
+const SECTIONS = [
+  {
+    eyebrow: 'Mission and vision',
+    title: 'Why we exist',
+    text: 'Our commitment to the health and well-being of older adults, and where we want long-term care to be in ten years.',
+    link: '/about/mission',
+    cta: 'Mission and vision',
+    image: '/missionVision.png',
+  },
+  {
+    eyebrow: 'Our history',
+    title: 'How we got here',
+    text: 'From a handful of neighbours helping neighbours to a province-wide volunteer network.',
+    link: '/about/history',
+    cta: 'Our history',
+    image: '/saskatchewan.jpg',
+  },
+  {
+    eyebrow: 'Our team',
+    title: 'The people behind the work',
+    text: 'Meet the coordinators, board members, and volunteers who keep the network running.',
+    link: '/about/team',
+    cta: 'Our team',
+    image: '/ourTeam.png',
+  },
+];
+
 function AboutPage() {
   const navigate = useNavigate();
 
   return (
     <div>
       <Navbar />
-      <div className="about-page">
 
-        <div className="about-hero">
-          <h1 className="about-title">
-            Get to <span className="about-script">Know Us</span>
-          </h1>
+      <header className="page-header">
+        <div className="page-header-text">
+          <span className="eyebrow">About us</span>
+          <h1>Neighbours looking after neighbours</h1>
         </div>
-
-        <div className="about-cards">
-          <div className="about-card">
-            <h2 className="about-card-title">Mission &amp; Vision</h2>
-            <p className="about-card-desc">Learn about our commitment to transforming the health and well-being of older adults.</p>
-            <button className="about-card-btn" onClick={() => navigate('/about/mission')}>Mission &amp; Vision</button>
-          </div>
-
-          <div className="about-card">
-            <h2 className="about-card-title">Our History</h2>
-            <p className="about-card-desc">Discover how BetterLTC started and where we are today.</p>
-            <button className="about-card-btn" onClick={() => navigate('/about/history')}>Our History</button>
-          </div>
-
-          <div className="about-card">
-            <h2 className="about-card-title">Our Team</h2>
-            <p className="about-card-desc">Meet the people dedicated to making a difference in long-term care.</p>
-            <button className="about-card-btn" onClick={() => navigate('/about/team')}>Our Team</button>
-          </div>
+        <div className="page-header-media">
+          <img src="/care1.png" alt="A volunteer with a senior" />
         </div>
+      </header>
 
-        <div className="about-color-rule">
-          <span style={{ background: '#1a2f4e' }} />
-          <span style={{ background: '#82a840' }} />
-          <span style={{ background: '#E8A020' }} />
-          <span style={{ background: '#1a2f4e' }} />
-          <span style={{ background: '#82a840' }} />
-        </div>
+      <section className="about-list">
+        {SECTIONS.map(s => (
+          <div key={s.link} className="list-row">
+            <div className="list-row-text">
+              <span className="eyebrow">{s.eyebrow}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+              <button className="btn btn-outline" onClick={() => navigate(s.link)}>{s.cta}</button>
+            </div>
+            <div className="list-row-media">
+              <img src={s.image} alt={s.title} loading="lazy" />
+            </div>
+          </div>
+        ))}
+      </section>
 
-      </div>
       <Footer />
     </div>
   );

@@ -1,110 +1,107 @@
-.volunteer-section {
-  padding: 60px;
-  background-color: white;
-}
-
-.volunteer-section h2 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 40px;
-  border-bottom: 4px solid #333333;
-  display: inline-block;
-  padding-bottom: 8px;
-  letter-spacing: 1px;
-}
-
 .volunteer-content {
-  display: flex;
-  gap: 60px;
-}
-
-.filters {
-  min-width: 220px;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-5) var(--space-7);
 }
 
 .filters h3 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  margin: 24px 0 12px 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
 }
 
 .filters label {
-  display: block;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
-  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 18px;
+  padding: var(--space-2) 0;
   cursor: pointer;
 }
 
 .filters input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  margin-right: 10px;
-  cursor: pointer;
+  accent-color: var(--color-text);
 }
 
 .volunteer-list {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 28px;
 }
 
 .volunteer-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border: 2px solid #ddd;
-  padding: 32px;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--color-border);
 }
 
-.card-status {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #82a840;
-  display: block;
-  margin-bottom: 8px;
+.volunteer-card:last-child {
+  border-bottom: 1px solid var(--color-border);
 }
 
 .card-info h4 {
-  font-family: 'Oswald', sans-serif;
+  font-family: var(--font-heading);
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin: 0 0 var(--space-1) 0;
 }
 
 .card-org {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  color: #888;
-  margin: 0;
+  font-size: 17px;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3) 0;
 }
 
 .card-meta {
   display: flex;
-  gap: 32px;
-  align-items: center;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
+  gap: var(--space-5);
+  font-size: 16px;
 }
 
-.card-meta button {
-  background-color: #333333;
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  cursor: pointer;
-  font-family: 'Oswald', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 1px;
+.card-meta strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
 }
 
-.card-meta button:hover {
-  background-color: #333333;
+.no-results {
+  font-size: 18px;
+  color: var(--color-text-muted);
+  padding: var(--space-5) 0;
+}
+
+@media (max-width: 900px) {
+  .volunteer-content {
+    grid-template-columns: 1fr;
+    padding: var(--space-5) var(--space-3);
+  }
+  .volunteer-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-4);
+  }
+  .filters h3 {
+    width: 100%;
+  }
+  .filters label {
+    font-size: 16px;
+    padding: var(--space-1) 0;
+  }
 }

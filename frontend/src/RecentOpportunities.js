@@ -18,10 +18,14 @@ function RecentOpportunities() {
   if (opportunities.length === 0) return null;
 
   return (
-    <section className="recent-opp">
+    <section className="section recent-opp">
+      <div className="container">
       <div className="recent-opp-header">
-        <h2>Recent Opportunities</h2>
-        <Link to="/volunteer" className="recent-opp-viewall">View All →</Link>
+        <div>
+          <span className="eyebrow">Opportunities</span>
+          <h2 className="section-title">Recent opportunities</h2>
+        </div>
+        <Link to="/volunteer" className="arrow-link">View all →</Link>
       </div>
       <div className="recent-opp-grid">
         {opportunities.map(op => (
@@ -37,10 +41,11 @@ function RecentOpportunities() {
                 <span className="opp-tag">{op.location}</span>
                 <span className="opp-tag">{op.days}</span>
               </div>
-              <span className="opp-view-detail">View Details →</span>
+              <span className="arrow-link">View details →</span>
             </div>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

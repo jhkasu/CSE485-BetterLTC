@@ -38,8 +38,13 @@ function HistorySection({ years, title, description, photos }) {
   };
 
   return (
-    <div className="history-section">
-      <h2 className="history-years">{years}: <span className="history-title">{title}</span></h2>
+    <div className="history-section split">
+      <div>
+        <span className="eyebrow">{years}</span>
+        <h2>{title}</h2>
+        <p className="history-description">{description}</p>
+      </div>
+      <div className="history-gallery">
       <Swiper
         modules={[Autoplay]}
         onSwiper={(swiper) => { swiperRef.current = swiper; }}
@@ -59,7 +64,7 @@ function HistorySection({ years, title, description, photos }) {
         <div className={`swiper-button-play${playing ? ' playing' : ''}`} role="button" aria-label="Play slideshow" onClick={handlePlay} />
         <div className="swiper-button-next spotlight-btn-next" tabIndex="0" role="button" aria-label="Next slide" onClick={() => swiperRef.current?.slideNext()} />
       </div>
-      <p className="history-description">{description}</p>
+      </div>
     </div>
   );
 }
@@ -69,18 +74,23 @@ function OurHistoryPage() {
     <div>
       <Navbar />
 
-      <div className="ourhistory-banner">
-        <img src="/saskatchewan.jpg" alt="Our History" />
-        <div className="ourhistory-banner-overlay">
-          <h1 className="ourhistory-banner-title">Our History</h1>
+      <header className="page-header">
+        <div className="page-header-text">
+          <span className="eyebrow">About us</span>
+          <h1>Our history</h1>
         </div>
-      </div>
+        <div className="page-header-media">
+          <img src="/saskatchewan.jpg" alt="Saskatchewan prairie" />
+        </div>
+      </header>
 
-      <div className="ourhistory-content">
-        {historyData.map(entry => (
-          <HistorySection key={entry.id} {...entry} />
-        ))}
-      </div>
+      <section className="section ourhistory-content">
+        <div className="container">
+          {historyData.map(entry => (
+            <HistorySection key={entry.id} {...entry} />
+          ))}
+        </div>
+      </section>
 
       <Footer />
     </div>

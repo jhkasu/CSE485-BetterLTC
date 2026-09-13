@@ -1,79 +1,82 @@
 .hero {
   position: relative;
-  min-height: 70vh;
+  display: grid;
+  grid-template-columns: 52% 48%;
+  background-color: var(--color-surface);
+  padding-bottom: 40px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 40px;
+  width: 55%;
+  background-color: var(--color-bg);
+}
+
+.hero-text {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
+  align-items: flex-start;
+  padding: var(--space-6) 104px var(--space-6) 15%;
+  min-height: 0;
 }
 
-.hero-video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  z-index: 0;
+.hero-text h1 {
+  font-size: clamp(40px, 4vw, 76px);
+  margin-bottom: var(--space-4);
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.65);
-  z-index: 1;
+.hero-text p {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  max-width: 420px;
+  margin: 0 0 var(--space-5) 0;
 }
 
-.hero-content {
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.hero-media {
   position: relative;
-  z-index: 2;
-  padding: 160px 60px;
+  min-height: 530px;
+  margin: 0 var(--space-3) 0 -72px;
 }
 
-.hero h1 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 90px;
-  color: white;
-  margin: 0 0 24px 0;
-  text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
-  line-height: 1.1;
+.hero-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.hero p {
-  font-family: 'Open Sans', sans-serif;
-  color: white;
-  font-size: 26px;
-  margin: 0 0 48px 0;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
-}
-
-.hero button {
-  font-family: 'Oswald', sans-serif;
-  padding: 20px 44px;
-  margin-right: 20px;
-  cursor: pointer;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.hero-primary {
-  background-color: #E8A020;
-  color: white;
-  border: 3px solid #E8A020;
-}
-
-.hero-secondary {
-  background-color: white;
-  color: #333333;
-  border: 3px solid white;
-}
-
-.hero-donate {
-  background-color: transparent;
-  color: white;
-  border: 3px solid white;
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-bottom: 0;
+  }
+  .hero::before {
+    display: none;
+  }
+  .hero-text {
+    background-color: var(--color-bg);
+    padding: var(--space-6) var(--space-3);
+    min-height: 0;
+  }
+  .hero-text h1 {
+    font-size: 44px;
+  }
+  .hero-media {
+    min-height: 320px;
+    margin: 0;
+  }
 }

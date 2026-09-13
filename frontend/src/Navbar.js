@@ -17,7 +17,7 @@ function Navbar() {
 
   return (
     <nav>
-      <img src="/logo.png" alt="BetterLTC" style={{height: '180px', cursor: 'pointer', flexShrink: 0}} onClick={() => navigate('/')} />
+      <img src="/new_logo.png" alt="VolunteerConnect Saskatchewan" className="nav-logo" onClick={() => navigate('/')} />
       <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
         ☰
       </button>
@@ -42,6 +42,7 @@ function Navbar() {
         <li onClick={() => navigate('/our-work')}>Our Work</li>
       </ul>
 
+      <div className="nav-actions">
       {currentUser ? (
         <div className="user-menu">
           <button className="user-menu-btn" onClick={() => setDropdownOpen(!dropdownOpen)}>
@@ -60,6 +61,7 @@ function Navbar() {
           <button className="signup-nav-btn" onClick={() => navigate('/signup')}>Sign Up</button>
         </>
       )}
+      </div>
 
       <button className="donate-btn">Donate now</button>
     </nav>

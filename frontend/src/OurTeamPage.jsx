@@ -19,15 +19,18 @@ function OurTeamPage() {
     <div>
       <Navbar />
 
-      <div className="ourteam-banner">
-        <img src="/ourTeam.png" alt="Our Team" />
-        <div className="ourteam-banner-overlay">
-          <h1 className="ourteam-banner-title">Our Team</h1>
+      <header className="page-header">
+        <div className="page-header-text">
+          <span className="eyebrow">About us</span>
+          <h1>Our team</h1>
         </div>
-      </div>
+        <div className="page-header-media">
+          <img src="/ourTeam.png" alt="Our team" />
+        </div>
+      </header>
 
-      <div className="ourteam-content">
-        <div className="team-grid">
+      <div className="section ourteam-content">
+        <div className="container team-grid">
           {members.map(member => (
             <div key={member.id} className="team-card">
               {member.imagePath

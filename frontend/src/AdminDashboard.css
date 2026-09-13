@@ -10,7 +10,7 @@
 
 .admin-sidebar {
   width: 240px;
-  background: #1a1a2e;
+  background: var(--color-text);
   color: white;
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@
 .admin-section-title {
   font-size: 28px;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--color-text);
   margin: 0 0 24px 0;
 }
 
@@ -126,7 +126,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #1a1a2e;
+  background: var(--color-text);
   color: #fff;
   border: none;
   padding: 12px 20px;
@@ -138,7 +138,7 @@
 }
 
 .admin-add-btn:hover {
-  background: #2d2d4e;
+  background: var(--color-text);
 }
 
 .admin-stats-grid {
@@ -157,7 +157,7 @@
 .admin-stat-number {
   font-size: 44px;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--color-text);
 }
 
 .admin-stat-label {
@@ -208,7 +208,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #1a1a2e;
+  background: var(--color-text);
   color: #fff;
   display: flex;
   align-items: center;
@@ -226,13 +226,13 @@
 }
 
 .role-badge.admin {
-  background: #e8e0ff;
-  color: #6b3fa0;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .role-badge.volunteer {
-  background: #e0f0ff;
-  color: #1a6fa0;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .bg-badge {
@@ -270,12 +270,12 @@
 }
 
 .admin-action-btn.edit {
-  background: #f0f4ff;
-  color: #3a5bef;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .admin-action-btn.edit:hover {
-  background: #dce4ff;
+  background: var(--color-bg);
 }
 
 .admin-action-btn.delete {
@@ -294,7 +294,7 @@
   font-weight: 600;
   padding: 8px 20px;
   border-radius: 8px;
-  letter-spacing: 0.3px;
+  letter-spacing: 0;
   box-shadow: 0 1px 3px rgba(22, 163, 74, 0.3);
 }
 
@@ -310,7 +310,7 @@
   font-weight: 600;
   padding: 8px 20px;
   border-radius: 8px;
-  letter-spacing: 0.3px;
+  letter-spacing: 0;
   box-shadow: 0 1px 3px rgba(220, 38, 38, 0.3);
 }
 
@@ -395,7 +395,7 @@
 .admin-modal-header h3 {
   font-size: 22px;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -450,7 +450,7 @@
 .admin-form input:focus,
 .admin-form textarea:focus,
 .admin-form select:focus {
-  border-color: #1a1a2e;
+  border-color: var(--color-text);
   background: #fff;
 }
 
@@ -465,7 +465,7 @@
 }
 
 .admin-save-btn {
-  background: #1a1a2e;
+  background: var(--color-text);
   color: #fff;
   border: none;
   padding: 12px 28px;
@@ -477,7 +477,7 @@
 }
 
 .admin-save-btn:hover {
-  background: #2d2d4e;
+  background: var(--color-text);
 }
 
 .admin-cancel-btn {

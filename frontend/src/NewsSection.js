@@ -45,7 +45,7 @@ function NewsCard({ post, size }) {
         {post.category && <span className="news-tag">{post.category}</span>}
         <h3>{post.title}</h3>
         <p>{preview}</p>
-        <Link to="/our-work" className="news-read-more">Read More →</Link>
+        <Link to="/our-work" className="arrow-link news-read-more">Read more →</Link>
       </div>
     </div>
   );
@@ -67,10 +67,14 @@ function NewsSection() {
   const [featured, ...rest] = posts;
 
   return (
-    <section className="news-section">
+    <section className="section news-section">
+      <div className="container">
       <div className="news-header">
-        <h2>News</h2>
-        <Link to="/our-work" className="news-viewall">View All →</Link>
+        <div>
+          <span className="eyebrow">Our work</span>
+          <h2 className="section-title">Latest news</h2>
+        </div>
+        <Link to="/our-work" className="arrow-link">View all →</Link>
       </div>
       {isEditorial ? (
         <div className="news-grid-editorial">
@@ -84,7 +88,7 @@ function NewsSection() {
               {featured.category && <span className="news-tag">{featured.category}</span>}
               <h3>{featured.title}</h3>
               <p>{stripHtml(featured.content)}</p>
-              <Link to="/our-work" className="news-read-more">Read More →</Link>
+              <Link to="/our-work" className="arrow-link news-read-more">Read more →</Link>
             </div>
           </div>
           <div className="news-right-col">
@@ -96,6 +100,7 @@ function NewsSection() {
           {posts.map(post => <NewsCard key={post.id} post={post} size="equal" />)}
         </div>
       )}
+      </div>
     </section>
   );
 }
