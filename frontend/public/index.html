@@ -25,6 +25,20 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <link href="https://fonts.googleapis.com/css2?family=Noticia+Text:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+      // Apply saved accessibility preferences before the first paint so the
+      // page never flashes in the wrong theme. Mirrors src/accessibility/a11yStorage.js.
+      (function () {
+        var contrast = 'light', fontSize = 'normal';
+        try {
+          var saved = JSON.parse(window.localStorage.getItem('a11y-settings') || '{}');
+          if (['light', 'dark', 'high'].indexOf(saved.contrast) !== -1) contrast = saved.contrast;
+          if (['normal', 'large', 'xlarge'].indexOf(saved.fontSize) !== -1) fontSize = saved.fontSize;
+        } catch (e) {}
+        document.documentElement.setAttribute('data-contrast', contrast);
+        document.documentElement.setAttribute('data-font-size', fontSize);
+      })();
+    </script>
     <title>BetterLTC</title>
   </head>
   <body>
