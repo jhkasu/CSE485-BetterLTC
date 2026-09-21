@@ -22,8 +22,9 @@ builder.Services.AddDbContext<ListingsDbContext>(op => op.UseSqlite(listingsDbCo
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment()) {
-    using var scope = app.Services.CreateScope();
+// Apply pending migrations on startup in every environment so a fresh
+// deployment creates its own tables.
+using (var scope = app.Services.CreateScope()) {
     scope.ServiceProvider.GetRequiredService<UsersDbContext>().Database.Migrate();
     scope.ServiceProvider.GetRequiredService<ListingsDbContext>().Database.Migrate();
 }
