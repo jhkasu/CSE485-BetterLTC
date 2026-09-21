@@ -11,7 +11,7 @@
 .admin-sidebar {
   width: 240px;
   background: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -127,7 +127,7 @@
   align-items: center;
   gap: 6px;
   background: var(--color-text);
-  color: #fff;
+  color: var(--color-on-text);
   border: none;
   padding: 12px 20px;
   border-radius: 8px;
@@ -209,7 +209,7 @@
   height: 40px;
   border-radius: 50%;
   background: var(--color-text);
-  color: #fff;
+  color: var(--color-on-text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -466,7 +466,7 @@
 
 .admin-save-btn {
   background: var(--color-text);
-  color: #fff;
+  color: var(--color-on-text);
   border: none;
   padding: 12px 28px;
   border-radius: 8px;

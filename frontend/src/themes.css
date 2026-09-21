@@ -1,0 +1,109 @@
+/*
+  Contrast themes and font scale.
+  Every value here overrides a token from index.css, so components never
+  need theme-specific rules. Switched by attributes on <html>:
+    data-contrast="light" | "dark" | "high"
+    data-font-size="normal" | "large" | "xlarge"
+*/
+
+html[data-contrast='dark'] {
+  color-scheme: dark;
+  --color-bg: #161618;
+  --color-surface: #1f1f23;
+  --color-dark: #2c2c31;
+  --color-dark-hover: #3a3a40;
+  --color-text: #f2f2f2;
+  --color-text-muted: #b8b8bf;
+  --color-border: #3d3d44;
+  --color-accent: #2ecc82;
+  --color-accent-hover: #49dd96;
+  --color-on-accent: #0e0e10;
+  --color-on-text: #161618;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: rgba(255, 255, 255, 0.7);
+  --color-on-dark-faint: rgba(255, 255, 255, 0.55);
+  --color-on-dark-border: rgba(255, 255, 255, 0.18);
+  --color-placeholder: #9a9aa2;
+  --color-error: #ff8a80;
+  --color-focus: #ffffff;
+  --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+html[data-contrast='high'] {
+  color-scheme: dark;
+  --color-bg: #000000;
+  --color-surface: #000000;
+  --color-dark: #000000;
+  --color-dark-hover: #1a1a1a;
+  --color-text: #ffffff;
+  --color-text-muted: #ffffff;
+  --color-border: #ffffff;
+  --color-accent: #ffff00;
+  --color-accent-hover: #ffffff;
+  --color-on-accent: #000000;
+  --color-on-text: #000000;
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #ffffff;
+  --color-on-dark-faint: #ffffff;
+  --color-on-dark-border: #ffffff;
+  --color-placeholder: #ffffff;
+  --color-error: #ff9d9d;
+  --color-focus: #ffff00;
+  --shadow-dropdown: 0 0 0 2px #ffffff;
+  --shadow-card: 0 0 0 2px #ffffff;
+}
+
+/* High contrast: nothing may rely on a fill alone to be seen */
+html[data-contrast='high'] .btn,
+html[data-contrast='high'] .donate-btn,
+html[data-contrast='high'] .signin-btn,
+html[data-contrast='high'] .signup-nav-btn,
+html[data-contrast='high'] .user-menu-btn,
+html[data-contrast='high'] .role-btn {
+  border: 2px solid var(--color-text);
+}
+
+html[data-contrast='high'] .btn-primary {
+  border-color: var(--color-accent);
+}
+
+/* selected state must not depend on a dark fill that equals the page */
+html[data-contrast='high'] .role-btn.active,
+html[data-contrast='high'] .shift-view-btn.active {
+  background-color: var(--color-text);
+  color: var(--color-on-text);
+}
+
+html[data-contrast='high'] a,
+html[data-contrast='high'] .arrow-link {
+  text-decoration: underline;
+}
+
+html[data-contrast='high'] nav,
+html[data-contrast='high'] .footer,
+html[data-contrast='high'] .overlap-card,
+html[data-contrast='high'] .signup-box {
+  border: 1px solid var(--color-border);
+}
+
+html[data-contrast='high'] :focus-visible,
+html[data-contrast='high'] .btn-dark:focus-visible,
+html[data-contrast='high'] .donate-btn:focus-visible,
+html[data-contrast='high'] .footer :focus-visible {
+  outline: 4px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Font scale. The control UI sets the attribute; the scale token does the rest. */
+html[data-font-size='large'] {
+  --font-scale: 1.125;
+}
+
+html[data-font-size='xlarge'] {
+  --font-scale: 1.25;
+}
+
+body {
+  zoom: var(--font-scale);
+}

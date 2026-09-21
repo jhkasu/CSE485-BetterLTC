@@ -13,6 +13,8 @@
   --color-on-dark-faint: rgba(255, 255, 255, 0.45);
   --color-on-dark-border: rgba(255, 255, 255, 0.15);
   --color-on-accent: #ffffff;
+  --color-on-text: #ffffff;
+  --font-scale: 1;
   --color-placeholder: #767676;
   --color-error: #c0392b;
   --color-focus: #1d1d20;
@@ -158,7 +160,7 @@ h1, h2, h3 {
 
 .btn-outline:hover {
   background-color: var(--color-text);
-  color: var(--color-on-dark);
+  color: var(--color-on-text);
 }
 
 .arrow-link {

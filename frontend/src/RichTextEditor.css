@@ -33,7 +33,7 @@
 
 .rte-menubar button.active {
   background: var(--color-text);
-  color: #fff;
+  color: var(--color-on-text);
 }
 
 .rte-divider {

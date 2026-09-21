@@ -315,7 +315,7 @@
 .profile-save-btn {
   padding: 16px 40px;
   background-color: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
   border: none;
   border-radius: 6px;
   font-family: var(--font-heading);
@@ -434,7 +434,7 @@
 .upload-submit-btn {
   padding: 14px 36px;
   background-color: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
   border: none;
   border-radius: 6px;
   font-family: var(--font-heading);
@@ -552,7 +552,7 @@
 
 .profile-pic-btn:hover {
   background-color: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
 }
 
 /* ── Password section (#56) ── */
@@ -667,7 +667,7 @@
 
 .cancel-shift-btn:hover {
   background-color: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
 }
 
 .cancel-confirm {
@@ -687,7 +687,7 @@
 .cancel-yes-btn {
   padding: 10px 20px;
   background-color: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
   border: none;
   border-radius: 6px;
   font-family: var(--font-heading);
@@ -826,7 +826,7 @@
 
 .shift-view-btn.active {
   background-color: var(--color-text);
-  color: white;
+  color: var(--color-on-text);
 }
 
 .shift-view-btn:not(.active):hover {
