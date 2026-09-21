@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './RecentOpportunities.css';
 import API_BASE from './config';
 
 function RecentOpportunities() {
-  const navigate = useNavigate();
   const [opportunities, setOpportunities] = useState([]);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ function RecentOpportunities() {
       </div>
       <div className="recent-opp-grid">
         {opportunities.map(op => (
-          <div key={op.id} className="opp-card" onClick={() => navigate(`/volunteer/${op.id}`)}>
+          <article key={op.id} className="opp-card">
             <div className="opp-card-body">
               <span className="opp-status">{op.status}</span>
               <h3>{op.listingTitle}</h3>
@@ -40,9 +39,9 @@ function RecentOpportunities() {
                 <span className="opp-tag">{op.location}</span>
                 <span className="opp-tag">{op.days}</span>
               </div>
-              <span className="arrow-link">View details →</span>
+              <Link className="arrow-link opp-link" to={`/volunteer/${op.id}`} aria-label={`View details for ${op.listingTitle}`}>View details →</Link>
             </div>
-          </div>
+          </article>
         ))}
       </div>
       </div>

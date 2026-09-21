@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Pillars.css';
 
 const PILLARS = [
@@ -27,7 +27,6 @@ const PILLARS = [
 ];
 
 function Pillars() {
-  const navigate = useNavigate();
   return (
     <section className="section pillars">
       <div className="container">
@@ -35,14 +34,14 @@ function Pillars() {
         <h2 className="section-title">Three ways to get involved</h2>
         <div className="pillars-grid">
           {PILLARS.map(p => (
-            <div key={p.title} className="pillar" onClick={() => navigate(p.link)}>
+            <article key={p.title} className="pillar">
               <div className="pillar-image">
-                <img src={p.image} alt={p.title} loading="lazy" />
+                <img src={p.image} alt="" loading="lazy" />
               </div>
               <h3>{p.title}</h3>
               <p>{p.text}</p>
-              <span className="arrow-link">{p.cta} &rarr;</span>
-            </div>
+              <Link className="arrow-link pillar-link" to={p.link}>{p.cta} <span aria-hidden="true">&rarr;</span></Link>
+            </article>
           ))}
         </div>
       </div>
