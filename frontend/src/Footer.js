@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from './Logo';
 import './Footer.css';
 
 function Footer() {
@@ -7,7 +8,7 @@ function Footer() {
       <div className="footer-container">
 
         <div className="footer-brand">
-          <h2 className="footer-logo">VolunteerConnect Saskatchewan</h2>
+          <Logo className="footer-logo" />
           <p className="footer-tagline">Connecting communities through care.</p>
         </div>
 

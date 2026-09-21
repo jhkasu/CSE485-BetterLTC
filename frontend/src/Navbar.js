@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 import './Navbar.css';
 
 function Navbar() {
@@ -23,7 +24,7 @@ function Navbar() {
     <header>
     <nav aria-label="Main">
       <Link to="/" className="nav-logo-link">
-        <img src="/new_logo.png" alt="VolunteerConnect Saskatchewan home" className="nav-logo" />
+        <Logo className="nav-logo" title="VolunteerConnect Saskatchewan home" />
       </Link>
       <button
         className="hamburger"

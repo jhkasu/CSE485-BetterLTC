@@ -16,9 +16,11 @@
 }
 
 .footer-logo {
-  font-size: 28px;
+  display: block;
+  height: 48px;
+  width: auto;
   color: var(--color-on-dark);
-  margin: 0 0 var(--space-2) 0;
+  margin: 0 0 var(--space-3) 0;
 }
 
 .footer-tagline {

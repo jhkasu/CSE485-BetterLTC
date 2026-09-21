@@ -11,7 +11,9 @@ nav {
 }
 
 .nav-logo {
-  height: 120px;
+  height: 60px;
+  width: auto;
+  color: var(--color-text);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -195,10 +197,8 @@ nav ul li:hover {
   }
 
   .nav-logo {
-    height: 56px;
-    max-width: 60%;
-    object-fit: contain;
-    object-position: left center;
+    height: 40px;
+    max-width: 100%;
   }
 
   .hamburger {
@@ -234,7 +234,7 @@ nav ul li:hover {
     height: 96px;
   }
   .nav-logo {
-    height: 88px;
+    height: 50px;
   }
   nav ul {
     gap: var(--space-4);
