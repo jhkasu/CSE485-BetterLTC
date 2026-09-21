@@ -46,7 +46,7 @@
 
 .gallery-controls > div:hover {
   background-color: var(--color-text);
-  color: #ffffff;
+  color: var(--color-on-dark);
 }
 
 .swiper-button-prev::before { content: '\2190'; }
