@@ -49,6 +49,34 @@ code {
     monospace;
 }
 
+/* Keyboard focus: visible ring on every interactive element */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.dark-band :focus-visible,
+.footer :focus-visible,
+.btn-dark:focus-visible,
+.donate-btn:focus-visible {
+  outline-color: var(--color-on-dark);
+  outline-offset: -6px;
+}
+
+.footer :focus-visible {
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 h1, h2, h3 {
   font-family: var(--font-heading);
   font-weight: 700;
