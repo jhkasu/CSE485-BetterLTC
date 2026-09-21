@@ -27,12 +27,12 @@
   display: flex;
   flex-direction: column;
   padding: var(--space-4);
-  cursor: pointer;
+  position: relative;
   transition: box-shadow 150ms ease-out, transform 150ms ease-out;
 }
 
 .opp-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
   transform: translateY(-2px);
 }
 
@@ -100,4 +100,10 @@
   .recent-opp-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.opp-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }

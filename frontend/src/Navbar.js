@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 import './Navbar.css';
 
 function Navbar() {
@@ -15,56 +16,76 @@ function Navbar() {
     navigate('/signin');
   };
 
+  const closeAboutOnBlur = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) setAboutOpen(false);
+  };
+
   return (
-    <nav>
-      <img src="/new_logo.png" alt="VolunteerConnect Saskatchewan" className="nav-logo" onClick={() => navigate('/')} />
-      <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-        ☰
+    <header>
+    <nav aria-label="Main">
+      <Link to="/" className="nav-logo-link">
+        <Logo className="nav-logo" title="VolunteerConnect Saskatchewan home" />
+      </Link>
+      <button
+        className="hamburger"
+        aria-label="Menu"
+        aria-expanded={menuOpen}
+        aria-controls="main-menu"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <span aria-hidden="true">☰</span>
       </button>
-      <ul className={menuOpen ? 'open' : ''}>
-        <li onClick={() => navigate('/get-help')}>Get Help</li>
+      <ul id="main-menu" className={menuOpen ? 'open' : ''}>
+        <li><Link to="/get-help">Get Help</Link></li>
         <li
           className="about-nav-item"
           onMouseEnter={() => setAboutOpen(true)}
           onMouseLeave={() => setAboutOpen(false)}
-          onClick={() => navigate('/about')}
+          onFocus={() => setAboutOpen(true)}
+          onBlur={closeAboutOnBlur}
         >
-          About Us
+          <Link to="/about" aria-haspopup="true" aria-expanded={aboutOpen}>About Us</Link>
           {aboutOpen && (
             <div className="about-dropdown">
-              <div onClick={(e) => { e.stopPropagation(); navigate('/about/mission'); setAboutOpen(false); }}>Mission &amp; Vision</div>
-              <div onClick={(e) => { e.stopPropagation(); navigate('/about/history'); setAboutOpen(false); }}>Our History</div>
-              <div onClick={(e) => { e.stopPropagation(); navigate('/about/team'); setAboutOpen(false); }}>Our Team</div>
+              <Link to="/about/mission" onClick={() => setAboutOpen(false)}>Mission &amp; Vision</Link>
+              <Link to="/about/history" onClick={() => setAboutOpen(false)}>Our History</Link>
+              <Link to="/about/team" onClick={() => setAboutOpen(false)}>Our Team</Link>
             </div>
           )}
         </li>
-        <li onClick={() => navigate('/volunteer')}>Volunteer</li>
-        <li onClick={() => navigate('/our-work')}>Our Work</li>
+        <li><Link to="/volunteer">Volunteer</Link></li>
+        <li><Link to="/our-work">Our Work</Link></li>
       </ul>
 
       <div className="nav-actions">
       {currentUser ? (
         <div className="user-menu">
-          <button className="user-menu-btn" onClick={() => setDropdownOpen(!dropdownOpen)}>
-            {currentUser.firstName} ▾
+          <button
+            className="user-menu-btn"
+            aria-haspopup="true"
+            aria-expanded={dropdownOpen}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {currentUser.firstName} <span aria-hidden="true">▾</span>
           </button>
           {dropdownOpen && (
             <div className="user-dropdown">
-              <div onClick={() => { navigate(currentUser.role === 'admin' ? '/admin' : '/dashboard'); setDropdownOpen(false); }}>Dashboard</div>
-              <div onClick={handleLogout}>Log Out</div>
+              <Link to={currentUser.role === 'admin' ? '/admin' : '/dashboard'} onClick={() => setDropdownOpen(false)}>Dashboard</Link>
+              <button type="button" onClick={handleLogout}>Log Out</button>
             </div>
           )}
         </div>
       ) : (
         <>
-          <button className="signin-btn" onClick={() => navigate('/signin')}>Sign In</button>
-          <button className="signup-nav-btn" onClick={() => navigate('/signup')}>Sign Up</button>
+          <Link className="signin-btn" to="/signin">Sign In</Link>
+          <Link className="signup-nav-btn" to="/signup">Sign Up</Link>
         </>
       )}
       </div>
 
       <button className="donate-btn">Donate now</button>
     </nav>
+    </header>
   );
 }
 

@@ -9,7 +9,14 @@
 }
 
 .pillar {
-  cursor: pointer;
+  position: relative;
+}
+
+/* whole card is clickable through the one real link */
+.pillar-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }
 
 .pillar-image {

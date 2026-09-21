@@ -1,0 +1,421 @@
+{
+  "common": {
+    "siteName": "VolunteerConnect Saskatchewan",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "search": "Search",
+    "viewAll": "View all",
+    "viewDetails": "View details",
+    "viewDetailsFor": "View details for {{title}}",
+    "readMore": "Read more",
+    "learnMore": "Learn more",
+    "logOut": "Log Out",
+    "viewSite": "View Site",
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "name": "Name",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "location": "Location",
+    "days": "Days",
+    "schedule": "Schedule",
+    "category": "Category",
+    "description": "Description",
+    "title": "Title",
+    "overview": "Overview",
+    "flexible": "Flexible",
+    "show": "Show",
+    "hide": "Hide",
+    "genericError": "Something went wrong. Please try again.",
+    "serverUnreachable": "Unable to reach the server. Please try again later."
+  },
+  "nav": {
+    "ariaMain": "Main",
+    "menu": "Menu",
+    "logoHome": "VolunteerConnect Saskatchewan home",
+    "getHelp": "Get Help",
+    "aboutUs": "About Us",
+    "missionVision": "Mission & Vision",
+    "ourHistory": "Our History",
+    "ourTeam": "Our Team",
+    "volunteer": "Volunteer",
+    "ourWork": "Our Work",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "donate": "Donate now"
+  },
+  "footer": {
+    "tagline": "Connecting communities through care.",
+    "contactUs": "Contact Us",
+    "followUs": "Follow Us",
+    "rights": "© {{year}} VolunteerConnect Saskatchewan. All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "heading": "Care. Connect. Community.",
+      "lead": "Free help for seniors in Saskatchewan, from neighbours who care.",
+      "needHelp": "I need help",
+      "wantToVolunteer": "I want to volunteer"
+    },
+    "pillars": {
+      "eyebrow": "What we do",
+      "heading": "Three ways to get involved",
+      "volunteer": {
+        "title": "Volunteer",
+        "text": "Give a few hours a month to a senior or a care home near you.",
+        "cta": "Browse opportunities"
+      },
+      "organizations": {
+        "title": "Organizations",
+        "text": "Post your needs and connect with screened volunteers in your area.",
+        "cta": "Partner with us"
+      },
+      "community": {
+        "title": "Community",
+        "text": "See the stories and results of the people who show up for each other.",
+        "cta": "Read our work"
+      }
+    },
+    "recent": {
+      "eyebrow": "Opportunities",
+      "heading": "Recent opportunities"
+    },
+    "news": {
+      "eyebrow": "Our work",
+      "heading": "Latest news"
+    }
+  },
+  "getHelp": {
+    "eyebrow": "Get help",
+    "heading": "We are here to help",
+    "lead": "Need support with meals, rides, home visits, or care for an older adult? Tell us a little about your situation and a real person will call you back.",
+    "form": {
+      "helpType": "How can we help?",
+      "chooseOne": "Choose one",
+      "tellUsMore": "Tell us more",
+      "send": "Send request",
+      "sending": "Sending..."
+    },
+    "success": {
+      "heading": "Thank you for reaching out",
+      "text": "We have received your request and will get back to you within two business days.",
+      "another": "Send another request"
+    },
+    "expect": {
+      "eyebrow": "What to expect",
+      "heading": "Simple, free, and local",
+      "item1": "A volunteer coordinator calls you back within two business days",
+      "item2": "Every volunteer has passed a background check",
+      "item3": "There is no cost to you or your family",
+      "item4": "You can pause or stop the help at any time"
+    }
+  },
+  "about": {
+    "eyebrow": "About us",
+    "heading": "Neighbours looking after neighbours",
+    "heroAlt": "A volunteer with a senior",
+    "mission": {
+      "eyebrow": "Mission and vision",
+      "title": "Why we exist",
+      "text": "Our commitment to the health and well-being of older adults, and where we want long-term care to be in ten years.",
+      "cta": "Mission and vision"
+    },
+    "history": {
+      "eyebrow": "Our history",
+      "title": "How we got here",
+      "text": "From a handful of neighbours helping neighbours to a province-wide volunteer network.",
+      "cta": "Our history"
+    },
+    "team": {
+      "eyebrow": "Our team",
+      "title": "The people behind the work",
+      "text": "Meet the coordinators, board members, and volunteers who keep the network running.",
+      "cta": "Our team"
+    }
+  },
+  "mission": {
+    "heading": "Mission and vision",
+    "missionEyebrow": "Our mission",
+    "visionEyebrow": "Our vision",
+    "figureAlt": "A volunteer shovelling snow for a senior",
+    "missionHeadline": "Dedicated to transforming the health and well-being of older adults.",
+    "missionBody": "BetterLTC – a non-profit charitable organization – is dedicated to transforming the health and well-being with older adults. By fostering innovation and collaboration, and using an asset-based approach the platform connects people with essential resources, cutting-edge research, and strategic insights to address the evolving needs of an aging population.\n\nThis commitment ensures collaborative, high-quality care, and resources that support dignity and interdependence. The website serves as a vital hub for sharing knowledge, promoting best practices, and driving meaningful change.\n\nBetterLTC enhances the capacity to deliver compassionate and effective care. The platform prioritizes well-being by equipping users with the tools, training, and knowledge necessary to navigate the complexities of growing older. By addressing challenges such as resource accessibility and availability, workforce development, and evolving care standards — BetterLTC contributes to a resilient and adaptive system.",
+    "visionTagline": "A world where growing older is celebrated — where every individual is valued, supported, and empowered to thrive.",
+    "visionBody": "At BetterLTC, we envision a transformative future for caring with older adults and their close ones that goes beyond traditional models to embrace a comprehensive, relational approach. Our aspiration is to create a world where care is not confined to facilities but extends to fostering environments that genuinely enhance the well-being, dignity, and autonomy of every older adult.\n\nWe believe growing older should be celebrated. This includes creating spaces that respect individuality, promote community, and honor the unique preferences and needs of each person. Our vision includes fostering meaningful connections, encouraging active participation, and ensuring that every older adult feels valued and supported.\n\nBy prioritizing innovation and collaboration, we aim to empower older adults, their close ones, care partners and communities with the tools and resources to thrive. Founded by Dr. Roslyn M. Compton, BetterLTC is committed to transforming older adult care through innovative initiatives and collaborative partnerships."
+  },
+  "history": {
+    "heading": "Our history",
+    "heroAlt": "Saskatchewan prairie",
+    "era1Title": "The Beginning",
+    "era2Title": "Growth & Expansion",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "playSlideshow": "Play slideshow"
+  },
+  "team": {
+    "heading": "Our team"
+  },
+  "ourWork": {
+    "eyebrow": "Our work",
+    "heading": "Stories from the community",
+    "empty": "No posts yet.",
+    "back": "Back to our work"
+  },
+  "volunteer": {
+    "eyebrow": "Volunteer",
+    "heading": "Find an opportunity near you",
+    "lead": "Every listing comes from a verified organization. Pick a city to narrow the list.",
+    "searchPlaceholder": "Enter a keyword...",
+    "empty": "No opportunities found.",
+    "emptyForKeyword": "No opportunities match \"{{keyword}}\".",
+    "otherCity": "Other"
+  },
+  "volunteerDetail": {
+    "back": "Back to opportunities",
+    "notFound": "Opportunity not found.",
+    "duration": "Duration",
+    "about": "About This Opportunity",
+    "register": "Register Now",
+    "submitting": "Submitting...",
+    "bgCheckNotice": "A background check approval is required before applying. Please wait for admin review.",
+    "registered": "You have applied for this opportunity.",
+    "mapLabel": "{{city}}, Saskatchewan"
+  },
+  "auth": {
+    "signInHeading": "Sign In",
+    "createAccount": "Create Account",
+    "roleVolunteer": "I want to volunteer",
+    "roleOrganization": "I represent an organization",
+    "orgName": "Organization Name",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "placeholders": {
+      "orgName": "Enter your organization name",
+      "firstName": "Enter your first name",
+      "lastName": "Enter your last name",
+      "email": "Enter your email",
+      "password": "Enter your password",
+      "confirmPassword": "Re-enter your password"
+    },
+    "errors": {
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required.",
+      "lettersOnly": "Please use English letters only.",
+      "emailInvalid": "Please enter a valid email address.",
+      "passwordShort": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords do not match.",
+      "orgNameRequired": "Organization name is required.",
+      "invalidCredentials": "Invalid email or password.",
+      "signUpFailed": "Sign up failed. Please try again.",
+      "volunteerEmailExists": "Volunteer with this email already exists.",
+      "orgEmailExists": "Organization with this email already exists."
+    },
+    "accountCreated": "Account created successfully. Please sign in."
+  },
+  "dashboard": {
+    "roleVolunteer": "Volunteer",
+    "nav": {
+      "applications": "My Applications",
+      "profile": "Profile Settings",
+      "shifts": "Upcoming Shifts",
+      "history": "Volunteer History"
+    },
+    "bgCheck": {
+      "heading": "Background Check Status",
+      "pending": "Pending Review",
+      "approved": "Approved",
+      "underReview": "Your background check is under review. Upload supporting documents below to speed up the process.",
+      "uploadHeading": "Upload Background Check Document",
+      "selectFile": "Click to select a file (PDF, JPG, PNG)",
+      "submit": "Submit Document",
+      "submitted": "{{file}} submitted! We'll review it shortly.",
+      "removeDocument": "Remove Document"
+    },
+    "profile": {
+      "changePhoto": "Change Photo",
+      "phoneNumber": "Phone Number",
+      "address": "Address",
+      "saved": "Saved!",
+      "saveChanges": "Save Changes",
+      "changePassword": "Change Password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password",
+      "updatePassword": "Update Password",
+      "placeholders": {
+        "phone": "e.g. 306-555-0123",
+        "address": "e.g. 123 Main St, Saskatoon, SK",
+        "currentPassword": "Enter current password",
+        "newPassword": "Min. 8 characters",
+        "confirmNewPassword": "Re-enter new password"
+      },
+      "errors": {
+        "currentRequired": "Please enter your current password.",
+        "newShort": "New password must be at least 8 characters.",
+        "newMismatch": "New passwords do not match."
+      },
+      "passwordUpdated": "Password updated successfully!"
+    },
+    "shifts": {
+      "empty": "No upcoming shifts scheduled.",
+      "list": "List",
+      "calendar": "Calendar"
+    },
+    "applications": {
+      "empty": "You have not applied to any opportunities yet."
+    },
+    "history": {
+      "empty": "No volunteer history yet."
+    }
+  },
+  "orgDashboard": {
+    "role": "Organization",
+    "nav": {
+      "listings": "My Listings",
+      "applicants": "Applicants"
+    },
+    "stats": {
+      "activeListings": "Active Listings",
+      "ongoing": "Ongoing",
+      "totalApplicants": "Total Applicants",
+      "pendingReview": "Pending Review"
+    },
+    "applicants": {
+      "empty": "No applicants yet.",
+      "listing": "Listing",
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "listings": {
+      "add": "Add Listing",
+      "empty": "No listings yet. Add your first volunteer opportunity.",
+      "deleteConfirm": "Delete this listing?",
+      "selectCategory": "Select a category",
+      "selectCity": "Select a city",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "titlePlaceholder": "Opportunity title",
+      "descriptionPlaceholder": "Describe the opportunity",
+      "requiredError": "Title, category, and location are required."
+    },
+    "pending": {
+      "heading": "Account Pending Approval",
+      "text": "Your organization account is currently under review. An admin will approve your account before you can post listings.",
+      "notify": "We will notify you once your account has been approved."
+    }
+  },
+  "adminDashboard": {
+    "panel": "Admin Panel",
+    "nav": {
+      "users": "Users",
+      "organizations": "Organizations",
+      "team": "Our Team",
+      "opportunities": "Volunteer Opportunities",
+      "work": "Our Work",
+      "help": "Get Help"
+    },
+    "stats": {
+      "totalVolunteers": "Total Volunteers",
+      "bgApproved": "Background Approved",
+      "activeOpportunities": "Active Opportunities",
+      "teamMembers": "Team Members"
+    },
+    "deleteConfirm": "Delete this item?",
+    "volunteers": {
+      "heading": "Volunteers",
+      "empty": "No volunteers registered yet.",
+      "bgCheck": "Background Check",
+      "approve": "Approve",
+      "revoke": "Revoke"
+    },
+    "organizations": {
+      "empty": "No organizations registered yet.",
+      "organization": "Organization",
+      "contact": "Contact"
+    },
+    "team": {
+      "addMember": "Add Member",
+      "photo": "Photo",
+      "position": "Position",
+      "bio": "Bio",
+      "uploading": "Uploading...",
+      "namePlaceholder": "Full name",
+      "positionPlaceholder": "Job title",
+      "bioPlaceholder": "Short bio"
+    },
+    "opportunities": {
+      "add": "Add Opportunity",
+      "cityPlaceholder": "City",
+      "daysPlaceholder": "e.g. Weekdays, Flexible"
+    },
+    "work": {
+      "addPost": "Add Post",
+      "selectCategory": "Select category",
+      "content": "Content",
+      "post": "Post",
+      "titlePlaceholder": "Post title"
+    },
+    "help": {
+      "heading": "Help Requests",
+      "empty": "No requests submitted yet.",
+      "helpType": "Help Type",
+      "submitted": "Submitted"
+    }
+  },
+  "options": {
+    "helpTypes": {
+      "seniorCare": "Senior Care Support",
+      "meal": "Meal Assistance",
+      "transportation": "Transportation Support",
+      "medical": "Medical Assistance",
+      "mentalHealth": "Mental Health Support",
+      "housing": "Housing Support",
+      "other": "Other"
+    },
+    "listingStatus": {
+      "ongoing": "Is Ongoing",
+      "oneTime": "One-time",
+      "completed": "Completed"
+    },
+    "applicationStatus": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "workCategories": {
+      "campaign": "Campaign",
+      "program": "Program",
+      "event": "Event",
+      "initiative": "Initiative"
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "daysShort": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    }
+  }
+}
