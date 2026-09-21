@@ -1,0 +1,421 @@
+{
+  "common": {
+    "siteName": "VolunteerConnect Saskatchewan",
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "remove": "Retirer",
+    "search": "Rechercher",
+    "viewAll": "Tout afficher",
+    "viewDetails": "Voir les détails",
+    "viewDetailsFor": "Voir les détails de {{title}}",
+    "readMore": "Lire la suite",
+    "learnMore": "En savoir plus",
+    "logOut": "Se déconnecter",
+    "viewSite": "Voir le site",
+    "email": "Courriel",
+    "phone": "Téléphone",
+    "password": "Mot de passe",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "name": "Nom",
+    "date": "Date",
+    "status": "Statut",
+    "actions": "Actions",
+    "location": "Lieu",
+    "days": "Jours",
+    "schedule": "Horaire",
+    "category": "Catégorie",
+    "description": "Description",
+    "title": "Titre",
+    "overview": "Aperçu",
+    "flexible": "Flexible",
+    "show": "Afficher",
+    "hide": "Masquer",
+    "genericError": "Une erreur s'est produite. Veuillez réessayer.",
+    "serverUnreachable": "Impossible de joindre le serveur. Veuillez réessayer plus tard."
+  },
+  "nav": {
+    "ariaMain": "Navigation principale",
+    "menu": "Menu",
+    "logoHome": "Accueil de VolunteerConnect Saskatchewan",
+    "getHelp": "Obtenir de l'aide",
+    "aboutUs": "À propos",
+    "missionVision": "Mission et vision",
+    "ourHistory": "Notre histoire",
+    "ourTeam": "Notre équipe",
+    "volunteer": "Bénévolat",
+    "ourWork": "Nos réalisations",
+    "dashboard": "Tableau de bord",
+    "signIn": "Ouvrir une session",
+    "signUp": "S'inscrire",
+    "donate": "Faire un don"
+  },
+  "footer": {
+    "tagline": "Rapprocher les communautés par l'entraide.",
+    "contactUs": "Nous joindre",
+    "followUs": "Suivez-nous",
+    "rights": "© {{year}} VolunteerConnect Saskatchewan. Tous droits réservés."
+  },
+  "home": {
+    "hero": {
+      "heading": "Soigner. Relier. Rassembler.",
+      "lead": "De l'aide gratuite pour les aînés de la Saskatchewan, offerte par des voisins qui ont leur bien-être à cœur.",
+      "needHelp": "J'ai besoin d'aide",
+      "wantToVolunteer": "Je veux faire du bénévolat"
+    },
+    "pillars": {
+      "eyebrow": "Ce que nous faisons",
+      "heading": "Trois façons de participer",
+      "volunteer": {
+        "title": "Bénévoles",
+        "text": "Offrez quelques heures par mois à une personne aînée ou à un foyer de soins près de chez vous.",
+        "cta": "Parcourir les occasions"
+      },
+      "organizations": {
+        "title": "Organismes",
+        "text": "Publiez vos besoins et entrez en contact avec des bénévoles vérifiés de votre région.",
+        "cta": "Devenir partenaire"
+      },
+      "community": {
+        "title": "Communauté",
+        "text": "Découvrez les histoires et les résultats de gens qui sont là les uns pour les autres.",
+        "cta": "Lire nos réalisations"
+      }
+    },
+    "recent": {
+      "eyebrow": "Occasions",
+      "heading": "Occasions récentes"
+    },
+    "news": {
+      "eyebrow": "Nos réalisations",
+      "heading": "Dernières nouvelles"
+    }
+  },
+  "getHelp": {
+    "eyebrow": "Obtenir de l'aide",
+    "heading": "Nous sommes là pour vous aider",
+    "lead": "Besoin d'un coup de main pour les repas, le transport, les visites à domicile ou les soins d'une personne aînée? Parlez-nous un peu de votre situation et une vraie personne vous rappellera.",
+    "form": {
+      "helpType": "Comment pouvons-nous vous aider?",
+      "chooseOne": "Choisir une option",
+      "tellUsMore": "Dites-nous-en plus",
+      "send": "Envoyer la demande",
+      "sending": "Envoi en cours..."
+    },
+    "success": {
+      "heading": "Merci d'avoir communiqué avec nous",
+      "text": "Nous avons bien reçu votre demande et nous vous répondrons dans un délai de deux jours ouvrables.",
+      "another": "Envoyer une autre demande"
+    },
+    "expect": {
+      "eyebrow": "À quoi s'attendre",
+      "heading": "Simple, gratuit et local",
+      "item1": "Une coordonnatrice ou un coordonnateur des bénévoles vous rappelle dans un délai de deux jours ouvrables",
+      "item2": "Chaque bénévole a fait l'objet d'une vérification des antécédents",
+      "item3": "Aucuns frais pour vous ni pour votre famille",
+      "item4": "Vous pouvez suspendre ou arrêter l'aide en tout temps"
+    }
+  },
+  "about": {
+    "eyebrow": "À propos",
+    "heading": "Des voisins qui veillent les uns sur les autres",
+    "heroAlt": "Un bénévole avec une personne aînée",
+    "mission": {
+      "eyebrow": "Mission et vision",
+      "title": "Notre raison d'être",
+      "text": "Notre engagement envers la santé et le bien-être des personnes aînées, et notre vision des soins de longue durée dans dix ans.",
+      "cta": "Mission et vision"
+    },
+    "history": {
+      "eyebrow": "Notre histoire",
+      "title": "Notre parcours",
+      "text": "D'une poignée de voisins qui s'entraidaient à un réseau de bénévoles à l'échelle de la province.",
+      "cta": "Notre histoire"
+    },
+    "team": {
+      "eyebrow": "Notre équipe",
+      "title": "Les gens derrière notre travail",
+      "text": "Faites la connaissance des coordonnateurs, des membres du conseil d'administration et des bénévoles qui font vivre le réseau.",
+      "cta": "Notre équipe"
+    }
+  },
+  "mission": {
+    "heading": "Mission et vision",
+    "missionEyebrow": "Notre mission",
+    "visionEyebrow": "Notre vision",
+    "figureAlt": "Un bénévole qui pellette la neige pour une personne aînée",
+    "missionHeadline": "Voués à transformer la santé et le bien-être des personnes aînées.",
+    "missionBody": "BetterLTC, un organisme de bienfaisance sans but lucratif, se consacre à transformer la santé et le bien-être des personnes aînées, avec elles. En favorisant l'innovation et la collaboration, et grâce à une approche fondée sur les forces, la plateforme met les gens en lien avec des ressources essentielles, des recherches de pointe et des perspectives stratégiques afin de répondre aux besoins changeants d'une population vieillissante.\n\nCet engagement assure des soins collaboratifs de grande qualité ainsi que des ressources qui soutiennent la dignité et l'interdépendance. Le site Web sert de carrefour essentiel pour partager les connaissances, promouvoir les pratiques exemplaires et susciter des changements concrets.\n\nBetterLTC renforce la capacité d'offrir des soins empreints de compassion et efficaces. La plateforme accorde la priorité au bien-être en donnant aux utilisateurs les outils, la formation et les connaissances nécessaires pour composer avec les réalités du vieillissement. En s'attaquant à des défis comme l'accessibilité et la disponibilité des ressources, le perfectionnement de la main-d'œuvre et l'évolution des normes de soins, BetterLTC contribue à un système résilient et adaptable.",
+    "visionTagline": "Un monde où vieillir est célébré, où chaque personne est valorisée, soutenue et outillée pour s'épanouir.",
+    "visionBody": "À BetterLTC, nous envisageons un avenir transformateur pour les soins offerts avec les personnes aînées et leurs proches, un avenir qui dépasse les modèles traditionnels pour adopter une approche globale et relationnelle. Nous aspirons à un monde où les soins ne se limitent pas aux établissements, mais contribuent à créer des milieux qui améliorent véritablement le bien-être, la dignité et l'autonomie de chaque personne aînée.\n\nNous croyons que vieillir devrait être célébré. Cela suppose de créer des espaces qui respectent l'individualité, favorisent la vie communautaire et honorent les préférences et les besoins uniques de chacun. Notre vision consiste à tisser des liens significatifs, à encourager la participation active et à veiller à ce que chaque personne aînée se sente valorisée et soutenue.\n\nEn misant sur l'innovation et la collaboration, nous voulons donner aux personnes aînées, à leurs proches, aux partenaires de soins et aux communautés les outils et les ressources pour s'épanouir. Fondé par la Dre Roslyn M. Compton, BetterLTC s'engage à transformer les soins aux personnes aînées grâce à des initiatives novatrices et à des partenariats de collaboration."
+  },
+  "history": {
+    "heading": "Notre histoire",
+    "heroAlt": "Prairie de la Saskatchewan",
+    "era1Title": "Les débuts",
+    "era2Title": "Croissance et expansion",
+    "prevSlide": "Diapositive précédente",
+    "nextSlide": "Diapositive suivante",
+    "playSlideshow": "Lancer le diaporama"
+  },
+  "team": {
+    "heading": "Notre équipe"
+  },
+  "ourWork": {
+    "eyebrow": "Nos réalisations",
+    "heading": "Histoires de la communauté",
+    "empty": "Aucune publication pour le moment.",
+    "back": "Retour à nos réalisations"
+  },
+  "volunteer": {
+    "eyebrow": "Bénévolat",
+    "heading": "Trouvez une occasion près de chez vous",
+    "lead": "Chaque annonce provient d'un organisme vérifié. Choisissez une ville pour préciser la liste.",
+    "searchPlaceholder": "Entrez un mot-clé...",
+    "empty": "Aucune occasion trouvée.",
+    "emptyForKeyword": "Aucune occasion ne correspond à « {{keyword}} ».",
+    "otherCity": "Autre"
+  },
+  "volunteerDetail": {
+    "back": "Retour aux occasions",
+    "notFound": "Occasion introuvable.",
+    "duration": "Durée",
+    "about": "À propos de cette occasion",
+    "register": "S'inscrire maintenant",
+    "submitting": "Envoi en cours...",
+    "bgCheckNotice": "Une vérification des antécédents approuvée est requise avant de postuler. Veuillez attendre l'examen par l'administration.",
+    "registered": "Vous avez postulé pour cette occasion.",
+    "mapLabel": "{{city}} (Saskatchewan)"
+  },
+  "auth": {
+    "signInHeading": "Ouvrir une session",
+    "createAccount": "Créer un compte",
+    "roleVolunteer": "Je veux faire du bénévolat",
+    "roleOrganization": "Je représente un organisme",
+    "orgName": "Nom de l'organisme",
+    "confirmPassword": "Confirmer le mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "noAccount": "Vous n'avez pas de compte?",
+    "placeholders": {
+      "orgName": "Entrez le nom de votre organisme",
+      "firstName": "Entrez votre prénom",
+      "lastName": "Entrez votre nom de famille",
+      "email": "Entrez votre courriel",
+      "password": "Entrez votre mot de passe",
+      "confirmPassword": "Entrez de nouveau votre mot de passe"
+    },
+    "errors": {
+      "firstNameRequired": "Le prénom est obligatoire.",
+      "lastNameRequired": "Le nom de famille est obligatoire.",
+      "lettersOnly": "Veuillez utiliser uniquement des lettres de l'alphabet anglais.",
+      "emailInvalid": "Veuillez entrer une adresse de courriel valide.",
+      "passwordShort": "Le mot de passe doit contenir au moins 8 caractères.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "orgNameRequired": "Le nom de l'organisme est obligatoire.",
+      "invalidCredentials": "Courriel ou mot de passe invalide.",
+      "signUpFailed": "L'inscription a échoué. Veuillez réessayer.",
+      "volunteerEmailExists": "Un compte de bénévole existe déjà avec ce courriel.",
+      "orgEmailExists": "Un compte d'organisme existe déjà avec ce courriel."
+    },
+    "accountCreated": "Compte créé avec succès. Veuillez ouvrir une session."
+  },
+  "dashboard": {
+    "roleVolunteer": "Bénévole",
+    "nav": {
+      "applications": "Mes candidatures",
+      "profile": "Paramètres du profil",
+      "shifts": "Quarts à venir",
+      "history": "Historique de bénévolat"
+    },
+    "bgCheck": {
+      "heading": "État de la vérification des antécédents",
+      "pending": "En attente d'examen",
+      "approved": "Approuvée",
+      "underReview": "Votre vérification des antécédents est en cours d'examen. Téléversez les documents justificatifs ci-dessous pour accélérer le processus.",
+      "uploadHeading": "Téléverser le document de vérification des antécédents",
+      "selectFile": "Cliquez pour sélectionner un fichier (PDF, JPG, PNG)",
+      "submit": "Soumettre le document",
+      "submitted": "{{file}} soumis! Nous l'examinerons sous peu.",
+      "removeDocument": "Retirer le document"
+    },
+    "profile": {
+      "changePhoto": "Changer la photo",
+      "phoneNumber": "Numéro de téléphone",
+      "address": "Adresse",
+      "saved": "Enregistré!",
+      "saveChanges": "Enregistrer les modifications",
+      "changePassword": "Changer le mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmNewPassword": "Confirmer le nouveau mot de passe",
+      "updatePassword": "Mettre à jour le mot de passe",
+      "placeholders": {
+        "phone": "p. ex. 306-555-0123",
+        "address": "p. ex. 123, rue Main, Saskatoon (Sask.)",
+        "currentPassword": "Entrez le mot de passe actuel",
+        "newPassword": "Au moins 8 caractères",
+        "confirmNewPassword": "Entrez de nouveau le nouveau mot de passe"
+      },
+      "errors": {
+        "currentRequired": "Veuillez entrer votre mot de passe actuel.",
+        "newShort": "Le nouveau mot de passe doit contenir au moins 8 caractères.",
+        "newMismatch": "Les nouveaux mots de passe ne correspondent pas."
+      },
+      "passwordUpdated": "Mot de passe mis à jour avec succès!"
+    },
+    "shifts": {
+      "empty": "Aucun quart prévu.",
+      "list": "Liste",
+      "calendar": "Calendrier"
+    },
+    "applications": {
+      "empty": "Vous n'avez encore postulé pour aucune occasion."
+    },
+    "history": {
+      "empty": "Aucun historique de bénévolat pour le moment."
+    }
+  },
+  "orgDashboard": {
+    "role": "Organisme",
+    "nav": {
+      "listings": "Mes annonces",
+      "applicants": "Candidats"
+    },
+    "stats": {
+      "activeListings": "Annonces actives",
+      "ongoing": "En cours",
+      "totalApplicants": "Total des candidats",
+      "pendingReview": "En attente d'examen"
+    },
+    "applicants": {
+      "empty": "Aucun candidat pour le moment.",
+      "listing": "Annonce",
+      "approve": "Approuver",
+      "reject": "Refuser"
+    },
+    "listings": {
+      "add": "Ajouter une annonce",
+      "empty": "Aucune annonce pour le moment. Ajoutez votre première occasion de bénévolat.",
+      "deleteConfirm": "Supprimer cette annonce?",
+      "selectCategory": "Choisir une catégorie",
+      "selectCity": "Choisir une ville",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "titlePlaceholder": "Titre de l'occasion",
+      "descriptionPlaceholder": "Décrivez l'occasion",
+      "requiredError": "Le titre, la catégorie et le lieu sont obligatoires."
+    },
+    "pending": {
+      "heading": "Compte en attente d'approbation",
+      "text": "Le compte de votre organisme est en cours d'examen. Un administrateur doit l'approuver avant que vous puissiez publier des annonces.",
+      "notify": "Nous vous aviserons dès que votre compte aura été approuvé."
+    }
+  },
+  "adminDashboard": {
+    "panel": "Panneau d'administration",
+    "nav": {
+      "users": "Utilisateurs",
+      "organizations": "Organismes",
+      "team": "Notre équipe",
+      "opportunities": "Occasions de bénévolat",
+      "work": "Nos réalisations",
+      "help": "Demandes d'aide"
+    },
+    "stats": {
+      "totalVolunteers": "Total des bénévoles",
+      "bgApproved": "Antécédents approuvés",
+      "activeOpportunities": "Occasions actives",
+      "teamMembers": "Membres de l'équipe"
+    },
+    "deleteConfirm": "Supprimer cet élément?",
+    "volunteers": {
+      "heading": "Bénévoles",
+      "empty": "Aucun bénévole inscrit pour le moment.",
+      "bgCheck": "Vérification des antécédents",
+      "approve": "Approuver",
+      "revoke": "Révoquer"
+    },
+    "organizations": {
+      "empty": "Aucun organisme inscrit pour le moment.",
+      "organization": "Organisme",
+      "contact": "Personne-ressource"
+    },
+    "team": {
+      "addMember": "Ajouter un membre",
+      "photo": "Photo",
+      "position": "Poste",
+      "bio": "Biographie",
+      "uploading": "Téléversement en cours...",
+      "namePlaceholder": "Nom complet",
+      "positionPlaceholder": "Titre du poste",
+      "bioPlaceholder": "Courte biographie"
+    },
+    "opportunities": {
+      "add": "Ajouter une occasion",
+      "cityPlaceholder": "Ville",
+      "daysPlaceholder": "p. ex. en semaine, flexible"
+    },
+    "work": {
+      "addPost": "Ajouter une publication",
+      "selectCategory": "Choisir une catégorie",
+      "content": "Contenu",
+      "post": "Publier",
+      "titlePlaceholder": "Titre de la publication"
+    },
+    "help": {
+      "heading": "Demandes d'aide",
+      "empty": "Aucune demande soumise pour le moment.",
+      "helpType": "Type d'aide",
+      "submitted": "Soumise le"
+    }
+  },
+  "options": {
+    "helpTypes": {
+      "seniorCare": "Soutien aux soins des aînés",
+      "meal": "Aide aux repas",
+      "transportation": "Aide au transport",
+      "medical": "Aide médicale",
+      "mentalHealth": "Soutien en santé mentale",
+      "housing": "Aide au logement",
+      "other": "Autre"
+    },
+    "listingStatus": {
+      "ongoing": "En cours",
+      "oneTime": "Ponctuelle",
+      "completed": "Terminée"
+    },
+    "applicationStatus": {
+      "pending": "En attente",
+      "approved": "Approuvée",
+      "rejected": "Refusée"
+    },
+    "workCategories": {
+      "campaign": "Campagne",
+      "program": "Programme",
+      "event": "Événement",
+      "initiative": "Initiative"
+    },
+    "days": {
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche"
+    },
+    "daysShort": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mer",
+      "thu": "Jeu",
+      "fri": "Ven",
+      "sat": "Sam",
+      "sun": "Dim"
+    }
+  }
+}
