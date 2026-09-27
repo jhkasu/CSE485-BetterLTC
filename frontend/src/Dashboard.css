@@ -15,7 +15,7 @@
   width: 320px;
   min-width: 320px;
   flex-shrink: 0;
-  background-color: var(--color-text);
+  background-color: var(--color-dark);
   padding: 40px 0;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@
 
 .sidebar-user {
   padding: 0 28px 32px;
-  border-bottom: 2px solid #444444;
+  border-bottom: 2px solid var(--color-border);
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
@@ -36,14 +36,14 @@
   font-family: var(--font-heading);
   font-size: 30px;
   font-weight: 700;
-  color: white;
+  color: var(--color-on-dark);
   letter-spacing: 0;
 }
 
 .sidebar-user-role {
   font-family: var(--font-body);
   font-size: 18px;
-  color: #aaa;
+  color: var(--color-text-muted);
   margin-top: 6px;
   text-transform: capitalize;
 }
@@ -64,7 +64,7 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0;
-  color: #aaa;
+  color: var(--color-text-muted);
   cursor: pointer;
   border-left: 4px solid transparent;
   transition: all 0.15s ease;
@@ -73,12 +73,12 @@
 }
 
 .sidebar-nav-item:hover {
-  color: white;
+  color: var(--color-on-dark);
   background-color: rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-nav-item.active {
-  color: white;
+  color: var(--color-on-dark);
   border-left: 4px solid var(--color-dark);
   background-color: rgba(255, 255, 255, 0.08);
 }
@@ -98,7 +98,7 @@
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0;
-  color: #aaa;
+  color: var(--color-text-muted);
   cursor: pointer;
   border-left: 4px solid transparent;
 }
@@ -132,13 +132,13 @@
 }
 
 .application-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 24px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .application-title {
@@ -152,14 +152,14 @@
 .application-org {
   font-family: var(--font-body);
   font-size: 14px;
-  color: #888;
+  color: var(--color-text-muted);
   margin-bottom: 4px;
 }
 
 .application-date {
   font-family: var(--font-body);
   font-size: 13px;
-  color: #aaa;
+  color: var(--color-text-muted);
 }
 
 .application-status-badge {
@@ -174,39 +174,39 @@
 }
 
 .application-status-badge.pending {
-  background: #fff8e1;
-  color: #7a5c00;
-  border: 1px solid #ffe082;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning-border);
 }
 
 .application-status-badge.approved {
-  background: #e6f4ea;
-  color: #2d6a4f;
-  border: 1px solid #b7dfc5;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
 }
 
 .application-status-badge.rejected {
-  background: #fdecea;
-  color: #b00020;
-  border: 1px solid #f5c6cb;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
 }
 
 .dashboard-placeholder {
-  background-color: white;
-  border: 2px dashed #ddd;
+  background-color: var(--color-surface);
+  border: 2px dashed var(--color-border);
   padding: 80px 40px;
   text-align: center;
-  color: #aaa;
+  color: var(--color-text-muted);
   font-family: var(--font-body);
   font-size: 22px;
 }
 
 /* ── Profile Form ── */
 .profile-form {
-  background: white;
+  background: var(--color-surface);
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -234,7 +234,7 @@
   font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 600;
-  color: #444;
+  color: var(--color-text);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -242,7 +242,7 @@
 .profile-field input[type="text"],
 .profile-field input:not([type="checkbox"]) {
   padding: 14px 18px;
-  border: 1.5px solid #ddd;
+  border: 1.5px solid var(--color-border);
   border-radius: 6px;
   font-family: var(--font-body);
   font-size: 18px;
@@ -257,7 +257,7 @@
 
 .input-disabled {
   background-color: var(--color-bg);
-  color: #aaa !important;
+  color: var(--color-text-muted) !important;
   cursor: not-allowed;
 }
 
@@ -273,7 +273,7 @@
   gap: 8px;
   font-family: var(--font-body);
   font-size: 15px;
-  color: #333;
+  color: var(--color-text);
   cursor: pointer;
 }
 
@@ -296,13 +296,13 @@
 }
 
 .bg-check-badge.approved {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .bg-check-badge.pending {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
 }
 
 .profile-actions {
@@ -333,7 +333,7 @@
 .profile-saved-msg {
   font-family: var(--font-body);
   font-size: 18px;
-  color: #155724;
+  color: var(--color-success);
   font-weight: 600;
 }
 
@@ -361,16 +361,16 @@
   font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 700;
-  color: white;
+  color: var(--color-on-text);
   letter-spacing: 0;
 }
 
 /* ── Overview cards (#54, #58) ── */
 .overview-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 32px 36px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
   max-width: 800px;
 }
 
@@ -386,7 +386,7 @@
   font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -394,7 +394,7 @@
 .overview-card-hint {
   font-family: var(--font-body);
   font-size: 16px;
-  color: #777;
+  color: var(--color-text-muted);
   margin-top: 16px;
   margin-bottom: 0;
   line-height: 1.6;
@@ -407,7 +407,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  border: 2px dashed #ddd;
+  border: 2px dashed var(--color-border);
   border-radius: 8px;
   padding: 40px 24px;
   cursor: pointer;
@@ -428,7 +428,7 @@
 .upload-area-text {
   font-family: var(--font-body);
   font-size: 17px;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .upload-submit-btn {
@@ -460,8 +460,8 @@
 .upload-remove-btn {
   padding: 14px 28px;
   background-color: transparent;
-  color: #888;
-  border: 2px solid #ddd;
+  color: var(--color-text-muted);
+  border: 2px solid var(--color-border);
   border-radius: 6px;
   font-family: var(--font-heading);
   font-size: 17px;
@@ -489,8 +489,8 @@
   align-items: center;
   font-family: var(--font-body);
   font-size: 17px;
-  color: #155724;
-  background-color: #d4edda;
+  color: var(--color-success);
+  background-color: var(--color-success-bg);
   padding: 14px 20px;
   border-radius: 6px;
   font-weight: 600;
@@ -504,9 +504,9 @@
   align-items: center;
   gap: 24px;
   padding: 28px 40px;
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -533,7 +533,7 @@
   font-family: var(--font-heading);
   font-size: 32px;
   font-weight: 700;
-  color: white;
+  color: var(--color-on-text);
   letter-spacing: 0;
 }
 
@@ -581,13 +581,13 @@
 }
 
 .password-msg.success {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .password-msg.error {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 /* ── Upcoming shifts (#60, #75) ── */
@@ -599,10 +599,10 @@
 }
 
 .shift-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 28px 32px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -630,7 +630,7 @@
   gap: 6px 24px;
   font-family: var(--font-body);
   font-size: 15px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .shift-meta span {
@@ -680,7 +680,7 @@
 .cancel-confirm-text {
   font-family: var(--font-body);
   font-size: 16px;
-  color: #444;
+  color: var(--color-text);
   font-weight: 600;
 }
 
@@ -703,8 +703,8 @@
 
 .cancel-no-btn {
   padding: 10px 20px;
-  background-color: #f0f0f0;
-  color: #444;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   border: none;
   border-radius: 6px;
   font-family: var(--font-heading);
@@ -715,7 +715,7 @@
 }
 
 .cancel-no-btn:hover {
-  background-color: #ddd;
+  background-color: var(--color-bg);
 }
 
 /* ── Volunteer history (#60) ── */
@@ -730,7 +730,7 @@
 .history-summary-label {
   font-family: var(--font-body);
   font-size: 15px;
-  color: #aaa;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0;
   margin-bottom: 8px;
@@ -754,7 +754,7 @@
   font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 600;
-  color: #aaa;
+  color: var(--color-text-muted);
 }
 
 .history-list {
@@ -765,10 +765,10 @@
 }
 
 .history-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 22px 32px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -849,13 +849,13 @@
 .cal-nav-btn {
   width: 36px;
   height: 36px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--color-border);
   border-radius: 6px;
-  background: white;
+  background: var(--color-surface);
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
-  color: #444;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -877,9 +877,9 @@
 
 /* ── Calendar grid ── */
 .cal-grid {
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
   border: 1px solid var(--color-border);
 }
@@ -888,7 +888,7 @@
 .cal-header {
   display: flex;
   border-bottom: 2px solid var(--color-border);
-  background: #fafafa;
+  background: var(--color-bg);
 }
 
 .cal-time-spacer {
@@ -917,7 +917,7 @@
   font-family: var(--font-heading);
   font-size: 15px;
   font-weight: 700;
-  color: #555;
+  color: var(--color-text-muted);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -925,7 +925,7 @@
 .cal-day-date {
   font-family: var(--font-body);
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-muted);
   margin-top: 2px;
 }
 
@@ -952,9 +952,9 @@
   padding-top: 4px;
   font-family: var(--font-body);
   font-size: 11px;
-  color: #aaa;
+  color: var(--color-text-muted);
   box-sizing: border-box;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* ── Day columns ── */
@@ -984,7 +984,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background-color: #f0f0f0;
+  background-color: var(--color-bg);
 }
 
 /* ── Shift event block ── */
@@ -1004,7 +1004,7 @@
   font-family: var(--font-heading);
   font-size: 12px;
   font-weight: 700;
-  color: white;
+  color: var(--color-on-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1014,7 +1014,7 @@
 .cal-shift-time {
   font-family: var(--font-body);
   font-size: 11px;
-  color: rgba(255,255,255,0.85);
+  color: var(--color-on-text);
   margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;

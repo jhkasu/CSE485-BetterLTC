@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople } from 'react-icons/md';
+import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import './OrgDashboard.css';
 import API_BASE from './config';
 
@@ -368,6 +369,9 @@ function OrgDashboard() {
                 {item.label}
               </div>
             ))}
+          </div>
+          <div className="org-sidebar-display">
+            <AccessibilityMenu placement="above" className="a11y-menu-sidebar" />
           </div>
           <div className="org-sidebar-viewsite" onClick={() => navigate('/')}>
             <MdOpenInNew /> View Site

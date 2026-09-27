@@ -54,6 +54,19 @@
     "signUp": "Sign Up",
     "donate": "Donate now"
   },
+  "a11y": {
+    "display": "Display",
+    "settings": "Display settings",
+    "textSize": "Text size",
+    "sizeDefault": "Default",
+    "sizeLarge": "Large",
+    "sizeXLarge": "Extra large",
+    "contrast": "Contrast",
+    "contrastLight": "Light",
+    "contrastDark": "Dark",
+    "contrastHigh": "High contrast",
+    "reset": "Reset to default"
+  },
   "footer": {
     "tagline": "Connecting communities through care.",
     "contactUs": "Contact Us",

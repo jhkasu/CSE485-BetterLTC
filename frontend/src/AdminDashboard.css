@@ -1,6 +1,6 @@
 .admin-page {
   min-height: 100vh;
-  background: #f5f6fa;
+  background: var(--color-bg);
 }
 
 .admin-layout {
@@ -10,8 +10,8 @@
 
 .admin-sidebar {
   width: 240px;
-  background: var(--color-text);
-  color: var(--color-on-text);
+  background: var(--color-dark);
+  color: var(--color-on-dark);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -19,19 +19,19 @@
 
 .admin-sidebar-header {
   padding: 28px 20px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--color-on-dark-border);
 }
 
 .admin-sidebar-title {
   font-size: 24px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-on-dark);
   margin-bottom: 4px;
 }
 
 .admin-sidebar-user {
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-on-dark-faint);
 }
 
 .admin-sidebar-nav {
@@ -45,19 +45,19 @@
   gap: 12px;
   padding: 14px 20px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--color-on-dark-muted);
   font-size: 18px;
   transition: background 0.15s, color 0.15s;
 }
 
 .admin-nav-item:hover {
   background: rgba(255, 255, 255, 0.07);
-  color: #fff;
+  color: var(--color-on-dark);
 }
 
 .admin-nav-item.active {
   background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  color: var(--color-on-dark);
   font-weight: 600;
 }
 
@@ -72,14 +72,14 @@
   gap: 10px;
   padding: 14px 20px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-on-dark-faint);
   font-size: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--color-on-dark-border);
   transition: color 0.15s;
 }
 
 .admin-sidebar-viewsite:hover {
-  color: #fff;
+  color: var(--color-on-dark);
 }
 
 .admin-sidebar-logout {
@@ -88,14 +88,14 @@
   gap: 10px;
   padding: 16px 20px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-on-dark-faint);
   font-size: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--color-on-dark-border);
   transition: color 0.15s;
 }
 
 .admin-sidebar-logout:hover {
-  color: #fff;
+  color: var(--color-on-dark);
 }
 
 .admin-main {
@@ -148,10 +148,10 @@
 }
 
 .admin-stat-card {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   padding: 28px 24px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  box-shadow: var(--shadow-card);
 }
 
 .admin-stat-number {
@@ -162,34 +162,34 @@
 
 .admin-stat-label {
   font-size: 17px;
-  color: #888;
+  color: var(--color-text-muted);
   margin-top: 6px;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  box-shadow: var(--shadow-card);
 }
 
 .admin-table th {
-  background: #f8f9fb;
+  background: var(--color-bg);
   text-align: left;
   padding: 16px 18px;
   font-size: 17px;
   font-weight: 600;
-  color: #555;
-  border-bottom: 1px solid #eee;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .admin-table td {
   padding: 16px 18px;
   font-size: 17px;
-  color: #333;
-  border-bottom: 1px solid #f0f0f0;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
   vertical-align: middle;
 }
 
@@ -243,13 +243,13 @@
 }
 
 .bg-badge.approved {
-  background: #e0f9e0;
-  color: #1a7a3a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .bg-badge.pending {
-  background: #fff3e0;
-  color: #a06010;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
 }
 
 .admin-action-cell {
@@ -279,17 +279,17 @@
 }
 
 .admin-action-btn.delete {
-  background: #fff0f0;
-  color: #d9363e;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 .admin-action-btn.delete:hover {
-  background: #ffe0e0;
+  background: var(--color-danger-bg);
 }
 
 .admin-action-btn.approve {
-  background: #16a34a;
-  color: #fff;
+  background: var(--color-success-solid);
+  color: var(--color-on-solid);
   font-size: 16px;
   font-weight: 600;
   padding: 8px 20px;
@@ -299,13 +299,13 @@
 }
 
 .admin-action-btn.approve:hover {
-  background: #15803d;
+  background: var(--color-success-solid-hover);
   box-shadow: 0 2px 6px rgba(22, 163, 74, 0.4);
 }
 
 .admin-action-btn.revoke {
-  background: #dc2626;
-  color: #fff;
+  background: var(--color-danger-solid);
+  color: var(--color-on-solid);
   font-size: 16px;
   font-weight: 600;
   padding: 8px 20px;
@@ -315,7 +315,7 @@
 }
 
 .admin-action-btn.revoke:hover {
-  background: #b91c1c;
+  background: var(--color-danger-solid-hover);
   box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
 }
 
@@ -324,13 +324,13 @@
   align-items: center;
   gap: 8px;
   font-size: 15px;
-  color: #d9363e;
+  color: var(--color-danger);
   white-space: nowrap;
 }
 
 .confirm-yes {
-  background: #d9363e;
-  color: #fff;
+  background: var(--color-danger-solid);
+  color: var(--color-on-solid);
   border: none;
   padding: 5px 12px;
   border-radius: 6px;
@@ -340,8 +340,8 @@
 }
 
 .confirm-no {
-  background: #eee;
-  color: #333;
+  background: var(--color-bg);
+  color: var(--color-text);
   border: none;
   padding: 5px 12px;
   border-radius: 6px;
@@ -360,14 +360,14 @@
 }
 
 .admin-modal {
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 14px;
   width: 480px;
   max-width: 95vw;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-card);
 }
 
 .admin-modal-body {
@@ -389,7 +389,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px 16px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .admin-modal-header h3 {
@@ -404,14 +404,14 @@
   border: none;
   cursor: pointer;
   font-size: 22px;
-  color: #888;
+  color: var(--color-text-muted);
   display: flex;
   padding: 4px;
   transition: color 0.15s;
 }
 
 .admin-modal-close:hover {
-  color: #333;
+  color: var(--color-text);
 }
 
 .admin-modal-body {
@@ -427,7 +427,7 @@
 .admin-form label {
   font-size: 17px;
   font-weight: 600;
-  color: #555;
+  color: var(--color-text-muted);
   margin-top: 8px;
 }
 
@@ -436,11 +436,11 @@
 .admin-form select {
   width: 100%;
   padding: 10px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   font-size: 17px;
-  color: #333;
-  background: #fafafa;
+  color: var(--color-text);
+  background: var(--color-bg);
   outline: none;
   transition: border 0.15s;
   box-sizing: border-box;
@@ -451,7 +451,7 @@
 .admin-form textarea:focus,
 .admin-form select:focus {
   border-color: var(--color-text);
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .admin-form textarea {
@@ -481,8 +481,8 @@
 }
 
 .admin-cancel-btn {
-  background: #eee;
-  color: #333;
+  background: var(--color-bg);
+  color: var(--color-text);
   border: none;
   padding: 12px 28px;
   border-radius: 8px;
@@ -492,5 +492,5 @@
 }
 
 .admin-cancel-btn:hover {
-  background: #e0e0e0;
+  background: var(--color-bg);
 }

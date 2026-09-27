@@ -54,6 +54,19 @@
     "signUp": "S'inscrire",
     "donate": "Faire un don"
   },
+  "a11y": {
+    "display": "Affichage",
+    "settings": "Paramètres d'affichage",
+    "textSize": "Taille du texte",
+    "sizeDefault": "Par défaut",
+    "sizeLarge": "Grande",
+    "sizeXLarge": "Très grande",
+    "contrast": "Contraste",
+    "contrastLight": "Clair",
+    "contrastDark": "Sombre",
+    "contrastHigh": "Contraste élevé",
+    "reset": "Rétablir les valeurs par défaut"
+  },
   "footer": {
     "tagline": "Rapprocher les communautés par l'entraide.",
     "contactUs": "Nous joindre",

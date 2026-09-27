@@ -18,6 +18,20 @@
   --color-placeholder: #767676;
   --color-error: #c0392b;
   --color-focus: #1d1d20;
+  --color-on-solid: #ffffff;
+  --color-success: #1a7a3a;
+  --color-success-bg: #e6f4ea;
+  --color-success-border: #b7dfc5;
+  --color-success-solid: #16a34a;
+  --color-success-solid-hover: #15803d;
+  --color-danger: #b00020;
+  --color-danger-bg: #fdecea;
+  --color-danger-border: #f5c6cb;
+  --color-danger-solid: #c0392b;
+  --color-danger-solid-hover: #a93226;
+  --color-warning: #7a5c00;
+  --color-warning-bg: #fff8e1;
+  --color-warning-border: #ffe082;
 
   --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.08);
