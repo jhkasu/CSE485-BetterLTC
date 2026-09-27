@@ -71,7 +71,8 @@ function AccessibilityMenu({ placement = 'below', className = '' }) {
   }, [open]);
 
   const onBlur = (e) => {
-    if (rootRef.current && !rootRef.current.contains(e.relatedTarget)) setOpen(false);
+    const next = e.relatedTarget;
+    if (next instanceof HTMLElement && rootRef.current && !rootRef.current.contains(next)) setOpen(false);
   };
 
   return (

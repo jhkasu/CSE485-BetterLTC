@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { AccessibilityProvider } from './AccessibilityContext';
 import AccessibilityMenu from './AccessibilityMenu';
 import { STORAGE_KEY } from './a11yStorage';
@@ -82,5 +83,33 @@ test('clicking outside closes the panel', () => {
   renderMenu();
   openPanel();
   fireEvent.mouseDown(screen.getByText('Outside'));
+  expect(screen.queryByRole('group', { name: /display settings/i })).not.toBeInTheDocument();
+});
+
+test('clicking an option with the mouse keeps the panel open and applies it', () => {
+  renderMenu();
+  userEvent.click(screen.getByRole('button', { name: /display/i }));
+  userEvent.click(screen.getByText('Dark'));
+  expect(screen.getByRole('group', { name: /display settings/i })).toBeInTheDocument();
+  expect(document.documentElement).toHaveAttribute('data-contrast', 'dark');
+  userEvent.click(screen.getByText('Extra large'));
+  expect(screen.getByRole('group', { name: /display settings/i })).toBeInTheDocument();
+  expect(document.documentElement).toHaveAttribute('data-font-size', 'xlarge');
+  userEvent.click(screen.getByRole('button', { name: /reset to default/i }));
+  expect(screen.getByRole('group', { name: /display settings/i })).toBeInTheDocument();
+  expect(document.documentElement).toHaveAttribute('data-contrast', 'light');
+});
+
+test('moving keyboard focus out of the menu closes the panel', () => {
+  render(
+    <AccessibilityProvider>
+      <AccessibilityMenu />
+      <button type="button">Next</button>
+    </AccessibilityProvider>
+  );
+  openPanel();
+  fireEvent.blur(screen.getByRole('button', { name: /display/i }), {
+    relatedTarget: screen.getByRole('button', { name: 'Next' }),
+  });
   expect(screen.queryByRole('group', { name: /display settings/i })).not.toBeInTheDocument();
 });
