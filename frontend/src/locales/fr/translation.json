@@ -50,7 +50,7 @@
     "volunteer": "Bénévolat",
     "ourWork": "Nos réalisations",
     "dashboard": "Tableau de bord",
-    "signIn": "Ouvrir une session",
+    "signIn": "Connexion",
     "signUp": "S'inscrire",
     "donate": "Faire un don"
   },
@@ -66,6 +66,9 @@
     "contrastDark": "Sombre",
     "contrastHigh": "Contraste élevé",
     "reset": "Rétablir les valeurs par défaut"
+  },
+  "language": {
+    "switchTo": "Changer la langue pour {{language}}"
   },
   "footer": {
     "tagline": "Rapprocher les communautés par l'entraide.",
@@ -173,7 +176,8 @@
     "era2Title": "Croissance et expansion",
     "prevSlide": "Diapositive précédente",
     "nextSlide": "Diapositive suivante",
-    "playSlideshow": "Lancer le diaporama"
+    "playSlideshow": "Lancer le diaporama",
+    "eraPlaceholder": "Description provisoire pour cette période."
   },
   "team": {
     "heading": "Notre équipe"
@@ -278,18 +282,22 @@
         "newShort": "Le nouveau mot de passe doit contenir au moins 8 caractères.",
         "newMismatch": "Les nouveaux mots de passe ne correspondent pas."
       },
-      "passwordUpdated": "Mot de passe mis à jour avec succès!"
+      "passwordUpdated": "Mot de passe mis à jour avec succès!",
+      "photoAlt": "Photo de profil"
     },
     "shifts": {
       "empty": "Aucun quart prévu.",
       "list": "Liste",
-      "calendar": "Calendrier"
+      "calendar": "Calendrier",
+      "approvedOn": "Approuvé le : {{date}}"
     },
     "applications": {
-      "empty": "Vous n'avez encore postulé pour aucune occasion."
+      "empty": "Vous n'avez encore postulé pour aucune occasion.",
+      "appliedOn": "Demande envoyée le : {{date}}"
     },
     "history": {
-      "empty": "Aucun historique de bénévolat pour le moment."
+      "empty": "Aucun historique de bénévolat pour le moment.",
+      "hours": "{{hours}} h"
     }
   },
   "orgDashboard": {
@@ -320,7 +328,8 @@
       "endDate": "Date de fin",
       "titlePlaceholder": "Titre de l'occasion",
       "descriptionPlaceholder": "Décrivez l'occasion",
-      "requiredError": "Le titre, la catégorie et le lieu sont obligatoires."
+      "requiredError": "Le titre, la catégorie et le lieu sont obligatoires.",
+      "editTitle": "Modifier l'annonce"
     },
     "pending": {
       "heading": "Compte en attente d'approbation",
@@ -365,25 +374,41 @@
       "uploading": "Téléversement en cours...",
       "namePlaceholder": "Nom complet",
       "positionPlaceholder": "Titre du poste",
-      "bioPlaceholder": "Courte biographie"
+      "bioPlaceholder": "Courte biographie",
+      "addTitle": "Ajouter un membre de l'équipe",
+      "editTitle": "Modifier un membre de l'équipe",
+      "previewAlt": "Aperçu"
     },
     "opportunities": {
       "add": "Ajouter une occasion",
       "cityPlaceholder": "Ville",
-      "daysPlaceholder": "p. ex. en semaine, flexible"
+      "daysPlaceholder": "p. ex. en semaine, flexible",
+      "editTitle": "Modifier l'occasion"
     },
     "work": {
       "addPost": "Ajouter une publication",
       "selectCategory": "Choisir une catégorie",
       "content": "Contenu",
       "post": "Publier",
-      "titlePlaceholder": "Titre de la publication"
+      "titlePlaceholder": "Titre de la publication",
+      "newPost": "Nouvelle publication",
+      "editPost": "Modifier la publication"
     },
     "help": {
       "heading": "Demandes d'aide",
       "empty": "Aucune demande soumise pour le moment.",
       "helpType": "Type d'aide",
       "submitted": "Soumise le"
+    },
+    "editor": {
+      "linkPrompt": "URL",
+      "youtubePrompt": "URL YouTube",
+      "bulletList": "Liste",
+      "orderedList": "Liste",
+      "quote": "Citation",
+      "link": "Lien",
+      "image": "Image",
+      "placeholder": "Rédigez votre publication ici..."
     }
   },
   "options": {

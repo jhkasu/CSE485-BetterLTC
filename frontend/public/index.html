@@ -37,6 +37,12 @@
         } catch (e) {}
         document.documentElement.setAttribute('data-contrast', contrast);
         document.documentElement.setAttribute('data-font-size', fontSize);
+        var language = (navigator.language || '').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en';
+        try {
+          var savedLanguage = window.localStorage.getItem('language');
+          if (savedLanguage === 'en' || savedLanguage === 'fr') language = savedLanguage;
+        } catch (e) {}
+        document.documentElement.setAttribute('lang', language === 'fr' ? 'fr-CA' : 'en-CA');
       })();
     </script>
     <title>BetterLTC</title>
