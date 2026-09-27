@@ -1,19 +1,22 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Logo from './Logo';
 import './Footer.css';
 
 function Footer() {
+  const { t } = useTranslation();
+  const year = new Date().getFullYear();
   return (
     <footer className="footer">
       <div className="footer-container">
 
         <div className="footer-brand">
           <Logo className="footer-logo" />
-          <p className="footer-tagline">Connecting communities through care.</p>
+          <p className="footer-tagline">{t('footer.tagline')}</p>
         </div>
 
         <div className="footer-contact">
-          <h3 className="footer-heading">Contact Us</h3>
+          <h3 className="footer-heading">{t('footer.contactUs')}</h3>
           <p>123 Placeholder St, Suite 100</p>
           <p>Phoenix, AZ 85001</p>
           <p className="footer-phone">(555) 000-0000</p>
@@ -21,7 +24,7 @@ function Footer() {
         </div>
 
         <div className="footer-social">
-          <h3 className="footer-heading">Follow Us</h3>
+          <h3 className="footer-heading">{t('footer.followUs')}</h3>
           <div className="social-links">
             <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
@@ -54,7 +57,7 @@ function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} VolunteerConnect Saskatchewan. All rights reserved.</p>
+        <p>{t('footer.rights', { year })}</p>
       </div>
     </footer>
   );

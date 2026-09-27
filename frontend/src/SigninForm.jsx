@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import mockUsers from './mockUsers';
 import './SignupForm.css';
 import API_BASE from './config';
@@ -7,6 +8,7 @@ import API_BASE from './config';
 const SigninForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const successMessage = location.state?.success || null;
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
@@ -20,8 +22,8 @@ const SigninForm = () => {
   const validate = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) newErrors.email = 'Please enter a valid email address.';
-    if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters.';
+    if (!emailRegex.test(formData.email)) newErrors.email = 'auth.errors.emailInvalid';
+    if (formData.password.length < 8) newErrors.password = 'auth.errors.passwordShort';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -57,28 +59,28 @@ const SigninForm = () => {
       return;
     }
 
-    setErrors({ auth: 'Invalid email or password.' });
+    setErrors({ auth: 'auth.errors.invalidCredentials' });
   };
 
   return (
     <div className="signup-container">
       <div className="signup-box">
-        <h2>Sign In</h2>
-          {successMessage && <p className="success-message">{successMessage}</p>}
+        <h2>{t('auth.signInHeading')}</h2>
+          {successMessage && <p className="success-message">{t(successMessage)}</p>}
         <form onSubmit={handleSubmit} noValidate>
 
-          <label>Email</label>
+          <label>{t('common.email')}</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            placeholder="Enter your email"
+            placeholder={t('auth.placeholders.email')}
           />
-          {errors.email && <p className="error">{errors.email}</p>}
+          {errors.email && <p className="error">{t(errors.email)}</p>}
 
-          <label>Password</label>
+          <label>{t('common.password')}</label>
           <div className="password-wrapper">
             <input
               type={showPassword ? 'text' : 'password'}
@@ -86,24 +88,24 @@ const SigninForm = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              placeholder="Enter your password"
+              placeholder={t('auth.placeholders.password')}
             />
             <span className="toggle-password" onClick={() => setShowPassword(prev => !prev)}>
-              {showPassword ? 'Hide' : 'Show'}
+              {showPassword ? t('common.hide') : t('common.show')}
             </span>
           </div>
-          {errors.password && <p className="error">{errors.password}</p>}
-          {errors.auth && <p className="error">{errors.auth}</p>}
+          {errors.password && <p className="error">{t(errors.password)}</p>}
+          {errors.auth && <p className="error">{t(errors.auth)}</p>}
 
           <p className="forgot-password" onClick={() => navigate('/forgot-password')}>
-            Forgot Password?
+            {t('auth.forgotPassword')}
           </p>
 
-          <button type="submit">Sign In</button>
+          <button type="submit">{t('nav.signIn')}</button>
 
           <p className="redirect-signup">
-            Don't have an account?{' '}
-            <span onClick={() => navigate('/signup')}>Sign Up</span>
+            {t('auth.noAccount')}{' '}
+            <span onClick={() => navigate('/signup')}>{t('nav.signUp')}</span>
           </p>
 
         </form>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurTeamPage.css';
 import API_BASE from './config';
 
 function OurTeamPage() {
+  const { t } = useTranslation();
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
@@ -20,11 +22,11 @@ function OurTeamPage() {
 
       <header className="page-header">
         <div className="page-header-text">
-          <span className="eyebrow">About us</span>
-          <h1>Our team</h1>
+          <span className="eyebrow">{t('about.eyebrow')}</span>
+          <h1>{t('team.heading')}</h1>
         </div>
         <div className="page-header-media">
-          <img src="/ourTeam.png" alt="Our team" />
+          <img src="/ourTeam.png" alt={t('team.heading')} />
         </div>
       </header>
 

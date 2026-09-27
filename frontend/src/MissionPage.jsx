@@ -1,21 +1,23 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import missionContent from './missionContent';
 import './MissionPage.css';
 
 function MissionPage() {
+  const { t } = useTranslation();
   return (
     <div>
       <Navbar />
 
       <header className="page-header">
         <div className="page-header-text">
-          <span className="eyebrow">About us</span>
-          <h1>Mission and vision</h1>
+          <span className="eyebrow">{t('about.eyebrow')}</span>
+          <h1>{t('mission.heading')}</h1>
         </div>
         <div className="page-header-media">
-          <img src="/missionVision.png" alt="Mission and vision" />
+          <img src="/missionVision.png" alt={t('mission.heading')} />
         </div>
       </header>
 
@@ -23,27 +25,27 @@ function MissionPage() {
         <div className="container">
           <div className="split">
             <div>
-              <span className="eyebrow">Our mission</span>
-              <h2>{missionContent.headline}</h2>
+              <span className="eyebrow">{t('mission.missionEyebrow')}</span>
+              <h2>{t(missionContent.headline)}</h2>
             </div>
             <div className="split-body">
-              {missionContent.body.split('\n\n').map((para, i) => (
+              {t(missionContent.body).split(/\n\n/).map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
           </div>
 
           <div className="mission-figure">
-            <img src="/care2.png" alt="A volunteer shovelling snow for a senior" loading="lazy" />
+            <img src="/care2.png" alt={t('mission.figureAlt')} loading="lazy" />
           </div>
 
           <div className="split">
             <div>
-              <span className="eyebrow">Our vision</span>
-              <h2>{missionContent.visionTagline}</h2>
+              <span className="eyebrow">{t('mission.visionEyebrow')}</span>
+              <h2>{t(missionContent.visionTagline)}</h2>
             </div>
             <div className="split-body">
-              {missionContent.visionBody.split('\n\n').map((para, i) => (
+              {t(missionContent.visionBody).split(/\n\n/).map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>

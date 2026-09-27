@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurHistoryPage.css';
@@ -10,20 +11,23 @@ const historyData = [
   {
     id: 1,
     years: '1990 – 2000',
-    title: 'The Beginning',
-    description: 'Placeholder description for this era.',
+    titleKey: 'history.era1Title',
+    descriptionKey: 'history.eraPlaceholder',
     photos: ['/history1.png', '/history2.png', '/history3.png'],
   },
   {
     id: 2,
     years: '2000 – 2010',
-    title: 'Growth & Expansion',
-    description: 'Placeholder description for this era.',
+    titleKey: 'history.era2Title',
+    descriptionKey: 'history.eraPlaceholder',
     photos: ['/history1.png', '/history2.png'],
   },
 ];
 
-function HistorySection({ years, title, description, photos }) {
+function HistorySection({ years, titleKey, descriptionKey, photos }) {
+  const { t } = useTranslation();
+  const title = t(titleKey);
+  const description = t(descriptionKey);
   const swiperRef = useRef(null);
   const [playing, setPlaying] = useState(false);
 
@@ -60,9 +64,9 @@ function HistorySection({ years, title, description, photos }) {
         ))}
       </Swiper>
       <div className="gallery-controls">
-        <div className="swiper-button-prev spotlight-btn-prev" tabIndex="0" role="button" aria-label="Previous slide" onClick={() => swiperRef.current?.slidePrev()} />
-        <div className={`swiper-button-play${playing ? ' playing' : ''}`} role="button" aria-label="Play slideshow" onClick={handlePlay} />
-        <div className="swiper-button-next spotlight-btn-next" tabIndex="0" role="button" aria-label="Next slide" onClick={() => swiperRef.current?.slideNext()} />
+        <div className="swiper-button-prev spotlight-btn-prev" tabIndex="0" role="button" aria-label={t('history.prevSlide')} onClick={() => swiperRef.current?.slidePrev()} />
+        <div className={`swiper-button-play${playing ? ' playing' : ''}`} role="button" aria-label={t('history.playSlideshow')} onClick={handlePlay} />
+        <div className="swiper-button-next spotlight-btn-next" tabIndex="0" role="button" aria-label={t('history.nextSlide')} onClick={() => swiperRef.current?.slideNext()} />
       </div>
       </div>
     </div>
@@ -70,17 +74,18 @@ function HistorySection({ years, title, description, photos }) {
 }
 
 function OurHistoryPage() {
+  const { t } = useTranslation();
   return (
     <div>
       <Navbar />
 
       <header className="page-header">
         <div className="page-header-text">
-          <span className="eyebrow">About us</span>
-          <h1>Our history</h1>
+          <span className="eyebrow">{t('about.eyebrow')}</span>
+          <h1>{t('history.heading')}</h1>
         </div>
         <div className="page-header-media">
-          <img src="/saskatchewan.jpg" alt="Saskatchewan prairie" />
+          <img src="/saskatchewan.jpg" alt={t('history.heroAlt')} />
         </div>
       </header>
 

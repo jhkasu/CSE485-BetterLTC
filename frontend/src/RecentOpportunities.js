@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './RecentOpportunities.css';
 import API_BASE from './config';
 
 function RecentOpportunities() {
+  const { t } = useTranslation();
   const [opportunities, setOpportunities] = useState([]);
 
   useEffect(() => {
@@ -20,10 +22,10 @@ function RecentOpportunities() {
       <div className="container">
       <div className="recent-opp-header">
         <div>
-          <span className="eyebrow">Opportunities</span>
-          <h2 className="section-title">Recent opportunities</h2>
+          <span className="eyebrow">{t('home.recent.eyebrow')}</span>
+          <h2 className="section-title">{t('home.recent.heading')}</h2>
         </div>
-        <Link to="/volunteer" className="arrow-link">View all →</Link>
+        <Link to="/volunteer" className="arrow-link">{t('common.viewAll')} →</Link>
       </div>
       <div className="recent-opp-grid">
         {opportunities.map(op => (
@@ -39,7 +41,7 @@ function RecentOpportunities() {
                 <span className="opp-tag">{op.location}</span>
                 <span className="opp-tag">{op.days}</span>
               </div>
-              <Link className="arrow-link opp-link" to={`/volunteer/${op.id}`} aria-label={`View details for ${op.listingTitle}`}>View details →</Link>
+              <Link className="arrow-link opp-link" to={`/volunteer/${op.id}`} aria-label={t('common.viewDetailsFor', { title: op.listingTitle })}>{t('common.viewDetails')} →</Link>
             </div>
           </article>
         ))}

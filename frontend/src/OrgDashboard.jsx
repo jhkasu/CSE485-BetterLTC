@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
+import LanguageToggle from './i18n/LanguageToggle';
 import './OrgDashboard.css';
 import API_BASE from './config';
 
@@ -11,22 +13,46 @@ const SK_CITIES = [
   'Humboldt', 'Melfort', 'Melville', 'Kindersley', 'Tisdale', 'Other',
 ];
 
-const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-const CATEGORIES = [
-  'Senior Care Support',
-  'Meal Assistance',
-  'Transportation Support',
-  'Medical Assistance',
-  'Mental Health Support',
-  'Housing Support',
-  'Other',
+const DAYS_OF_WEEK = [
+  { value: 'Monday', labelKey: 'options.days.monday' },
+  { value: 'Tuesday', labelKey: 'options.days.tuesday' },
+  { value: 'Wednesday', labelKey: 'options.days.wednesday' },
+  { value: 'Thursday', labelKey: 'options.days.thursday' },
+  { value: 'Friday', labelKey: 'options.days.friday' },
+  { value: 'Saturday', labelKey: 'options.days.saturday' },
+  { value: 'Sunday', labelKey: 'options.days.sunday' },
 ];
 
+const DAY_LABEL_KEYS = Object.fromEntries(DAYS_OF_WEEK.map(d => [d.value, d.labelKey]));
+
+const CATEGORIES = [
+  { value: 'Senior Care Support', labelKey: 'options.helpTypes.seniorCare' },
+  { value: 'Meal Assistance', labelKey: 'options.helpTypes.meal' },
+  { value: 'Transportation Support', labelKey: 'options.helpTypes.transportation' },
+  { value: 'Medical Assistance', labelKey: 'options.helpTypes.medical' },
+  { value: 'Mental Health Support', labelKey: 'options.helpTypes.mentalHealth' },
+  { value: 'Housing Support', labelKey: 'options.helpTypes.housing' },
+  { value: 'Other', labelKey: 'options.helpTypes.other' },
+];
+
+const LISTING_STATUSES = [
+  { value: 'Is Ongoing', labelKey: 'options.listingStatus.ongoing' },
+  { value: 'One-time', labelKey: 'options.listingStatus.oneTime' },
+  { value: 'Completed', labelKey: 'options.listingStatus.completed' },
+];
+
+const LISTING_STATUS_KEYS = Object.fromEntries(LISTING_STATUSES.map(s => [s.value, s.labelKey]));
+
+const REGISTRATION_STATUS_KEYS = {
+  Pending: 'options.applicationStatus.pending',
+  Approved: 'options.applicationStatus.approved',
+  Rejected: 'options.applicationStatus.rejected',
+};
+
 const NAV_ITEMS = [
-  { id: 'overview', label: 'Overview', icon: <MdDashboard /> },
-  { id: 'listings', label: 'My Listings', icon: <MdVolunteerActivism /> },
-  { id: 'applicants', label: 'Applicants', icon: <MdPeople /> },
+  { id: 'overview', labelKey: 'common.overview', icon: <MdDashboard /> },
+  { id: 'listings', labelKey: 'orgDashboard.nav.listings', icon: <MdVolunteerActivism /> },
+  { id: 'applicants', labelKey: 'orgDashboard.nav.applicants', icon: <MdPeople /> },
 ];
 
 function Modal({ title, onClose, children }) {
@@ -44,16 +70,18 @@ function Modal({ title, onClose, children }) {
 }
 
 function DeleteConfirm({ onConfirm, onCancel }) {
+  const { t } = useTranslation();
   return (
     <div className="delete-confirm-row">
-      <span>Delete this listing?</span>
-      <button className="confirm-yes" onClick={onConfirm}>Delete</button>
-      <button className="confirm-no" onClick={onCancel}>Cancel</button>
+      <span>{t('orgDashboard.listings.deleteConfirm')}</span>
+      <button className="confirm-yes" onClick={onConfirm}>{t('common.delete')}</button>
+      <button className="confirm-no" onClick={onCancel}>{t('common.cancel')}</button>
     </div>
   );
 }
 
 function OrgDashboard() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('currentUser')));
   const [activeSection, setActiveSection] = useState('overview');
@@ -125,7 +153,7 @@ function OrgDashboard() {
   const saveListing = () => {
 
     if (!form.listingTitle.trim() || !form.category || !form.location) {
-      setFormError('Title, category, and location are required.');
+      setFormError('orgDashboard.listings.requiredError');
       return;
     }
     setFormError('');
@@ -170,23 +198,23 @@ function OrgDashboard() {
 
   const renderOverview = () => (
     <div>
-      <h2 className="org-section-title">Overview</h2>
+      <h2 className="org-section-title">{t('common.overview')}</h2>
       <div className="org-stats-grid">
         <div className="org-stat-card">
           <div className="org-stat-number">{listings.length}</div>
-          <div className="org-stat-label">Active Listings</div>
+          <div className="org-stat-label">{t('orgDashboard.stats.activeListings')}</div>
         </div>
         <div className="org-stat-card">
           <div className="org-stat-number">{listings.filter(l => l.status === 'Is Ongoing').length}</div>
-          <div className="org-stat-label">Ongoing</div>
+          <div className="org-stat-label">{t('orgDashboard.stats.ongoing')}</div>
         </div>
         <div className="org-stat-card">
           <div className="org-stat-number">{registrations.length}</div>
-          <div className="org-stat-label">Total Applicants</div>
+          <div className="org-stat-label">{t('orgDashboard.stats.totalApplicants')}</div>
         </div>
         <div className="org-stat-card">
           <div className="org-stat-number">{registrations.filter(r => r.status === 'Pending').length}</div>
-          <div className="org-stat-label">Pending Review</div>
+          <div className="org-stat-label">{t('orgDashboard.stats.pendingReview')}</div>
         </div>
       </div>
     </div>
@@ -194,19 +222,19 @@ function OrgDashboard() {
 
   const renderApplicants = () => (
     <div>
-      <h2 className="org-section-title">Applicants</h2>
+      <h2 className="org-section-title">{t('orgDashboard.nav.applicants')}</h2>
       {registrations.length === 0 ? (
-        <p className="org-empty">No applicants yet.</p>
+        <p className="org-empty">{t('orgDashboard.applicants.empty')}</p>
       ) : (
         <table className="org-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Listing</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>{t('common.name')}</th>
+              <th>{t('common.email')}</th>
+              <th>{t('orgDashboard.applicants.listing')}</th>
+              <th>{t('common.date')}</th>
+              <th>{t('common.status')}</th>
+              <th>{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -216,20 +244,20 @@ function OrgDashboard() {
                 <td>{r.volunteerEmail}</td>
                 <td>{r.listingTitle}</td>
                 <td>{r.registeredAt}</td>
-                <td><span className={`org-reg-badge ${r.status.toLowerCase()}`}>{r.status}</span></td>
+                <td><span className={`org-reg-badge ${r.status.toLowerCase()}`}>{REGISTRATION_STATUS_KEYS[r.status] ? t(REGISTRATION_STATUS_KEYS[r.status]) : r.status}</span></td>
                 <td>
                   <div className="org-action-cell">
                     {r.status === 'Pending' && (
                       <>
-                        <button className="admin-action-btn approve" onClick={() => updateRegistrationStatus(r.id, 'Approved')}>Approve</button>
-                        <button className="admin-action-btn revoke" onClick={() => updateRegistrationStatus(r.id, 'Rejected')}>Reject</button>
+                        <button className="admin-action-btn approve" onClick={() => updateRegistrationStatus(r.id, 'Approved')}>{t('orgDashboard.applicants.approve')}</button>
+                        <button className="admin-action-btn revoke" onClick={() => updateRegistrationStatus(r.id, 'Rejected')}>{t('orgDashboard.applicants.reject')}</button>
                       </>
                     )}
                     {r.status === 'Approved' && (
-                      <button className="admin-action-btn revoke" onClick={() => updateRegistrationStatus(r.id, 'Rejected')}>Reject</button>
+                      <button className="admin-action-btn revoke" onClick={() => updateRegistrationStatus(r.id, 'Rejected')}>{t('orgDashboard.applicants.reject')}</button>
                     )}
                     {r.status === 'Rejected' && (
-                      <button className="admin-action-btn approve" onClick={() => updateRegistrationStatus(r.id, 'Approved')}>Approve</button>
+                      <button className="admin-action-btn approve" onClick={() => updateRegistrationStatus(r.id, 'Approved')}>{t('orgDashboard.applicants.approve')}</button>
                     )}
                   </div>
                 </td>
@@ -244,20 +272,20 @@ function OrgDashboard() {
   const renderListings = () => (
     <div>
       <div className="org-section-header">
-        <h2 className="org-section-title">My Listings</h2>
-        <button className="org-add-btn" onClick={openAdd}><MdAdd /> Add Listing</button>
+        <h2 className="org-section-title">{t('orgDashboard.nav.listings')}</h2>
+        <button className="org-add-btn" onClick={openAdd}><MdAdd /> {t('orgDashboard.listings.add')}</button>
       </div>
       {listings.length === 0 ? (
-        <p className="org-empty">No listings yet. Add your first volunteer opportunity.</p>
+        <p className="org-empty">{t('orgDashboard.listings.empty')}</p>
       ) : (
         <table className="org-table">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Location</th>
-              <th>Schedule</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>{t('common.title')}</th>
+              <th>{t('common.location')}</th>
+              <th>{t('common.schedule')}</th>
+              <th>{t('common.status')}</th>
+              <th>{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -265,8 +293,8 @@ function OrgDashboard() {
               <tr key={l.id}>
                 <td>{l.listingTitle}</td>
                 <td>{l.location}</td>
-                <td>{l.days}</td>
-                <td><span className="org-status-badge">{l.status}</span></td>
+                <td>{l.days ? l.days.split(', ').map(d => (DAY_LABEL_KEYS[d] ? t(DAY_LABEL_KEYS[d]) : d)).join(', ') : l.days}</td>
+                <td><span className="org-status-badge">{LISTING_STATUS_KEYS[l.status] ? t(LISTING_STATUS_KEYS[l.status]) : l.status}</span></td>
                 <td>
                   <div className="org-action-cell">
                     {deleteId === l.id ? (
@@ -285,49 +313,47 @@ function OrgDashboard() {
         </table>
       )}
       {modal && (
-        <Modal title={modal.mode === 'add' ? 'Add Listing' : 'Edit Listing'} onClose={() => setModal(null)}>
+        <Modal title={modal.mode === 'add' ? t('orgDashboard.listings.add') : t('orgDashboard.listings.editTitle')} onClose={() => setModal(null)}>
           <div className="org-form">
-            <label>Title</label>
-            <input value={form.listingTitle} onChange={e => setForm({ ...form, listingTitle: e.target.value })} placeholder="Opportunity title" />
-            <label>Category</label>
+            <label>{t('common.title')}</label>
+            <input value={form.listingTitle} onChange={e => setForm({ ...form, listingTitle: e.target.value })} placeholder={t('orgDashboard.listings.titlePlaceholder')} />
+            <label>{t('common.category')}</label>
             <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>
-              <option value="">Select a category</option>
-              {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+              <option value="">{t('orgDashboard.listings.selectCategory')}</option>
+              {CATEGORIES.map(c => <option key={c.value} value={c.value}>{t(c.labelKey)}</option>)}
             </select>
-            <label>Description</label>
-            <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Describe the opportunity" rows={3} />
-            <label>Location</label>
+            <label>{t('common.description')}</label>
+            <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder={t('orgDashboard.listings.descriptionPlaceholder')} rows={3} />
+            <label>{t('common.location')}</label>
             <select value={form.location} onChange={e => setForm({ ...form, location: e.target.value })}>
-              <option value="">Select a city</option>
-              {SK_CITIES.map(city => <option key={city} value={city}>{city}</option>)}
+              <option value="">{t('orgDashboard.listings.selectCity')}</option>
+              {SK_CITIES.map(city => <option key={city} value={city}>{city === 'Other' ? t('volunteer.otherCity') : city}</option>)}
             </select>
-            <label>Schedule</label>
+            <label>{t('common.schedule')}</label>
             <div className="org-days-grid">
               {DAYS_OF_WEEK.map(day => (
-                <label key={day} className="org-day-checkbox">
+                <label key={day.value} className="org-day-checkbox">
                   <input
                     type="checkbox"
-                    checked={form.days.includes(day)}
-                    onChange={() => toggleDay(day)}
+                    checked={form.days.includes(day.value)}
+                    onChange={() => toggleDay(day.value)}
                   />
-                  {day}
+                  {t(day.labelKey)}
                 </label>
               ))}
             </div>
-            <label>Status</label>
+            <label>{t('common.status')}</label>
             <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}>
-              <option>Is Ongoing</option>
-              <option>One-time</option>
-              <option>Completed</option>
+              {LISTING_STATUSES.map(s => <option key={s.value} value={s.value}>{t(s.labelKey)}</option>)}
             </select>
-            <label>Start Date</label>
+            <label>{t('orgDashboard.listings.startDate')}</label>
             <input type="date" value={form.startDate} onChange={e => setForm({ ...form, startDate: e.target.value })} />
-            <label>End Date</label>
+            <label>{t('orgDashboard.listings.endDate')}</label>
             <input type="date" value={form.endDate} onChange={e => setForm({ ...form, endDate: e.target.value })} />
-            {formError && <p className="org-form-error">{formError}</p>}
+            {formError && <p className="org-form-error">{t(formError)}</p>}
             <div className="org-form-actions">
-              <button className="org-save-btn" onClick={saveListing}>Save</button>
-              <button className="org-cancel-btn" onClick={() => setModal(null)}>Cancel</button>
+              <button className="org-save-btn" onClick={saveListing}>{t('common.save')}</button>
+              <button className="org-cancel-btn" onClick={() => setModal(null)}>{t('common.cancel')}</button>
             </div>
           </div>
         </Modal>
@@ -340,10 +366,10 @@ function OrgDashboard() {
       <div className="org-page">
         <div className="org-pending-wrap">
           <div className="org-pending-box">
-            <h2>Account Pending Approval</h2>
-            <p>Your organization account is currently under review. An admin will approve your account before you can post listings.</p>
-            <p>We will notify you once your account has been approved.</p>
-            <button className="org-cancel-btn" onClick={handleLogout}>Log Out</button>
+            <h2>{t('orgDashboard.pending.heading')}</h2>
+            <p>{t('orgDashboard.pending.text')}</p>
+            <p>{t('orgDashboard.pending.notify')}</p>
+            <button className="org-cancel-btn" onClick={handleLogout}>{t('common.logOut')}</button>
           </div>
         </div>
       </div>
@@ -355,7 +381,7 @@ function OrgDashboard() {
       <div className="org-layout">
         <aside className="org-sidebar">
           <div className="org-sidebar-header">
-            <div className="org-sidebar-title">Organization</div>
+            <div className="org-sidebar-title">{t('orgDashboard.role')}</div>
             <div className="org-sidebar-name">{user?.orgName}</div>
           </div>
           <div className="org-sidebar-nav">
@@ -366,18 +392,19 @@ function OrgDashboard() {
                 onClick={() => setActiveSection(item.id)}
               >
                 <span className="org-nav-icon">{item.icon}</span>
-                {item.label}
+                {t(item.labelKey)}
               </div>
             ))}
           </div>
           <div className="org-sidebar-display">
             <AccessibilityMenu placement="above" className="a11y-menu-sidebar" />
+            <LanguageToggle className="language-toggle-sidebar" />
           </div>
           <div className="org-sidebar-viewsite" onClick={() => navigate('/')}>
-            <MdOpenInNew /> View Site
+            <MdOpenInNew /> {t('common.viewSite')}
           </div>
           <div className="org-sidebar-logout" onClick={handleLogout}>
-            <MdLogout /> Log Out
+            <MdLogout /> {t('common.logOut')}
           </div>
         </aside>
         <main className="org-main">
