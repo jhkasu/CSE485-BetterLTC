@@ -1,20 +1,22 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAccessibilitySettings } from './AccessibilityContext';
 import './AccessibilityMenu.css';
 
 const FONT_SIZE_LABELS = {
-  normal: 'Default',
-  large: 'Large',
-  xlarge: 'Extra large',
+  normal: 'a11y.sizeDefault',
+  large: 'a11y.sizeLarge',
+  xlarge: 'a11y.sizeXLarge',
 };
 
 const CONTRAST_LABELS = {
-  light: 'Light',
-  dark: 'Dark',
-  high: 'High contrast',
+  light: 'a11y.contrastLight',
+  dark: 'a11y.contrastDark',
+  high: 'a11y.contrastHigh',
 };
 
 function OptionGroup({ legend, name, options, labels, value, onChange, sampleClass }) {
+  const { t } = useTranslation();
   return (
     <fieldset className="a11y-group">
       <legend className="a11y-legend">{legend}</legend>
@@ -31,7 +33,7 @@ function OptionGroup({ legend, name, options, labels, value, onChange, sampleCla
             {sampleClass && (
               <span className={`${sampleClass} ${sampleClass}-${option}`} aria-hidden="true">A</span>
             )}
-            <span>{labels[option]}</span>
+            <span>{t(labels[option])}</span>
           </label>
         ))}
       </div>
@@ -42,6 +44,7 @@ function OptionGroup({ legend, name, options, labels, value, onChange, sampleCla
 function AccessibilityMenu({ placement = 'below', className = '' }) {
   const { contrast, fontSize, setContrast, setFontSize, reset, contrastModes, fontSizes } =
     useAccessibilitySettings();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
   const buttonRef = useRef(null);
@@ -82,17 +85,17 @@ function AccessibilityMenu({ placement = 'below', className = '' }) {
         onClick={() => setOpen((prev) => !prev)}
       >
         <span className="a11y-trigger-icon" aria-hidden="true">Aa</span>
-        <span className="a11y-trigger-label">Display</span>
+        <span className="a11y-trigger-label">{t('a11y.display')}</span>
       </button>
       {open && (
         <div
           id={panelId}
           className={`a11y-panel a11y-panel-${placement}`}
           role="group"
-          aria-label="Display settings"
+          aria-label={t('a11y.settings')}
         >
           <OptionGroup
-            legend="Text size"
+            legend={t('a11y.textSize')}
             name={`${groupName}-font`}
             options={fontSizes}
             labels={FONT_SIZE_LABELS}
@@ -101,7 +104,7 @@ function AccessibilityMenu({ placement = 'below', className = '' }) {
             sampleClass="a11y-sample"
           />
           <OptionGroup
-            legend="Contrast"
+            legend={t('a11y.contrast')}
             name={`${groupName}-contrast`}
             options={contrastModes}
             labels={CONTRAST_LABELS}
@@ -109,7 +112,7 @@ function AccessibilityMenu({ placement = 'below', className = '' }) {
             onChange={setContrast}
           />
           <button type="button" className="a11y-reset" onClick={reset}>
-            Reset to default
+            {t('a11y.reset')}
           </button>
         </div>
       )}

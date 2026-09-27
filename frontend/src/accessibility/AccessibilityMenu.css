@@ -8,13 +8,13 @@
   align-items: center;
   gap: var(--space-2);
   white-space: nowrap;
-  padding: 12px 20px;
+  padding: 6px 14px;
   background-color: transparent;
   color: var(--color-text);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   font-family: var(--font-body);
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: border-color 150ms ease-out;
@@ -160,31 +160,8 @@
   border-color: var(--color-on-dark);
 }
 
-@media (max-width: 1600px) and (min-width: 1025px) {
-  .a11y-trigger {
-    font-size: 18px;
-    padding: 10px 16px;
-  }
-}
-
 @media (max-width: 1024px) {
-  .a11y-trigger {
-    font-size: 16px;
-    padding: 8px 12px;
-  }
-
-  .a11y-trigger-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-
-  .a11y-panel-below {
-    left: 0;
-    right: auto;
+  .a11y-panel {
     width: min(320px, calc(100vw - 32px));
   }
 }
