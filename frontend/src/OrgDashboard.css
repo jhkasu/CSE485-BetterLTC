@@ -27,7 +27,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0;
-  color: var(--color-dark);
+  color: var(--color-on-dark-muted);
   margin-bottom: 6px;
 }
 
