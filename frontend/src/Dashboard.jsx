@@ -213,7 +213,6 @@ const Dashboard = () => {
           {t('dashboard.bgCheck.uploadHeading')}
         </div>
 
-        {/* 제출 전 — 파일 선택 영역 */}
         {!bgDocUploaded && (
           <label className="upload-area" htmlFor="bg-doc-input">
             <MdCloudUpload className="upload-icon" />
@@ -230,7 +229,6 @@ const Dashboard = () => {
           </label>
         )}
 
-        {/* 파일 선택됐지만 아직 제출 전 */}
         {bgDoc && !bgDocUploaded && (
           <div className="upload-actions">
             <button className="upload-submit-btn" onClick={handleBgDocSubmit}>
@@ -242,7 +240,6 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* 제출 완료 */}
         {bgDocUploaded && (
           <div className="upload-submitted-row">
             <div className="upload-success">
@@ -370,7 +367,6 @@ const Dashboard = () => {
 
   const approvedApplications = applications.filter(a => a.status === 'Approved');
 
-  /* ── 리스트 뷰 ── */
   const renderShiftList = () => (
     approvedApplications.length === 0
       ? <div className="dashboard-placeholder">{t('dashboard.shifts.empty')}</div>
@@ -391,7 +387,6 @@ const Dashboard = () => {
       )
   );
 
-  /* ── 캘린더 뷰 ── */
   const renderCalendar = () => {
     const monday   = getMondayOf(new Date());
     monday.setDate(monday.getDate() + weekOffset * 7);
@@ -411,7 +406,6 @@ const Dashboard = () => {
 
     return (
       <div className="cal-wrapper">
-        {/* 주 탐색 */}
         <div className="cal-nav">
           <button className="cal-nav-btn" onClick={() => setWeekOffset(w => w - 1)}>‹</button>
           <span className="cal-nav-label">
@@ -421,7 +415,6 @@ const Dashboard = () => {
         </div>
 
         <div className="cal-grid">
-          {/* 헤더 행 */}
           <div className="cal-header">
             <div className="cal-time-spacer" />
             {weekDays.map((d, i) => (
@@ -432,9 +425,7 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* 바디 */}
           <div className="cal-body">
-            {/* 시간 레이블 */}
             <div className="cal-time-col">
               {hours.map(h => (
                 <div key={h} className="cal-time-label" style={{ height: HOUR_HEIGHT }}>
@@ -443,7 +434,6 @@ const Dashboard = () => {
               ))}
             </div>
 
-            {/* 요일 컬럼들 */}
             <div className="cal-days">
               {weekDays.map((d, dayIdx) => {
                 const dateStr   = toDateString(d);
@@ -477,7 +467,6 @@ const Dashboard = () => {
     );
   };
 
-  /* ── 탭 전체 ── */
   const renderShifts = () => (
     <>
       <h2 className="dashboard-section-title">{t('dashboard.nav.shifts')}</h2>
