@@ -6,6 +6,7 @@ import {
   MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
+import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import './AdminDashboard.css';
 import API_BASE from './config';
 
@@ -591,6 +592,9 @@ function AdminDashboard() {
                 {item.label}
               </div>
             ))}
+          </div>
+          <div className="admin-sidebar-display">
+            <AccessibilityMenu placement="above" className="a11y-menu-sidebar" />
           </div>
           <div className="admin-sidebar-viewsite" onClick={() => navigate('/')}>
             <MdOpenInNew /> View Site
