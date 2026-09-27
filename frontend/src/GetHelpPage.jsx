@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './GetHelpPage.css';
 import API_BASE from './config';
 
 const HELP_TYPES = [
-  'Senior Care Support',
-  'Meal Assistance',
-  'Transportation Support',
-  'Medical Assistance',
-  'Mental Health Support',
-  'Housing Support',
-  'Other',
+  { value: 'Senior Care Support', labelKey: 'options.helpTypes.seniorCare' },
+  { value: 'Meal Assistance', labelKey: 'options.helpTypes.meal' },
+  { value: 'Transportation Support', labelKey: 'options.helpTypes.transportation' },
+  { value: 'Medical Assistance', labelKey: 'options.helpTypes.medical' },
+  { value: 'Mental Health Support', labelKey: 'options.helpTypes.mentalHealth' },
+  { value: 'Housing Support', labelKey: 'options.helpTypes.housing' },
+  { value: 'Other', labelKey: 'options.helpTypes.other' },
 ];
 
 function GetHelpPage() {
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -60,12 +62,9 @@ function GetHelpPage() {
 
       <header className="page-header page-header--plain gethelp-header">
         <div className="page-header-text">
-          <span className="eyebrow">Get help</span>
-          <h1>We are here to help</h1>
-          <p>
-            Need support with meals, rides, home visits, or care for an older adult?
-            Tell us a little about your situation and a real person will call you back.
-          </p>
+          <span className="eyebrow">{t('getHelp.eyebrow')}</span>
+          <h1>{t('getHelp.heading')}</h1>
+          <p>{t('getHelp.lead')}</p>
         </div>
         <div className="page-header-side">
           <a href="tel:5550000000">(555) 000-0000</a>
@@ -76,46 +75,46 @@ function GetHelpPage() {
       <div className="overlap-card gethelp-card">
         {status === 'success' ? (
           <div className="gethelp-success">
-            <h2>Thank you for reaching out</h2>
-            <p>We have received your request and will get back to you within two business days.</p>
-            <button className="btn btn-outline" onClick={() => setStatus(null)}>Send another request</button>
+            <h2>{t('getHelp.success.heading')}</h2>
+            <p>{t('getHelp.success.text')}</p>
+            <button className="btn btn-outline" onClick={() => setStatus(null)}>{t('getHelp.success.another')}</button>
           </div>
         ) : (
           <form className="form-underline" onSubmit={handleSubmit}>
             <div className="form-row">
               <div>
-                <label htmlFor="firstName">First name</label>
+                <label htmlFor="firstName">{t('common.firstName')}</label>
                 <input id="firstName" name="firstName" value={form.firstName} onChange={handleChange} required />
               </div>
               <div>
-                <label htmlFor="lastName">Last name</label>
+                <label htmlFor="lastName">{t('common.lastName')}</label>
                 <input id="lastName" name="lastName" value={form.lastName} onChange={handleChange} required />
               </div>
             </div>
             <div className="form-row">
               <div>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">{t('common.email')}</label>
                 <input id="email" name="email" type="email" value={form.email} onChange={handleChange} required />
               </div>
               <div>
-                <label htmlFor="phone">Phone</label>
+                <label htmlFor="phone">{t('common.phone')}</label>
                 <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} />
               </div>
             </div>
-            <label htmlFor="helpType">How can we help?</label>
+            <label htmlFor="helpType">{t('getHelp.form.helpType')}</label>
             <select id="helpType" name="helpType" value={form.helpType} onChange={handleChange} required>
-              <option value="">Choose one</option>
+              <option value="">{t('getHelp.form.chooseOne')}</option>
               {HELP_TYPES.map((type) => (
-                <option key={type} value={type}>{type}</option>
+                <option key={type.value} value={type.value}>{t(type.labelKey)}</option>
               ))}
             </select>
-            <label htmlFor="description">Tell us more</label>
+            <label htmlFor="description">{t('getHelp.form.tellUsMore')}</label>
             <textarea id="description" name="description" value={form.description} onChange={handleChange} rows={5} />
             {status === 'error' && (
-              <p className="form-error">Something went wrong. Please try again.</p>
+              <p className="form-error">{t('common.genericError')}</p>
             )}
             <button className="btn btn-primary btn-lg" type="submit" disabled={status === 'loading'}>
-              {status === 'loading' ? 'Sending...' : 'Send request'}
+              {status === 'loading' ? t('getHelp.form.sending') : t('getHelp.form.send')}
             </button>
           </form>
         )}
@@ -125,15 +124,15 @@ function GetHelpPage() {
         <div className="container">
           <div className="split">
             <div>
-              <span className="eyebrow">What to expect</span>
-              <h2>Simple, free, and local</h2>
+              <span className="eyebrow">{t('getHelp.expect.eyebrow')}</span>
+              <h2>{t('getHelp.expect.heading')}</h2>
             </div>
             <div className="split-body">
               <ul className="check-list">
-                <li>A volunteer coordinator calls you back within two business days</li>
-                <li>Every volunteer has passed a background check</li>
-                <li>There is no cost to you or your family</li>
-                <li>You can pause or stop the help at any time</li>
+                <li>{t('getHelp.expect.item1')}</li>
+                <li>{t('getHelp.expect.item2')}</li>
+                <li>{t('getHelp.expect.item3')}</li>
+                <li>{t('getHelp.expect.item4')}</li>
               </ul>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -37,6 +38,7 @@ const CITY_COORDS = {
 function VolunteerDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [listing, setListing] = useState(null);
   const [notFound, setNotFound] = useState(false);
   const [registered, setRegistered] = useState(false);
@@ -80,16 +82,16 @@ function VolunteerDetail() {
     const stored = localStorage.getItem('currentUser');
     const user = stored ? JSON.parse(stored) : null;
     if (!user) {
-      return <button className="vdetail-register" onClick={handleRegister}>Register Now</button>;
+      return <button className="vdetail-register" onClick={handleRegister}>{t('volunteerDetail.register')}</button>;
     }
     if (user.role !== 'volunteer') return null;
     if (!user.backgroundCheckApproved) {
-      return <p className="vdetail-bgcheck-notice">A background check approval is required before applying. Please wait for admin review.</p>;
+      return <p className="vdetail-bgcheck-notice">{t('volunteerDetail.bgCheckNotice')}</p>;
     }
-    if (registered) return <p className="vdetail-registered">You have applied for this opportunity.</p>;
+    if (registered) return <p className="vdetail-registered">{t('volunteerDetail.registered')}</p>;
     return (
       <button className="vdetail-register" onClick={handleRegister} disabled={regLoading}>
-        {regLoading ? 'Submitting...' : 'Register Now'}
+        {regLoading ? t('volunteerDetail.submitting') : t('volunteerDetail.register')}
       </button>
     );
   };
@@ -99,8 +101,8 @@ function VolunteerDetail() {
       <div>
         <Navbar />
         <div className="vdetail-not-found">
-          <p>Opportunity not found.</p>
-          <Link to="/volunteer">← Back to Opportunities</Link>
+          <p>{t('volunteerDetail.notFound')}</p>
+          <Link to="/volunteer">← {t('volunteerDetail.back')}</Link>
         </div>
         <Footer />
       </div>
@@ -111,7 +113,7 @@ function VolunteerDetail() {
     return (
       <div>
         <Navbar />
-        <div className="vdetail-page"><p>Loading...</p></div>
+        <div className="vdetail-page"><p>{t('common.loading')}</p></div>
         <Footer />
       </div>
     );
@@ -124,7 +126,7 @@ function VolunteerDetail() {
       <Navbar />
       <header className="page-header page-header--plain">
         <div className="page-header-text">
-          <Link to="/volunteer" className="arrow-link vdetail-back">← Back to opportunities</Link>
+          <Link to="/volunteer" className="arrow-link vdetail-back">← {t('volunteerDetail.back')}</Link>
           <span className="eyebrow">{listing.status}{listing.category ? ` · ${listing.category}` : ''}</span>
           <h1>{listing.listingTitle}</h1>
           <p className="vdetail-org">{listing.orgName}</p>
@@ -138,7 +140,7 @@ function VolunteerDetail() {
               <div className="vdetail-meta-item">
                 <MdLocationOn className="vdetail-meta-icon" />
                 <div>
-                  <span className="vdetail-meta-label">Location</span>
+                  <span className="vdetail-meta-label">{t('common.location')}</span>
                   <span className="vdetail-meta-value">{listing.location}</span>
                 </div>
               </div>
@@ -146,7 +148,7 @@ function VolunteerDetail() {
                 <div className="vdetail-meta-item">
                   <MdSchedule className="vdetail-meta-icon" />
                   <div>
-                    <span className="vdetail-meta-label">Schedule</span>
+                    <span className="vdetail-meta-label">{t('common.schedule')}</span>
                     <span className="vdetail-meta-value">{listing.days}</span>
                   </div>
                 </div>
@@ -155,7 +157,7 @@ function VolunteerDetail() {
                 <div className="vdetail-meta-item">
                   <MdCalendarToday className="vdetail-meta-icon" />
                   <div>
-                    <span className="vdetail-meta-label">Duration</span>
+                    <span className="vdetail-meta-label">{t('volunteerDetail.duration')}</span>
                     <span className="vdetail-meta-value">
                       {listing.startDate}{listing.startDate && listing.endDate ? ' — ' : ''}{listing.endDate}
                     </span>
@@ -166,7 +168,7 @@ function VolunteerDetail() {
 
             {listing.description && (
               <div className="vdetail-description-section">
-                <h2>About This Opportunity</h2>
+                <h2>{t('volunteerDetail.about')}</h2>
                 <p className="vdetail-description">{listing.description}</p>
               </div>
             )}
@@ -179,7 +181,7 @@ function VolunteerDetail() {
           <div className="vdetail-sidebar">
             <div className="vdetail-map-card">
               <div className="vdetail-map-label">
-                <MdLocationOn /> {listing.location}, Saskatchewan
+                <MdLocationOn /> {t('volunteerDetail.mapLabel', { city: listing.location })}
               </div>
               <MapContainer
                 key={listing.location}

@@ -69,6 +69,14 @@
   display: flex;
 }
 
+.org-sidebar-display {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-on-dark-border);
+}
+
 .org-sidebar-viewsite,
 .org-sidebar-logout {
   display: flex;

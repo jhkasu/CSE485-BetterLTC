@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './VolunteerList.css';
 import API_BASE from './config';
 
@@ -7,6 +8,7 @@ const CITIES = ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Curr
 
 function VolunteerList() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [listings, setListings] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
   const [keyword, setKeyword] = useState('');
@@ -37,27 +39,27 @@ function VolunteerList() {
     <div>
       <header className="page-header page-header--plain">
         <div className="page-header-text">
-          <span className="eyebrow">Volunteer</span>
-          <h1>Find an opportunity near you</h1>
-          <p>Every listing comes from a verified organization. Pick a city to narrow the list.</p>
+          <span className="eyebrow">{t('volunteer.eyebrow')}</span>
+          <h1>{t('volunteer.heading')}</h1>
+          <p>{t('volunteer.lead')}</p>
         </div>
       </header>
       <div className="volunteer-content container">
         <form className="search-box" onSubmit={e => e.preventDefault()}>
-          <label htmlFor="keyword">Search</label>
+          <label htmlFor="keyword">{t('common.search')}</label>
           <div className="search-row">
             <input
               type="text"
               id="keyword"
-              placeholder="Enter a keyword..."
+              placeholder={t('volunteer.searchPlaceholder')}
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
-            <button type="submit" className="btn btn-dark">Search</button>
+            <button type="submit" className="btn btn-dark">{t('common.search')}</button>
           </div>
         </form>
         <div className="filters">
-          <h3>Location</h3>
+          <h3>{t('common.location')}</h3>
           {CITIES.map(city => (
             <label key={city}>
               <input
@@ -65,14 +67,14 @@ function VolunteerList() {
                 checked={selectedCities.includes(city)}
                 onChange={() => toggleCity(city)}
               />
-              {city}
+              {city === 'Other' ? t('volunteer.otherCity') : city}
             </label>
           ))}
         </div>
         <div className="volunteer-list">
           {filtered.length === 0 ? (
             <p className="no-results">
-              {search ? `No opportunities match "${keyword}".` : 'No opportunities found.'}
+              {search ? t('volunteer.emptyForKeyword', { keyword }) : t('volunteer.empty')}
             </p>
           ) : (
             filtered.map(listing => (
@@ -82,11 +84,11 @@ function VolunteerList() {
                   <h4>{listing.listingTitle}</h4>
                   <p className="card-org">{listing.orgName}</p>
                   <div className="card-meta">
-                    <span><strong>Location</strong>{listing.location}</span>
-                    <span><strong>Days</strong>{listing.days || 'Flexible'}</span>
+                    <span><strong>{t('common.location')}</strong>{listing.location}</span>
+                    <span><strong>{t('common.days')}</strong>{listing.days || t('common.flexible')}</span>
                   </div>
                 </div>
-                <button className="btn btn-outline" onClick={() => navigate(`/volunteer/${listing.id}`)}>View details</button>
+                <button className="btn btn-outline" onClick={() => navigate(`/volunteer/${listing.id}`)}>{t('common.viewDetails')}</button>
               </div>
             ))
           )}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurWorkPage.css';
@@ -39,6 +40,7 @@ function stripHtml(html) {
 }
 
 function OurWorkPage() {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [selected, setSelected] = useState(null);
 
@@ -55,7 +57,7 @@ function OurWorkPage() {
         <Navbar />
         <header className="page-header page-header--plain">
           <div className="page-header-text">
-            <button className="arrow-link ourwork-back" onClick={() => setSelected(null)}>← Back to our work</button>
+            <button className="arrow-link ourwork-back" onClick={() => setSelected(null)}>← {t('ourWork.back')}</button>
             <span className="eyebrow">
               {selected.category}{selected.category && selected.date ? ' · ' : ''}{selected.date}
             </span>
@@ -79,17 +81,17 @@ function OurWorkPage() {
 
       <header className="page-header">
         <div className="page-header-text">
-          <span className="eyebrow">Our work</span>
-          <h1>Stories from the community</h1>
+          <span className="eyebrow">{t('ourWork.eyebrow')}</span>
+          <h1>{t('ourWork.heading')}</h1>
         </div>
         <div className="page-header-media">
-          <img src="/ourWork.png" alt="Our work" />
+          <img src="/ourWork.png" alt={t('ourWork.eyebrow')} />
         </div>
       </header>
 
       <div className="ourwork-page">
         {posts.length === 0 ? (
-          <p className="ourwork-empty">No posts yet.</p>
+          <p className="ourwork-empty">{t('ourWork.empty')}</p>
         ) : (
           posts.map(post => {
             const { thumb } = extractMedia(post.content);
@@ -104,7 +106,7 @@ function OurWorkPage() {
                   )}
                   <h3>{post.title}</h3>
                   <p className="ourwork-preview">{preview}</p>
-                  <button className="btn btn-outline" onClick={() => setSelected(post)}>Read more</button>
+                  <button className="btn btn-outline" onClick={() => setSelected(post)}>{t('common.readMore')}</button>
                 </div>
                 <div className="list-row-media">
                   {thumb

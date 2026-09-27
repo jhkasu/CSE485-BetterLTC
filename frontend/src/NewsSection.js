@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './NewsSection.css';
 import API_BASE from './config';
 
@@ -31,6 +32,7 @@ function stripHtml(html) {
 }
 
 function NewsCard({ post, size }) {
+  const { t } = useTranslation();
   const { thumb } = extractMedia(post.content);
   const preview = stripHtml(post.content);
   return (
@@ -44,13 +46,14 @@ function NewsCard({ post, size }) {
         {post.category && <span className="news-tag">{post.category}</span>}
         <h3>{post.title}</h3>
         <p>{preview}</p>
-        <Link to="/our-work" className="arrow-link news-read-more">Read more →</Link>
+        <Link to="/our-work" className="arrow-link news-read-more">{t('common.readMore')} →</Link>
       </div>
     </div>
   );
 }
 
 function NewsSection() {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -70,10 +73,10 @@ function NewsSection() {
       <div className="container">
       <div className="news-header">
         <div>
-          <span className="eyebrow">Our work</span>
-          <h2 className="section-title">Latest news</h2>
+          <span className="eyebrow">{t('home.news.eyebrow')}</span>
+          <h2 className="section-title">{t('home.news.heading')}</h2>
         </div>
-        <Link to="/our-work" className="arrow-link">View all →</Link>
+        <Link to="/our-work" className="arrow-link">{t('common.viewAll')} →</Link>
       </div>
       {isEditorial ? (
         <div className="news-grid-editorial">
@@ -87,7 +90,7 @@ function NewsSection() {
               {featured.category && <span className="news-tag">{featured.category}</span>}
               <h3>{featured.title}</h3>
               <p>{stripHtml(featured.content)}</p>
-              <Link to="/our-work" className="arrow-link news-read-more">Read more →</Link>
+              <Link to="/our-work" className="arrow-link news-read-more">{t('common.readMore')} →</Link>
             </div>
           </div>
           <div className="news-right-col">

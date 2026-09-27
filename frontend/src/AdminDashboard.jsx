@@ -6,7 +6,9 @@ import {
   MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
+import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
+import LanguageToggle from './i18n/LanguageToggle';
 import './AdminDashboard.css';
 import API_BASE from './config';
 
@@ -21,13 +23,13 @@ const INIT_OPPORTUNITIES = [
 
 
 const NAV_ITEMS = [
-  { id: 'overview',       label: 'Overview',                icon: <MdDashboard /> },
-  { id: 'users',          label: 'Users',                   icon: <MdPeople /> },
-  { id: 'organizations',  label: 'Organizations',           icon: <MdBusiness /> },
-  { id: 'team',           label: 'Our Team',                icon: <MdGroups /> },
-  { id: 'opportunities',  label: 'Volunteer Opportunities', icon: <MdVolunteerActivism /> },
-  { id: 'work',           label: 'Our Work',                icon: <MdWork /> },
-  { id: 'help',           label: 'Get Help',                icon: <MdHelpCenter /> },
+  { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
+  { id: 'users',          labelKey: 'adminDashboard.nav.users',         icon: <MdPeople /> },
+  { id: 'organizations',  labelKey: 'adminDashboard.nav.organizations', icon: <MdBusiness /> },
+  { id: 'team',           labelKey: 'adminDashboard.nav.team',          icon: <MdGroups /> },
+  { id: 'opportunities',  labelKey: 'adminDashboard.nav.opportunities', icon: <MdVolunteerActivism /> },
+  { id: 'work',           labelKey: 'adminDashboard.nav.work',          icon: <MdWork /> },
+  { id: 'help',           labelKey: 'adminDashboard.nav.help',          icon: <MdHelpCenter /> },
 ];
 
 function Modal({ title, onClose, children, wide }) {
@@ -45,16 +47,18 @@ function Modal({ title, onClose, children, wide }) {
 }
 
 function DeleteConfirm({ onConfirm, onCancel }) {
+  const { t } = useTranslation();
   return (
     <div className="delete-confirm-row">
-      <span>Delete this item?</span>
-      <button className="confirm-yes" onClick={onConfirm}>Delete</button>
-      <button className="confirm-no" onClick={onCancel}>Cancel</button>
+      <span>{t('adminDashboard.deleteConfirm')}</span>
+      <button className="confirm-yes" onClick={onConfirm}>{t('common.delete')}</button>
+      <button className="confirm-no" onClick={onCancel}>{t('common.cancel')}</button>
     </div>
   );
 }
 
 function AdminDashboard() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('currentUser'));
   const [activeSection, setActiveSection] = useState('overview');
@@ -220,23 +224,23 @@ function AdminDashboard() {
 
   const renderOverview = () => (
     <div>
-      <h2 className="admin-section-title">Overview</h2>
+      <h2 className="admin-section-title">{t('common.overview')}</h2>
       <div className="admin-stats-grid">
         <div className="admin-stat-card">
           <div className="admin-stat-number">{volunteers.length}</div>
-          <div className="admin-stat-label">Total Volunteers</div>
+          <div className="admin-stat-label">{t('adminDashboard.stats.totalVolunteers')}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-number">{volunteers.filter(v => v.backgroundCheckApproved).length}</div>
-          <div className="admin-stat-label">Background Approved</div>
+          <div className="admin-stat-label">{t('adminDashboard.stats.bgApproved')}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-number">{opportunities.length}</div>
-          <div className="admin-stat-label">Active Opportunities</div>
+          <div className="admin-stat-label">{t('adminDashboard.stats.activeOpportunities')}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-number">{team.length}</div>
-          <div className="admin-stat-label">Team Members</div>
+          <div className="admin-stat-label">{t('adminDashboard.stats.teamMembers')}</div>
         </div>
       </div>
     </div>
@@ -244,17 +248,17 @@ function AdminDashboard() {
 
   const renderUsers = () => (
     <div>
-      <h2 className="admin-section-title">Volunteers</h2>
+      <h2 className="admin-section-title">{t('adminDashboard.volunteers.heading')}</h2>
       {volunteers.length === 0 ? (
-        <p style={{ color: '#888', marginTop: 20 }}>No volunteers registered yet.</p>
+        <p style={{ color: '#888', marginTop: 20 }}>{t('adminDashboard.volunteers.empty')}</p>
       ) : (
         <table className="admin-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Background Check</th>
-              <th>Actions</th>
+              <th>{t('common.name')}</th>
+              <th>{t('common.email')}</th>
+              <th>{t('adminDashboard.volunteers.bgCheck')}</th>
+              <th>{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -262,10 +266,10 @@ function AdminDashboard() {
               <tr key={v.id}>
                 <td>{v.firstName} {v.lastName}</td>
                 <td>{v.email}</td>
-                <td><span className={`bg-badge ${v.backgroundCheckApproved ? 'approved' : 'pending'}`}>{v.backgroundCheckApproved ? 'Approved' : 'Pending'}</span></td>
+                <td><span className={`bg-badge ${v.backgroundCheckApproved ? 'approved' : 'pending'}`}>{v.backgroundCheckApproved ? t('options.applicationStatus.approved') : t('options.applicationStatus.pending')}</span></td>
                 <td>
                   <button className={`admin-action-btn ${v.backgroundCheckApproved ? 'revoke' : 'approve'}`} onClick={() => toggleBgCheck(v)}>
-                    {v.backgroundCheckApproved ? 'Revoke' : 'Approve'}
+                    {v.backgroundCheckApproved ? t('adminDashboard.volunteers.revoke') : t('adminDashboard.volunteers.approve')}
                   </button>
                 </td>
               </tr>
@@ -279,16 +283,16 @@ function AdminDashboard() {
   const renderTeam = () => (
     <div>
       <div className="admin-section-header">
-        <h2 className="admin-section-title">Our Team</h2>
-        <button className="admin-add-btn" onClick={openTeamAdd}><MdAdd /> Add Member</button>
+        <h2 className="admin-section-title">{t('adminDashboard.nav.team')}</h2>
+        <button className="admin-add-btn" onClick={openTeamAdd}><MdAdd /> {t('adminDashboard.team.addMember')}</button>
       </div>
       <table className="admin-table">
         <thead>
           <tr>
-            <th>Photo</th>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Actions</th>
+            <th>{t('adminDashboard.team.photo')}</th>
+            <th>{t('common.name')}</th>
+            <th>{t('adminDashboard.team.position')}</th>
+            <th>{t('common.actions')}</th>
           </tr>
         </thead>
         <tbody>
@@ -318,21 +322,21 @@ function AdminDashboard() {
         </tbody>
       </table>
       {teamModal && (
-        <Modal title={teamModal.mode === 'add' ? 'Add Team Member' : 'Edit Team Member'} onClose={() => setTeamModal(null)}>
+        <Modal title={teamModal.mode === 'add' ? t('adminDashboard.team.addTitle') : t('adminDashboard.team.editTitle')} onClose={() => setTeamModal(null)}>
           <div className="admin-form">
-            <label>Name</label>
-            <input value={teamForm.name} onChange={e => setTeamForm({ ...teamForm, name: e.target.value })} placeholder="Full name" />
-            <label>Position</label>
-            <input value={teamForm.position} onChange={e => setTeamForm({ ...teamForm, position: e.target.value })} placeholder="Job title" />
-            <label>Bio</label>
-            <textarea value={teamForm.bio} onChange={e => setTeamForm({ ...teamForm, bio: e.target.value })} placeholder="Short bio" rows={3} />
-            <label>Photo</label>
+            <label>{t('common.name')}</label>
+            <input value={teamForm.name} onChange={e => setTeamForm({ ...teamForm, name: e.target.value })} placeholder={t('adminDashboard.team.namePlaceholder')} />
+            <label>{t('adminDashboard.team.position')}</label>
+            <input value={teamForm.position} onChange={e => setTeamForm({ ...teamForm, position: e.target.value })} placeholder={t('adminDashboard.team.positionPlaceholder')} />
+            <label>{t('adminDashboard.team.bio')}</label>
+            <textarea value={teamForm.bio} onChange={e => setTeamForm({ ...teamForm, bio: e.target.value })} placeholder={t('adminDashboard.team.bioPlaceholder')} rows={3} />
+            <label>{t('adminDashboard.team.photo')}</label>
             <input type="file" accept="image/*" onChange={handleTeamImageChange} />
-            {teamImageUploading && <span style={{ fontSize: 12, color: '#888' }}>Uploading...</span>}
-            {teamForm.imagePath && <img src={`${API_BASE}${teamForm.imagePath}`} alt="preview" style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', marginTop: 6 }} />}
+            {teamImageUploading && <span style={{ fontSize: 12, color: '#888' }}>{t('adminDashboard.team.uploading')}</span>}
+            {teamForm.imagePath && <img src={`${API_BASE}${teamForm.imagePath}`} alt={t('adminDashboard.team.previewAlt')} style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', marginTop: 6 }} />}
             <div className="admin-form-actions">
-              <button className="admin-save-btn" onClick={saveTeam}>Save</button>
-              <button className="admin-cancel-btn" onClick={() => setTeamModal(null)}>Cancel</button>
+              <button className="admin-save-btn" onClick={saveTeam}>{t('common.save')}</button>
+              <button className="admin-cancel-btn" onClick={() => setTeamModal(null)}>{t('common.cancel')}</button>
             </div>
           </div>
         </Modal>
@@ -343,16 +347,16 @@ function AdminDashboard() {
   const renderOpportunities = () => (
     <div>
       <div className="admin-section-header">
-        <h2 className="admin-section-title">Volunteer Opportunities</h2>
-        <button className="admin-add-btn" onClick={openOppAdd}><MdAdd /> Add Opportunity</button>
+        <h2 className="admin-section-title">{t('adminDashboard.nav.opportunities')}</h2>
+        <button className="admin-add-btn" onClick={openOppAdd}><MdAdd /> {t('adminDashboard.opportunities.add')}</button>
       </div>
       <table className="admin-table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Days</th>
-            <th>Actions</th>
+            <th>{t('common.title')}</th>
+            <th>{t('common.location')}</th>
+            <th>{t('common.days')}</th>
+            <th>{t('common.actions')}</th>
           </tr>
         </thead>
         <tbody>
@@ -378,19 +382,19 @@ function AdminDashboard() {
         </tbody>
       </table>
       {oppModal && (
-        <Modal title={oppModal.mode === 'add' ? 'Add Opportunity' : 'Edit Opportunity'} onClose={() => setOppModal(null)}>
+        <Modal title={oppModal.mode === 'add' ? t('adminDashboard.opportunities.add') : t('adminDashboard.opportunities.editTitle')} onClose={() => setOppModal(null)}>
           <div className="admin-form">
-            <label>Title</label>
-            <input value={oppForm.title} onChange={e => setOppForm({ ...oppForm, title: e.target.value })} placeholder="Opportunity title" />
-            <label>Description</label>
-            <textarea value={oppForm.description} onChange={e => setOppForm({ ...oppForm, description: e.target.value })} placeholder="Description" rows={3} />
-            <label>Location</label>
-            <input value={oppForm.location} onChange={e => setOppForm({ ...oppForm, location: e.target.value })} placeholder="City" />
-            <label>Days</label>
-            <input value={oppForm.days} onChange={e => setOppForm({ ...oppForm, days: e.target.value })} placeholder="e.g. Weekdays, Flexible" />
+            <label>{t('common.title')}</label>
+            <input value={oppForm.title} onChange={e => setOppForm({ ...oppForm, title: e.target.value })} placeholder={t('orgDashboard.listings.titlePlaceholder')} />
+            <label>{t('common.description')}</label>
+            <textarea value={oppForm.description} onChange={e => setOppForm({ ...oppForm, description: e.target.value })} placeholder={t('common.description')} rows={3} />
+            <label>{t('common.location')}</label>
+            <input value={oppForm.location} onChange={e => setOppForm({ ...oppForm, location: e.target.value })} placeholder={t('adminDashboard.opportunities.cityPlaceholder')} />
+            <label>{t('common.days')}</label>
+            <input value={oppForm.days} onChange={e => setOppForm({ ...oppForm, days: e.target.value })} placeholder={t('adminDashboard.opportunities.daysPlaceholder')} />
             <div className="admin-form-actions">
-              <button className="admin-save-btn" onClick={saveOpp}>Save</button>
-              <button className="admin-cancel-btn" onClick={() => setOppModal(null)}>Cancel</button>
+              <button className="admin-save-btn" onClick={saveOpp}>{t('common.save')}</button>
+              <button className="admin-cancel-btn" onClick={() => setOppModal(null)}>{t('common.cancel')}</button>
             </div>
           </div>
         </Modal>
@@ -401,16 +405,16 @@ function AdminDashboard() {
   const renderWork = () => (
     <div>
       <div className="admin-section-header">
-        <h2 className="admin-section-title">Our Work</h2>
-        <button className="admin-add-btn" onClick={openWorkAdd}><MdAdd /> Add Post</button>
+        <h2 className="admin-section-title">{t('adminDashboard.nav.work')}</h2>
+        <button className="admin-add-btn" onClick={openWorkAdd}><MdAdd /> {t('adminDashboard.work.addPost')}</button>
       </div>
       <table className="admin-table">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Actions</th>
+            <th>{t('common.title')}</th>
+            <th>{t('common.category')}</th>
+            <th>{t('common.date')}</th>
+            <th>{t('common.actions')}</th>
           </tr>
         </thead>
         <tbody>
@@ -436,28 +440,28 @@ function AdminDashboard() {
         </tbody>
       </table>
       {workModal && (
-        <Modal title={workModal.mode === 'add' ? 'New Post' : 'Edit Post'} onClose={null} wide>
+        <Modal title={workModal.mode === 'add' ? t('adminDashboard.work.newPost') : t('adminDashboard.work.editPost')} onClose={null} wide>
           <div className="admin-form">
-            <label>Title</label>
-            <input value={workForm.title} onChange={e => setWorkForm({ ...workForm, title: e.target.value })} placeholder="Post title" />
-            <label>Category</label>
+            <label>{t('common.title')}</label>
+            <input value={workForm.title} onChange={e => setWorkForm({ ...workForm, title: e.target.value })} placeholder={t('adminDashboard.work.titlePlaceholder')} />
+            <label>{t('common.category')}</label>
             <select value={workForm.category} onChange={e => setWorkForm({ ...workForm, category: e.target.value })}>
-              <option value="">Select category</option>
-              <option>Campaign</option>
-              <option>Program</option>
-              <option>Event</option>
-              <option>Initiative</option>
+              <option value="">{t('adminDashboard.work.selectCategory')}</option>
+              <option value="Campaign">{t('options.workCategories.campaign')}</option>
+              <option value="Program">{t('options.workCategories.program')}</option>
+              <option value="Event">{t('options.workCategories.event')}</option>
+              <option value="Initiative">{t('options.workCategories.initiative')}</option>
             </select>
-            <label>Date</label>
+            <label>{t('common.date')}</label>
             <input type="date" value={workForm.date} onChange={e => setWorkForm({ ...workForm, date: e.target.value })} />
-            <label>Content</label>
+            <label>{t('adminDashboard.work.content')}</label>
             <RichTextEditor
               content={workForm.content}
               onChange={html => setWorkForm(f => ({ ...f, content: html }))}
             />
             <div className="admin-form-actions">
-              <button className="admin-save-btn" onClick={saveWork}>Post</button>
-              <button className="admin-cancel-btn" onClick={() => setWorkModal(null)}>Cancel</button>
+              <button className="admin-save-btn" onClick={saveWork}>{t('adminDashboard.work.post')}</button>
+              <button className="admin-cancel-btn" onClick={() => setWorkModal(null)}>{t('common.cancel')}</button>
             </div>
           </div>
         </Modal>
@@ -467,19 +471,19 @@ function AdminDashboard() {
 
   const renderHelp = () => (
     <div>
-      <h2 className="admin-section-title">Help Requests</h2>
+      <h2 className="admin-section-title">{t('adminDashboard.help.heading')}</h2>
       {helpRequests.length === 0 ? (
-        <p style={{ color: '#888', marginTop: 20 }}>No requests submitted yet.</p>
+        <p style={{ color: '#888', marginTop: 20 }}>{t('adminDashboard.help.empty')}</p>
       ) : (
         <table className="admin-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Help Type</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Submitted</th>
-              <th>Actions</th>
+              <th>{t('common.name')}</th>
+              <th>{t('adminDashboard.help.helpType')}</th>
+              <th>{t('common.email')}</th>
+              <th>{t('common.phone')}</th>
+              <th>{t('adminDashboard.help.submitted')}</th>
+              <th>{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -519,18 +523,18 @@ function AdminDashboard() {
 
   const renderOrganizations = () => (
     <div>
-      <h2 className="admin-section-title">Organizations</h2>
+      <h2 className="admin-section-title">{t('adminDashboard.nav.organizations')}</h2>
       {organizations.length === 0 ? (
-        <p style={{ color: '#888', marginTop: 20 }}>No organizations registered yet.</p>
+        <p style={{ color: '#888', marginTop: 20 }}>{t('adminDashboard.organizations.empty')}</p>
       ) : (
         <table className="admin-table">
           <thead>
             <tr>
-              <th>Organization</th>
-              <th>Contact</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>{t('adminDashboard.organizations.organization')}</th>
+              <th>{t('adminDashboard.organizations.contact')}</th>
+              <th>{t('common.email')}</th>
+              <th>{t('common.status')}</th>
+              <th>{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -541,7 +545,7 @@ function AdminDashboard() {
                 <td>{org.email}</td>
                 <td>
                   <span className={`bg-badge ${org.isApproved ? 'approved' : 'pending'}`}>
-                    {org.isApproved ? 'Approved' : 'Pending'}
+                    {org.isApproved ? t('options.applicationStatus.approved') : t('options.applicationStatus.pending')}
                   </span>
                 </td>
                 <td>
@@ -549,7 +553,7 @@ function AdminDashboard() {
                     className={`admin-action-btn ${org.isApproved ? 'revoke' : 'approve'}`}
                     onClick={() => toggleOrgApproval(org)}
                   >
-                    {org.isApproved ? 'Revoke' : 'Approve'}
+                    {org.isApproved ? t('adminDashboard.volunteers.revoke') : t('adminDashboard.volunteers.approve')}
                   </button>
                 </td>
               </tr>
@@ -578,7 +582,7 @@ function AdminDashboard() {
       <div className="admin-layout">
         <aside className="admin-sidebar">
           <div className="admin-sidebar-header">
-            <div className="admin-sidebar-title">Admin Panel</div>
+            <div className="admin-sidebar-title">{t('adminDashboard.panel')}</div>
             <div className="admin-sidebar-user">{user?.firstName} {user?.lastName}</div>
           </div>
           <div className="admin-sidebar-nav">
@@ -589,18 +593,19 @@ function AdminDashboard() {
                 onClick={() => setActiveSection(item.id)}
               >
                 <span className="admin-nav-icon">{item.icon}</span>
-                {item.label}
+                {t(item.labelKey)}
               </div>
             ))}
           </div>
           <div className="admin-sidebar-display">
             <AccessibilityMenu placement="above" className="a11y-menu-sidebar" />
+            <LanguageToggle className="language-toggle-sidebar" />
           </div>
           <div className="admin-sidebar-viewsite" onClick={() => navigate('/')}>
-            <MdOpenInNew /> View Site
+            <MdOpenInNew /> {t('common.viewSite')}
           </div>
           <div className="admin-sidebar-logout" onClick={handleLogout}>
-            <MdLogout /> Log Out
+            <MdLogout /> {t('common.logOut')}
           </div>
         </aside>
         <main className="admin-main">

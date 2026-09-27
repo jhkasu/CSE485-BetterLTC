@@ -1,8 +1,8 @@
 # French translation review list
 
-The French file is `frontend/public/locales/fr/translation.json`. It uses Canadian French conventions:
+The French file is `frontend/src/locales/fr/translation.json`. It uses Canadian French conventions:
 `courriel` for email, `téléverser` for upload, `organisme` for a non-profit organization, `aînés` / `personnes aînées` for seniors,
-`ouvrir une session` for sign in, guillemets « » for quotes, and no space before `?` and `!`.
+`ouvrir une session` for the sign-in page heading (the short navbar button says `Connexion`), guillemets « » for quotes, and no space before `?` and `!`.
 
 The keys below need a fluent speaker or the client to confirm them before launch. Everything else is routine interface text.
 

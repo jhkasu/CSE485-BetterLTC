@@ -4,10 +4,12 @@ import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import Youtube from '@tiptap/extension-youtube';
+import { useTranslation } from 'react-i18next';
 import './RichTextEditor.css';
 import API_BASE from './config';
 
 function MenuBar({ editor }) {
+  const { t } = useTranslation();
   if (!editor) return null;
 
   const addImage = () => {
@@ -31,13 +33,13 @@ function MenuBar({ editor }) {
   };
 
   const setLink = () => {
-    const url = window.prompt('URL');
+    const url = window.prompt(t('adminDashboard.editor.linkPrompt'));
     if (!url) return;
     editor.chain().focus().setLink({ href: url }).run();
   };
 
   const addYoutube = () => {
-    const url = window.prompt('YouTube URL');
+    const url = window.prompt(t('adminDashboard.editor.youtubePrompt'));
     if (!url) return;
     editor.chain().focus().setYoutubeVideo({ src: url }).run();
   };
@@ -51,25 +53,26 @@ function MenuBar({ editor }) {
       <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'active' : ''}>H2</button>
       <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={editor.isActive('heading', { level: 3 }) ? 'active' : ''}>H3</button>
       <div className="rte-divider" />
-      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive('bulletList') ? 'active' : ''}>• List</button>
-      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive('orderedList') ? 'active' : ''}>1. List</button>
+      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive('bulletList') ? 'active' : ''}>• {t('adminDashboard.editor.bulletList')}</button>
+      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive('orderedList') ? 'active' : ''}>1. {t('adminDashboard.editor.orderedList')}</button>
       <div className="rte-divider" />
-      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive('blockquote') ? 'active' : ''}>" Quote</button>
+      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive('blockquote') ? 'active' : ''}>" {t('adminDashboard.editor.quote')}</button>
       <div className="rte-divider" />
-      <button type="button" onClick={setLink} className={editor.isActive('link') ? 'active' : ''}>Link</button>
-      <button type="button" onClick={addImage}>Image</button>
+      <button type="button" onClick={setLink} className={editor.isActive('link') ? 'active' : ''}>{t('adminDashboard.editor.link')}</button>
+      <button type="button" onClick={addImage}>{t('adminDashboard.editor.image')}</button>
       <button type="button" onClick={addYoutube}>YouTube</button>
     </div>
   );
 }
 
 function RichTextEditor({ content, onChange }) {
+  const { t } = useTranslation();
   const editor = useEditor({
     extensions: [
       StarterKit,
       Image.configure({ inline: false }),
       Link.configure({ openOnClick: false }),
-      Placeholder.configure({ placeholder: 'Write your post here...' }),
+      Placeholder.configure({ placeholder: () => t('adminDashboard.editor.placeholder') }),
       Youtube.configure({ width: 640, height: 360, nocookie: true }),
     ],
     content,

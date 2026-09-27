@@ -1,46 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './Pillars.css';
 
 const PILLARS = [
   {
-    title: 'Volunteer',
-    text: 'Give a few hours a month to a senior or a care home near you.',
+    key: 'volunteer',
     image: '/care2.png',
     link: '/volunteer',
-    cta: 'Browse opportunities',
   },
   {
-    title: 'Organizations',
-    text: 'Post your needs and connect with screened volunteers in your area.',
+    key: 'organizations',
     image: '/care1.png',
     link: '/signup',
-    cta: 'Partner with us',
   },
   {
-    title: 'Community',
-    text: 'See the stories and results of the people who show up for each other.',
+    key: 'community',
     image: '/saskatchewan.jpg',
     link: '/our-work',
-    cta: 'Read our work',
   },
 ];
 
 function Pillars() {
+  const { t } = useTranslation();
   return (
     <section className="section pillars">
       <div className="container">
-        <span className="eyebrow">What we do</span>
-        <h2 className="section-title">Three ways to get involved</h2>
+        <span className="eyebrow">{t('home.pillars.eyebrow')}</span>
+        <h2 className="section-title">{t('home.pillars.heading')}</h2>
         <div className="pillars-grid">
           {PILLARS.map(p => (
-            <article key={p.title} className="pillar">
+            <article key={p.key} className="pillar">
               <div className="pillar-image">
                 <img src={p.image} alt="" loading="lazy" />
               </div>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-              <Link className="arrow-link pillar-link" to={p.link}>{p.cta} <span aria-hidden="true">&rarr;</span></Link>
+              <h3>{t(`home.pillars.${p.key}.title`)}</h3>
+              <p>{t(`home.pillars.${p.key}.text`)}</p>
+              <Link className="arrow-link pillar-link" to={p.link}>{t(`home.pillars.${p.key}.cta`)} <span aria-hidden="true">&rarr;</span></Link>
             </article>
           ))}
         </div>

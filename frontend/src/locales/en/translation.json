@@ -67,6 +67,9 @@
     "contrastHigh": "High contrast",
     "reset": "Reset to default"
   },
+  "language": {
+    "switchTo": "Switch language to {{language}}"
+  },
   "footer": {
     "tagline": "Connecting communities through care.",
     "contactUs": "Contact Us",
@@ -173,7 +176,8 @@
     "era2Title": "Growth & Expansion",
     "prevSlide": "Previous slide",
     "nextSlide": "Next slide",
-    "playSlideshow": "Play slideshow"
+    "playSlideshow": "Play slideshow",
+    "eraPlaceholder": "Placeholder description for this era."
   },
   "team": {
     "heading": "Our team"
@@ -278,18 +282,22 @@
         "newShort": "New password must be at least 8 characters.",
         "newMismatch": "New passwords do not match."
       },
-      "passwordUpdated": "Password updated successfully!"
+      "passwordUpdated": "Password updated successfully!",
+      "photoAlt": "Profile"
     },
     "shifts": {
       "empty": "No upcoming shifts scheduled.",
       "list": "List",
-      "calendar": "Calendar"
+      "calendar": "Calendar",
+      "approvedOn": "Approved: {{date}}"
     },
     "applications": {
-      "empty": "You have not applied to any opportunities yet."
+      "empty": "You have not applied to any opportunities yet.",
+      "appliedOn": "Applied: {{date}}"
     },
     "history": {
-      "empty": "No volunteer history yet."
+      "empty": "No volunteer history yet.",
+      "hours": "{{hours}} hrs"
     }
   },
   "orgDashboard": {
@@ -320,7 +328,8 @@
       "endDate": "End Date",
       "titlePlaceholder": "Opportunity title",
       "descriptionPlaceholder": "Describe the opportunity",
-      "requiredError": "Title, category, and location are required."
+      "requiredError": "Title, category, and location are required.",
+      "editTitle": "Edit Listing"
     },
     "pending": {
       "heading": "Account Pending Approval",
@@ -365,25 +374,41 @@
       "uploading": "Uploading...",
       "namePlaceholder": "Full name",
       "positionPlaceholder": "Job title",
-      "bioPlaceholder": "Short bio"
+      "bioPlaceholder": "Short bio",
+      "addTitle": "Add Team Member",
+      "editTitle": "Edit Team Member",
+      "previewAlt": "Preview"
     },
     "opportunities": {
       "add": "Add Opportunity",
       "cityPlaceholder": "City",
-      "daysPlaceholder": "e.g. Weekdays, Flexible"
+      "daysPlaceholder": "e.g. Weekdays, Flexible",
+      "editTitle": "Edit Opportunity"
     },
     "work": {
       "addPost": "Add Post",
       "selectCategory": "Select category",
       "content": "Content",
       "post": "Post",
-      "titlePlaceholder": "Post title"
+      "titlePlaceholder": "Post title",
+      "newPost": "New Post",
+      "editPost": "Edit Post"
     },
     "help": {
       "heading": "Help Requests",
       "empty": "No requests submitted yet.",
       "helpType": "Help Type",
       "submitted": "Submitted"
+    },
+    "editor": {
+      "linkPrompt": "URL",
+      "youtubePrompt": "YouTube URL",
+      "bulletList": "List",
+      "orderedList": "List",
+      "quote": "Quote",
+      "link": "Link",
+      "image": "Image",
+      "placeholder": "Write your post here..."
     }
   },
   "options": {

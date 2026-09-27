@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   MdDashboard, MdPerson, MdCalendarToday, MdHistory,
   MdLogout, MdCloudUpload, MdCheckCircle,
@@ -10,15 +11,15 @@ import './Dashboard.css';
 import API_BASE from './config';
 
 const NAV_ITEMS = [
-  { id: 'overview',      label: 'Overview',          icon: <MdDashboard /> },
-  { id: 'applications',  label: 'My Applications',   icon: <MdAssignment /> },
-  { id: 'profile',       label: 'Profile Settings',  icon: <MdPerson /> },
-  { id: 'shifts',        label: 'Upcoming Shifts',   icon: <MdCalendarToday /> },
-  { id: 'history',       label: 'Volunteer History', icon: <MdHistory /> },
+  { id: 'overview',      labelKey: 'common.overview',            icon: <MdDashboard /> },
+  { id: 'applications',  labelKey: 'dashboard.nav.applications', icon: <MdAssignment /> },
+  { id: 'profile',       labelKey: 'dashboard.nav.profile',      icon: <MdPerson /> },
+  { id: 'shifts',        labelKey: 'dashboard.nav.shifts',       icon: <MdCalendarToday /> },
+  { id: 'history',       labelKey: 'dashboard.nav.history',      icon: <MdHistory /> },
 ];
 
 /* ── Calendar helpers ── */
-const CAL_DAYS   = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const CAL_DAYS   = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const HOUR_HEIGHT = 72;  // px per hour
 const CAL_START   = 8;   // 8 AM
 const CAL_END     = 21;  // 9 PM
@@ -53,6 +54,7 @@ function toDateString(d) {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('currentUser')));
   const [applications, setApplications] = useState([]);
   const [activeSection, setActiveSection] = useState('overview');
@@ -94,7 +96,7 @@ const Dashboard = () => {
 
   /* ── Password change (#56) ── */
   const [passwordForm, setPasswordForm] = useState({ current: '', newPass: '', confirm: '' });
-  const [passwordMsg,  setPasswordMsg]  = useState(null); // { type:'success'|'error', text }
+  const [passwordMsg,  setPasswordMsg]  = useState(null);
 
   /* ── Background check document upload (#54) ── */
   const [bgDoc,        setBgDoc]        = useState(null);   // { name }
@@ -137,18 +139,18 @@ const Dashboard = () => {
   const handlePasswordSave = (e) => {
     e.preventDefault();
     if (!passwordForm.current) {
-      setPasswordMsg({ type: 'error', text: 'Please enter your current password.' });
+      setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.currentRequired' });
       return;
     }
     if (passwordForm.newPass.length < 8) {
-      setPasswordMsg({ type: 'error', text: 'New password must be at least 8 characters.' });
+      setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.newShort' });
       return;
     }
     if (passwordForm.newPass !== passwordForm.confirm) {
-      setPasswordMsg({ type: 'error', text: 'New passwords do not match.' });
+      setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.newMismatch' });
       return;
     }
-    setPasswordMsg({ type: 'success', text: 'Password updated successfully!' });
+    setPasswordMsg({ type: 'success', key: 'dashboard.profile.passwordUpdated' });
     setPasswordForm({ current: '', newPass: '', confirm: '' });
   };
 
@@ -182,22 +184,25 @@ const Dashboard = () => {
     navigate('/signin');
   };
 
+  const SUBMITTED_MARK = '\u0000';
+  const [submittedBefore, submittedAfter = ''] = t('dashboard.bgCheck.submitted', { file: SUBMITTED_MARK }).split(SUBMITTED_MARK);
+
   /* ── Section renderers ── */
   const renderOverview = () => (
     <>
-      <h2 className="dashboard-section-title">Overview</h2>
+      <h2 className="dashboard-section-title">{t('common.overview')}</h2>
 
       {/* #58 — Background check status */}
       <div className="overview-card">
         <div className="overview-card-header">
-          <span className="overview-card-label">Background Check Status</span>
+          <span className="overview-card-label">{t('dashboard.bgCheck.heading')}</span>
           <div className={`bg-check-badge ${user?.backgroundCheckApproved ? 'approved' : 'pending'}`}>
-            {user?.backgroundCheckApproved ? '✓  Approved' : '⏳  Pending Review'}
+            {user?.backgroundCheckApproved ? `✓  ${t('dashboard.bgCheck.approved')}` : `⏳  ${t('dashboard.bgCheck.pending')}`}
           </div>
         </div>
         {!user?.backgroundCheckApproved && (
           <p className="overview-card-hint">
-            Your background check is under review. Upload supporting documents below to speed up the process.
+            {t('dashboard.bgCheck.underReview')}
           </p>
         )}
       </div>
@@ -205,15 +210,14 @@ const Dashboard = () => {
       {/* #54 — Document upload */}
       <div className="overview-card" style={{ marginTop: 24 }}>
         <div className="overview-card-label" style={{ marginBottom: 16 }}>
-          Upload Background Check Document
+          {t('dashboard.bgCheck.uploadHeading')}
         </div>
 
-        {/* 제출 전 — 파일 선택 영역 */}
         {!bgDocUploaded && (
           <label className="upload-area" htmlFor="bg-doc-input">
             <MdCloudUpload className="upload-icon" />
             <span className="upload-area-text">
-              {bgDoc ? bgDoc.name : 'Click to select a file  (PDF, JPG, PNG)'}
+              {bgDoc ? bgDoc.name : t('dashboard.bgCheck.selectFile')}
             </span>
             <input
               id="bg-doc-input"
@@ -225,27 +229,25 @@ const Dashboard = () => {
           </label>
         )}
 
-        {/* 파일 선택됐지만 아직 제출 전 */}
         {bgDoc && !bgDocUploaded && (
           <div className="upload-actions">
             <button className="upload-submit-btn" onClick={handleBgDocSubmit}>
-              Submit Document
+              {t('dashboard.bgCheck.submit')}
             </button>
             <button className="upload-remove-btn" onClick={handleBgDocRemove}>
-              Remove
+              {t('common.remove')}
             </button>
           </div>
         )}
 
-        {/* 제출 완료 */}
         {bgDocUploaded && (
           <div className="upload-submitted-row">
             <div className="upload-success">
               <MdCheckCircle style={{ marginRight: 8, fontSize: 22 }} />
-              <span><strong>{bgDoc.name}</strong> submitted! We'll review it shortly.</span>
+              <span>{submittedBefore}<strong>{bgDoc.name}</strong>{submittedAfter}</span>
             </div>
             <button className="upload-remove-btn" onClick={handleBgDocRemove}>
-              Remove Document
+              {t('dashboard.bgCheck.removeDocument')}
             </button>
           </div>
         )}
@@ -255,18 +257,18 @@ const Dashboard = () => {
 
   const renderProfile = () => (
     <>
-      <h2 className="dashboard-section-title">Profile Settings</h2>
+      <h2 className="dashboard-section-title">{t('dashboard.nav.profile')}</h2>
 
       {/* #56 — Profile picture */}
       <div className="profile-pic-section">
         <div className="profile-pic-preview">
           {profilePic
-            ? <img src={profilePic} alt="Profile" className="profile-pic-img" />
+            ? <img src={profilePic} alt={t('dashboard.profile.photoAlt')} className="profile-pic-img" />
             : <div className="profile-pic-placeholder">{user?.firstName?.[0]}{user?.lastName?.[0]}</div>
           }
         </div>
         <label className="profile-pic-btn" htmlFor="profile-pic-input">
-          Change Photo
+          {t('dashboard.profile.changePhoto')}
         </label>
         <input
           id="profile-pic-input"
@@ -281,82 +283,82 @@ const Dashboard = () => {
       <form className="profile-form" onSubmit={handleProfileSave} style={{ marginTop: 28 }}>
         <div className="profile-row">
           <div className="profile-field">
-            <label>First Name</label>
+            <label>{t('common.firstName')}</label>
             <input name="firstName" value={profileForm.firstName} onChange={handleProfileChange} />
           </div>
           <div className="profile-field">
-            <label>Last Name</label>
+            <label>{t('common.lastName')}</label>
             <input name="lastName" value={profileForm.lastName} onChange={handleProfileChange} />
           </div>
         </div>
 
         <div className="profile-row">
           <div className="profile-field">
-            <label>Email</label>
+            <label>{t('common.email')}</label>
             <input name="email" value={profileForm.email} disabled className="input-disabled" />
           </div>
           <div className="profile-field">
-            <label>Phone Number</label>
-            <input name="phone" value={profileForm.phone} onChange={handleProfileChange} placeholder="e.g. 416-555-0123" />
+            <label>{t('dashboard.profile.phoneNumber')}</label>
+            <input name="phone" value={profileForm.phone} onChange={handleProfileChange} placeholder={t('dashboard.profile.placeholders.phone')} />
           </div>
         </div>
 
         {/* #56 — Address */}
         <div className="profile-field full-width">
-          <label>Address</label>
-          <input name="address" value={profileForm.address} onChange={handleProfileChange} placeholder="e.g. 123 Main St, Toronto, ON" />
+          <label>{t('dashboard.profile.address')}</label>
+          <input name="address" value={profileForm.address} onChange={handleProfileChange} placeholder={t('dashboard.profile.placeholders.address')} />
         </div>
 
         <div className="profile-actions">
-          {profileSaved && <span className="profile-saved-msg">Saved!</span>}
-          <button type="submit" className="profile-save-btn">Save Changes</button>
+          {profileSaved && <span className="profile-saved-msg">{t('dashboard.profile.saved')}</span>}
+          <button type="submit" className="profile-save-btn">{t('dashboard.profile.saveChanges')}</button>
         </div>
       </form>
 
       {/* #56 — Password change */}
       <div className="password-section">
-        <h3 className="password-section-title">Change Password</h3>
+        <h3 className="password-section-title">{t('dashboard.profile.changePassword')}</h3>
         <form className="profile-form" onSubmit={handlePasswordSave}>
           <div className="profile-field full-width">
-            <label>Current Password</label>
+            <label>{t('dashboard.profile.currentPassword')}</label>
             <input
               type="password"
               name="current"
               value={passwordForm.current}
               onChange={handlePasswordChange}
-              placeholder="Enter current password"
+              placeholder={t('dashboard.profile.placeholders.currentPassword')}
             />
           </div>
 
           <div className="profile-row">
             <div className="profile-field">
-              <label>New Password</label>
+              <label>{t('dashboard.profile.newPassword')}</label>
               <input
                 type="password"
                 name="newPass"
                 value={passwordForm.newPass}
                 onChange={handlePasswordChange}
-                placeholder="Min. 8 characters"
+                placeholder={t('dashboard.profile.placeholders.newPassword')}
               />
             </div>
             <div className="profile-field">
-              <label>Confirm New Password</label>
+              <label>{t('dashboard.profile.confirmNewPassword')}</label>
               <input
                 type="password"
                 name="confirm"
                 value={passwordForm.confirm}
                 onChange={handlePasswordChange}
-                placeholder="Re-enter new password"
+                placeholder={t('dashboard.profile.placeholders.confirmNewPassword')}
               />
             </div>
           </div>
 
           {passwordMsg && (
-            <div className={`password-msg ${passwordMsg.type}`}>{passwordMsg.text}</div>
+            <div className={`password-msg ${passwordMsg.type}`}>{t(passwordMsg.key)}</div>
           )}
 
           <div className="profile-actions">
-            <button type="submit" className="profile-save-btn">Update Password</button>
+            <button type="submit" className="profile-save-btn">{t('dashboard.profile.updatePassword')}</button>
           </div>
         </form>
       </div>
@@ -365,10 +367,9 @@ const Dashboard = () => {
 
   const approvedApplications = applications.filter(a => a.status === 'Approved');
 
-  /* ── 리스트 뷰 ── */
   const renderShiftList = () => (
     approvedApplications.length === 0
-      ? <div className="dashboard-placeholder">No upcoming shifts scheduled.</div>
+      ? <div className="dashboard-placeholder">{t('dashboard.shifts.empty')}</div>
       : (
         <div className="shift-list">
           {approvedApplications.map((app) => (
@@ -377,7 +378,7 @@ const Dashboard = () => {
                 <div className="shift-title">{app.listingTitle}</div>
                 <div className="shift-meta">
                   <span><MdLocationOn className="shift-meta-icon" /> {app.orgName}</span>
-                  <span><MdCalendarToday className="shift-meta-icon" /> Approved: {app.registeredAt}</span>
+                  <span><MdCalendarToday className="shift-meta-icon" /> {t('dashboard.shifts.approvedOn', { date: app.registeredAt })}</span>
                 </div>
               </div>
             </div>
@@ -386,7 +387,6 @@ const Dashboard = () => {
       )
   );
 
-  /* ── 캘린더 뷰 ── */
   const renderCalendar = () => {
     const monday   = getMondayOf(new Date());
     monday.setDate(monday.getDate() + weekOffset * 7);
@@ -406,7 +406,6 @@ const Dashboard = () => {
 
     return (
       <div className="cal-wrapper">
-        {/* 주 탐색 */}
         <div className="cal-nav">
           <button className="cal-nav-btn" onClick={() => setWeekOffset(w => w - 1)}>‹</button>
           <span className="cal-nav-label">
@@ -416,20 +415,17 @@ const Dashboard = () => {
         </div>
 
         <div className="cal-grid">
-          {/* 헤더 행 */}
           <div className="cal-header">
             <div className="cal-time-spacer" />
             {weekDays.map((d, i) => (
               <div key={i} className={`cal-day-header ${toDateString(d) === todayStr ? 'today' : ''}`}>
-                <div className="cal-day-name">{CAL_DAYS[i]}</div>
+                <div className="cal-day-name">{t(`options.daysShort.${CAL_DAYS[i]}`)}</div>
                 <div className="cal-day-date">{fmtHeader(d)}</div>
               </div>
             ))}
           </div>
 
-          {/* 바디 */}
           <div className="cal-body">
-            {/* 시간 레이블 */}
             <div className="cal-time-col">
               {hours.map(h => (
                 <div key={h} className="cal-time-label" style={{ height: HOUR_HEIGHT }}>
@@ -438,7 +434,6 @@ const Dashboard = () => {
               ))}
             </div>
 
-            {/* 요일 컬럼들 */}
             <div className="cal-days">
               {weekDays.map((d, dayIdx) => {
                 const dateStr   = toDateString(d);
@@ -472,20 +467,19 @@ const Dashboard = () => {
     );
   };
 
-  /* ── 탭 전체 ── */
   const renderShifts = () => (
     <>
-      <h2 className="dashboard-section-title">Upcoming Shifts</h2>
+      <h2 className="dashboard-section-title">{t('dashboard.nav.shifts')}</h2>
 
       <div className="shift-view-toggle">
         <button
           className={`shift-view-btn ${shiftView === 'list' ? 'active' : ''}`}
           onClick={() => setShiftView('list')}
-        >List</button>
+        >{t('dashboard.shifts.list')}</button>
         <button
           className={`shift-view-btn ${shiftView === 'calendar' ? 'active' : ''}`}
           onClick={() => setShiftView('calendar')}
-        >Calendar</button>
+        >{t('dashboard.shifts.calendar')}</button>
       </div>
 
       {shiftView === 'list' ? renderShiftList() : renderCalendar()}
@@ -494,9 +488,9 @@ const Dashboard = () => {
 
   const renderApplications = () => (
     <>
-      <h2 className="dashboard-section-title">My Applications</h2>
+      <h2 className="dashboard-section-title">{t('dashboard.nav.applications')}</h2>
       {applications.length === 0 ? (
-        <div className="dashboard-placeholder">You have not applied to any opportunities yet.</div>
+        <div className="dashboard-placeholder">{t('dashboard.applications.empty')}</div>
       ) : (
         <div className="applications-list">
           {applications.map(app => (
@@ -504,10 +498,10 @@ const Dashboard = () => {
               <div className="application-card-left">
                 <div className="application-title">{app.listingTitle}</div>
                 <div className="application-org">{app.orgName}</div>
-                <div className="application-date">Applied: {app.registeredAt}</div>
+                <div className="application-date">{t('dashboard.applications.appliedOn', { date: app.registeredAt })}</div>
               </div>
               <div className={`application-status-badge ${app.status.toLowerCase()}`}>
-                {app.status}
+                {t(`options.applicationStatus.${app.status.toLowerCase()}`, { defaultValue: app.status })}
               </div>
             </div>
           ))}
@@ -521,11 +515,11 @@ const Dashboard = () => {
     const totalHours = history.reduce((sum, h) => sum + h.hours, 0);
     return (
       <>
-        <h2 className="dashboard-section-title">Volunteer History</h2>
+        <h2 className="dashboard-section-title">{t('dashboard.nav.history')}</h2>
 
 
         {history.length === 0 ? (
-          <div className="dashboard-placeholder">No volunteer history yet.</div>
+          <div className="dashboard-placeholder">{t('dashboard.history.empty')}</div>
         ) : (
           <div className="history-list">
             {history.map((item) => (
@@ -537,7 +531,7 @@ const Dashboard = () => {
                     <span><MdLocationOn   className="shift-meta-icon" /> {item.location}</span>
                   </div>
                 </div>
-                <div className="history-card-hours">{item.hours} hrs</div>
+                <div className="history-card-hours">{t('dashboard.history.hours', { hours: item.hours })}</div>
               </div>
             ))}
           </div>
@@ -567,12 +561,12 @@ const Dashboard = () => {
           <div className="sidebar-user">
             <div className="sidebar-avatar">
               {profilePic
-                ? <img src={profilePic} alt="Profile" className="sidebar-avatar-img" />
+                ? <img src={profilePic} alt={t('dashboard.profile.photoAlt')} className="sidebar-avatar-img" />
                 : <div className="sidebar-avatar-initials">{user?.firstName?.[0]}{user?.lastName?.[0]}</div>
               }
             </div>
             <div className="sidebar-user-name">{user?.firstName} {user?.lastName}</div>
-            <div className="sidebar-user-role">{user?.role}</div>
+            <div className="sidebar-user-role">{user?.role === 'volunteer' ? t('dashboard.roleVolunteer') : user?.role}</div>
           </div>
 
           <nav className="sidebar-nav">
@@ -583,13 +577,13 @@ const Dashboard = () => {
                 onClick={() => setActiveSection(item.id)}
               >
                 <span className="nav-icon">{item.icon}</span>
-                {item.label}
+                {t(item.labelKey)}
               </div>
             ))}
           </nav>
 
           <div className="sidebar-logout" onClick={handleLogout}>
-            <MdLogout /> Log Out
+            <MdLogout /> {t('common.logOut')}
           </div>
         </aside>
 
