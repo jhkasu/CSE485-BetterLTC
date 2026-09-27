@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Backend.Security;
 
 namespace Backend.Controllers;
 
@@ -17,7 +18,7 @@ public class OrganizationController : ControllerBase {
     public async Task<IActionResult> GetAllOrganizations() {
         try {
             var orgs = await _context.Organizations.OrderByDescending(o => o.Id).ToListAsync();
-            return Ok(orgs);
+            return Ok(orgs.Select(OrganizationResponse.From));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -26,10 +27,9 @@ public class OrganizationController : ControllerBase {
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
         try {
-            var org = await _context.Organizations
-                .FirstOrDefaultAsync(o => o.Email == request.Email && o.Password == request.Password);
-            if (org is null) return NotFound();
-            return Ok(org);
+            var org = await _context.Organizations.FirstOrDefaultAsync(o => o.Email == request.Email);
+            if (org is null || !PasswordHashing.Verify(request.Password, org.Password)) return NotFound();
+            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -42,9 +42,10 @@ public class OrganizationController : ControllerBase {
             // Reject duplicate organization email before inserting
             bool exists = await _context.Organizations.AnyAsync(o => o.Email == org.Email);
             if (exists) return Conflict("Organization with this email already exists.");
+            org.Password = PasswordHashing.Hash(org.Password);
             _context.Organizations.Add(org);
             await _context.SaveChangesAsync();
-            return Ok(org);
+            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -55,14 +56,14 @@ public class OrganizationController : ControllerBase {
         try {
             var org = await _context.Organizations.FindAsync(id);
             if (org is null) return NotFound();
-            return Ok(org);
+            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateOrganization(int id, Organization updated) {
+    public async Task<IActionResult> UpdateOrganization(int id, OrganizationUpdateRequest updated) {
         try {
             var org = await _context.Organizations.FindAsync(id);
             if (org is null) return NotFound();
@@ -71,7 +72,7 @@ public class OrganizationController : ControllerBase {
             org.Email = updated.Email;
             org.IsApproved = updated.IsApproved;
             await _context.SaveChangesAsync();
-            return Ok(org);
+            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -84,7 +85,7 @@ public class OrganizationController : ControllerBase {
             if (org is null) return NotFound();
             org.IsApproved = true;
             await _context.SaveChangesAsync();
-            return Ok(org);
+            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -97,7 +98,7 @@ public class OrganizationController : ControllerBase {
             if (org is null) return NotFound();
             org.IsApproved = false;
             await _context.SaveChangesAsync();
-            return Ok(org);
+            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }

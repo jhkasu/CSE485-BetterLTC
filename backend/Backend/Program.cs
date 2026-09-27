@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Backend.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 string[] allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? [];
@@ -25,7 +26,9 @@ var app = builder.Build();
 // Apply pending migrations on startup in every environment so a fresh
 // deployment creates its own tables.
 using (var scope = app.Services.CreateScope()) {
-    scope.ServiceProvider.GetRequiredService<UsersDbContext>().Database.Migrate();
+    var usersDb = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
+    usersDb.Database.Migrate();
+    PasswordHashing.UpgradeLegacyPasswords(usersDb);
     scope.ServiceProvider.GetRequiredService<ListingsDbContext>().Database.Migrate();
 }
 
