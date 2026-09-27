@@ -8,7 +8,8 @@ import { MdLocationOn, MdCalendarToday, MdSchedule, MdCategory } from 'react-ico
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './VolunteerDetail.css';
-import API_BASE from './config';
+import apiFetch from './api';
+import { getCurrentUser } from './auth/session';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -45,7 +46,7 @@ function VolunteerDetail() {
   const [regLoading, setRegLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/listings/${id}`)
+    apiFetch(`/api/listings/${id}`)
       .then(res => {
         if (!res.ok) { setNotFound(true); return null; }
         return res.json();
@@ -55,13 +56,12 @@ function VolunteerDetail() {
   }, [id]);
 
   const handleRegister = async () => {
-    const stored = localStorage.getItem('currentUser');
-    if (!stored) { navigate('/signin'); return; }
-    const user = JSON.parse(stored);
+    const user = getCurrentUser();
+    if (!user) { navigate('/signin'); return; }
     if (user.role !== 'volunteer') return;
     setRegLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/registrations`, {
+      const res = await apiFetch(`/api/registrations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -79,8 +79,7 @@ function VolunteerDetail() {
   };
 
   const renderRegisterArea = () => {
-    const stored = localStorage.getItem('currentUser');
-    const user = stored ? JSON.parse(stored) : null;
+    const user = getCurrentUser();
     if (!user) {
       return <button className="vdetail-register" onClick={handleRegister}>{t('volunteerDetail.register')}</button>;
     }

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './RecentOpportunities.css';
-import API_BASE from './config';
+import apiFetch from './api';
 
 function RecentOpportunities() {
   const { t } = useTranslation();
   const [opportunities, setOpportunities] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/listings`)
+    apiFetch(`/api/listings`)
       .then(res => res.json())
       .then(data => setOpportunities(data.slice(0, 3)))
       .catch(() => setOpportunities([]));

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Backend.Security;
 
 namespace Backend.Controllers;
 
@@ -14,36 +16,39 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpGet]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAllVolunteers() {
         try {
             var volunteers = await _context.Volunteers.OrderByDescending(v => v.Id).ToListAsync();
-            return Ok(volunteers);
+            return Ok(volunteers.Select(VolunteerResponse.From));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
     }
 
     [HttpPut("{id:int}/approve-bgcheck")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> ApproveBgCheck(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
             if (volunteer is null) return NotFound();
             volunteer.BackgroundCheckApproved = true;
             await _context.SaveChangesAsync();
-            return Ok(volunteer);
+            return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
     }
 
     [HttpPut("{id:int}/revoke-bgcheck")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> RevokeBgCheck(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
             if (volunteer is null) return NotFound();
             volunteer.BackgroundCheckApproved = false;
             await _context.SaveChangesAsync();
-            return Ok(volunteer);
+            return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -56,38 +61,30 @@ public class VolunteerController : ControllerBase {
             // Reject duplicate email before inserting 
             bool exists = await _context.Volunteers.AnyAsync(v => v.Email == volunteer.Email);
             if (exists) return Conflict("Volunteer with this email already exists.");
+            volunteer.Password = PasswordHashing.Hash(volunteer.Password);
             _context.Volunteers.Add(volunteer);
             await _context.SaveChangesAsync();
-            return Ok(volunteer);
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
-    [HttpPost("signin")]
-    public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
-        try {
-            var volunteer = await _context.Volunteers
-                .FirstOrDefaultAsync(v => v.Email == request.Email && v.Password == request.Password);
-            if (volunteer is null) return NotFound();
-            return Ok(volunteer);
+            return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
     }
 
     [HttpGet("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> GetVolunteer(int id) {
         try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Volunteer, id)) return Forbid();
             var volunteer = await _context.Volunteers.FindAsync(id);
             if (volunteer is null) return NotFound();
-            return Ok(volunteer);
+            return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteVolunteer(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);

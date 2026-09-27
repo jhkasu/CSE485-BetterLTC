@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Backend.Security;
 
 namespace Backend.Controllers;
 
@@ -37,6 +39,7 @@ public class TeamMemberController : ControllerBase {
     }
 
     [HttpPost]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Create(TeamMember member) {
         try {
             _context.TeamMembers.Add(member);
@@ -48,6 +51,7 @@ public class TeamMemberController : ControllerBase {
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Update(int id, TeamMember updated) {
         try {
             var member = await _context.TeamMembers.FindAsync(id);
@@ -65,6 +69,7 @@ public class TeamMemberController : ControllerBase {
     }
 
     [HttpPost("upload")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> UploadImage(IFormFile file) {
         try {
             if (file is null || file.Length == 0) return BadRequest("No file provided.");
@@ -83,6 +88,7 @@ public class TeamMemberController : ControllerBase {
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Delete(int id) {
         try {
             var member = await _context.TeamMembers.FindAsync(id);

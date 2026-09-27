@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './NewsSection.css';
-import API_BASE from './config';
+import apiFetch from './api';
 
 function extractYoutubeId(url) {
   const match = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -57,7 +57,7 @@ function NewsSection() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/our-work`)
+    apiFetch(`/api/our-work`)
       .then(res => res.json())
       .then(data => setPosts(data.slice(0, 3)))
       .catch(() => setPosts([]));

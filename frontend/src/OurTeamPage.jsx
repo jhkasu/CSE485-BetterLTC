@@ -4,13 +4,14 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurTeamPage.css';
 import API_BASE from './config';
+import apiFetch from './api';
 
 function OurTeamPage() {
   const { t } = useTranslation();
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/team-members`)
+    apiFetch(`/api/team-members`)
       .then(res => res.json())
       .then(data => setMembers(data))
       .catch(() => setMembers([]));

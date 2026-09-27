@@ -7,6 +7,7 @@ import Youtube from '@tiptap/extension-youtube';
 import { useTranslation } from 'react-i18next';
 import './RichTextEditor.css';
 import API_BASE from './config';
+import apiFetch from './api';
 
 function MenuBar({ editor }) {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ function MenuBar({ editor }) {
       const data = new FormData();
       data.append('file', file);
       try {
-        const res = await fetch(`${API_BASE}/api/team-members/upload`, { method: 'POST', body: data });
+        const res = await apiFetch(`/api/team-members/upload`, { method: 'POST', body: data });
         const { imagePath } = await res.json();
         editor.chain().focus().setImage({ src: `${API_BASE}${imagePath}` }).run();
       } catch (err) {

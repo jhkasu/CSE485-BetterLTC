@@ -11,6 +11,8 @@ import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
 import './AdminDashboard.css';
 import API_BASE from './config';
+import apiFetch from './api';
+import { clearSession, getCurrentUser } from './auth/session';
 
 
 const INIT_OPPORTUNITIES = [
@@ -60,13 +62,13 @@ function DeleteConfirm({ onConfirm, onCancel }) {
 function AdminDashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const user = getCurrentUser();
   const [activeSection, setActiveSection] = useState('overview');
 
   const [volunteers, setVolunteers] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/volunteers`)
+    apiFetch(`/api/volunteers`)
       .then(res => res.json())
       .then(data => setVolunteers(data))
       .catch(() => {});
@@ -75,7 +77,7 @@ function AdminDashboard() {
   const [organizations, setOrganizations] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/organizations`)
+    apiFetch(`/api/organizations`)
       .then(res => res.json())
       .then(data => setOrganizations(data))
       .catch(() => {});
@@ -88,7 +90,7 @@ function AdminDashboard() {
   const [teamDeleteId, setTeamDeleteId] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/team-members`)
+    apiFetch(`/api/team-members`)
       .then(res => res.json())
       .then(data => setTeam(data))
       .catch(() => {});
@@ -105,7 +107,7 @@ function AdminDashboard() {
   const [workDeleteId, setWorkDeleteId] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/our-work`)
+    apiFetch(`/api/our-work`)
       .then(res => res.json())
       .then(data => setWork(data))
       .catch(() => {});
@@ -115,7 +117,7 @@ function AdminDashboard() {
   const [helpDeleteId, setHelpDeleteId] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/help-requests`)
+    apiFetch(`/api/help-requests`)
       .then(res => res.json())
       .then(data => setHelpRequests(data))
       .catch(() => {});
@@ -124,15 +126,15 @@ function AdminDashboard() {
   const nextId = (list) => Math.max(0, ...list.map(i => i.id)) + 1;
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
+    clearSession();
     navigate('/signin');
   };
 
   const toggleBgCheck = (volunteer) => {
     const endpoint = volunteer.backgroundCheckApproved
-      ? `${API_BASE}/api/volunteers/${volunteer.id}/revoke-bgcheck`
-      : `${API_BASE}/api/volunteers/${volunteer.id}/approve-bgcheck`;
-    fetch(endpoint, { method: 'PUT' })
+      ? `/api/volunteers/${volunteer.id}/revoke-bgcheck`
+      : `/api/volunteers/${volunteer.id}/approve-bgcheck`;
+    apiFetch(endpoint, { method: 'PUT' })
       .then(res => res.json())
       .then(updated => setVolunteers(volunteers.map(v => v.id === updated.id ? updated : v)))
       .catch(() => {});
@@ -146,14 +148,14 @@ function AdminDashboard() {
     const data = new FormData();
     data.append('file', file);
     setTeamImageUploading(true);
-    fetch(`${API_BASE}/api/team-members/upload`, { method: 'POST', body: data })
+    apiFetch(`/api/team-members/upload`, { method: 'POST', body: data })
       .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.json(); })
       .then(({ imagePath }) => { setTeamForm(f => ({ ...f, imagePath })); setTeamImageUploading(false); })
       .catch(err => { console.error('Upload failed:', err); setTeamImageUploading(false); });
   };
   const saveTeam = () => {
     if (teamModal.mode === 'add') {
-      fetch(`${API_BASE}/api/team-members`, {
+      apiFetch(`/api/team-members`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(teamForm),
@@ -162,7 +164,7 @@ function AdminDashboard() {
         .then(created => { setTeam([...team, created]); setTeamModal(null); })
         .catch(err => console.error('POST team-member failed:', err));
     } else {
-      fetch(`${API_BASE}/api/team-members/${teamModal.item.id}`, {
+      apiFetch(`/api/team-members/${teamModal.item.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(teamForm),
@@ -173,7 +175,7 @@ function AdminDashboard() {
     }
   };
   const deleteTeam = (id) => {
-    fetch(`${API_BASE}/api/team-members/${id}`, { method: 'DELETE' })
+    apiFetch(`/api/team-members/${id}`, { method: 'DELETE' })
       .then(() => { setTeam(team.filter(t => t.id !== id)); setTeamDeleteId(null); })
       .catch(() => {});
   };
@@ -191,7 +193,7 @@ function AdminDashboard() {
   const openWorkEdit = (item) => { setWorkForm({ title: item.title, content: item.content, category: item.category, date: item.date }); setWorkModal({ mode: 'edit', item }); };
   const saveWork = () => {
     if (workModal.mode === 'add') {
-      fetch(`${API_BASE}/api/our-work`, {
+      apiFetch(`/api/our-work`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(workForm),
@@ -200,7 +202,7 @@ function AdminDashboard() {
         .then(created => { setWork([created, ...work]); setWorkModal(null); })
         .catch(err => console.error('POST our-work failed:', err));
     } else {
-      fetch(`${API_BASE}/api/our-work/${workModal.item.id}`, {
+      apiFetch(`/api/our-work/${workModal.item.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(workForm),
@@ -211,13 +213,13 @@ function AdminDashboard() {
     }
   };
   const deleteWork = (id) => {
-    fetch(`${API_BASE}/api/our-work/${id}`, { method: 'DELETE' })
+    apiFetch(`/api/our-work/${id}`, { method: 'DELETE' })
       .then(() => { setWork(work.filter(w => w.id !== id)); setWorkDeleteId(null); })
       .catch(err => console.error('DELETE our-work failed:', err));
   };
 
   const deleteHelpRequest = (id) => {
-    fetch(`${API_BASE}/api/help-requests/${id}`, { method: 'DELETE' })
+    apiFetch(`/api/help-requests/${id}`, { method: 'DELETE' })
       .then(() => { setHelpRequests(helpRequests.filter(r => r.id !== id)); setHelpDeleteId(null); })
       .catch(() => {});
   };
@@ -513,9 +515,9 @@ function AdminDashboard() {
 
   const toggleOrgApproval = (org) => {
     const endpoint = org.isApproved
-      ? `${API_BASE}/api/organizations/${org.id}/revoke`
-      : `${API_BASE}/api/organizations/${org.id}/approve`;
-    fetch(endpoint, { method: 'PUT' })
+      ? `/api/organizations/${org.id}/revoke`
+      : `/api/organizations/${org.id}/approve`;
+    apiFetch(endpoint, { method: 'PUT' })
       .then(res => res.json())
       .then(updated => setOrganizations(organizations.map(o => o.id === updated.id ? updated : o)))
       .catch(() => {});

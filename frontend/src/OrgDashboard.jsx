@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
 import './OrgDashboard.css';
-import API_BASE from './config';
+import apiFetch from './api';
+import { clearSession, getCurrentUser } from './auth/session';
 
 const SK_CITIES = [
   'Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current',
@@ -83,7 +84,7 @@ function DeleteConfirm({ onConfirm, onCancel }) {
 function OrgDashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('currentUser')));
+  const [user, setUser] = useState(() => getCurrentUser());
   const [activeSection, setActiveSection] = useState('overview');
   const [listings, setListings] = useState([]);
   const [registrations, setRegistrations] = useState([]);
@@ -94,7 +95,7 @@ function OrgDashboard() {
 
   useEffect(() => {
     if (user?.id) {
-      fetch(`${API_BASE}/api/organizations/${user.id}`)
+      apiFetch(`/api/organizations/${user.id}`)
         .then(res => res.json())
         .then(data => {
           const updated = { ...user, isApproved: data.isApproved };
@@ -106,21 +107,21 @@ function OrgDashboard() {
   }, [user?.id]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/listings`)
+    apiFetch(`/api/listings`)
       .then(res => res.json())
       .then(data => setListings(data.filter(l => l.orgName === user?.orgName)))
       .catch(() => {});
   }, [user?.orgName]);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/registrations`)
+    apiFetch(`/api/registrations`)
       .then(res => res.json())
       .then(data => setRegistrations(data.filter(r => r.orgName === user?.orgName)))
       .catch(() => {});
   }, [user?.orgName]);
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
+    clearSession();
     navigate('/signin');
   };
 
@@ -159,7 +160,7 @@ function OrgDashboard() {
     setFormError('');
     const payload = { ...form, days: form.days.join(', '), orgName: user?.orgName || '' };
     if (modal.mode === 'add') {
-      fetch(`${API_BASE}/api/listings`, {
+      apiFetch(`/api/listings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -168,7 +169,7 @@ function OrgDashboard() {
         .then(created => { setListings([created, ...listings]); setModal(null); })
         .catch(() => {});
     } else {
-      fetch(`${API_BASE}/api/listings/${modal.item.id}`, {
+      apiFetch(`/api/listings/${modal.item.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...payload, id: modal.item.id }),
@@ -180,7 +181,7 @@ function OrgDashboard() {
   };
 
   const updateRegistrationStatus = (id, status) => {
-    fetch(`${API_BASE}/api/registrations/${id}/status`, {
+    apiFetch(`/api/registrations/${id}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(status),
@@ -191,7 +192,7 @@ function OrgDashboard() {
   };
 
   const deleteListing = (id) => {
-    fetch(`${API_BASE}/api/listings/${id}`, { method: 'DELETE' })
+    apiFetch(`/api/listings/${id}`, { method: 'DELETE' })
       .then(() => { setListings(listings.filter(l => l.id !== id)); setDeleteId(null); })
       .catch(() => {});
   };

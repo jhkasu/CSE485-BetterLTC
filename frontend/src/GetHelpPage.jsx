@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './GetHelpPage.css';
-import API_BASE from './config';
+import apiFetch from './api';
 
 const HELP_TYPES = [
   { value: 'Senior Care Support', labelKey: 'options.helpTypes.seniorCare' },
@@ -43,7 +43,7 @@ function GetHelpPage() {
     e.preventDefault();
     setStatus('loading');
     try {
-      const res = await fetch(`${API_BASE}/api/help-requests`, {
+      const res = await apiFetch(`/api/help-requests`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
