@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
@@ -15,21 +16,11 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpGet]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAllOrganizations() {
         try {
             var orgs = await _context.Organizations.OrderByDescending(o => o.Id).ToListAsync();
             return Ok(orgs.Select(OrganizationResponse.From));
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
-    [HttpPost("signin")]
-    public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
-        try {
-            var org = await _context.Organizations.FirstOrDefaultAsync(o => o.Email == request.Email);
-            if (org is null || !PasswordHashing.Verify(request.Password, org.Password)) return NotFound();
-            return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -52,8 +43,10 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpGet("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> GetOrganization(int id) {
         try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Organization, id)) return Forbid();
             var org = await _context.Organizations.FindAsync(id);
             if (org is null) return NotFound();
             return Ok(OrganizationResponse.From(org));
@@ -63,6 +56,7 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> UpdateOrganization(int id, OrganizationUpdateRequest updated) {
         try {
             var org = await _context.Organizations.FindAsync(id);
@@ -79,6 +73,7 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpPut("{id:int}/approve")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> ApproveOrganization(int id) {
         try {
             var org = await _context.Organizations.FindAsync(id);
@@ -92,6 +87,7 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpPut("{id:int}/revoke")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> RevokeOrganization(int id) {
         try {
             var org = await _context.Organizations.FindAsync(id);
@@ -105,6 +101,7 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteOrganization(int id) {
         try {
             var org = await _context.Organizations.FindAsync(id);

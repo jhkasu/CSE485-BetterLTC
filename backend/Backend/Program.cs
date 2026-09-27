@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Backend.Models;
 using Backend.Security;
 
@@ -12,6 +14,27 @@ builder.Services.AddCors(options => {
     });
 });
 builder.Services.AddControllers();
+
+var jwtSettings = JwtSettings.From(builder.Configuration);
+builder.Services.AddSingleton(jwtSettings);
+builder.Services.AddSingleton<TokenService>();
+builder.Services.AddSingleton(builder.Configuration.GetSection("Admin").Get<AdminAccount>() ?? new AdminAccount());
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+    options.MapInboundClaims = false;
+    options.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings.Issuer,
+        ValidateAudience = true,
+        ValidAudience = jwtSettings.Audience,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = jwtSettings.SigningKey,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.FromMinutes(1),
+        NameClaimType = Roles.IdClaim,
+        RoleClaimType = Roles.RoleClaim,
+    };
+});
+builder.Services.AddAuthorization();
 
 string usersDbConn = builder.Configuration.GetConnectionString("UsersDb")
     ?? throw new ArgumentNullException("[Users Database Connection String] string is null");
@@ -33,6 +56,8 @@ using (var scope = app.Services.CreateScope()) {
 }
 
 app.UseCors();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseStaticFiles();
 app.MapGet("/", () => "Hello World!");
 app.MapControllers();

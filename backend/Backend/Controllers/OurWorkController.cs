@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Backend.Security;
 
 namespace Backend.Controllers;
 
@@ -35,6 +37,7 @@ public class OurWorkController : ControllerBase {
     }
 
     [HttpPost]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Create(OurWork post) {
         try {
             _context.OurWorks.Add(post);
@@ -46,6 +49,7 @@ public class OurWorkController : ControllerBase {
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Update(int id, OurWork updated) {
         try {
             var post = await _context.OurWorks.FindAsync(id);
@@ -62,6 +66,7 @@ public class OurWorkController : ControllerBase {
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Delete(int id) {
         try {
             var post = await _context.OurWorks.FindAsync(id);

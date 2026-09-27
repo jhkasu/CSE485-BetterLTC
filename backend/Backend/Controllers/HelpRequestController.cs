@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Backend.Security;
 
 namespace Backend.Controllers;
 
@@ -14,6 +16,7 @@ public class HelpRequestController : ControllerBase {
     }
 
     [HttpGet]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAll() {
         try {
             var requests = await _context.HelpRequests.OrderByDescending(r => r.SubmittedAt).ToListAsync();
@@ -36,6 +39,7 @@ public class HelpRequestController : ControllerBase {
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Delete(int id) {
         try {
             var request = await _context.HelpRequests.FindAsync(id);

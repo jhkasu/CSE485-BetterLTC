@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
@@ -15,6 +16,7 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpGet]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAllVolunteers() {
         try {
             var volunteers = await _context.Volunteers.OrderByDescending(v => v.Id).ToListAsync();
@@ -25,6 +27,7 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpPut("{id:int}/approve-bgcheck")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> ApproveBgCheck(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
@@ -38,6 +41,7 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpPut("{id:int}/revoke-bgcheck")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> RevokeBgCheck(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
@@ -66,20 +70,11 @@ public class VolunteerController : ControllerBase {
         }
     }
 
-    [HttpPost("signin")]
-    public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
-        try {
-            var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.Email == request.Email);
-            if (volunteer is null || !PasswordHashing.Verify(request.Password, volunteer.Password)) return NotFound();
-            return Ok(VolunteerResponse.From(volunteer));
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
     [HttpGet("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> GetVolunteer(int id) {
         try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Volunteer, id)) return Forbid();
             var volunteer = await _context.Volunteers.FindAsync(id);
             if (volunteer is null) return NotFound();
             return Ok(VolunteerResponse.From(volunteer));
@@ -89,6 +84,7 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteVolunteer(int id) {
         try {
             var volunteer = await _context.Volunteers.FindAsync(id);
