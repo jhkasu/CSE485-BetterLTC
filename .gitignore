@@ -3,9 +3,11 @@
 
 .backend-old/bin/
 .backend-old/obj/
-Backend/Backend/bin/
-Backend/Backend/obj/
-Backend/Backend/Test/
-Backend/Backend/*.db
+backend/Backend/bin/
+backend/Backend/obj/
+backend/Backend/Test/
+backend/Backend/*.db
+backend/Backend/*.db-shm
+backend/Backend/*.db-wal
 backend/Backend/wwwroot/uploads/
 frontend/.env
