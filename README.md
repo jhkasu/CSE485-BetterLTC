@@ -26,12 +26,13 @@ Opens http://localhost:3000 in your browser. `copy .env.example .env` and `npm i
 On Mac use `cp` instead of `copy`.
 
 ## Test accounts
-- Admin: kim@test.com / password123
+- Admin, local only: kim@test.com / password123, set in `backend/Backend/appsettings.Development.json`. On Azure the admin comes from the `Admin__Email` and `Admin__Password` app settings, see below.
 - Volunteer and organization accounts: create one on the Sign Up page. Organization accounts must be approved by the admin before they can post listings.
 
 ## Config
 - `frontend/.env` holds the backend URL (`REACT_APP_API_BASE_URL`). Never commit this file.
 - `backend/Backend/appsettings.json` has `AllowedOrigins`, the list of frontend URLs the backend accepts. On Azure this is overridden by app settings, see below.
+- Sign-in returns a JWT that the frontend sends as `Authorization: Bearer <token>`. `Jwt__Key` sets the signing key (at least 32 characters). Without it the backend makes a random key at startup, so everyone has to sign in again after a restart.
 
 ## Test deployment on Azure
 
@@ -44,8 +45,8 @@ This is a test environment on a personal Azure for Students subscription. Everyt
 
 Things to know before you demo it:
 - The first visit after 20 minutes of no traffic takes 10 to 20 seconds while the server wakes up.
-- The database is SQLite stored in the server's temp folder. **All accounts and listings are wiped whenever the backend restarts or is redeployed.** The admin login still works because it is built into the frontend. Moving to PostgreSQL fixes this.
-- Passwords are not hashed yet. Do not sign up with a password you use anywhere else.
+- The database is SQLite stored in the server's temp folder. **All accounts and listings are wiped whenever the backend restarts or is redeployed.** The admin login still works because it comes from app settings. Moving to PostgreSQL fixes this.
+- Passwords are hashed with BCrypt and never returned by the API.
 - The Free tier allows 60 CPU minutes per day, shared by the site and the API.
 
 ### One-time setup (already done, listed so it can be repeated on another subscription)
@@ -77,6 +78,12 @@ Backend settings. The database files go in `/tmp` because SQLite cannot lock fil
 
 ```
 az webapp config appsettings set --name betterltc-test-api --resource-group betterltc-test-rg --settings "ConnectionStrings__UsersDb=Data Source=/tmp/Users.db" "ConnectionStrings__ListingsDb=Data Source=/tmp/Listings.db" "AllowedOrigins__0=https://betterltc-test-web.azurewebsites.net" "AllowedOrigins__1=http://localhost:3000"
+```
+
+Admin account and token key. Pick your own values; they never go in the repository.
+
+```
+az webapp config appsettings set --name betterltc-test-api --resource-group betterltc-test-rg --settings "Admin__Email=<admin email>" "Admin__Password=<admin password>" "Jwt__Key=<random string of 32 or more characters>"
 ```
 
 Frontend setting. The site is a folder of static files, so tell the Node container to serve them. `--spa` makes page refreshes on routes like `/about/team` work.
