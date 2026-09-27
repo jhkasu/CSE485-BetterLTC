@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
+import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import './Navbar.css';
 
 function Navbar() {
@@ -58,6 +59,7 @@ function Navbar() {
       </ul>
 
       <div className="nav-actions">
+      <AccessibilityMenu />
       {currentUser ? (
         <div className="user-menu">
           <button
