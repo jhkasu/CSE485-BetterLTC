@@ -5,6 +5,7 @@ import Logo from './Logo';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
 import './Navbar.css';
+import { clearSession, getCurrentUser } from './auth/session';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,10 +14,10 @@ function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = getCurrentUser();
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
+    clearSession();
     navigate('/signin');
   };
 

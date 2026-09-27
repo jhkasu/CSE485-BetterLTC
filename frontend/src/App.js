@@ -19,28 +19,26 @@ import OurWorkPage from './OurWorkPage';
 import GetHelpPage from './GetHelpPage';
 import VolunteerDetail from './VolunteerDetail';
 import OrgDashboard from './OrgDashboard';
+import { getSessionRole } from './auth/session';
 
 function PrivateRoute({ children }) {
-  const stored = localStorage.getItem('currentUser');
-  if (!stored) return <Navigate to="/signin" />;
-  const user = JSON.parse(stored);
-  if (user.role === 'organization') return <Navigate to="/org-dashboard" />;
-  if (user.role === 'admin') return <Navigate to="/admin" />;
+  const role = getSessionRole();
+  if (!role) return <Navigate to="/signin" />;
+  if (role === 'organization') return <Navigate to="/org-dashboard" />;
+  if (role === 'admin') return <Navigate to="/admin" />;
   return children;
 }
 
 function AdminRoute({ children }) {
-  const stored = localStorage.getItem('currentUser');
-  if (!stored) return <Navigate to="/signin" />;
-  const user = JSON.parse(stored);
-  return user.role === 'admin' ? children : <Navigate to="/dashboard" />;
+  const role = getSessionRole();
+  if (!role) return <Navigate to="/signin" />;
+  return role === 'admin' ? children : <Navigate to="/dashboard" />;
 }
 
 function OrgRoute({ children }) {
-  const stored = localStorage.getItem('currentUser');
-  if (!stored) return <Navigate to="/signin" />;
-  const user = JSON.parse(stored);
-  return user.role === 'organization' ? children : <Navigate to="/dashboard" />;
+  const role = getSessionRole();
+  if (!role) return <Navigate to="/signin" />;
+  return role === 'organization' ? children : <Navigate to="/dashboard" />;
 }
 
 function Home() {

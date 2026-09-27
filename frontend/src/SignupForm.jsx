@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './SignupForm.css';
-import API_BASE from './config';
+import apiFetch from './api';
 
 const SERVER_ERROR_KEYS = {
   'Volunteer with this email already exists.': 'auth.errors.volunteerEmailExists',
@@ -74,7 +74,7 @@ const SignupForm = () => {
         password: formData.password,
       };
       try {
-        const res = await fetch(`${API_BASE}/api/volunteers`, {
+        const res = await apiFetch(`/api/volunteers`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
@@ -97,7 +97,7 @@ const SignupForm = () => {
         isApproved: false,
       };
       try {
-        const res = await fetch(`${API_BASE}/api/organizations`, {
+        const res = await apiFetch(`/api/organizations`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

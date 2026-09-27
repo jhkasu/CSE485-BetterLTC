@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import mockUsers from './mockUsers';
 import './SignupForm.css';
-import API_BASE from './config';
+import apiFetch from './api';
+import { setSession } from './auth/session';
+
+const HOME_BY_ROLE = {
+  admin: '/admin',
+  volunteer: '/dashboard',
+  organization: '/org-dashboard',
+};
 
 const SigninForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
   const successMessage = location.state?.success || null;
+  const sessionExpired = new URLSearchParams(location.search).get('expired') === '1';
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -32,30 +39,27 @@ const SigninForm = () => {
     e.preventDefault();
     if (!validate()) return;
 
-    const adminUser = mockUsers.find(u => u.email === formData.email && u.password === formData.password && u.role === 'admin');
-    if (adminUser) {
-      const { password, ...safeUser } = adminUser;
-      localStorage.setItem('currentUser', JSON.stringify(safeUser));
-      navigate('/admin');
+    let res;
+    try {
+      res = await apiFetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email, password: formData.password }),
+      });
+    } catch {
+      setErrors({ auth: 'common.serverUnreachable' });
       return;
     }
 
-    const body = JSON.stringify({ email: formData.email, password: formData.password });
-    const headers = { 'Content-Type': 'application/json' };
-
-    const volunteerRes = await fetch(`${API_BASE}/api/volunteers/signin`, { method: 'POST', headers, body });
-    if (volunteerRes.ok) {
-      const volunteer = await volunteerRes.json();
-      localStorage.setItem('currentUser', JSON.stringify({ ...volunteer, role: 'volunteer' }));
-      navigate('/dashboard');
+    if (res.ok) {
+      const { token, user } = await res.json();
+      setSession(token, user);
+      navigate(HOME_BY_ROLE[user.role] || '/');
       return;
     }
 
-    const orgRes = await fetch(`${API_BASE}/api/organizations/signin`, { method: 'POST', headers, body });
-    if (orgRes.ok) {
-      const org = await orgRes.json();
-      localStorage.setItem('currentUser', JSON.stringify({ ...org, role: 'organization', orgName: org.orgName }));
-      navigate('/org-dashboard');
+    if (res.status !== 401) {
+      setErrors({ auth: 'common.genericError' });
       return;
     }
 
@@ -67,6 +71,7 @@ const SigninForm = () => {
       <div className="signup-box">
         <h2>{t('auth.signInHeading')}</h2>
           {successMessage && <p className="success-message">{t(successMessage)}</p>}
+          {sessionExpired && !successMessage && <p className="error" role="status">{t('auth.sessionExpired')}</p>}
         <form onSubmit={handleSubmit} noValidate>
 
           <label>{t('common.email')}</label>

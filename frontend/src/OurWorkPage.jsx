@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurWorkPage.css';
-import API_BASE from './config';
+import apiFetch from './api';
 
 function extractYoutubeId(url) {
   const match = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -45,7 +45,7 @@ function OurWorkPage() {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/our-work`)
+    apiFetch(`/api/our-work`)
       .then(res => res.json())
       .then(data => setPosts(data))
       .catch(() => setPosts([]));

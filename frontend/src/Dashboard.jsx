@@ -8,7 +8,8 @@ import {
 } from 'react-icons/md';
 import Navbar from './Navbar';
 import './Dashboard.css';
-import API_BASE from './config';
+import apiFetch from './api';
+import { clearSession, getCurrentUser } from './auth/session';
 
 const NAV_ITEMS = [
   { id: 'overview',      labelKey: 'common.overview',            icon: <MdDashboard /> },
@@ -55,13 +56,13 @@ function toDateString(d) {
 const Dashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('currentUser')));
+  const [user, setUser] = useState(() => getCurrentUser());
   const [applications, setApplications] = useState([]);
   const [activeSection, setActiveSection] = useState('overview');
 
   useEffect(() => {
     if (user?.id) {
-      fetch(`${API_BASE}/api/volunteers/${user.id}`)
+      apiFetch(`/api/volunteers/${user.id}`)
         .then(res => res.json())
         .then(data => {
           const updated = { ...user, backgroundCheckApproved: data.backgroundCheckApproved };
@@ -74,7 +75,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (user?.id) {
-      fetch(`${API_BASE}/api/registrations/volunteer/${user.id}`)
+      apiFetch(`/api/registrations/volunteer/${user.id}`)
         .then(res => res.json())
         .then(data => setApplications(data))
         .catch(() => {});
@@ -180,7 +181,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
+    clearSession();
     navigate('/signin');
   };
 

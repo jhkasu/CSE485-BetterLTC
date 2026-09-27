@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './VolunteerList.css';
-import API_BASE from './config';
+import apiFetch from './api';
 
 const CITIES = ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current', 'Yorkton', 'North Battleford', 'Estevan', 'Weyburn', 'Lloydminster', 'Humboldt', 'Melfort', 'Melville', 'Kindersley', 'Tisdale', 'Other'];
 
@@ -14,7 +14,7 @@ function VolunteerList() {
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/listings`)
+    apiFetch(`/api/listings`)
       .then(res => res.json())
       .then(data => setListings(data))
       .catch(() => setListings([]));

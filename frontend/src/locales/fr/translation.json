@@ -238,7 +238,8 @@
       "volunteerEmailExists": "Un compte de bénévole existe déjà avec ce courriel.",
       "orgEmailExists": "Un compte d'organisme existe déjà avec ce courriel."
     },
-    "accountCreated": "Compte créé avec succès. Veuillez ouvrir une session."
+    "accountCreated": "Compte créé avec succès. Veuillez ouvrir une session.",
+    "sessionExpired": "Votre session a expiré. Veuillez ouvrir une session de nouveau."
   },
   "dashboard": {
     "roleVolunteer": "Bénévole",

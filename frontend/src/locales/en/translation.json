@@ -238,7 +238,8 @@
       "volunteerEmailExists": "Volunteer with this email already exists.",
       "orgEmailExists": "Organization with this email already exists."
     },
-    "accountCreated": "Account created successfully. Please sign in."
+    "accountCreated": "Account created successfully. Please sign in.",
+    "sessionExpired": "Your session has expired. Please sign in again."
   },
   "dashboard": {
     "roleVolunteer": "Volunteer",
