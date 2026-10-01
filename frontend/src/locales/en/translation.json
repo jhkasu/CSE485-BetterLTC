@@ -53,7 +53,8 @@
     "dashboard": "Dashboard",
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "donate": "Donate now"
+    "donate": "Donate now",
+    "directory": "Organizations"
   },
   "a11y": {
     "display": "Display",
@@ -603,7 +604,9 @@
       "website": "Official website",
       "websiteInvalid": "Please enter a full website address, like https://www.example.org.",
       "viewPublic": "View your public page",
-      "publicPending": "Your public page will be visible once an administrator approves your organization."
+      "publicPending": "Your public page will be visible once an administrator approves your organization.",
+      "categories": "Categories",
+      "categoriesHint": "Volunteers use these to find you in the directory."
     },
     "recommended": {
       "heading": "Recommended Volunteers",
@@ -800,6 +803,16 @@
       "new": "New",
       "accepted": "Accepted",
       "contacted": "Contacted"
+    },
+    "orgCategories": {
+      "health": "Health",
+      "seniors": "Seniors' Services",
+      "youth": "Youth",
+      "education": "Education",
+      "environment": "Environment",
+      "arts": "Arts and Culture",
+      "community": "Community Services",
+      "other": "Other"
     }
   },
   "matching": {
@@ -840,6 +853,21 @@
     "details": "Details",
     "serviceAreas": "Service areas",
     "helpTypes": "Types of help",
-    "website": "Website"
+    "website": "Website",
+    "categories": "Categories"
+  },
+  "directory": {
+    "eyebrow": "Directory",
+    "heading": "Find an Organization",
+    "lead": "Browse Saskatchewan organizations by the kind of work they do and where they serve.",
+    "filters": {
+      "category": "Category"
+    },
+    "count_one": "{{count}} organization",
+    "count_other": "{{count}} organizations",
+    "empty": "No organizations are listed yet.",
+    "emptyFiltered": "No organizations match these filters.",
+    "viewProfile": "View profile",
+    "viewProfileOf": "View {{name}} profile"
   }
 }

@@ -5,6 +5,7 @@ import { MdOpenInNew } from 'react-icons/md';
 import apiFetch from './api';
 import HELP_TYPES from './helpTypes';
 import SK_CITIES from './saskatchewanCities';
+import ORG_CATEGORIES from './orgCategories';
 import './OrgProfile.css';
 
 const DESCRIPTION_LIMIT = 500;
@@ -32,6 +33,7 @@ function toForm(org) {
     description: org?.description || '',
     serviceAreas: org?.serviceAreas || [],
     helpTypes: org?.helpTypes || [],
+    categories: org?.categories || [],
     notificationEmail: org?.notificationEmail || '',
     website: org?.website || '',
   };
@@ -255,6 +257,13 @@ function OrgProfile({ org, onSaved }) {
           </div>
 
           <div className="org-profile-column">
+            {checkboxGroup(
+              'categories',
+              ORG_CATEGORIES.map(category => ({ value: category.value, label: t(category.labelKey) })),
+              'orgDashboard.profile.categories',
+              'orgDashboard.profile.categoriesHint',
+            )}
+
             {checkboxGroup(
               'helpTypes',
               HELP_TYPES.map(type => ({ value: type.value, label: t(type.labelKey) })),
