@@ -10,9 +10,11 @@ namespace Backend.Controllers;
 [ApiController]
 public class VolunteerController : ControllerBase {
     private readonly UsersDbContext _context;
+    private readonly AdminAccount _admin;
 
-    public VolunteerController(UsersDbContext context) {
+    public VolunteerController(UsersDbContext context, AdminAccount admin) {
         this._context = context;
+        this._admin = admin;
     }
 
     [HttpGet]
@@ -57,10 +59,8 @@ public class VolunteerController : ControllerBase {
     [HttpPost]
     public async Task<IActionResult> AddVolunteer(Volunteer volunteer) {
         try {
-
-            // Reject duplicate email before inserting 
-            bool exists = await _context.Volunteers.AnyAsync(v => v.Email == volunteer.Email);
-            if (exists) return Conflict("Volunteer with this email already exists.");
+            volunteer.Email = AccountEmails.Normalize(volunteer.Email);
+            if (await AccountEmails.IsTaken(_context, _admin, volunteer.Email)) return Conflict(AccountEmails.AlreadyRegistered);
             volunteer.Password = PasswordHashing.Hash(volunteer.Password);
             _context.Volunteers.Add(volunteer);
             await _context.SaveChangesAsync();
