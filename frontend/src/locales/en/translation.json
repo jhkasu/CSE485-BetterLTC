@@ -235,8 +235,7 @@
       "orgNameRequired": "Organization name is required.",
       "invalidCredentials": "Invalid email or password.",
       "signUpFailed": "Sign up failed. Please try again.",
-      "volunteerEmailExists": "Volunteer with this email already exists.",
-      "orgEmailExists": "Organization with this email already exists."
+      "emailRegistered": "This email is already registered."
     },
     "accountCreated": "Account created successfully. Please sign in.",
     "sessionExpired": "Your session has expired. Please sign in again."

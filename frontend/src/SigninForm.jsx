@@ -29,7 +29,7 @@ const SigninForm = () => {
   const validate = () => {
     const newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) newErrors.email = 'auth.errors.emailInvalid';
+    if (!emailRegex.test(formData.email.trim())) newErrors.email = 'auth.errors.emailInvalid';
     if (formData.password.length < 8) newErrors.password = 'auth.errors.passwordShort';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -44,7 +44,7 @@ const SigninForm = () => {
       res = await apiFetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email, password: formData.password }),
+        body: JSON.stringify({ email: formData.email.trim(), password: formData.password }),
       });
     } catch {
       setErrors({ auth: 'common.serverUnreachable' });
