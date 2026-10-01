@@ -10,6 +10,7 @@ import Footer from './Footer';
 import './VolunteerDetail.css';
 import apiFetch from './api';
 import { getCurrentUser } from './auth/session';
+import { OrgNameLink } from './ListingCard';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -128,7 +129,7 @@ function VolunteerDetail() {
           <Link to="/volunteer" className="arrow-link vdetail-back">← {t('volunteerDetail.back')}</Link>
           <span className="eyebrow">{listing.status}{listing.category ? ` · ${listing.category}` : ''}</span>
           <h1>{listing.listingTitle}</h1>
-          <p className="vdetail-org">{listing.orgName}</p>
+          <OrgNameLink listing={listing} className="vdetail-org" />
         </div>
       </header>
       <div className="vdetail-page container">

@@ -21,6 +21,7 @@ import OurWorkPage from './OurWorkPage';
 import GetHelpPage from './GetHelpPage';
 import VolunteerDetail from './VolunteerDetail';
 import OrgDashboard from './OrgDashboard';
+import OrganizationPage from './OrganizationPage';
 import { getSessionRole } from './auth/session';
 
 function PrivateRoute({ children }) {
@@ -107,6 +108,7 @@ function App() {
         <Route path="/about/history" element={<OurHistoryPage />} />
         <Route path="/our-work" element={<OurWorkPage />} />
         <Route path="/get-help" element={<GetHelpPage />} />
+        <Route path="/organizations/:id" element={<OrganizationPage />} />
         <Route
           path="/dashboard"
           element={

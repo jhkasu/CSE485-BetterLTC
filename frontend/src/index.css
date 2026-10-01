@@ -512,3 +512,14 @@ h1, h2, h3 {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+.org-name-link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.org-name-link:hover {
+  color: var(--color-text);
+}

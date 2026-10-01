@@ -587,7 +587,23 @@
       "save": "Enregistrer",
       "saved": "Enregistré!",
       "saveFailed": "Impossible d'enregistrer votre profil. Veuillez réessayer.",
-      "nameRequired": "Veuillez entrer le nom de votre organisme."
+      "nameRequired": "Veuillez entrer le nom de votre organisme.",
+      "logo": "Logo ou photo",
+      "logoPreview": "Logo actuel",
+      "noLogo": "Aucun logo",
+      "uploadLogo": "Téléverser une image",
+      "changeLogo": "Changer l'image",
+      "removeLogo": "Retirer",
+      "logoHint": "JPG ou PNG, 2 Mo maximum. Une image carrée donne le meilleur résultat.",
+      "logoErrors": {
+        "type": "Veuillez choisir une image JPG ou PNG.",
+        "size": "L'image doit faire 2 Mo ou moins.",
+        "upload": "Le téléversement a échoué. Veuillez réessayer."
+      },
+      "website": "Site Web officiel",
+      "websiteInvalid": "Veuillez entrer une adresse Web complète, comme https://www.example.org.",
+      "viewPublic": "Voir votre page publique",
+      "publicPending": "Votre page publique sera visible une fois votre organisme approuvé par un administrateur."
     },
     "recommended": {
       "heading": "Bénévoles recommandés",
@@ -807,5 +823,23 @@
       "fair": "Compatibilité moyenne",
       "low": "Faible compatibilité"
     }
+  },
+  "orgPage": {
+    "notFound": "Organisme introuvable",
+    "notFoundText": "La page de cet organisme n'est pas disponible.",
+    "browse": "Parcourir les occasions",
+    "serves": "Dessert {{areas}}",
+    "servesMore": "Dessert {{areas}} et {{count}} autres",
+    "logoAlt": "Logo de {{name}}",
+    "visitWebsite": "Visiter le site Web",
+    "newTab": "s'ouvre dans un nouvel onglet",
+    "about": "À propos",
+    "openings_one": "{{count}} occasion ouverte",
+    "openings_other": "{{count}} occasions ouvertes",
+    "noOpenings": "Aucune occasion ouverte pour le moment.",
+    "details": "Détails",
+    "serviceAreas": "Régions desservies",
+    "helpTypes": "Types d'aide",
+    "website": "Site Web"
   }
 }

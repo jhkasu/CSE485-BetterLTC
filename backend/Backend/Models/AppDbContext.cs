@@ -16,6 +16,7 @@ public class AppDbContext : DbContext {
     public DbSet<Registration> Registrations { get; set; }
     public DbSet<BackgroundCheck> BackgroundChecks { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<OrganizationLogo> OrganizationLogos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -34,6 +35,12 @@ public class AppDbContext : DbContext {
 
         modelBuilder.Entity<Notification>()
             .HasIndex(n => new { n.AccountRole, n.AccountId, n.CreatedAt });
+
+        modelBuilder.Entity<OrganizationLogo>()
+            .HasOne<Organization>()
+            .WithOne()
+            .HasForeignKey<OrganizationLogo>(l => l.OrganizationId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<HelpRequest>()
             .HasOne<Organization>()

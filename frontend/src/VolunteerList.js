@@ -1,29 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { MdSearch, MdLocationOn, MdCalendarToday, MdEvent } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 import './VolunteerList.css';
 import apiFetch from './api';
 import CITIES from './saskatchewanCities';
-import HELP_TYPES, { HELP_TYPE_KEYS } from './helpTypes';
+import HELP_TYPES from './helpTypes';
 import FilterChip from './FilterChip';
-import MatchPanel from './MatchPanel';
+import ListingCard, { listingDays } from './ListingCard';
 import { getSessionRole } from './auth/session';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-const LISTING_STATUS_KEYS = {
-  'Is Ongoing': 'options.listingStatus.ongoing',
-  'One-time': 'options.listingStatus.oneTime',
-  Completed: 'options.listingStatus.completed',
-};
-
-function listingDays(listing) {
-  return (listing.days || '').split(',').map(d => d.trim()).filter(Boolean);
-}
-
 function VolunteerList() {
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const [listings, setListings] = useState([]);
   const [areas, setAreas] = useState([]);
@@ -51,7 +40,6 @@ function VolunteerList() {
 
   const hasMatches = !!matches && Object.keys(matches).length > 0;
   const cityLabel = (city) => (city === 'Other' ? t('volunteer.otherCity') : city);
-  const typeLabel = (type) => (HELP_TYPE_KEYS[type] ? t(HELP_TYPE_KEYS[type]) : type);
   const dayLabel = (day) => t(`options.days.${day.toLowerCase()}`, { defaultValue: day });
 
   const search = keyword.trim().toLowerCase();
@@ -148,32 +136,9 @@ function VolunteerList() {
           </p>
         ) : (
           <ul className="vl-list">
-            {filtered.map(listing => {
-              const match = hasMatches ? matches[listing.id] : null;
-              const listingDayNames = listingDays(listing);
-              const dates = [listing.startDate, listing.endDate].filter(Boolean).join(' – ');
-              return (
-                <li key={listing.id} className={`vl-card${match ? ' vl-card--matched' : ''}`}>
-                  <div className="vl-main">
-                    <div className="vl-tags">
-                      {listing.category && <span className="vl-tag">{typeLabel(listing.category)}</span>}
-                      {listing.status && <span className="vl-tag vl-tag--muted">{LISTING_STATUS_KEYS[listing.status] ? t(LISTING_STATUS_KEYS[listing.status]) : listing.status}</span>}
-                    </div>
-                    <h4 className="vl-title">{listing.listingTitle}</h4>
-                    <p className="vl-org">{listing.orgName}</p>
-                    <div className="vl-meta">
-                      <span><MdLocationOn aria-hidden="true" /> {cityLabel(listing.location)}</span>
-                      <span><MdCalendarToday aria-hidden="true" /> {listingDayNames.length ? listingDayNames.map(dayLabel).join(', ') : t('common.flexible')}</span>
-                      {dates && <span><MdEvent aria-hidden="true" /> {dates}</span>}
-                    </div>
-                    <div className="vl-actions">
-                      <button className="btn btn-primary" onClick={() => navigate(`/volunteer/${listing.id}`)}>{t('common.viewDetails')}</button>
-                    </div>
-                  </div>
-                  {match && <MatchPanel match={match} />}
-                </li>
-              );
-            })}
+            {filtered.map(listing => (
+              <ListingCard key={listing.id} listing={listing} match={hasMatches ? matches[listing.id] : null} />
+            ))}
           </ul>
         )}
       </div>
