@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  MdPerson, MdAccountBalance, MdApartment, MdPhone, MdGroups, MdAccessTime,
+  MdPerson, MdAccountBalance, MdApartment, MdPhone,
   MdBusiness, MdVolunteerActivism, MdChevronRight,
 } from 'react-icons/md';
 import './HowItWorks.css';
@@ -12,14 +12,12 @@ const STEPS = [
   { key: 'match', icon: <MdAccountBalance /> },
   { key: 'accept', icon: <MdApartment /> },
   { key: 'contact', icon: <MdPhone /> },
-  { key: 'assign', icon: <MdGroups /> },
-  { key: 'service', icon: <MdAccessTime /> },
 ];
 
 const ROLES = [
   { key: 'seniors', icon: <MdPerson />, link: '/get-help' },
   { key: 'organizations', icon: <MdBusiness />, link: '/signup' },
-  { key: 'volunteers', icon: <MdVolunteerActivism />, link: '/volunteer' },
+  { key: 'volunteers', icon: <MdVolunteerActivism />, link: '/organizations' },
 ];
 
 function HowItWorks() {

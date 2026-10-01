@@ -35,7 +35,7 @@ public class AuthController : ControllerBase {
                 var profile = VolunteerResponse.From(volunteer);
                 return Ok(new {
                     token = _tokens.Create(volunteer.Id, Roles.Volunteer, volunteer.Email, $"{volunteer.FirstName} {volunteer.LastName}"),
-                    user = new { profile.Id, profile.FirstName, profile.LastName, profile.Email, profile.BackgroundCheckApproved, role = Roles.Volunteer },
+                    user = new { profile.Id, profile.FirstName, profile.LastName, profile.Email, role = Roles.Volunteer },
                 });
             }
 

@@ -14,7 +14,7 @@ function Hero() {
         <p>{t('home.hero.lead')}</p>
         <div className="hero-actions">
           <Link className="btn btn-primary btn-lg" to="/get-help">{t('home.hero.needHelp')}</Link>
-          <Link className="btn btn-dark btn-lg" to="/volunteer">{t('home.hero.wantToVolunteer')}</Link>
+          <Link className="btn btn-dark btn-lg" to="/organizations">{t('home.hero.wantToVolunteer')}</Link>
         </div>
       </div>
       <div className="hero-media" aria-hidden="true">

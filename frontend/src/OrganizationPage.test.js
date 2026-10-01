@@ -10,18 +10,12 @@ const org = {
   website: 'https://www.prairiecare.org', logoVersion: 99,
 };
 
-const listings = [
-  { id: 1, listingTitle: 'Friendly Visits', orgName: 'Prairie Care', organizationId: 4, location: 'Regina', days: 'Monday', status: 'Is Ongoing', category: 'Companionship' },
-  { id: 2, listingTitle: 'Old Event', orgName: 'Prairie Care', organizationId: 4, location: 'Regina', days: '', status: 'Completed', category: '' },
-  { id: 3, listingTitle: 'Other Org Rides', orgName: 'Other', organizationId: 9, location: 'Regina', days: '', status: 'Is Ongoing', category: '' },
-];
-
 function respond(body, ok = true) {
   return Promise.resolve({ ok, status: ok ? 200 : 404, json: async () => body });
 }
 
 function renderPage(publicResponse) {
-  global.fetch = jest.fn(url => (url.endsWith('/public') ? publicResponse : respond(listings)));
+  global.fetch = jest.fn(() => publicResponse);
   return render(
     <AccessibilityProvider>
       <MemoryRouter initialEntries={['/organizations/4']}>
@@ -47,7 +41,7 @@ test('builds logo and website helpers', () => {
   expect(websiteHost('https://www.prairiecare.org/about')).toBe('prairiecare.org');
 });
 
-test('shows the profile, website link, and only its open opportunities', async () => {
+test('shows the profile and website link', async () => {
   renderPage(respond(org));
   expect(await screen.findByRole('heading', { level: 1, name: 'Prairie Care' })).toBeInTheDocument();
   expect(screen.getByText('We help seniors stay connected.')).toBeInTheDocument();
@@ -55,10 +49,6 @@ test('shows the profile, website link, and only its open opportunities', async (
   const visit = screen.getByRole('link', { name: /Visit website/ });
   expect(visit).toHaveAttribute('href', 'https://www.prairiecare.org');
   expect(visit).toHaveAttribute('target', '_blank');
-  expect(await screen.findByText('Friendly Visits')).toBeInTheDocument();
-  expect(screen.queryByText('Old Event')).not.toBeInTheDocument();
-  expect(screen.queryByText('Other Org Rides')).not.toBeInTheDocument();
-  expect(screen.getByRole('heading', { name: '1 open opportunity' })).toBeInTheDocument();
 });
 
 test('hides empty sections', async () => {

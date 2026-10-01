@@ -6,7 +6,7 @@ import { futureExp, makeToken } from './auth/testToken';
 
 const volunteer = {
   id: 7, firstName: 'Ana', lastName: 'Lee', email: 'ana@example.test',
-  city: '', availableDays: [], availableTimes: [], interests: [], languages: ['English'], recommendationConsent: false,
+  city: '', availableDays: [], availableTimes: [], interests: [], languages: ['English'],
 };
 
 beforeEach(() => {
@@ -35,7 +35,7 @@ test('requires a city and a day before saving', () => {
   expect(global.fetch).not.toHaveBeenCalled();
 });
 
-test('saves the matching profile with consent', async () => {
+test('saves the matching profile', async () => {
   global.fetch = jest.fn((url, options) => Promise.resolve({ ok: true, status: 200, json: async () => ({ ...volunteer, ...JSON.parse(options.body) }) }));
   const onSaved = jest.fn();
   render(<VolunteerMatchingProfile volunteer={volunteer} onSaved={onSaved} />);
@@ -45,7 +45,6 @@ test('saves the matching profile with consent', async () => {
   fireEvent.click(screen.getByRole('checkbox', { name: 'Afternoon' }));
   fireEvent.click(screen.getByRole('checkbox', { name: 'Transportation Support' }));
   fireEvent.click(screen.getByRole('checkbox', { name: 'French' }));
-  fireEvent.click(screen.getByRole('checkbox', { name: /agree to be recommended/i }));
   fireEvent.click(screen.getByRole('button', { name: 'Save profile' }));
   expect(await screen.findByText('Saved!')).toBeInTheDocument();
   const [url, options] = global.fetch.mock.calls[0];
@@ -56,7 +55,6 @@ test('saves the matching profile with consent', async () => {
     availableTimes: ['Afternoon'],
     interests: ['Transportation Support'],
     languages: ['English', 'French'],
-    recommendationConsent: true,
   });
   expect(onSaved).toHaveBeenCalled();
 });

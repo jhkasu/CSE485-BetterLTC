@@ -1,13 +1,13 @@
 import React from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import AdminMatchingStatus, { requestNumber } from './AdminMatchingStatus';
+import AdminHelpRequests, { requestNumber } from './AdminHelpRequests';
 import { setSession } from './auth/session';
 import { futureExp, makeToken } from './auth/testToken';
 
 const requests = [
-  { id: 1, firstName: 'Mary', lastName: 'Smith', email: 'mary@example.test', phone: '306-555-0100', contactMethod: 'Phone', helpType: 'Companionship', city: 'Regina', forFamilyMember: false, seniorName: '', language: 'en', status: 'New', submittedAt: '2026-09-20T12:00:00Z', acceptedAt: null, contactedAt: null, organizationId: null, organizationName: null, alert: 'NoOrganization' },
-  { id: 2, firstName: 'John', lastName: 'Brown', email: 'john@example.test', phone: '', contactMethod: 'Email', helpType: 'Transportation', city: 'Saskatoon', forFamilyMember: false, seniorName: '', language: 'en', status: 'Accepted', submittedAt: '2026-09-28T12:00:00Z', acceptedAt: '2026-09-29T12:00:00Z', contactedAt: null, organizationId: 4, organizationName: 'Prairie Care', alert: '' },
-  { id: 12, firstName: 'Anne', lastName: 'Lee', email: 'anne@example.test', phone: '', contactMethod: 'Email', helpType: 'Companionship', city: 'Regina', forFamilyMember: false, seniorName: '', language: 'en', status: 'Contacted', submittedAt: '2026-09-25T12:00:00Z', acceptedAt: '2026-09-26T12:00:00Z', contactedAt: '2026-09-27T12:00:00Z', organizationId: 4, organizationName: 'Prairie Care', alert: '' },
+  { id: 1, firstName: 'Mary', lastName: 'Smith', email: 'mary@example.test', phone: '306-555-0100', contactMethod: 'Phone', helpType: 'Companionship', city: 'Regina', forFamilyMember: false, seniorName: '', language: 'en', status: 'New', submittedAt: '2026-09-20T12:00:00Z', acceptedAt: null, contactedAt: null, organizationId: null, organizationName: null },
+  { id: 2, firstName: 'John', lastName: 'Brown', email: 'john@example.test', phone: '', contactMethod: 'Email', helpType: 'Transportation', city: 'Saskatoon', forFamilyMember: false, seniorName: '', language: 'en', status: 'Accepted', submittedAt: '2026-09-28T12:00:00Z', acceptedAt: '2026-09-29T12:00:00Z', contactedAt: null, organizationId: 4, organizationName: 'Prairie Care' },
+  { id: 12, firstName: 'Anne', lastName: 'Lee', email: 'anne@example.test', phone: '', contactMethod: 'Email', helpType: 'Companionship', city: 'Regina', forFamilyMember: false, seniorName: '', language: 'en', status: 'Contacted', submittedAt: '2026-09-25T12:00:00Z', acceptedAt: '2026-09-26T12:00:00Z', contactedAt: '2026-09-27T12:00:00Z', organizationId: 4, organizationName: 'Prairie Care' },
 ];
 
 function respond(body, ok = true) {
@@ -29,23 +29,19 @@ test('formats request numbers', () => {
   expect(requestNumber(1234)).toBe('REQ-1234');
 });
 
-test('shows counts per tab and filters by status and attention', async () => {
-  render(<AdminMatchingStatus />);
+test('shows counts per tab and filters by status', async () => {
+  render(<AdminHelpRequests />);
   expect(await screen.findByText('REQ-001')).toBeInTheDocument();
   expect(screen.getByRole('tab', { name: 'All (3)' })).toBeInTheDocument();
-  expect(screen.getByText('No organization after 3 days')).toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('tab', { name: 'Accepted (1)' }));
   expect(screen.queryByText('REQ-001')).not.toBeInTheDocument();
   expect(screen.getByText('REQ-002')).toBeInTheDocument();
-
-  fireEvent.click(screen.getByRole('tab', { name: 'Needs attention (1)' }));
-  expect(screen.getByText('REQ-001')).toBeInTheDocument();
-  expect(screen.queryByText('REQ-012')).not.toBeInTheDocument();
+  expect(screen.queryByRole('tab', { name: /Needs attention/ })).not.toBeInTheDocument();
 });
 
 test('view shows history and releases an accepted request after confirming', async () => {
-  render(<AdminMatchingStatus />);
+  render(<AdminHelpRequests />);
   await screen.findByText('REQ-002');
   const row = screen.getAllByRole('row').find(r => within(r).queryByText('REQ-002'));
   fireEvent.click(within(row).getByRole('button', { name: 'View' }));
@@ -63,12 +59,11 @@ test('view shows history and releases an accepted request after confirming', asy
 });
 
 test('a new request has no release button and can be deleted', async () => {
-  render(<AdminMatchingStatus />);
+  render(<AdminHelpRequests />);
   await screen.findByText('REQ-001');
   const row = screen.getAllByRole('row').find(r => within(r).queryByText('REQ-001'));
   fireEvent.click(within(row).getByRole('button', { name: 'View' }));
   const dialog = screen.getByRole('dialog');
-  expect(within(dialog).getByText(/No organization has accepted/)).toBeInTheDocument();
   expect(within(dialog).queryByRole('button', { name: 'Release' })).not.toBeInTheDocument();
 
   fireEvent.click(within(dialog).getByRole('button', { name: 'Delete' }));

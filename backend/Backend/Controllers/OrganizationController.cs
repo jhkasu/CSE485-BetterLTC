@@ -106,12 +106,6 @@ public class OrganizationController : ControllerBase {
             org.Categories = categories;
             org.NotificationEmail = notificationEmail;
             org.Website = website;
-            await _context.Listings
-                .Where(l => l.OrganizationId == id)
-                .ExecuteUpdateAsync(s => s.SetProperty(l => l.OrgName, orgName));
-            await _context.Registrations
-                .Where(r => _context.Listings.Any(l => l.Id == r.ListingId && l.OrganizationId == id))
-                .ExecuteUpdateAsync(s => s.SetProperty(r => r.OrgName, orgName));
             await _context.SaveChangesAsync();
             return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {

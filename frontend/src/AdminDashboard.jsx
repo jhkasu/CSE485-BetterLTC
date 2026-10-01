@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
-  MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness, MdLock, MdVerifiedUser,
+  MdClose, MdOpenInNew, MdBusiness, MdLock,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
 import { useTranslation } from 'react-i18next';
@@ -15,28 +15,15 @@ import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import { HELP_TYPE_KEYS } from './helpTypes';
-import AdminBackgroundChecks from './AdminBackgroundChecks';
-import AdminMatchingStatus from './AdminMatchingStatus';
-
-
-const INIT_OPPORTUNITIES = [
-  { id: 1, title: 'Senior Companionship Program', description: 'Provide friendship and support to isolated seniors in long-term care facilities.', location: 'Toronto', days: 'Flexible' },
-  { id: 2, title: 'Community Food Drive Support', description: 'Help sort and pack food donations for local families in need.', location: 'Vancouver', days: 'Weekends' },
-  { id: 3, title: 'Memory Care Activities Assistant', description: 'Lead engaging activities for seniors living with dementia in care homes.', location: 'Montreal', days: 'Weekdays' },
-  { id: 4, title: 'Transportation Volunteer', description: 'Drive seniors to medical appointments and community events.', location: 'Calgary', days: 'Flexible' },
-];
-
-
+import AdminHelpRequests from './AdminHelpRequests';
 
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
   { id: 'users',          labelKey: 'adminDashboard.nav.users',         icon: <MdPeople /> },
-  { id: 'bgChecks',       labelKey: 'adminDashboard.nav.bgChecks',      icon: <MdVerifiedUser /> },
   { id: 'organizations',  labelKey: 'adminDashboard.nav.organizations', icon: <MdBusiness /> },
   { id: 'team',           labelKey: 'adminDashboard.nav.team',          icon: <MdGroups /> },
-  { id: 'opportunities',  labelKey: 'adminDashboard.nav.opportunities', icon: <MdVolunteerActivism /> },
   { id: 'work',           labelKey: 'adminDashboard.nav.work',          icon: <MdWork /> },
-  { id: 'help',           labelKey: 'adminDashboard.nav.matching',      icon: <MdHelpCenter /> },
+  { id: 'help',           labelKey: 'adminDashboard.nav.help',          icon: <MdHelpCenter /> },
   { id: 'account',        labelKey: 'common.account',                   icon: <MdLock /> },
 ];
 
@@ -102,11 +89,6 @@ function AdminDashboard() {
       .catch(() => {});
   }, []);
 
-  const [opportunities, setOpportunities] = useState(INIT_OPPORTUNITIES);
-  const [oppModal, setOppModal] = useState(null);
-  const [oppForm, setOppForm] = useState({ title: '', description: '', location: '', days: '' });
-  const [oppDeleteId, setOppDeleteId] = useState(null);
-
   const [work, setWork] = useState([]);
   const [workModal, setWorkModal] = useState(null);
   const [workForm, setWorkForm] = useState({ title: '', content: '', category: '', date: '' });
@@ -119,19 +101,9 @@ function AdminDashboard() {
       .catch(() => {});
   }, []);
 
-
-  const nextId = (list) => Math.max(0, ...list.map(i => i.id)) + 1;
-
   const handleLogout = () => {
     clearSession();
     navigate('/signin');
-  };
-
-  const revokeBgCheck = (volunteer) => {
-    apiFetch(`/api/volunteers/${volunteer.id}/revoke-bgcheck`, { method: 'PUT' })
-      .then(res => res.json())
-      .then(updated => setVolunteers(volunteers.map(v => v.id === updated.id ? updated : v)))
-      .catch(() => {});
   };
 
   const openTeamAdd = () => { setTeamForm({ name: '', position: '', bio: '', imagePath: '' }); setTeamModal({ mode: 'add' }); };
@@ -173,15 +145,6 @@ function AdminDashboard() {
       .then(() => { setTeam(team.filter(t => t.id !== id)); setTeamDeleteId(null); })
       .catch(() => {});
   };
-
-  const openOppAdd = () => { setOppForm({ title: '', description: '', location: '', days: '' }); setOppModal({ mode: 'add' }); };
-  const openOppEdit = (item) => { setOppForm({ title: item.title, description: item.description, location: item.location, days: item.days }); setOppModal({ mode: 'edit', item }); };
-  const saveOpp = () => {
-    if (oppModal.mode === 'add') setOpportunities([...opportunities, { id: nextId(opportunities), ...oppForm }]);
-    else setOpportunities(opportunities.map(o => o.id === oppModal.item.id ? { ...o, ...oppForm } : o));
-    setOppModal(null);
-  };
-  const deleteOpp = (id) => { setOpportunities(opportunities.filter(o => o.id !== id)); setOppDeleteId(null); };
 
   const openWorkAdd = () => { setWorkForm({ title: '', content: '', category: '', date: '' }); setWorkModal({ mode: 'add' }); };
   const openWorkEdit = (item) => { setWorkForm({ title: item.title, content: item.content, category: item.category, date: item.date }); setWorkModal({ mode: 'edit', item }); };
@@ -228,12 +191,8 @@ function AdminDashboard() {
           <div className="admin-stat-label">{t('adminDashboard.stats.totalVolunteers')}</div>
         </div>
         <div className="admin-stat-card">
-          <div className="admin-stat-number">{volunteers.filter(v => v.backgroundCheckApproved).length}</div>
-          <div className="admin-stat-label">{t('adminDashboard.stats.bgApproved')}</div>
-        </div>
-        <div className="admin-stat-card">
-          <div className="admin-stat-number">{opportunities.length}</div>
-          <div className="admin-stat-label">{t('adminDashboard.stats.activeOpportunities')}</div>
+          <div className="admin-stat-number">{organizations.filter(o => o.isApproved).length}</div>
+          <div className="admin-stat-label">{t('adminDashboard.stats.approvedOrganizations')}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-number">{team.length}</div>
@@ -254,8 +213,7 @@ function AdminDashboard() {
             <tr>
               <th>{t('common.name')}</th>
               <th>{t('common.email')}</th>
-              <th>{t('adminDashboard.volunteers.bgCheck')}</th>
-              <th>{t('common.actions')}</th>
+              <th>{t('adminDashboard.volunteers.city')}</th>
             </tr>
           </thead>
           <tbody>
@@ -263,14 +221,7 @@ function AdminDashboard() {
               <tr key={v.id}>
                 <td>{v.firstName} {v.lastName}</td>
                 <td>{v.email}</td>
-                <td><span className={`bg-badge ${v.backgroundCheckApproved ? 'approved' : 'pending'}`}>{v.backgroundCheckApproved ? t('options.applicationStatus.approved') : t('options.applicationStatus.pending')}</span></td>
-                <td>
-                  {v.backgroundCheckApproved ? (
-                    <button className="admin-action-btn revoke" onClick={() => revokeBgCheck(v)}>{t('adminDashboard.volunteers.revoke')}</button>
-                  ) : (
-                    <button className="admin-action-btn approve" onClick={() => setActiveSection('bgChecks')}>{t('adminDashboard.volunteers.reviewDocuments')}</button>
-                  )}
-                </td>
+                <td>{v.city === 'Other' ? t('volunteer.otherCity') : v.city || '—'}</td>
               </tr>
             ))}
           </tbody>
@@ -336,64 +287,6 @@ function AdminDashboard() {
             <div className="admin-form-actions">
               <button className="admin-save-btn" onClick={saveTeam}>{t('common.save')}</button>
               <button className="admin-cancel-btn" onClick={() => setTeamModal(null)}>{t('common.cancel')}</button>
-            </div>
-          </div>
-        </Modal>
-      )}
-    </div>
-  );
-
-  const renderOpportunities = () => (
-    <div>
-      <div className="admin-section-header">
-        <h2 className="admin-section-title">{t('adminDashboard.nav.opportunities')}</h2>
-        <button className="admin-add-btn" onClick={openOppAdd}><MdAdd /> {t('adminDashboard.opportunities.add')}</button>
-      </div>
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>{t('common.title')}</th>
-            <th>{t('common.location')}</th>
-            <th>{t('common.days')}</th>
-            <th>{t('common.actions')}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {opportunities.map(o => (
-            <tr key={o.id}>
-              <td>{o.title}</td>
-              <td>{o.location}</td>
-              <td>{o.days}</td>
-              <td>
-                <div className="admin-action-cell">
-                  {oppDeleteId === o.id ? (
-                    <DeleteConfirm onConfirm={() => deleteOpp(o.id)} onCancel={() => setOppDeleteId(null)} />
-                  ) : (
-                    <>
-                      <button className="admin-action-btn edit" onClick={() => openOppEdit(o)}><MdEdit /></button>
-                      <button className="admin-action-btn delete" onClick={() => setOppDeleteId(o.id)}><MdDelete /></button>
-                    </>
-                  )}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {oppModal && (
-        <Modal title={oppModal.mode === 'add' ? t('adminDashboard.opportunities.add') : t('adminDashboard.opportunities.editTitle')} onClose={() => setOppModal(null)}>
-          <div className="admin-form">
-            <label>{t('common.title')}</label>
-            <input value={oppForm.title} onChange={e => setOppForm({ ...oppForm, title: e.target.value })} placeholder={t('orgDashboard.listings.titlePlaceholder')} />
-            <label>{t('common.description')}</label>
-            <textarea value={oppForm.description} onChange={e => setOppForm({ ...oppForm, description: e.target.value })} placeholder={t('common.description')} rows={3} />
-            <label>{t('common.location')}</label>
-            <input value={oppForm.location} onChange={e => setOppForm({ ...oppForm, location: e.target.value })} placeholder={t('adminDashboard.opportunities.cityPlaceholder')} />
-            <label>{t('common.days')}</label>
-            <input value={oppForm.days} onChange={e => setOppForm({ ...oppForm, days: e.target.value })} placeholder={t('adminDashboard.opportunities.daysPlaceholder')} />
-            <div className="admin-form-actions">
-              <button className="admin-save-btn" onClick={saveOpp}>{t('common.save')}</button>
-              <button className="admin-cancel-btn" onClick={() => setOppModal(null)}>{t('common.cancel')}</button>
             </div>
           </div>
         </Modal>
@@ -534,12 +427,10 @@ function AdminDashboard() {
     switch (activeSection) {
       case 'overview':       return renderOverview();
       case 'users':          return renderUsers();
-      case 'bgChecks':       return <AdminBackgroundChecks />;
       case 'organizations':  return renderOrganizations();
       case 'team':           return renderTeam();
-      case 'opportunities':  return renderOpportunities();
       case 'work':           return renderWork();
-      case 'help':           return <AdminMatchingStatus />;
+      case 'help':           return <AdminHelpRequests />;
       case 'account':        return renderAccount();
       default:               return null;
     }

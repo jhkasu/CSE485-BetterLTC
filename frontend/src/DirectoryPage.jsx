@@ -9,7 +9,6 @@ import CITIES from './saskatchewanCities';
 import ORG_CATEGORIES, { ORG_CATEGORY_KEYS } from './orgCategories';
 import FilterChip from './FilterChip';
 import { initials, logoUrl } from './OrganizationPage';
-import './VolunteerList.css';
 import './DirectoryPage.css';
 
 export function directoryQuery(categories, areas) {
@@ -51,8 +50,8 @@ function DirectoryPage() {
       </header>
 
       <main className="dir-page container">
-        <div className="vl-toolbar">
-          <div className="vl-chips">
+        <div className="dir-toolbar">
+          <div className="dir-chips">
             <FilterChip
               label={t('directory.filters.category')}
               options={ORG_CATEGORIES.map(c => ({ value: c.value, label: t(c.labelKey) }))}
@@ -66,18 +65,18 @@ function DirectoryPage() {
               onChange={setAreas}
             />
             {anyFilter && (
-              <button type="button" className="vl-clear" onClick={() => { setCategories([]); setAreas([]); }}>{t('volunteer.filters.clear')}</button>
+              <button type="button" className="dir-clear" onClick={() => { setCategories([]); setAreas([]); }}>{t('volunteer.filters.clear')}</button>
             )}
           </div>
         </div>
 
         {orgs === null ? (
-          <p className="vl-count">{t('common.loading')}</p>
+          <p className="dir-count">{t('common.loading')}</p>
         ) : (
           <>
-            <p className="vl-count" role="status">{t('directory.count', { count: orgs.length })}</p>
+            <p className="dir-count" role="status">{t('directory.count', { count: orgs.length })}</p>
             {orgs.length === 0 ? (
-              <p className="no-results">{t(anyFilter ? 'directory.emptyFiltered' : 'directory.empty')}</p>
+              <p className="dir-empty">{t(anyFilter ? 'directory.emptyFiltered' : 'directory.empty')}</p>
             ) : (
               <ul className="dir-grid">
                 {orgs.map(org => {
@@ -94,7 +93,7 @@ function DirectoryPage() {
                       </div>
                       {(org.categories || []).length > 0 && (
                         <ul className="dir-tags" aria-label={t('orgPage.categories')}>
-                          {org.categories.map(c => <li key={c} className="vl-tag">{categoryLabel(c)}</li>)}
+                          {org.categories.map(c => <li key={c} className="dir-tag">{categoryLabel(c)}</li>)}
                         </ul>
                       )}
                       {org.description && <p className="dir-description">{org.description}</p>}

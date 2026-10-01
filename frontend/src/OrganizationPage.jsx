@@ -8,8 +8,6 @@ import apiFetch from './api';
 import API_BASE from './config';
 import { HELP_TYPE_KEYS } from './helpTypes';
 import { ORG_CATEGORY_KEYS } from './orgCategories';
-import ListingCard from './ListingCard';
-import { getSessionRole } from './auth/session';
 import './OrganizationPage.css';
 
 const AREA_PREVIEW = 3;
@@ -34,9 +32,6 @@ function OrganizationPage() {
   const { id } = useParams();
   const { t } = useTranslation();
   const [org, setOrg] = useState(undefined);
-  const [listings, setListings] = useState([]);
-  const [matches, setMatches] = useState({});
-  const isVolunteer = getSessionRole() === 'volunteer';
 
   useEffect(() => {
     setOrg(undefined);
@@ -44,20 +39,7 @@ function OrganizationPage() {
       .then(res => (res.ok ? res.json() : null))
       .then(setOrg)
       .catch(() => setOrg(null));
-    apiFetch('/api/listings')
-      .then(res => (res.ok ? res.json() : []))
-      .then(data => setListings((Array.isArray(data) ? data : [])
-        .filter(l => String(l.organizationId) === String(id) && l.status !== 'Completed')))
-      .catch(() => setListings([]));
   }, [id]);
-
-  useEffect(() => {
-    if (!isVolunteer) return;
-    apiFetch('/api/listings/matches')
-      .then(res => (res.ok ? res.json() : []))
-      .then(data => setMatches(Object.fromEntries((Array.isArray(data) ? data : []).map(m => [m.listingId, m.match]))))
-      .catch(() => setMatches({}));
-  }, [isVolunteer]);
 
   const cityLabel = (city) => (city === 'Other' ? t('volunteer.otherCity') : city);
   const typeLabel = (type) => (HELP_TYPE_KEYS[type] ? t(HELP_TYPE_KEYS[type]) : type);
@@ -79,7 +61,7 @@ function OrganizationPage() {
         <main className="orgp-page container">
           <h1 className="orgp-missing-title">{t('orgPage.notFound')}</h1>
           <p className="orgp-empty">{t('orgPage.notFoundText')}</p>
-          <Link className="btn btn-primary" to="/volunteer">{t('orgPage.browse')}</Link>
+          <Link className="btn btn-primary" to="/organizations">{t('orgPage.browse')}</Link>
         </main>
         <Footer />
       </div>
@@ -120,19 +102,6 @@ function OrganizationPage() {
                 <p className="orgp-description">{org.description}</p>
               </section>
             )}
-
-            <section className="orgp-openings" aria-labelledby="orgp-openings">
-              <h2 id="orgp-openings" className="orgp-section-title">{t('orgPage.openings', { count: listings.length })}</h2>
-              {listings.length === 0 ? (
-                <p className="orgp-empty">{t('orgPage.noOpenings')}</p>
-              ) : (
-                <ul className="vl-list">
-                  {listings.map(listing => (
-                    <ListingCard key={listing.id} listing={listing} match={matches[listing.id] || null} showOrg={false} />
-                  ))}
-                </ul>
-              )}
-            </section>
           </div>
 
           <aside className="orgp-card orgp-side" aria-label={t('orgPage.details')}>

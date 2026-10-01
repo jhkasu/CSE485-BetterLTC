@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MdClose, MdWarning } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import apiFetch from './api';
 import { HELP_TYPE_KEYS } from './helpTypes';
 
-const TABS = ['all', 'New', 'Accepted', 'Contacted', 'attention'];
+const TABS = ['all', 'New', 'Accepted', 'Contacted'];
 const STATUS_BADGE = { New: 'pending', Accepted: 'pending', Contacted: 'approved' };
 
 export function requestNumber(id) {
   return `REQ-${String(id).padStart(3, '0')}`;
 }
 
-function AdminMatchingStatus() {
+function AdminHelpRequests() {
   const { t, i18n } = useTranslation();
   const [requests, setRequests] = useState(null);
   const [tab, setTab] = useState('all');
@@ -39,10 +39,9 @@ function AdminMatchingStatus() {
     New: (requests || []).filter(r => r.status === 'New').length,
     Accepted: (requests || []).filter(r => r.status === 'Accepted').length,
     Contacted: (requests || []).filter(r => r.status === 'Contacted').length,
-    attention: (requests || []).filter(r => r.alert).length,
   };
   const visible = (requests || []).filter(r => (
-    tab === 'all' ? true : tab === 'attention' ? !!r.alert : r.status === tab
+    tab === 'all' || r.status === tab
   ));
 
   const runAction = () => {
@@ -82,7 +81,7 @@ function AdminMatchingStatus() {
             type="button"
             role="tab"
             aria-selected={tab === key}
-            className={`admin-tab${tab === key ? ' admin-tab--active' : ''}${key === 'attention' && counts.attention > 0 ? ' admin-tab--alert' : ''}`}
+            className={`admin-tab${tab === key ? ' admin-tab--active' : ''}`}
             onClick={() => setTab(key)}
           >
             {t(`adminDashboard.matching.tabs.${key}`)} ({counts[key]})
@@ -122,9 +121,6 @@ function AdminMatchingStatus() {
                   <span className={`bg-badge ${STATUS_BADGE[r.status] || 'pending'}`}>
                     {t(`options.helpRequestStatus.${(r.status || 'New').toLowerCase()}`, { defaultValue: r.status })}
                   </span>
-                  {r.alert && (
-                    <div className="admin-alert-tag"><MdWarning aria-hidden="true" /> {t(`adminDashboard.matching.alerts.${r.alert}`)}</div>
-                  )}
                 </td>
                 <td>{r.organizationName || '—'}</td>
                 <td>{formatDate(r.submittedAt)}</td>
@@ -149,9 +145,6 @@ function AdminMatchingStatus() {
               <button className="admin-modal-close" onClick={() => setSelected(null)} aria-label={t('common.cancel')}><MdClose /></button>
             </div>
             <div className="admin-modal-body">
-              {selected.alert && (
-                <p className="admin-alert-box"><MdWarning aria-hidden="true" /> {t(`adminDashboard.matching.alertHelp.${selected.alert}`)}</p>
-              )}
               <dl className="admin-detail-list">
                 <dt>{t('adminDashboard.matching.requester')}</dt>
                 <dd>{selected.firstName} {selected.lastName}{selected.forFamilyMember && selected.seniorName ? ` · ${t('adminDashboard.help.forSenior', { name: selected.seniorName })}` : ''}</dd>
@@ -204,4 +197,4 @@ function AdminMatchingStatus() {
   );
 }
 
-export default AdminMatchingStatus;
+export default AdminHelpRequests;
