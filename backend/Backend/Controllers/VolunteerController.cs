@@ -26,20 +26,6 @@ public class VolunteerController : ControllerBase {
         }
     }
 
-    [HttpPut("{id:int}/approve-bgcheck")]
-    [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> ApproveBgCheck(int id) {
-        try {
-            var volunteer = await _context.Volunteers.FindAsync(id);
-            if (volunteer is null) return NotFound();
-            volunteer.BackgroundCheckApproved = true;
-            await _context.SaveChangesAsync();
-            return Ok(VolunteerResponse.From(volunteer));
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
     [HttpPut("{id:int}/revoke-bgcheck")]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> RevokeBgCheck(int id) {

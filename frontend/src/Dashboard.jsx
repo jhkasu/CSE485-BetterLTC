@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   MdDashboard, MdPerson, MdCalendarToday, MdHistory,
-  MdLogout, MdCloudUpload, MdCheckCircle,
+  MdLogout, MdVerifiedUser,
   MdLocationOn, MdAssignment, MdTune,
 } from 'react-icons/md';
 import Navbar from './Navbar';
@@ -12,10 +12,12 @@ import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import VolunteerMatchingProfile, { isMatchingProfileComplete } from './VolunteerMatchingProfile';
+import BackgroundCheck from './BackgroundCheck';
 
 const NAV_ITEMS = [
   { id: 'overview',      labelKey: 'common.overview',            icon: <MdDashboard /> },
   { id: 'matching',      labelKey: 'dashboard.nav.matching',     icon: <MdTune /> },
+  { id: 'bgCheck',       labelKey: 'dashboard.nav.bgCheck',      icon: <MdVerifiedUser /> },
   { id: 'applications',  labelKey: 'dashboard.nav.applications', icon: <MdAssignment /> },
   { id: 'profile',       labelKey: 'dashboard.nav.profile',      icon: <MdPerson /> },
   { id: 'shifts',        labelKey: 'dashboard.nav.shifts',       icon: <MdCalendarToday /> },
@@ -63,6 +65,8 @@ const Dashboard = () => {
   const [applications, setApplications] = useState([]);
   const [activeSection, setActiveSection] = useState('overview');
   const [volunteerData, setVolunteerData] = useState(null);
+  const [bgCheck, setBgCheck] = useState(null);
+  const bgCheckStatus = bgCheck?.status || 'NotStarted';
 
   useEffect(() => {
     if (user?.id) {
@@ -93,6 +97,13 @@ const Dashboard = () => {
   }, [user?.id]);
 
   useEffect(() => {
+    apiFetch('/api/background-checks/me')
+      .then(res => (res.ok ? res.json() : null))
+      .then(data => { if (data) setBgCheck(data); })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     if (user?.id) {
       apiFetch(`/api/registrations/volunteer/${user.id}`)
         .then(res => res.json())
@@ -114,10 +125,6 @@ const Dashboard = () => {
 
   /* ── Profile picture (#56) ── */
   const [profilePic, setProfilePic] = useState(user?.profilePic || null);
-
-  /* ── Background check document upload (#54) ── */
-  const [bgDoc,        setBgDoc]        = useState(null);   // { name }
-  const [bgDocUploaded,setBgDocUploaded]= useState(false);
 
   /* ── Shift view (list / calendar) ── */
   const [shiftView,   setShiftView]  = useState('list');
@@ -165,33 +172,10 @@ const Dashboard = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleBgDocChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setBgDoc({ name: file.name });
-    setBgDocUploaded(false);
-  };
-
-  const handleBgDocSubmit = () => {
-    if (!bgDoc) return;
-    setBgDocUploaded(true);
-  };
-
-  const handleBgDocRemove = () => {
-    setBgDoc(null);
-    setBgDocUploaded(false);
-    // reset the file input so the same file can be re-selected
-    const input = document.getElementById('bg-doc-input');
-    if (input) input.value = '';
-  };
-
   const handleLogout = () => {
     clearSession();
     navigate('/signin');
   };
-
-  const SUBMITTED_MARK = '\u0000';
-  const [submittedBefore, submittedAfter = ''] = t('dashboard.bgCheck.submitted', { file: SUBMITTED_MARK }).split(SUBMITTED_MARK);
 
   /* ── Section renderers ── */
   const renderOverview = () => (
@@ -208,64 +192,18 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* #58 — Background check status */}
       <div className="overview-card">
         <div className="overview-card-header">
           <span className="overview-card-label">{t('dashboard.bgCheck.heading')}</span>
-          <div className={`bg-check-badge ${user?.backgroundCheckApproved ? 'approved' : 'pending'}`}>
-            {user?.backgroundCheckApproved ? `✓  ${t('dashboard.bgCheck.approved')}` : `⏳  ${t('dashboard.bgCheck.pending')}`}
+          <div className={`bg-check-badge ${bgCheckStatus === 'Approved' ? 'approved' : 'pending'}`}>
+            {t(`dashboard.bgCheck.status.${bgCheckStatus}`)}
           </div>
         </div>
-        {!user?.backgroundCheckApproved && (
-          <p className="overview-card-hint">
-            {t('dashboard.bgCheck.underReview')}
-          </p>
-        )}
-      </div>
-
-      {/* #54 — Document upload */}
-      <div className="overview-card" style={{ marginTop: 24 }}>
-        <div className="overview-card-label" style={{ marginBottom: 16 }}>
-          {t('dashboard.bgCheck.uploadHeading')}
-        </div>
-
-        {!bgDocUploaded && (
-          <label className="upload-area" htmlFor="bg-doc-input">
-            <MdCloudUpload className="upload-icon" />
-            <span className="upload-area-text">
-              {bgDoc ? bgDoc.name : t('dashboard.bgCheck.selectFile')}
-            </span>
-            <input
-              id="bg-doc-input"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              style={{ display: 'none' }}
-              onChange={handleBgDocChange}
-            />
-          </label>
-        )}
-
-        {bgDoc && !bgDocUploaded && (
-          <div className="upload-actions">
-            <button className="upload-submit-btn" onClick={handleBgDocSubmit}>
-              {t('dashboard.bgCheck.submit')}
-            </button>
-            <button className="upload-remove-btn" onClick={handleBgDocRemove}>
-              {t('common.remove')}
-            </button>
-          </div>
-        )}
-
-        {bgDocUploaded && (
-          <div className="upload-submitted-row">
-            <div className="upload-success">
-              <MdCheckCircle style={{ marginRight: 8, fontSize: 22 }} />
-              <span>{submittedBefore}<strong>{bgDoc.name}</strong>{submittedAfter}</span>
-            </div>
-            <button className="upload-remove-btn" onClick={handleBgDocRemove}>
-              {t('dashboard.bgCheck.removeDocument')}
-            </button>
-          </div>
+        <p className="overview-card-hint">{t(`dashboard.bgCheck.hint.${bgCheckStatus}`)}</p>
+        {bgCheckStatus !== 'Approved' && bgCheckStatus !== 'Submitted' && (
+          <button type="button" className="overview-card-action" onClick={() => setActiveSection('bgCheck')}>
+            {t('dashboard.bgCheck.goTo')}
+          </button>
         )}
       </div>
     </>
@@ -527,6 +465,7 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':     return renderOverview();
+      case 'bgCheck':      return <BackgroundCheck onChange={setBgCheck} />;
       case 'matching':     return volunteerData && (
         <VolunteerMatchingProfile volunteer={volunteerData} onSaved={setVolunteerData} />
       );

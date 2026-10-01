@@ -513,3 +513,61 @@
   max-width: 260px;
   font-size: 14px;
 }
+
+.bg-badge.rejected {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.admin-section-lead {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  margin: 6px 0 0 0;
+}
+
+.admin-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.admin-filter select {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.admin-doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-text);
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.admin-empty {
+  color: var(--color-text-muted);
+  margin-top: 20px;
+}
+
+.admin-error {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 15px;
+}

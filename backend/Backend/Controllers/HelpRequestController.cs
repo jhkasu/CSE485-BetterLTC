@@ -119,8 +119,10 @@ public class HelpRequestController : ControllerBase {
             var request = await _context.HelpRequests.FindAsync(id);
             if (request is null) return NotFound();
             if (!await CanManage(request)) return Forbid();
+            var today = DateOnly.FromDateTime(DateTime.UtcNow);
             var volunteers = await _context.Volunteers
                 .Where(v => v.RecommendationConsent && v.BackgroundCheckApproved && v.City != "")
+                .Where(v => !_context.BackgroundChecks.Any(c => c.VolunteerId == v.Id && c.ExpiresOn != null && c.ExpiresOn < today))
                 .ToListAsync();
             var ranked = volunteers
                 .Select(v => new { Volunteer = v, Match = MatchScoring.ForRequest(v, request) })

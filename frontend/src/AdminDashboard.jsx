@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
-  MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness, MdLock,
+  MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness, MdLock, MdVerifiedUser,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import { HELP_TYPE_KEYS } from './helpTypes';
+import AdminBackgroundChecks from './AdminBackgroundChecks';
 
 
 const INIT_OPPORTUNITIES = [
@@ -29,6 +30,7 @@ const INIT_OPPORTUNITIES = [
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
   { id: 'users',          labelKey: 'adminDashboard.nav.users',         icon: <MdPeople /> },
+  { id: 'bgChecks',       labelKey: 'adminDashboard.nav.bgChecks',      icon: <MdVerifiedUser /> },
   { id: 'organizations',  labelKey: 'adminDashboard.nav.organizations', icon: <MdBusiness /> },
   { id: 'team',           labelKey: 'adminDashboard.nav.team',          icon: <MdGroups /> },
   { id: 'opportunities',  labelKey: 'adminDashboard.nav.opportunities', icon: <MdVolunteerActivism /> },
@@ -133,11 +135,8 @@ function AdminDashboard() {
     navigate('/signin');
   };
 
-  const toggleBgCheck = (volunteer) => {
-    const endpoint = volunteer.backgroundCheckApproved
-      ? `/api/volunteers/${volunteer.id}/revoke-bgcheck`
-      : `/api/volunteers/${volunteer.id}/approve-bgcheck`;
-    apiFetch(endpoint, { method: 'PUT' })
+  const revokeBgCheck = (volunteer) => {
+    apiFetch(`/api/volunteers/${volunteer.id}/revoke-bgcheck`, { method: 'PUT' })
       .then(res => res.json())
       .then(updated => setVolunteers(volunteers.map(v => v.id === updated.id ? updated : v)))
       .catch(() => {});
@@ -280,9 +279,11 @@ function AdminDashboard() {
                 <td>{v.email}</td>
                 <td><span className={`bg-badge ${v.backgroundCheckApproved ? 'approved' : 'pending'}`}>{v.backgroundCheckApproved ? t('options.applicationStatus.approved') : t('options.applicationStatus.pending')}</span></td>
                 <td>
-                  <button className={`admin-action-btn ${v.backgroundCheckApproved ? 'revoke' : 'approve'}`} onClick={() => toggleBgCheck(v)}>
-                    {v.backgroundCheckApproved ? t('adminDashboard.volunteers.revoke') : t('adminDashboard.volunteers.approve')}
-                  </button>
+                  {v.backgroundCheckApproved ? (
+                    <button className="admin-action-btn revoke" onClick={() => revokeBgCheck(v)}>{t('adminDashboard.volunteers.revoke')}</button>
+                  ) : (
+                    <button className="admin-action-btn approve" onClick={() => setActiveSection('bgChecks')}>{t('adminDashboard.volunteers.reviewDocuments')}</button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -598,6 +599,7 @@ function AdminDashboard() {
     switch (activeSection) {
       case 'overview':       return renderOverview();
       case 'users':          return renderUsers();
+      case 'bgChecks':       return <AdminBackgroundChecks />;
       case 'organizations':  return renderOrganizations();
       case 'team':           return renderTeam();
       case 'opportunities':  return renderOpportunities();

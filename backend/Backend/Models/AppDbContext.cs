@@ -14,10 +14,21 @@ public class AppDbContext : DbContext {
     public DbSet<HelpRequest> HelpRequests { get; set; }
     public DbSet<Listing> Listings { get; set; }
     public DbSet<Registration> Registrations { get; set; }
+    public DbSet<BackgroundCheck> BackgroundChecks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
             .HasIndex(a => a.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<BackgroundCheck>()
+            .HasOne<Volunteer>()
+            .WithMany()
+            .HasForeignKey(c => c.VolunteerId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<BackgroundCheck>()
+            .HasIndex(c => c.VolunteerId)
             .IsUnique();
 
         modelBuilder.Entity<HelpRequest>()
