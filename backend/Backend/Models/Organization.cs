@@ -9,4 +9,12 @@ public class Organization : IAccount {
     [Required] public string Email { get; set; } = "";
     [Required] public string Password { get; set; } = "";
     public bool IsApproved { get; set; } = false;
+    public string Description { get; set; } = "";
+    public List<string> ServiceAreas { get; set; } = [];
+    public List<string> HelpTypes { get; set; } = [];
+    public string NotificationEmail { get; set; } = "";
+
+    public bool Serves(string city, string helpType) {
+        return ServiceAreas.Contains(city) && HelpTypes.Contains(helpType);
+    }
 }

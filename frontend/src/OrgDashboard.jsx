@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople, MdLock, MdInbox, MdAssignmentTurnedIn } from 'react-icons/md';
+import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople, MdLock, MdInbox, MdAssignmentTurnedIn, MdBusiness } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
@@ -10,6 +10,7 @@ import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import SK_CITIES from './saskatchewanCities';
 import { HelpRequestList, AcceptedRequestList, HelpRequestDetail } from './OrgHelpRequests';
+import OrgProfile from './OrgProfile';
 
 const DAYS_OF_WEEK = [
   { value: 'Monday', labelKey: 'options.days.monday' },
@@ -54,6 +55,7 @@ const NAV_ITEMS = [
   { id: 'applicants', labelKey: 'orgDashboard.nav.applicants', icon: <MdPeople /> },
   { id: 'requests', labelKey: 'orgDashboard.nav.requests', icon: <MdInbox /> },
   { id: 'accepted', labelKey: 'orgDashboard.nav.accepted', icon: <MdAssignmentTurnedIn /> },
+  { id: 'profile', labelKey: 'orgDashboard.nav.profile', icon: <MdBusiness /> },
   { id: 'account', labelKey: 'common.account', icon: <MdLock /> },
 ];
 
@@ -88,6 +90,7 @@ function OrgDashboard() {
   const [user, setUser] = useState(() => getCurrentUser());
   const [activeSection, setActiveSection] = useState('overview');
   const [requestDetailId, setRequestDetailId] = useState(null);
+  const [orgProfile, setOrgProfile] = useState(null);
   const [listings, setListings] = useState([]);
   const [registrations, setRegistrations] = useState([]);
   const [modal, setModal] = useState(null);
@@ -103,9 +106,10 @@ function OrgDashboard() {
       apiFetch(`/api/organizations/${user.id}`)
         .then(res => res.json())
         .then(data => {
-          const updated = { ...user, isApproved: data.isApproved };
+          const updated = { ...user, orgName: data.orgName, isApproved: data.isApproved };
           localStorage.setItem('currentUser', JSON.stringify(updated));
           setUser(updated);
+          setOrgProfile(data);
         })
         .catch(() => {});
     }
@@ -477,11 +481,26 @@ function OrgDashboard() {
           {activeSection === 'listings' && renderListings()}
           {activeSection === 'applicants' && renderApplicants()}
           {activeSection === 'requests' && (
-            <HelpRequestList onAccepted={(id) => { setActiveSection('accepted'); setRequestDetailId(id); }} />
+            <HelpRequestList
+              needsProfile={!!orgProfile && (!orgProfile.serviceAreas?.length || !orgProfile.helpTypes?.length)}
+              onSetupProfile={() => setActiveSection('profile')}
+              onAccepted={(id) => { setActiveSection('accepted'); setRequestDetailId(id); }}
+            />
           )}
           {activeSection === 'accepted' && (requestDetailId
             ? <HelpRequestDetail id={requestDetailId} onBack={() => setRequestDetailId(null)} />
             : <AcceptedRequestList onOpen={setRequestDetailId} />)}
+          {activeSection === 'profile' && orgProfile && (
+            <OrgProfile
+              org={orgProfile}
+              onSaved={(saved) => {
+                setOrgProfile(saved);
+                const updated = { ...user, orgName: saved.orgName };
+                localStorage.setItem('currentUser', JSON.stringify(updated));
+                setUser(updated);
+              }}
+            />
+          )}
           {activeSection === 'account' && (
             <div>
               <h2 className="org-section-title">{t('common.account')}</h2>

@@ -72,3 +72,12 @@ test('detail shows contact details and marks the request as contacted', async ()
   expect(await screen.findByText('The senior has been contacted and you can proceed with volunteer matching.')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Mark as contacted' })).not.toBeInTheDocument();
 });
+
+test('asks the organization to set up its profile before showing requests', async () => {
+  global.fetch = jest.fn(() => respond([]));
+  const onSetupProfile = jest.fn();
+  render(<HelpRequestList onAccepted={() => {}} needsProfile onSetupProfile={onSetupProfile} />);
+  fireEvent.click(await screen.findByRole('button', { name: 'Set up profile' }));
+  expect(onSetupProfile).toHaveBeenCalled();
+  expect(screen.queryByText('There are no open requests right now.')).not.toBeInTheDocument();
+});
