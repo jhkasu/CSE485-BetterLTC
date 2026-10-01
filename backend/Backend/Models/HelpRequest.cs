@@ -19,5 +19,6 @@ public class HelpRequest {
     public DateTime? AcceptedAt { get; set; }
     public DateTime? ContactedAt { get; set; }
     public string Description { get; set; } = "";
+    public string Language { get; set; } = "en";
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
 }

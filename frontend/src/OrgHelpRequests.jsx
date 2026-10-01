@@ -7,6 +7,7 @@ import {
 import apiFetch from './api';
 import HELP_TYPES, { HELP_TYPE_KEYS } from './helpTypes';
 import SK_CITIES from './saskatchewanCities';
+import { matchReasons, languageList } from './matchReasons';
 import './OrgHelpRequests.css';
 
 const HELP_TYPE_ICONS = {
@@ -325,6 +326,54 @@ export function HelpRequestDetail({ id, onBack }) {
           )}
         </div>
       </section>
+
+      <RecommendedVolunteers requestId={request.id} />
     </div>
+  );
+}
+
+function RecommendedVolunteers({ requestId }) {
+  const { t } = useTranslation();
+  const [volunteers, setVolunteers] = useState(null);
+
+  useEffect(() => {
+    apiFetch(`/api/help-requests/${requestId}/recommended-volunteers`)
+      .then(res => (res.ok ? res.json() : []))
+      .then(data => setVolunteers(Array.isArray(data) ? data : []))
+      .catch(() => setVolunteers([]));
+  }, [requestId]);
+
+  return (
+    <section className="hr-recommended" aria-labelledby="hr-recommended-title">
+      <h3 id="hr-recommended-title" className="hr-recommended-title">{t('orgDashboard.recommended.heading')}</h3>
+      <p className="hr-recommended-lead">{t('orgDashboard.recommended.lead')}</p>
+      {volunteers === null ? (
+        <p className="org-empty">{t('common.loading')}</p>
+      ) : volunteers.length === 0 ? (
+        <p className="org-empty">{t('orgDashboard.recommended.empty')}</p>
+      ) : (
+        <ul className="hr-list">
+          {volunteers.map(v => (
+            <li key={v.id} className="hr-card hr-volunteer">
+              <div className="hr-avatar" aria-hidden="true">{v.firstName?.[0]}{v.lastName?.[0]}</div>
+              <div className="hr-card-body">
+                <div className="hr-volunteer-head">
+                  <h4 className="hr-card-title">{v.firstName} {v.lastName}</h4>
+                  <span className="hr-badge"><MdVerifiedUser aria-hidden="true" /> {t('orgDashboard.recommended.checked')}</span>
+                </div>
+                <p className="hr-card-meta">{matchReasons(t, v.match, { availableDays: v.availableDays, forOrganization: true }).join(' · ')}</p>
+                {v.languages?.length > 0 && (
+                  <p className="hr-card-meta">{t('orgDashboard.recommended.languages', { languages: languageList(t, v.languages) })}</p>
+                )}
+              </div>
+              <div className="hr-score">
+                <span className="hr-score-value">{v.match.score}%</span>
+                <span className="hr-score-label">{t('matching.match')}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }

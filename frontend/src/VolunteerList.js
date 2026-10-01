@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './VolunteerList.css';
 import apiFetch from './api';
 import CITIES from './saskatchewanCities';
+import { getSessionRole } from './auth/session';
+import { matchReasons } from './matchReasons';
 
 function VolunteerList() {
   const navigate = useNavigate();
@@ -11,6 +13,9 @@ function VolunteerList() {
   const [listings, setListings] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [matches, setMatches] = useState(null);
+  const [sort, setSort] = useState('match');
+  const isVolunteer = getSessionRole() === 'volunteer';
 
   useEffect(() => {
     apiFetch(`/api/listings`)
@@ -18,6 +23,16 @@ function VolunteerList() {
       .then(data => setListings(data))
       .catch(() => setListings([]));
   }, []);
+
+  useEffect(() => {
+    if (!isVolunteer) return;
+    apiFetch(`/api/listings/matches`)
+      .then(res => (res.ok ? res.json() : []))
+      .then(data => setMatches(Object.fromEntries((Array.isArray(data) ? data : []).map(m => [m.listingId, m.match]))))
+      .catch(() => setMatches({}));
+  }, [isVolunteer]);
+
+  const hasMatches = !!matches && Object.keys(matches).length > 0;
 
   const toggleCity = (city) => {
     setSelectedCities(prev =>
@@ -33,6 +48,9 @@ function VolunteerList() {
       (l.description || '').toLowerCase().includes(search);
     return cityOk && textOk;
   });
+  if (hasMatches && sort === 'match') {
+    filtered.sort((a, b) => (matches[b.id]?.score ?? 0) - (matches[a.id]?.score ?? 0));
+  }
 
   return (
     <div>
@@ -71,6 +89,21 @@ function VolunteerList() {
           ))}
         </div>
         <div className="volunteer-list">
+          {isVolunteer && matches && !hasMatches && (
+            <div className="match-setup">
+              <p>{t('matching.setupPrompt')}</p>
+              <Link className="btn btn-primary" to="/dashboard">{t('dashboard.matching.reminderButton')}</Link>
+            </div>
+          )}
+          {hasMatches && (
+            <div className="match-sort">
+              <label htmlFor="match-sort">{t('matching.sortBy')}</label>
+              <select id="match-sort" value={sort} onChange={e => setSort(e.target.value)}>
+                <option value="match">{t('matching.bestMatch')}</option>
+                <option value="newest">{t('matching.newest')}</option>
+              </select>
+            </div>
+          )}
           {filtered.length === 0 ? (
             <p className="no-results">
               {search ? t('volunteer.emptyForKeyword', { keyword }) : t('volunteer.empty')}
@@ -81,6 +114,12 @@ function VolunteerList() {
                 <div className="card-info">
                   <span className="eyebrow">{listing.status}{listing.category ? ` · ${listing.category}` : ''}</span>
                   <h4>{listing.listingTitle}</h4>
+                  {hasMatches && matches[listing.id] && (
+                    <p className="card-match">
+                      <span className="card-match-score">{t('matching.percent', { score: matches[listing.id].score })}</span>
+                      {matchReasons(t, matches[listing.id]).join(' · ')}
+                    </p>
+                  )}
                   <p className="card-org">{listing.orgName}</p>
                   <div className="card-meta">
                     <span><strong>{t('common.location')}</strong>{listing.location}</span>

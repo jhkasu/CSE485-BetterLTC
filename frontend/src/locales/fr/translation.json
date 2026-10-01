@@ -511,6 +511,13 @@
       "saved": "Enregistré!",
       "saveFailed": "Impossible d'enregistrer votre profil. Veuillez réessayer.",
       "nameRequired": "Veuillez entrer le nom de votre organisme."
+    },
+    "recommended": {
+      "heading": "Bénévoles recommandés",
+      "lead": "Bénévoles qui ont accepté d'être recommandés et dont la vérification des antécédents est approuvée, classés selon la ville, les intérêts et la langue.",
+      "empty": "Aucun bénévole correspondant pour le moment.",
+      "checked": "Vérification approuvée",
+      "languages": "Langues : {{languages}}"
     }
   },
   "adminDashboard": {
@@ -641,6 +648,22 @@
       "new": "Nouvelle",
       "accepted": "Acceptée",
       "contacted": "Contactée"
+    }
+  },
+  "matching": {
+    "match": "compatibilité",
+    "percent": "{{score}} % compatible",
+    "sortBy": "Trier par",
+    "bestMatch": "Meilleure compatibilité",
+    "newest": "Plus récentes",
+    "setupPrompt": "Configurez votre profil pour voir à quel point chaque occasion vous convient.",
+    "reasons": {
+      "sameCity": "Même ville",
+      "days": "Disponible {{days}}",
+      "available": "Disponible {{days}}",
+      "interest": "Correspond à vos intérêts",
+      "speaks": "Parle {{languages}}",
+      "interestedInHelp": "Intéressé par ce type d'aide"
     }
   }
 }

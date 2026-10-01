@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 using Backend.Security;
 using Backend.Email;
+using Backend.Matching;
 
 namespace Backend.Controllers;
 
@@ -51,6 +52,7 @@ public class HelpRequestController : ControllerBase {
                 ForFamilyMember = request.ForFamilyMember,
                 SeniorName = request.ForFamilyMember ? request.SeniorName.Trim() : "",
                 ConsentGiven = true,
+                Language = request.Language.StartsWith("fr", StringComparison.OrdinalIgnoreCase) ? "fr" : "en",
                 Status = HelpRequestStatuses.New,
                 SubmittedAt = DateTime.UtcNow,
             };
@@ -105,6 +107,37 @@ public class HelpRequestController : ControllerBase {
             if (request is null) return NotFound();
             if (!await CanManage(request)) return Forbid();
             return Ok(HelpRequestDetailResponse.From(request));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("{id:int}/recommended-volunteers")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> RecommendedVolunteers(int id) {
+        try {
+            var request = await _context.HelpRequests.FindAsync(id);
+            if (request is null) return NotFound();
+            if (!await CanManage(request)) return Forbid();
+            var volunteers = await _context.Volunteers
+                .Where(v => v.RecommendationConsent && v.BackgroundCheckApproved && v.City != "")
+                .ToListAsync();
+            var ranked = volunteers
+                .Select(v => new { Volunteer = v, Match = MatchScoring.ForRequest(v, request) })
+                .Where(x => x.Match.Score > 0)
+                .OrderByDescending(x => x.Match.Score)
+                .ThenBy(x => x.Volunteer.FirstName)
+                .Take(10)
+                .Select(x => new RecommendedVolunteerResponse(
+                    x.Volunteer.Id,
+                    x.Volunteer.FirstName,
+                    x.Volunteer.LastName,
+                    x.Volunteer.City,
+                    x.Volunteer.AvailableDays,
+                    x.Volunteer.AvailableTimes,
+                    x.Volunteer.Languages,
+                    x.Match));
+            return Ok(ranked);
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
