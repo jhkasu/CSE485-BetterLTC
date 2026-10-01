@@ -511,6 +511,13 @@
       "saved": "Saved!",
       "saveFailed": "Could not save your profile. Please try again.",
       "nameRequired": "Please enter your organization name."
+    },
+    "recommended": {
+      "heading": "Recommended Volunteers",
+      "lead": "Volunteers who agreed to be recommended and passed a background check, ranked by city, interests, and language.",
+      "empty": "No matching volunteers yet.",
+      "checked": "Background check passed",
+      "languages": "Languages: {{languages}}"
     }
   },
   "adminDashboard": {
@@ -641,6 +648,22 @@
       "new": "New",
       "accepted": "Accepted",
       "contacted": "Contacted"
+    }
+  },
+  "matching": {
+    "match": "match",
+    "percent": "{{score}}% match",
+    "sortBy": "Sort by",
+    "bestMatch": "Best match",
+    "newest": "Newest",
+    "setupPrompt": "Set up your profile to see how well each opportunity matches you.",
+    "reasons": {
+      "sameCity": "Same city",
+      "days": "Available {{days}}",
+      "available": "Available {{days}}",
+      "interest": "Matches your interests",
+      "speaks": "Speaks {{languages}}",
+      "interestedInHelp": "Interested in this type of help"
     }
   }
 }

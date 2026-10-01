@@ -81,3 +81,18 @@ test('asks the organization to set up its profile before showing requests', asyn
   expect(onSetupProfile).toHaveBeenCalled();
   expect(screen.queryByText('There are no open requests right now.')).not.toBeInTheDocument();
 });
+
+test('detail lists recommended volunteers with their match score', async () => {
+  const recommended = [{
+    id: 9, firstName: 'Emily', lastName: 'Carter', city: 'Regina', availableDays: ['Tuesday', 'Thursday'],
+    availableTimes: [], languages: ['English', 'French'],
+    match: { score: 100, sameCity: true, interestMatch: true, matchingDays: [], sharedLanguages: ['English'] },
+  }];
+  global.fetch = jest.fn((url) => respond(url.endsWith('/recommended-volunteers') ? recommended : detail));
+  render(<HelpRequestDetail id={1} onBack={() => {}} />);
+  expect(await screen.findByRole('heading', { name: 'Emily Carter' })).toBeInTheDocument();
+  expect(screen.getByText('100%')).toBeInTheDocument();
+  expect(screen.getByText('Background check passed')).toBeInTheDocument();
+  expect(screen.getByText('Same city · Available Tue, Thu · Interested in this type of help · Speaks English')).toBeInTheDocument();
+  expect(screen.queryByText(/@/)).not.toBeInTheDocument();
+});

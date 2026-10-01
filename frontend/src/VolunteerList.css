@@ -156,3 +156,58 @@
   padding: 14px 28px;
   white-space: nowrap;
 }
+
+.match-setup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background-color: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  border-radius: 8px;
+}
+
+.match-setup p {
+  margin: 0;
+  font-size: 17px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.match-sort {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-size: 16px;
+}
+
+.match-sort select {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.card-match {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin: var(--space-1) 0 var(--space-2) 0;
+}
+
+.card-match-score {
+  display: inline-block;
+  margin-right: var(--space-2);
+  padding: 2px 10px;
+  border-radius: 20px;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  font-weight: 700;
+}

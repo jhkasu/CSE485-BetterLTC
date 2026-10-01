@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 using Backend.Security;
+using Backend.Matching;
 
 namespace Backend.Controllers;
 
@@ -26,6 +27,21 @@ public class ListingsController : ControllerBase {
         try {
             var listings = await _context.Listings.OrderByDescending(l => l.Id).ToListAsync();
             return Ok(listings);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("matches")]
+    [Authorize(Roles = Roles.Volunteer)]
+    public async Task<IActionResult> GetMatches() {
+        try {
+            int? id = User.AccountId();
+            var volunteer = id is null ? null : await _context.Volunteers.FindAsync(id.Value);
+            if (volunteer is null) return Forbid();
+            if (volunteer.City == "" || volunteer.AvailableDays.Count == 0) return Ok(Array.Empty<object>());
+            var listings = await _context.Listings.ToListAsync();
+            return Ok(listings.Select(l => new { listingId = l.Id, match = MatchScoring.ForListing(volunteer, l) }));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
