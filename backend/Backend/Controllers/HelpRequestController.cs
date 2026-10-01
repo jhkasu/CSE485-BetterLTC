@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 using Backend.Security;
+using Backend.Email;
 
 namespace Backend.Controllers;
 
@@ -11,9 +12,11 @@ namespace Backend.Controllers;
 [ApiController]
 public class HelpRequestController : ControllerBase {
     private readonly AppDbContext _context;
+    private readonly IEmailSender _email;
 
-    public HelpRequestController(AppDbContext context) {
+    public HelpRequestController(AppDbContext context, IEmailSender email) {
         _context = context;
+        _email = email;
     }
 
     [HttpGet]
@@ -53,7 +56,9 @@ public class HelpRequestController : ControllerBase {
             };
             _context.HelpRequests.Add(helpRequest);
             await _context.SaveChangesAsync();
-            return Ok(new { helpRequest.Id, helpRequest.Status });
+            bool emailSent = helpRequest.Email.Length > 0
+                && await _email.SendAsync(helpRequest.Email, HelpRequestEmails.Confirmation(helpRequest, request.Language));
+            return Ok(new { helpRequest.Id, helpRequest.Status, emailSent });
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }

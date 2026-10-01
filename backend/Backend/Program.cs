@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Backend.Models;
 using Backend.Security;
+using Backend.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 string[] allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? [];
@@ -18,6 +19,8 @@ builder.Services.AddControllers();
 var jwtSettings = JwtSettings.From(builder.Configuration);
 builder.Services.AddSingleton(jwtSettings);
 builder.Services.AddSingleton<TokenService>();
+builder.Services.AddSingleton(builder.Configuration.GetSection("Email").Get<EmailSettings>() ?? new EmailSettings());
+builder.Services.AddSingleton<IEmailSender, AzureEmailSender>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
     options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters {
