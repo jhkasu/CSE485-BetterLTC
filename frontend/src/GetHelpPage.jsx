@@ -7,16 +7,7 @@ import Footer from './Footer';
 import './GetHelpPage.css';
 import apiFetch from './api';
 import SK_CITIES from './saskatchewanCities';
-
-const HELP_TYPES = [
-  { value: 'Senior Care Support', labelKey: 'options.helpTypes.seniorCare' },
-  { value: 'Meal Assistance', labelKey: 'options.helpTypes.meal' },
-  { value: 'Transportation Support', labelKey: 'options.helpTypes.transportation' },
-  { value: 'Medical Assistance', labelKey: 'options.helpTypes.medical' },
-  { value: 'Mental Health Support', labelKey: 'options.helpTypes.mentalHealth' },
-  { value: 'Housing Support', labelKey: 'options.helpTypes.housing' },
-  { value: 'Other', labelKey: 'options.helpTypes.other' },
-];
+import HELP_TYPES from './helpTypes';
 
 const CONTACT_METHODS = [
   { value: 'Phone', labelKey: 'getHelp.request.methods.phone' },
@@ -81,6 +72,7 @@ function GetHelpPage() {
       setSubmitted({ method: form.contactMethod, phone: form.phone, email: form.email, emailSent: !!data.emailSent });
       setStatus('success');
       setForm(EMPTY_FORM);
+      window.scrollTo(0, 0);
     } catch {
       setStatus(null);
       setError('common.genericError');

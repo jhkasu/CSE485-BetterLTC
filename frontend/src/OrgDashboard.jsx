@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople, MdLock } from 'react-icons/md';
+import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople, MdLock, MdInbox, MdAssignmentTurnedIn } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
@@ -9,6 +9,7 @@ import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import SK_CITIES from './saskatchewanCities';
+import { HelpRequestList, AcceptedRequestList, HelpRequestDetail } from './OrgHelpRequests';
 
 const DAYS_OF_WEEK = [
   { value: 'Monday', labelKey: 'options.days.monday' },
@@ -51,6 +52,8 @@ const NAV_ITEMS = [
   { id: 'overview', labelKey: 'common.overview', icon: <MdDashboard /> },
   { id: 'listings', labelKey: 'orgDashboard.nav.listings', icon: <MdVolunteerActivism /> },
   { id: 'applicants', labelKey: 'orgDashboard.nav.applicants', icon: <MdPeople /> },
+  { id: 'requests', labelKey: 'orgDashboard.nav.requests', icon: <MdInbox /> },
+  { id: 'accepted', labelKey: 'orgDashboard.nav.accepted', icon: <MdAssignmentTurnedIn /> },
   { id: 'account', labelKey: 'common.account', icon: <MdLock /> },
 ];
 
@@ -84,6 +87,7 @@ function OrgDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(() => getCurrentUser());
   const [activeSection, setActiveSection] = useState('overview');
+  const [requestDetailId, setRequestDetailId] = useState(null);
   const [listings, setListings] = useState([]);
   const [registrations, setRegistrations] = useState([]);
   const [modal, setModal] = useState(null);
@@ -450,7 +454,7 @@ function OrgDashboard() {
               <div
                 key={item.id}
                 className={`org-nav-item ${activeSection === item.id ? 'active' : ''}`}
-                onClick={() => setActiveSection(item.id)}
+                onClick={() => { setActiveSection(item.id); setRequestDetailId(null); }}
               >
                 <span className="org-nav-icon">{item.icon}</span>
                 {t(item.labelKey)}
@@ -472,6 +476,12 @@ function OrgDashboard() {
           {activeSection === 'overview' && renderOverview()}
           {activeSection === 'listings' && renderListings()}
           {activeSection === 'applicants' && renderApplicants()}
+          {activeSection === 'requests' && (
+            <HelpRequestList onAccepted={(id) => { setActiveSection('accepted'); setRequestDetailId(id); }} />
+          )}
+          {activeSection === 'accepted' && (requestDetailId
+            ? <HelpRequestDetail id={requestDetailId} onBack={() => setRequestDetailId(null)} />
+            : <AcceptedRequestList onOpen={setRequestDetailId} />)}
           {activeSection === 'account' && (
             <div>
               <h2 className="org-section-title">{t('common.account')}</h2>

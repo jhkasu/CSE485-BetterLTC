@@ -15,6 +15,9 @@ public class HelpRequest {
     public string SeniorName { get; set; } = "";
     public bool ConsentGiven { get; set; }
     public string Status { get; set; } = "New";
+    public int? OrganizationId { get; set; }
+    public DateTime? AcceptedAt { get; set; }
+    public DateTime? ContactedAt { get; set; }
     public string Description { get; set; } = "";
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
 }
