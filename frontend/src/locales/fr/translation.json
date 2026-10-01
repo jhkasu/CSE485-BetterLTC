@@ -322,18 +322,59 @@
       "profile": "Paramètres du profil",
       "shifts": "Quarts à venir",
       "history": "Historique de bénévolat",
-      "matching": "Configuration du profil"
+      "matching": "Configuration du profil",
+      "bgCheck": "Vérification des antécédents"
     },
     "bgCheck": {
-      "heading": "État de la vérification des antécédents",
-      "pending": "En attente d'examen",
-      "approved": "Approuvée",
-      "underReview": "Votre vérification des antécédents est en cours d'examen. Téléversez les documents justificatifs ci-dessous pour accélérer le processus.",
-      "uploadHeading": "Téléverser le document de vérification des antécédents",
-      "selectFile": "Cliquez pour sélectionner un fichier (PDF, JPG, PNG)",
-      "submit": "Soumettre le document",
-      "submitted": "{{file}} soumis! Nous l'examinerons sous peu.",
-      "removeDocument": "Retirer le document"
+      "heading": "Statut de la vérification des antécédents",
+      "lead": "Nous vérifions chaque bénévole avant de le jumeler à des aînés.",
+      "steps": {
+        "consent": "Consentement",
+        "apply": "Comment faire la demande",
+        "upload": "Téléverser le document",
+        "review": "Examen",
+        "approved": "Approuvée"
+      },
+      "status": {
+        "NotStarted": "Non commencée",
+        "ConsentGiven": "En cours",
+        "Submitted": "En examen",
+        "Approved": "Approuvée",
+        "Rejected": "Nouveau document requis",
+        "Expired": "Expirée"
+      },
+      "hint": {
+        "NotStarted": "Commencez votre vérification pour que les organismes puissent vous jumeler à des aînés.",
+        "ConsentGiven": "Téléversez votre vérification du casier judiciaire pour terminer.",
+        "Submitted": "Votre document est en cours d'examen. Nous mettrons votre statut à jour bientôt.",
+        "Approved": "Vous pouvez être jumelé à des aînés et à des organismes.",
+        "Rejected": "Votre document n'a pas été accepté. Veuillez en téléverser un nouveau.",
+        "Expired": "Votre vérification a expiré. Veuillez téléverser un nouveau document."
+      },
+      "goTo": "Aller à la vérification",
+      "consentText": "En cliquant sur Commencer, vous acceptez une vérification des antécédents et nous autorisez à examiner le document que vous téléversez.",
+      "start": "Commencer",
+      "applyText": "Demandez une vérification du casier judiciaire avec vérification des secteurs vulnérables. Elle est nécessaire pour travailler auprès des aînés.",
+      "applyItem1": "Faites la demande auprès de votre service de police local ou d'un détachement de la GRC.",
+      "applyItem2": "Indiquez que vous faites du bénévolat auprès des aînés.",
+      "applyItem3": "Quand vous recevez le résultat, enregistrez-le en PDF ou prenez une photo claire.",
+      "haveDocument": "J'ai mon document",
+      "uploadText": "Téléversez votre vérification du casier judiciaire. PDF, JPG ou PNG, jusqu'à 5 Mo.",
+      "selectFile": "Cliquez pour choisir un fichier (PDF, JPG, PNG)",
+      "submit": "Envoyer le document",
+      "uploading": "Téléversement...",
+      "reviewText": "Nous avons reçu {{file}} le {{date}}. Un administrateur l'examine.",
+      "approvedTitle": "Vérification approuvée",
+      "approvedText": "Votre vérification est valide jusqu'au {{date}}.",
+      "expiringSoon_one": "Votre vérification expire dans {{count}} jour. Veuillez téléverser un nouveau document bientôt.",
+      "expiringSoon_other": "Votre vérification expire dans {{count}} jours. Veuillez téléverser un nouveau document bientôt.",
+      "rejected": "Votre document n'a pas été accepté : {{reason}}",
+      "expired": "Votre vérification a expiré le {{date}}.",
+      "errors": {
+        "type": "Veuillez choisir un fichier PDF, JPG ou PNG.",
+        "size": "Le fichier doit faire 5 Mo ou moins.",
+        "upload": "Impossible de téléverser le document. Veuillez réessayer."
+      }
     },
     "profile": {
       "changePhoto": "Changer la photo",
@@ -536,7 +577,8 @@
       "team": "Notre équipe",
       "opportunities": "Occasions de bénévolat",
       "work": "Nos réalisations",
-      "help": "Demandes d'aide"
+      "help": "Demandes d'aide",
+      "bgChecks": "Vérifications"
     },
     "stats": {
       "totalVolunteers": "Total des bénévoles",
@@ -550,7 +592,8 @@
       "empty": "Aucun bénévole inscrit pour le moment.",
       "bgCheck": "Vérification des antécédents",
       "approve": "Approuver",
-      "revoke": "Révoquer"
+      "revoke": "Révoquer",
+      "reviewDocuments": "Examiner les documents"
     },
     "organizations": {
       "empty": "Aucun organisme inscrit pour le moment.",
@@ -605,6 +648,27 @@
       "link": "Lien",
       "image": "Image",
       "placeholder": "Rédigez votre publication ici..."
+    },
+    "bgChecks": {
+      "heading": "Examen des vérifications des antécédents",
+      "lead": "Examinez les documents téléversés. Approuvez avec une date d'expiration ou refusez en indiquant une raison.",
+      "filter": "Afficher",
+      "all": "Toutes ({{count}})",
+      "empty": "Aucune vérification à afficher.",
+      "document": "Document",
+      "submitted": "Envoyée",
+      "expires": "Expire",
+      "expiringSoon": "Expire bientôt",
+      "approve": "Approuver",
+      "reject": "Refuser",
+      "approveTitle": "Approuver la vérification de {{name}}",
+      "rejectTitle": "Refuser la vérification de {{name}}",
+      "expiresOn": "Valide jusqu'au",
+      "reason": "Raison (visible par le bénévole)",
+      "reasonPlaceholder": "Par exemple : Le document est flou. Veuillez téléverser une copie plus claire.",
+      "reasonRequired": "Veuillez indiquer une raison.",
+      "expiryInFuture": "Veuillez choisir une date future.",
+      "openFailed": "Impossible d'ouvrir le document."
     }
   },
   "options": {

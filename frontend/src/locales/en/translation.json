@@ -322,18 +322,59 @@
       "profile": "Profile Settings",
       "shifts": "Upcoming Shifts",
       "history": "Volunteer History",
-      "matching": "Profile Setup"
+      "matching": "Profile Setup",
+      "bgCheck": "Background Check"
     },
     "bgCheck": {
       "heading": "Background Check Status",
-      "pending": "Pending Review",
-      "approved": "Approved",
-      "underReview": "Your background check is under review. Upload supporting documents below to speed up the process.",
-      "uploadHeading": "Upload Background Check Document",
-      "selectFile": "Click to select a file (PDF, JPG, PNG)",
-      "submit": "Submit Document",
-      "submitted": "{{file}} submitted! We'll review it shortly.",
-      "removeDocument": "Remove Document"
+      "lead": "We verify every volunteer before they are matched with seniors.",
+      "steps": {
+        "consent": "Consent",
+        "apply": "How to apply",
+        "upload": "Upload document",
+        "review": "Review",
+        "approved": "Approved"
+      },
+      "status": {
+        "NotStarted": "Not started",
+        "ConsentGiven": "In progress",
+        "Submitted": "Under review",
+        "Approved": "Approved",
+        "Rejected": "Needs a new document",
+        "Expired": "Expired"
+      },
+      "hint": {
+        "NotStarted": "Start your background check so organizations can match you with seniors.",
+        "ConsentGiven": "Upload your criminal record check to finish.",
+        "Submitted": "Your document is being reviewed. We will update your status soon.",
+        "Approved": "You can be matched with seniors and organizations.",
+        "Rejected": "Your document was not accepted. Please upload a new one.",
+        "Expired": "Your background check has expired. Please upload a new document."
+      },
+      "goTo": "Go to background check",
+      "consentText": "By clicking Start, you agree to a background check and give us permission to review the document you upload.",
+      "start": "Start",
+      "applyText": "Ask for a Criminal Record Check with Vulnerable Sector Verification. It is needed to work with seniors.",
+      "applyItem1": "Apply at your local police service or RCMP detachment.",
+      "applyItem2": "Tell them you are volunteering with seniors.",
+      "applyItem3": "When you get the result, save it as a PDF or take a clear photo.",
+      "haveDocument": "I have my document",
+      "uploadText": "Upload your criminal record check. PDF, JPG, or PNG, up to 5 MB.",
+      "selectFile": "Click to choose a file (PDF, JPG, PNG)",
+      "submit": "Submit document",
+      "uploading": "Uploading...",
+      "reviewText": "We received {{file}} on {{date}}. An administrator is reviewing it.",
+      "approvedTitle": "Background check approved",
+      "approvedText": "Your background check is valid until {{date}}.",
+      "expiringSoon_one": "Your background check expires in {{count}} day. Please upload a new document soon.",
+      "expiringSoon_other": "Your background check expires in {{count}} days. Please upload a new document soon.",
+      "rejected": "Your document was not accepted: {{reason}}",
+      "expired": "Your background check expired on {{date}}.",
+      "errors": {
+        "type": "Please choose a PDF, JPG, or PNG file.",
+        "size": "The file must be 5 MB or smaller.",
+        "upload": "Could not upload the document. Please try again."
+      }
     },
     "profile": {
       "changePhoto": "Change Photo",
@@ -536,7 +577,8 @@
       "team": "Our Team",
       "opportunities": "Volunteer Opportunities",
       "work": "Our Work",
-      "help": "Get Help"
+      "help": "Get Help",
+      "bgChecks": "Background Checks"
     },
     "stats": {
       "totalVolunteers": "Total Volunteers",
@@ -550,7 +592,8 @@
       "empty": "No volunteers registered yet.",
       "bgCheck": "Background Check",
       "approve": "Approve",
-      "revoke": "Revoke"
+      "revoke": "Revoke",
+      "reviewDocuments": "Review documents"
     },
     "organizations": {
       "empty": "No organizations registered yet.",
@@ -605,6 +648,27 @@
       "link": "Link",
       "image": "Image",
       "placeholder": "Write your post here..."
+    },
+    "bgChecks": {
+      "heading": "Background Check Review",
+      "lead": "Review uploaded documents. Approve with an expiry date or reject with a reason.",
+      "filter": "Show",
+      "all": "All ({{count}})",
+      "empty": "No background checks to show.",
+      "document": "Document",
+      "submitted": "Submitted",
+      "expires": "Expires",
+      "expiringSoon": "Expiring soon",
+      "approve": "Approve",
+      "reject": "Reject",
+      "approveTitle": "Approve background check for {{name}}",
+      "rejectTitle": "Reject background check for {{name}}",
+      "expiresOn": "Valid until",
+      "reason": "Reason (shown to the volunteer)",
+      "reasonPlaceholder": "For example: The document is blurry. Please upload a clearer copy.",
+      "reasonRequired": "Please give a reason.",
+      "expiryInFuture": "Please choose a date in the future.",
+      "openFailed": "Could not open the document."
     }
   },
   "options": {
