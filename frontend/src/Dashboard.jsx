@@ -11,8 +11,9 @@ import './Dashboard.css';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
-import VolunteerMatchingProfile, { isMatchingProfileComplete } from './VolunteerMatchingProfile';
+import VolunteerMatchingProfile from './VolunteerMatchingProfile';
 import BackgroundCheck from './BackgroundCheck';
+import VolunteerOverview from './VolunteerOverview';
 
 const NAV_ITEMS = [
   { id: 'overview',      labelKey: 'common.overview',            icon: <MdDashboard /> },
@@ -66,7 +67,6 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('overview');
   const [volunteerData, setVolunteerData] = useState(null);
   const [bgCheck, setBgCheck] = useState(null);
-  const bgCheckStatus = bgCheck?.status || 'NotStarted';
 
   useEffect(() => {
     if (user?.id) {
@@ -179,34 +179,13 @@ const Dashboard = () => {
 
   /* ── Section renderers ── */
   const renderOverview = () => (
-    <>
-      <h2 className="dashboard-section-title">{t('common.overview')}</h2>
-
-      {volunteerData && !isMatchingProfileComplete(volunteerData) && (
-        <div className="overview-card overview-card-reminder" style={{ marginBottom: 24 }}>
-          <div className="overview-card-label">{t('dashboard.matching.reminderTitle')}</div>
-          <p className="overview-card-hint">{t('dashboard.matching.reminderText')}</p>
-          <button type="button" className="overview-card-action" onClick={() => setActiveSection('matching')}>
-            {t('dashboard.matching.reminderButton')}
-          </button>
-        </div>
-      )}
-
-      <div className="overview-card">
-        <div className="overview-card-header">
-          <span className="overview-card-label">{t('dashboard.bgCheck.heading')}</span>
-          <div className={`bg-check-badge ${bgCheckStatus === 'Approved' ? 'approved' : 'pending'}`}>
-            {t(`dashboard.bgCheck.status.${bgCheckStatus}`)}
-          </div>
-        </div>
-        <p className="overview-card-hint">{t(`dashboard.bgCheck.hint.${bgCheckStatus}`)}</p>
-        {bgCheckStatus !== 'Approved' && bgCheckStatus !== 'Submitted' && (
-          <button type="button" className="overview-card-action" onClick={() => setActiveSection('bgCheck')}>
-            {t('dashboard.bgCheck.goTo')}
-          </button>
-        )}
-      </div>
-    </>
+    <VolunteerOverview
+      user={user}
+      volunteer={volunteerData}
+      applications={applications}
+      bgCheck={bgCheck}
+      onNavigate={setActiveSection}
+    />
   );
 
   const renderProfile = () => (

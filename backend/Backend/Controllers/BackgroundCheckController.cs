@@ -194,6 +194,7 @@ public class BackgroundCheckController : ControllerBase {
             check.ReviewedAt = DateTime.UtcNow;
             check.ReviewedByAdminId = User.AccountId();
             await SetVolunteerApproved(check.VolunteerId, true);
+            Notify(check.VolunteerId, NotificationTypes.BackgroundCheckApproved, request.ExpiresOn.ToString("yyyy-MM-dd"));
             await _context.SaveChangesAsync();
             return Ok(BackgroundCheckResponse.From(check, Today));
         } catch (Exception ex) {
@@ -216,11 +217,22 @@ public class BackgroundCheckController : ControllerBase {
             check.ReviewedAt = DateTime.UtcNow;
             check.ReviewedByAdminId = User.AccountId();
             await SetVolunteerApproved(check.VolunteerId, false);
+            Notify(check.VolunteerId, NotificationTypes.BackgroundCheckRejected, reason);
             await _context.SaveChangesAsync();
             return Ok(BackgroundCheckResponse.From(check, Today));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    private void Notify(int volunteerId, string type, string detail) {
+        _context.Notifications.Add(new Notification {
+            AccountRole = Roles.Volunteer,
+            AccountId = volunteerId,
+            Type = type,
+            Detail = detail,
+            CreatedAt = DateTime.UtcNow,
+        });
     }
 
     private IQueryable<BackgroundCheck> WithoutFile() {

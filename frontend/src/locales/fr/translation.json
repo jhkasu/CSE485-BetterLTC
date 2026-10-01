@@ -457,6 +457,27 @@
       "reminderTitle": "Terminez la configuration de votre profil",
       "reminderText": "Ajoutez votre ville et vos jours disponibles pour que les organismes puissent vous jumeler à des aînés et des occasions près de chez vous.",
       "reminderButton": "Configurer le profil"
+    },
+    "overview": {
+      "welcome": "Bon retour, {{name}}!",
+      "lead": "Voici ce qui se passe dans votre bénévolat.",
+      "recommended": "Recommandées pour vous",
+      "viewAll": "Tout voir",
+      "viewSchedule": "Voir l'horaire",
+      "viewHistory": "Voir l'historique",
+      "noRecommendations": "Aucune bonne correspondance pour le moment. Consultez la page des occasions pour tout voir."
+    },
+    "notifications": {
+      "heading": "Avis récents",
+      "empty": "Aucun avis pour le moment.",
+      "markRead": "Tout marquer comme lu",
+      "types": {
+        "ApplicationApproved": "Votre candidature pour {{subject}} a été approuvée.",
+        "ApplicationRejected": "Votre candidature pour {{subject}} n'a pas été retenue.",
+        "HoursRecorded": "{{detail}} heures ont été enregistrées pour {{subject}}.",
+        "BackgroundCheckApproved": "Votre vérification a été approuvée. Elle est valide jusqu'au {{date}}.",
+        "BackgroundCheckRejected": "Votre document de vérification n'a pas été accepté : {{detail}}"
+      }
     }
   },
   "orgDashboard": {
