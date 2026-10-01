@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend.Files;
 using Backend.Models;
 using Backend.Security;
 
@@ -10,6 +11,13 @@ namespace Backend.Controllers;
 [Route("api/organizations")]
 [ApiController]
 public class OrganizationController : ControllerBase {
+    private const long MaxLogoSize = 2 * 1024 * 1024;
+    private static readonly Dictionary<string, string> LogoTypes = new() {
+        [".jpg"] = FileSignatures.Jpeg,
+        [".jpeg"] = FileSignatures.Jpeg,
+        [".png"] = FileSignatures.Png,
+    };
+
     private readonly AppDbContext _context;
 
     public OrganizationController(AppDbContext context) {
@@ -86,18 +94,97 @@ public class OrganizationController : ControllerBase {
             if (notificationEmail.Length > 0 && !new EmailAddressAttribute().IsValid(notificationEmail)) return BadRequest("Invalid notification email.");
             string orgName = profile.OrgName.Trim();
             if (orgName.Length == 0) return BadRequest("Organization name is required.");
+            string website = profile.Website.Trim();
+            if (website.Length > 0 && !IsWebsite(website)) return BadRequest("The website must be a full address starting with https://.");
 
             org.OrgName = orgName;
             org.Description = profile.Description.Trim();
             org.ServiceAreas = areas;
             org.HelpTypes = helpTypes;
             org.NotificationEmail = notificationEmail;
+            org.Website = website;
             await _context.Listings
                 .Where(l => l.OrganizationId == id)
                 .ExecuteUpdateAsync(s => s.SetProperty(l => l.OrgName, orgName));
             await _context.Registrations
                 .Where(r => _context.Listings.Any(l => l.Id == r.ListingId && l.OrganizationId == id))
                 .ExecuteUpdateAsync(s => s.SetProperty(r => r.OrgName, orgName));
+            await _context.SaveChangesAsync();
+            return Ok(OrganizationResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("{id:int}/public")]
+    public async Task<IActionResult> GetPublicProfile(int id) {
+        try {
+            var org = await _context.Organizations.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id && o.IsApproved);
+            if (org is null) return NotFound();
+            return Ok(OrganizationPublicResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("{id:int}/logo")]
+    public async Task<IActionResult> GetLogo(int id) {
+        try {
+            bool visible = await _context.Organizations.AnyAsync(o => o.Id == id && o.IsApproved)
+                || User.IsInRole(Roles.Admin)
+                || User.IsAccount(Roles.Organization, id);
+            if (!visible) return NotFound();
+            var logo = await _context.OrganizationLogos.AsNoTracking().FirstOrDefaultAsync(l => l.OrganizationId == id);
+            if (logo is null) return NotFound();
+            Response.Headers.CacheControl = "public, max-age=86400";
+            return File(logo.Data, logo.ContentType);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/logo")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    [RequestSizeLimit(MaxLogoSize + 1024 * 1024)]
+    public async Task<IActionResult> UploadLogo(int id, IFormFile file) {
+        try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Organization, id)) return Forbid();
+            var org = await _context.Organizations.FindAsync(id);
+            if (org is null) return NotFound();
+            if (file is null || file.Length == 0) return BadRequest("Please choose an image.");
+            if (file.Length > MaxLogoSize) return BadRequest("The image must be 2 MB or smaller.");
+            string extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!LogoTypes.TryGetValue(extension, out var contentType)) return BadRequest("Only JPG or PNG images are accepted.");
+
+            using var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            byte[] data = stream.ToArray();
+            if (!FileSignatures.Matches(data, contentType)) return BadRequest("The file does not look like a JPG or PNG image.");
+
+            var logo = await _context.OrganizationLogos.FindAsync(id);
+            if (logo is null) {
+                logo = new OrganizationLogo { OrganizationId = id };
+                _context.OrganizationLogos.Add(logo);
+            }
+            logo.ContentType = contentType;
+            logo.Data = data;
+            org.LogoUpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return Ok(OrganizationResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:int}/logo")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> DeleteLogo(int id) {
+        try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Organization, id)) return Forbid();
+            var org = await _context.Organizations.FindAsync(id);
+            if (org is null) return NotFound();
+            await _context.OrganizationLogos.Where(l => l.OrganizationId == id).ExecuteDeleteAsync();
+            org.LogoUpdatedAt = null;
             await _context.SaveChangesAsync();
             return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
@@ -145,5 +232,11 @@ public class OrganizationController : ControllerBase {
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    private static bool IsWebsite(string value) {
+        return Uri.TryCreate(value, UriKind.Absolute, out var uri)
+            && uri.Scheme == Uri.UriSchemeHttps
+            && uri.Host.Contains('.');
     }
 }

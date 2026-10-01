@@ -1,0 +1,201 @@
+.orgp-page {
+  padding: var(--space-5) var(--space-5) var(--space-7);
+}
+
+.orgp-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.orgp-logo {
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.orgp-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
+
+.orgp-identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.orgp-identity h1 {
+  font-size: 36px;
+  margin: 0;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.orgp-areas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  color: var(--color-text-muted);
+  margin: var(--space-2) 0 0 0;
+}
+
+.orgp-website {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.orgp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.orgp-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.orgp-card {
+  background: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+}
+
+.orgp-card h2,
+.orgp-section-title {
+  font-size: 24px;
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-text);
+}
+
+.orgp-description {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+  white-space: pre-line;
+}
+
+.orgp-side h3 {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin: var(--space-3) 0 var(--space-2) 0;
+}
+
+.orgp-side h3:first-of-type {
+  margin-top: 0;
+}
+
+.orgp-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.orgp-chips li {
+  font-size: 15px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.orgp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 17px;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.orgp-empty {
+  font-size: 18px;
+  color: var(--color-text-muted);
+}
+
+.orgp-missing-title {
+  font-size: 32px;
+  margin: 0 0 var(--space-2) 0;
+}
+
+@media (max-width: 900px) {
+  .orgp-page {
+    padding: var(--space-4) var(--space-3) var(--space-6);
+  }
+
+  .orgp-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-4);
+  }
+
+  .orgp-logo {
+    width: 88px;
+    height: 88px;
+    font-size: 32px;
+  }
+
+  .orgp-identity h1 {
+    font-size: 28px;
+  }
+
+  .orgp-website {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .orgp-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .orgp-main {
+    display: contents;
+  }
+
+  .orgp-about {
+    order: 1;
+  }
+
+  .orgp-side {
+    order: 2;
+  }
+
+  .orgp-openings {
+    order: 3;
+  }
+}

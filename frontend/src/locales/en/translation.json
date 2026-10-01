@@ -587,7 +587,23 @@
       "save": "Save changes",
       "saved": "Saved!",
       "saveFailed": "Could not save your profile. Please try again.",
-      "nameRequired": "Please enter your organization name."
+      "nameRequired": "Please enter your organization name.",
+      "logo": "Logo or photo",
+      "logoPreview": "Current logo",
+      "noLogo": "No logo yet",
+      "uploadLogo": "Upload image",
+      "changeLogo": "Change image",
+      "removeLogo": "Remove",
+      "logoHint": "JPG or PNG, up to 2 MB. A square image looks best.",
+      "logoErrors": {
+        "type": "Please choose a JPG or PNG image.",
+        "size": "The image must be 2 MB or smaller.",
+        "upload": "We couldn't upload the image. Please try again."
+      },
+      "website": "Official website",
+      "websiteInvalid": "Please enter a full website address, like https://www.example.org.",
+      "viewPublic": "View your public page",
+      "publicPending": "Your public page will be visible once an administrator approves your organization."
     },
     "recommended": {
       "heading": "Recommended Volunteers",
@@ -807,5 +823,23 @@
       "fair": "Fair match",
       "low": "Low match"
     }
+  },
+  "orgPage": {
+    "notFound": "Organization not found",
+    "notFoundText": "This organization's page isn't available.",
+    "browse": "Browse opportunities",
+    "serves": "Serves {{areas}}",
+    "servesMore": "Serves {{areas}} and {{count}} more",
+    "logoAlt": "{{name}} logo",
+    "visitWebsite": "Visit website",
+    "newTab": "opens in a new tab",
+    "about": "About",
+    "openings_one": "{{count}} open opportunity",
+    "openings_other": "{{count}} open opportunities",
+    "noOpenings": "No open opportunities right now.",
+    "details": "Details",
+    "serviceAreas": "Service areas",
+    "helpTypes": "Types of help",
+    "website": "Website"
   }
 }

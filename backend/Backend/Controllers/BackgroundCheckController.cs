@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend.Files;
 using Backend.Models;
 using Backend.Security;
 
@@ -80,7 +81,7 @@ public class BackgroundCheckController : ControllerBase {
             using var stream = new MemoryStream();
             await file.CopyToAsync(stream);
             byte[] data = stream.ToArray();
-            if (!MatchesSignature(data, contentType)) return BadRequest("The file does not look like a PDF, JPG, or PNG.");
+            if (!FileSignatures.Matches(data, contentType)) return BadRequest("The file does not look like a PDF, JPG, or PNG.");
 
             check.FileName = Path.GetFileName(file.FileName);
             check.ContentType = contentType;
@@ -266,18 +267,5 @@ public class BackgroundCheckController : ControllerBase {
     private async Task SetVolunteerApproved(int volunteerId, bool approved) {
         var volunteer = await _context.Volunteers.FindAsync(volunteerId);
         if (volunteer is not null) volunteer.BackgroundCheckApproved = approved;
-    }
-
-    private static bool MatchesSignature(byte[] data, string contentType) {
-        return contentType switch {
-            "application/pdf" => StartsWith(data, [0x25, 0x50, 0x44, 0x46]),
-            "image/png" => StartsWith(data, [0x89, 0x50, 0x4E, 0x47]),
-            "image/jpeg" => StartsWith(data, [0xFF, 0xD8, 0xFF]),
-            _ => false,
-        };
-    }
-
-    private static bool StartsWith(byte[] data, byte[] prefix) {
-        return data.Length >= prefix.Length && data.AsSpan(0, prefix.Length).SequenceEqual(prefix);
     }
 }
