@@ -103,22 +103,6 @@ public class VolunteerController : ControllerBase {
         }
     }
 
-    [HttpPut("{id:int}/password")]
-    [Authorize(Roles = Roles.Volunteer)]
-    public async Task<IActionResult> ChangePassword(int id, ChangePasswordRequest request) {
-        try {
-            if (!User.IsAccount(Roles.Volunteer, id)) return Forbid();
-            var volunteer = await _context.Volunteers.FindAsync(id);
-            if (volunteer is null) return NotFound();
-            if (!PasswordHashing.Verify(request.CurrentPassword, volunteer.Password)) return BadRequest("Current password is incorrect.");
-            volunteer.Password = PasswordHashing.Hash(request.NewPassword);
-            await _context.SaveChangesAsync();
-            return NoContent();
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
     [HttpDelete("{id:int}")]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteVolunteer(int id) {

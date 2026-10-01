@@ -115,7 +115,7 @@ function fillPasswordForm(current, next) {
 
 test('changes the password through the API', async () => {
   global.fetch.mockImplementation((url, options = {}) => {
-    if (url.endsWith('/api/volunteers/7/password')) return Promise.resolve({ ok: true, status: 204, json: async () => ({}) });
+    if (url.endsWith('/api/auth/password')) return Promise.resolve({ ok: true, status: 204, json: async () => ({}) });
     if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
     return respond(volunteer);
   });
@@ -123,14 +123,14 @@ test('changes the password through the API', async () => {
   openSection('Profile Settings');
   fillPasswordForm('oldpassword', 'newpassword1');
   expect(await screen.findByText('Password updated successfully!')).toBeInTheDocument();
-  const [, options] = global.fetch.mock.calls.find(([url]) => url.endsWith('/api/volunteers/7/password'));
+  const [, options] = global.fetch.mock.calls.find(([url]) => url.endsWith('/api/auth/password'));
   expect(options.method).toBe('PUT');
   expect(JSON.parse(options.body)).toEqual({ currentPassword: 'oldpassword', newPassword: 'newpassword1' });
 });
 
 test('shows an error when the current password is wrong', async () => {
   global.fetch.mockImplementation((url) => {
-    if (url.endsWith('/api/volunteers/7/password')) return Promise.resolve({ ok: false, status: 400, json: async () => ({}) });
+    if (url.endsWith('/api/auth/password')) return Promise.resolve({ ok: false, status: 400, json: async () => ({}) });
     if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
     return respond(volunteer);
   });

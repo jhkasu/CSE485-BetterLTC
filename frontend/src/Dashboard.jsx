@@ -10,6 +10,7 @@ import Navbar from './Navbar';
 import './Dashboard.css';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
+import ChangePasswordForm from './auth/ChangePasswordForm';
 
 const NAV_ITEMS = [
   { id: 'overview',      labelKey: 'common.overview',            icon: <MdDashboard /> },
@@ -110,10 +111,6 @@ const Dashboard = () => {
   /* ── Profile picture (#56) ── */
   const [profilePic, setProfilePic] = useState(user?.profilePic || null);
 
-  /* ── Password change (#56) ── */
-  const [passwordForm, setPasswordForm] = useState({ current: '', newPass: '', confirm: '' });
-  const [passwordMsg,  setPasswordMsg]  = useState(null);
-
   /* ── Background check document upload (#54) ── */
   const [bgDoc,        setBgDoc]        = useState(null);   // { name }
   const [bgDocUploaded,setBgDocUploaded]= useState(false);
@@ -162,43 +159,6 @@ const Dashboard = () => {
     const reader = new FileReader();
     reader.onload = (ev) => setProfilePic(ev.target.result);
     reader.readAsDataURL(file);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPasswordForm({ ...passwordForm, [e.target.name]: e.target.value });
-    setPasswordMsg(null);
-  };
-
-  const handlePasswordSave = (e) => {
-    e.preventDefault();
-    if (!passwordForm.current) {
-      setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.currentRequired' });
-      return;
-    }
-    if (passwordForm.newPass.length < 8) {
-      setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.newShort' });
-      return;
-    }
-    if (passwordForm.newPass !== passwordForm.confirm) {
-      setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.newMismatch' });
-      return;
-    }
-    apiFetch(`/api/volunteers/${user.id}/password`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ currentPassword: passwordForm.current, newPassword: passwordForm.newPass }),
-    })
-      .then(res => {
-        if (res.ok) {
-          setPasswordMsg({ type: 'success', key: 'dashboard.profile.passwordUpdated' });
-          setPasswordForm({ current: '', newPass: '', confirm: '' });
-        } else if (res.status === 400) {
-          setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.currentIncorrect' });
-        } else {
-          setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.passwordFailed' });
-        }
-      })
-      .catch(() => setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.passwordFailed' }));
   };
 
   const handleBgDocChange = (e) => {
@@ -358,52 +318,8 @@ const Dashboard = () => {
         </div>
       </form>
 
-      {/* #56 — Password change */}
-      <div className="password-section">
-        <h3 className="password-section-title">{t('dashboard.profile.changePassword')}</h3>
-        <form className="profile-form" onSubmit={handlePasswordSave}>
-          <div className="profile-field full-width">
-            <label>{t('dashboard.profile.currentPassword')}</label>
-            <input
-              type="password"
-              name="current"
-              value={passwordForm.current}
-              onChange={handlePasswordChange}
-              placeholder={t('dashboard.profile.placeholders.currentPassword')}
-            />
-          </div>
-
-          <div className="profile-row">
-            <div className="profile-field">
-              <label>{t('dashboard.profile.newPassword')}</label>
-              <input
-                type="password"
-                name="newPass"
-                value={passwordForm.newPass}
-                onChange={handlePasswordChange}
-                placeholder={t('dashboard.profile.placeholders.newPassword')}
-              />
-            </div>
-            <div className="profile-field">
-              <label>{t('dashboard.profile.confirmNewPassword')}</label>
-              <input
-                type="password"
-                name="confirm"
-                value={passwordForm.confirm}
-                onChange={handlePasswordChange}
-                placeholder={t('dashboard.profile.placeholders.confirmNewPassword')}
-              />
-            </div>
-          </div>
-
-          {passwordMsg && (
-            <div className={`password-msg ${passwordMsg.type}`}>{t(passwordMsg.key)}</div>
-          )}
-
-          <div className="profile-actions">
-            <button type="submit" className="profile-save-btn">{t('dashboard.profile.updatePassword')}</button>
-          </div>
-        </form>
+      <div className="profile-password">
+        <ChangePasswordForm />
       </div>
     </>
   );

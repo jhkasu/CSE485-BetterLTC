@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
@@ -51,5 +52,29 @@ public class AuthController : ControllerBase {
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    [HttpPut("password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword(ChangePasswordRequest request) {
+        try {
+            int? id = User.AccountId();
+            if (id is null) return Forbid();
+            var account = await FindAccount(id.Value);
+            if (account is null) return Forbid();
+            if (!PasswordHashing.Verify(request.CurrentPassword, account.Password)) return BadRequest("Current password is incorrect.");
+            account.Password = PasswordHashing.Hash(request.NewPassword);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    private async Task<IAccount?> FindAccount(int id) {
+        if (User.IsInRole(Roles.Admin)) return await _context.Admins.FindAsync(id);
+        if (User.IsInRole(Roles.Volunteer)) return await _context.Volunteers.FindAsync(id);
+        if (User.IsInRole(Roles.Organization)) return await _context.Organizations.FindAsync(id);
+        return null;
     }
 }
