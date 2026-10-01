@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Models;
 
-public class Admin {
+public class Admin : IAccount {
     [Key] public int Id { get; set; }
 
     [Required] public string FirstName { get; set; } = "";

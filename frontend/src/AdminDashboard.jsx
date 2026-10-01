@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
-  MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness,
+  MdClose, MdVolunteerActivism, MdOpenInNew, MdBusiness, MdLock,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import './AdminDashboard.css';
 import API_BASE from './config';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
+import ChangePasswordForm from './auth/ChangePasswordForm';
 
 
 const INIT_OPPORTUNITIES = [
@@ -32,6 +33,7 @@ const NAV_ITEMS = [
   { id: 'opportunities',  labelKey: 'adminDashboard.nav.opportunities', icon: <MdVolunteerActivism /> },
   { id: 'work',           labelKey: 'adminDashboard.nav.work',          icon: <MdWork /> },
   { id: 'help',           labelKey: 'adminDashboard.nav.help',          icon: <MdHelpCenter /> },
+  { id: 'account',        labelKey: 'common.account',                   icon: <MdLock /> },
 ];
 
 function Modal({ title, onClose, children, wide }) {
@@ -223,6 +225,13 @@ function AdminDashboard() {
       .then(() => { setHelpRequests(helpRequests.filter(r => r.id !== id)); setHelpDeleteId(null); })
       .catch(() => {});
   };
+
+  const renderAccount = () => (
+    <div>
+      <h2 className="admin-section-title">{t('common.account')}</h2>
+      <ChangePasswordForm />
+    </div>
+  );
 
   const renderOverview = () => (
     <div>
@@ -575,6 +584,7 @@ function AdminDashboard() {
       case 'opportunities':  return renderOpportunities();
       case 'work':           return renderWork();
       case 'help':           return renderHelp();
+      case 'account':        return renderAccount();
       default:               return null;
     }
   };

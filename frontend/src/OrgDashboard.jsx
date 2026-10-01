@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople } from 'react-icons/md';
+import { MdDashboard, MdVolunteerActivism, MdLogout, MdAdd, MdEdit, MdDelete, MdClose, MdOpenInNew, MdPeople, MdLock } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
 import './OrgDashboard.css';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
+import ChangePasswordForm from './auth/ChangePasswordForm';
 
 const SK_CITIES = [
   'Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current',
@@ -55,6 +56,7 @@ const NAV_ITEMS = [
   { id: 'overview', labelKey: 'common.overview', icon: <MdDashboard /> },
   { id: 'listings', labelKey: 'orgDashboard.nav.listings', icon: <MdVolunteerActivism /> },
   { id: 'applicants', labelKey: 'orgDashboard.nav.applicants', icon: <MdPeople /> },
+  { id: 'account', labelKey: 'common.account', icon: <MdLock /> },
 ];
 
 function Modal({ title, onClose, children }) {
@@ -475,6 +477,12 @@ function OrgDashboard() {
           {activeSection === 'overview' && renderOverview()}
           {activeSection === 'listings' && renderListings()}
           {activeSection === 'applicants' && renderApplicants()}
+          {activeSection === 'account' && (
+            <div>
+              <h2 className="org-section-title">{t('common.account')}</h2>
+              <ChangePasswordForm />
+            </div>
+          )}
         </main>
       </div>
     </div>

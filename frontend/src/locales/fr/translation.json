@@ -36,7 +36,8 @@
     "show": "Afficher",
     "hide": "Masquer",
     "genericError": "Une erreur s'est produite. Veuillez réessayer.",
-    "serverUnreachable": "Impossible de joindre le serveur. Veuillez réessayer plus tard."
+    "serverUnreachable": "Impossible de joindre le serveur. Veuillez réessayer plus tard.",
+    "account": "Compte"
   },
   "nav": {
     "ariaMain": "Navigation principale",

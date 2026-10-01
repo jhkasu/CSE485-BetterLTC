@@ -36,7 +36,8 @@
     "show": "Show",
     "hide": "Hide",
     "genericError": "Something went wrong. Please try again.",
-    "serverUnreachable": "Unable to reach the server. Please try again later."
+    "serverUnreachable": "Unable to reach the server. Please try again later.",
+    "account": "Account"
   },
   "nav": {
     "ariaMain": "Main",

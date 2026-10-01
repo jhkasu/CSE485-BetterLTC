@@ -577,39 +577,9 @@
   color: var(--color-on-text);
 }
 
-/* ── Password section (#56) ── */
-.password-section {
+.profile-password {
   max-width: 800px;
   margin: 36px auto 0;
-}
-
-.password-section-title {
-  font-family: var(--font-heading);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: 0;
-  border-left: 5px solid var(--color-text);
-  padding-left: 14px;
-  margin-bottom: 20px;
-}
-
-.password-msg {
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 600;
-  padding: 12px 18px;
-  border-radius: 6px;
-}
-
-.password-msg.success {
-  background-color: var(--color-success-bg);
-  color: var(--color-success);
-}
-
-.password-msg.error {
-  background-color: var(--color-danger-bg);
-  color: var(--color-danger);
 }
 
 /* ── Upcoming shifts (#60, #75) ── */
