@@ -109,16 +109,16 @@ function OrgDashboard() {
   useEffect(() => {
     apiFetch(`/api/listings`)
       .then(res => res.json())
-      .then(data => setListings(data.filter(l => l.orgName === user?.orgName)))
+      .then(data => setListings(data.filter(l => l.organizationId === user?.id)))
       .catch(() => {});
-  }, [user?.orgName]);
+  }, [user?.id]);
 
   useEffect(() => {
     apiFetch(`/api/registrations`)
       .then(res => res.json())
-      .then(data => setRegistrations(data.filter(r => r.orgName === user?.orgName)))
+      .then(data => setRegistrations(Array.isArray(data) ? data : []))
       .catch(() => {});
-  }, [user?.orgName]);
+  }, [user?.id]);
 
   const handleLogout = () => {
     clearSession();
