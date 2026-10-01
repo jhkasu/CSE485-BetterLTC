@@ -43,15 +43,24 @@
 .sidebar-user-role {
   font-family: var(--font-body);
   font-size: 18px;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
   margin-top: 6px;
   text-transform: capitalize;
 }
 
-.sidebar-nav {
+.dashboard-sidebar .sidebar-nav {
   display: flex;
   flex-direction: column;
   flex: 1;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  position: static;
+  background-color: transparent;
+  border-bottom: none;
 }
 
 .sidebar-nav-item {
@@ -64,7 +73,7 @@
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
   cursor: pointer;
   border-left: 4px solid transparent;
   transition: all 0.15s ease;
@@ -79,7 +88,7 @@
 
 .sidebar-nav-item.active {
   color: var(--color-on-dark);
-  border-left: 4px solid var(--color-dark);
+  border-left: 4px solid var(--color-accent);
   background-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -98,13 +107,13 @@
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
   cursor: pointer;
   border-left: 4px solid transparent;
 }
 
 .sidebar-logout:hover {
-  color: var(--color-dark);
+  color: var(--color-on-dark);
 }
 
 /* ── Main Content ── */
@@ -189,6 +198,12 @@
   background: var(--color-danger-bg);
   color: var(--color-danger);
   border: 1px solid var(--color-danger-border);
+}
+
+.application-status-badge.completed {
+  background: var(--color-dark);
+  color: var(--color-on-dark);
+  border: 1px solid var(--color-dark);
 }
 
 .dashboard-placeholder {
@@ -337,6 +352,13 @@
   font-weight: 600;
 }
 
+.profile-error-msg {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--color-error);
+  font-weight: 600;
+}
+
 /* ── Sidebar avatar ── */
 .sidebar-avatar {
   width: 72px;
@@ -344,7 +366,7 @@
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 16px;
-  background-color: var(--color-text);
+  background-color: var(--color-dark-hover);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -361,7 +383,7 @@
   font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 700;
-  color: var(--color-on-text);
+  color: var(--color-on-dark);
   letter-spacing: 0;
 }
 
@@ -720,7 +742,7 @@
 
 /* ── Volunteer history (#60) ── */
 .history-summary {
-  background: var(--color-text);
+  background: var(--color-dark);
   border-radius: 8px;
   padding: 28px 36px;
   max-width: 300px;
@@ -730,7 +752,7 @@
 .history-summary-label {
   font-family: var(--font-body);
   font-size: 15px;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
   text-transform: uppercase;
   letter-spacing: 0;
   margin-bottom: 8px;
@@ -746,7 +768,7 @@
   font-family: var(--font-heading);
   font-size: 56px;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-on-dark);
   line-height: 1;
 }
 
@@ -754,7 +776,7 @@
   font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
 }
 
 .history-list {
@@ -1019,4 +1041,112 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media (max-width: 900px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    min-width: 0;
+    padding: 20px 0 0;
+  }
+
+  .sidebar-user {
+    flex-direction: row;
+    gap: 16px;
+    padding: 0 16px 16px;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  .sidebar-avatar {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0;
+  }
+
+  .sidebar-user-name {
+    font-size: 22px;
+  }
+
+  .sidebar-user-role {
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  .dashboard-sidebar .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sidebar-nav-item {
+    width: auto;
+    flex-shrink: 0;
+    padding: 14px 16px;
+    font-size: 17px;
+    gap: 8px;
+    border-left: none;
+    border-bottom: 4px solid transparent;
+  }
+
+  .sidebar-nav-item.active {
+    border-left: none;
+    border-bottom: 4px solid var(--color-accent);
+  }
+
+  .sidebar-nav-item .nav-icon {
+    font-size: 20px;
+  }
+
+  .sidebar-logout {
+    display: none;
+  }
+
+  .dashboard-main {
+    padding: 28px 16px 40px;
+    min-width: 0;
+  }
+
+  .dashboard-section-title {
+    font-size: 30px;
+  }
+
+  .overview-card,
+  .application-card,
+  .shift-card,
+  .history-card {
+    padding: 20px;
+  }
+
+  .application-card,
+  .shift-card,
+  .history-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-row {
+    flex-direction: column;
+  }
+
+  .history-summary {
+    max-width: none;
+    padding: 20px 24px;
+  }
+
+  .history-summary-hours {
+    font-size: 44px;
+  }
+
+  .cal-grid {
+    overflow-x: auto;
+  }
+
+  .cal-header,
+  .cal-body {
+    min-width: 640px;
+  }
 }

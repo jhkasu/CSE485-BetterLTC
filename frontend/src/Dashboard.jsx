@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   MdDashboard, MdPerson, MdCalendarToday, MdHistory,
   MdLogout, MdCloudUpload, MdCheckCircle,
-  MdCancel, MdAccessTime, MdLocationOn, MdAssignment,
+  MdLocationOn, MdAssignment,
 } from 'react-icons/md';
 import Navbar from './Navbar';
 import './Dashboard.css';
@@ -33,19 +33,19 @@ function getMondayOf(d) {
   return date;
 }
 
-function parseTimeDecimal(t) {
-  // "10:00 AM" → 10.0 ,  "2:30 PM" → 14.5
-  const [timePart, period] = t.trim().split(' ');
-  let [h, m] = timePart.split(':').map(Number);
-  if (period === 'PM' && h !== 12) h += 12;
-  if (period === 'AM' && h === 12) h = 0;
-  return h + m / 60;
+const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+function listingDays(app) {
+  return (app.days || '').split(',').map(d => d.trim()).filter(Boolean);
 }
 
-function parseShiftTime(timeStr) {
-  // "10:00 AM – 12:00 PM"
-  const [s, e] = timeStr.split('–').map(p => p.trim());
-  return { start: parseTimeDecimal(s), end: parseTimeDecimal(e) };
+function runsOn(app, date) {
+  const dateStr = toDateString(date);
+  if (!app.startDate && !app.endDate) return false;
+  if (app.startDate && dateStr < app.startDate) return false;
+  if (app.endDate && dateStr > app.endDate) return false;
+  const days = listingDays(app);
+  return days.length === 0 || days.includes(WEEKDAY_NAMES[date.getDay()]);
 }
 
 function toDateString(d) {
@@ -65,9 +65,23 @@ const Dashboard = () => {
       apiFetch(`/api/volunteers/${user.id}`)
         .then(res => res.json())
         .then(data => {
-          const updated = { ...user, backgroundCheckApproved: data.backgroundCheckApproved };
+          const updated = {
+            ...user,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            phone: data.phone,
+            address: data.address,
+            backgroundCheckApproved: data.backgroundCheckApproved,
+          };
           localStorage.setItem('currentUser', JSON.stringify(updated));
           setUser(updated);
+          setProfileForm(form => ({
+            ...form,
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            phone: data.phone || '',
+            address: data.address || '',
+          }));
         })
         .catch(() => {});
     }
@@ -91,6 +105,7 @@ const Dashboard = () => {
     address:   user?.address   || '',
   });
   const [profileSaved, setProfileSaved] = useState(false);
+  const [profileError, setProfileError] = useState(false);
 
   /* ── Profile picture (#56) ── */
   const [profilePic, setProfilePic] = useState(user?.profilePic || null);
@@ -103,10 +118,6 @@ const Dashboard = () => {
   const [bgDoc,        setBgDoc]        = useState(null);   // { name }
   const [bgDocUploaded,setBgDocUploaded]= useState(false);
 
-  /* ── Upcoming shifts with cancellation (#60, #75) ── */
-  const [shifts,        setShifts]       = useState([]);
-  const [cancelConfirm, setCancelConfirm]= useState(null); // shift id pending confirm
-
   /* ── Shift view (list / calendar) ── */
   const [shiftView,   setShiftView]  = useState('list');
   const [weekOffset,  setWeekOffset] = useState(0);
@@ -115,13 +126,34 @@ const Dashboard = () => {
   const handleProfileChange = (e) => {
     setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
     setProfileSaved(false);
+    setProfileError(false);
   };
 
   const handleProfileSave = (e) => {
     e.preventDefault();
-    const updated = { ...user, ...profileForm, profilePic };
-    localStorage.setItem('currentUser', JSON.stringify(updated));
-    setProfileSaved(true);
+    setProfileSaved(false);
+    setProfileError(false);
+    apiFetch(`/api/volunteers/${user.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: profileForm.firstName,
+        lastName: profileForm.lastName,
+        phone: profileForm.phone,
+        address: profileForm.address,
+      }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('save failed');
+        return res.json();
+      })
+      .then(data => {
+        const updated = { ...user, firstName: data.firstName, lastName: data.lastName, phone: data.phone, address: data.address, profilePic };
+        localStorage.setItem('currentUser', JSON.stringify(updated));
+        setUser(updated);
+        setProfileSaved(true);
+      })
+      .catch(() => setProfileError(true));
   };
 
   const handleProfilePicChange = (e) => {
@@ -151,8 +183,22 @@ const Dashboard = () => {
       setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.newMismatch' });
       return;
     }
-    setPasswordMsg({ type: 'success', key: 'dashboard.profile.passwordUpdated' });
-    setPasswordForm({ current: '', newPass: '', confirm: '' });
+    apiFetch(`/api/volunteers/${user.id}/password`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentPassword: passwordForm.current, newPassword: passwordForm.newPass }),
+    })
+      .then(res => {
+        if (res.ok) {
+          setPasswordMsg({ type: 'success', key: 'dashboard.profile.passwordUpdated' });
+          setPasswordForm({ current: '', newPass: '', confirm: '' });
+        } else if (res.status === 400) {
+          setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.currentIncorrect' });
+        } else {
+          setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.passwordFailed' });
+        }
+      })
+      .catch(() => setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.passwordFailed' }));
   };
 
   const handleBgDocChange = (e) => {
@@ -173,11 +219,6 @@ const Dashboard = () => {
     // reset the file input so the same file can be re-selected
     const input = document.getElementById('bg-doc-input');
     if (input) input.value = '';
-  };
-
-  const handleCancelShift = (shiftId) => {
-    setShifts(shifts.filter(s => s.id !== shiftId));
-    setCancelConfirm(null);
   };
 
   const handleLogout = () => {
@@ -312,6 +353,7 @@ const Dashboard = () => {
 
         <div className="profile-actions">
           {profileSaved && <span className="profile-saved-msg">{t('dashboard.profile.saved')}</span>}
+          {profileError && <span className="profile-error-msg">{t('dashboard.profile.saveFailed')}</span>}
           <button type="submit" className="profile-save-btn">{t('dashboard.profile.saveChanges')}</button>
         </div>
       </form>
@@ -368,6 +410,12 @@ const Dashboard = () => {
 
   const approvedApplications = applications.filter(a => a.status === 'Approved');
 
+  const formatSchedule = (app) => {
+    const range = [app.startDate, app.endDate].filter(Boolean).join(' – ');
+    const days = listingDays(app).map(d => t(`options.days.${d.toLowerCase()}`, { defaultValue: d })).join(', ');
+    return [range, days].filter(Boolean).join(' · ') || t('dashboard.shifts.noSchedule');
+  };
+
   const renderShiftList = () => (
     approvedApplications.length === 0
       ? <div className="dashboard-placeholder">{t('dashboard.shifts.empty')}</div>
@@ -378,8 +426,8 @@ const Dashboard = () => {
               <div className="shift-card-left">
                 <div className="shift-title">{app.listingTitle}</div>
                 <div className="shift-meta">
-                  <span><MdLocationOn className="shift-meta-icon" /> {app.orgName}</span>
-                  <span><MdCalendarToday className="shift-meta-icon" /> {t('dashboard.shifts.approvedOn', { date: app.registeredAt })}</span>
+                  <span><MdLocationOn className="shift-meta-icon" /> {app.orgName}{app.location ? ` · ${app.location}` : ''}</span>
+                  <span><MdCalendarToday className="shift-meta-icon" /> {formatSchedule(app)}</span>
                 </div>
               </div>
             </div>
@@ -438,7 +486,7 @@ const Dashboard = () => {
             <div className="cal-days">
               {weekDays.map((d, dayIdx) => {
                 const dateStr   = toDateString(d);
-                const dayShifts = approvedApplications.filter(a => a.registeredAt === dateStr);
+                const dayShifts = approvedApplications.filter(a => runsOn(a, d));
                 const isToday   = dateStr === todayStr;
 
                 return (
@@ -512,13 +560,18 @@ const Dashboard = () => {
   );
 
   const renderHistory = () => {
-    const history = [];
-    const totalHours = history.reduce((sum, h) => sum + h.hours, 0);
+    const history = applications.filter(a => a.status === 'Completed');
+    const totalHours = history.reduce((sum, h) => sum + (h.hoursServed || 0), 0);
     return (
       <>
         <h2 className="dashboard-section-title">{t('dashboard.nav.history')}</h2>
-
-
+        <div className="history-summary">
+          <div className="history-summary-label">{t('dashboard.history.totalHours')}</div>
+          <div className="history-summary-hours-row">
+            <span className="history-summary-hours">{totalHours}</span>
+            <span className="history-summary-unit">{t('dashboard.history.hoursUnit')}</span>
+          </div>
+        </div>
         {history.length === 0 ? (
           <div className="dashboard-placeholder">{t('dashboard.history.empty')}</div>
         ) : (
@@ -526,13 +579,13 @@ const Dashboard = () => {
             {history.map((item) => (
               <div key={item.id} className="history-card">
                 <div className="history-card-info">
-                  <div className="history-card-title">{item.title}</div>
+                  <div className="history-card-title">{item.listingTitle}</div>
                   <div className="shift-meta">
-                    <span><MdCalendarToday className="shift-meta-icon" /> {item.date}</span>
-                    <span><MdLocationOn   className="shift-meta-icon" /> {item.location}</span>
+                    <span><MdCalendarToday className="shift-meta-icon" /> {item.completedAt}</span>
+                    <span><MdLocationOn   className="shift-meta-icon" /> {item.orgName}{item.location ? ` · ${item.location}` : ''}</span>
                   </div>
                 </div>
-                <div className="history-card-hours">{t('dashboard.history.hours', { hours: item.hours })}</div>
+                <div className="history-card-hours">{t('dashboard.history.hours', { hours: item.hoursServed })}</div>
               </div>
             ))}
           </div>

@@ -9,6 +9,9 @@ namespace Backend.Controllers;
 [Route("api/registrations")]
 [ApiController]
 public class RegistrationController : ControllerBase {
+    private const string Approved = "Approved";
+    private const string Completed = "Completed";
+    private static readonly string[] ReviewStatuses = ["Pending", Approved, "Rejected"];
     private readonly AppDbContext _context;
 
     public RegistrationController(AppDbContext context) {
@@ -46,6 +49,9 @@ public class RegistrationController : ControllerBase {
             var list = await _context.Registrations
                 .Where(r => r.VolunteerId == volunteerId)
                 .OrderByDescending(r => r.Id)
+                .Join(_context.Listings, r => r.ListingId, l => l.Id, (r, l) => new VolunteerRegistrationResponse(
+                    r.Id, r.ListingId, r.ListingTitle, r.OrgName, r.RegisteredAt, r.Status, r.HoursServed, r.CompletedAt,
+                    l.Location, l.Days, l.StartDate, l.EndDate))
                 .ToListAsync();
             return Ok(list);
         } catch (Exception ex) {
@@ -91,6 +97,8 @@ public class RegistrationController : ControllerBase {
             if (exists) return Conflict("Already registered.");
             reg.RegisteredAt = DateTime.UtcNow.ToString("yyyy-MM-dd");
             reg.Status = "Pending";
+            reg.HoursServed = null;
+            reg.CompletedAt = "";
             _context.Registrations.Add(reg);
             await _context.SaveChangesAsync();
             return Ok(reg);
@@ -103,18 +111,42 @@ public class RegistrationController : ControllerBase {
     [Authorize(Roles = Roles.OrganizationOrAdmin)]
     public async Task<IActionResult> UpdateStatus(int id, [FromBody] string status) {
         try {
+            if (!ReviewStatuses.Contains(status)) return BadRequest("Invalid status.");
             var reg = await _context.Registrations.FindAsync(id);
             if (reg is null) return NotFound();
-            if (!User.IsInRole(Roles.Admin)) {
-                var org = await CurrentOrganization();
-                var listing = await _context.Listings.FindAsync(reg.ListingId);
-                if (org is null || listing is null || listing.OrganizationId != org.Id) return Forbid();
-            }
+            if (!await CanManage(reg)) return Forbid();
             reg.Status = status;
+            reg.HoursServed = null;
+            reg.CompletedAt = "";
             await _context.SaveChangesAsync();
             return Ok(reg);
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    [HttpPut("{id:int}/complete")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> Complete(int id, CompleteRegistrationRequest request) {
+        try {
+            var reg = await _context.Registrations.FindAsync(id);
+            if (reg is null) return NotFound();
+            if (!await CanManage(reg)) return Forbid();
+            if (reg.Status != Approved && reg.Status != Completed) return BadRequest("Only approved volunteers can be marked as completed.");
+            reg.Status = Completed;
+            reg.HoursServed = request.Hours;
+            reg.CompletedAt = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            await _context.SaveChangesAsync();
+            return Ok(reg);
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    private async Task<bool> CanManage(Registration reg) {
+        if (User.IsInRole(Roles.Admin)) return true;
+        var org = await CurrentOrganization();
+        var listing = await _context.Listings.FindAsync(reg.ListingId);
+        return org is not null && listing is not null && listing.OrganizationId == org.Id;
     }
 }
