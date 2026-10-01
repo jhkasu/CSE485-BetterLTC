@@ -313,7 +313,8 @@
       "applications": "Mes candidatures",
       "profile": "Paramètres du profil",
       "shifts": "Quarts à venir",
-      "history": "Historique de bénévolat"
+      "history": "Historique de bénévolat",
+      "matching": "Configuration du profil"
     },
     "bgCheck": {
       "heading": "État de la vérification des antécédents",
@@ -370,6 +371,36 @@
       "hours": "{{hours}} h",
       "totalHours": "Total des heures de bénévolat",
       "hoursUnit": "h"
+    },
+    "matching": {
+      "lead": "Dites-nous où et quand vous pouvez aider afin que nous puissions vous jumeler aux bonnes occasions.",
+      "city": "Lieu",
+      "selectCity": "Choisissez votre ville",
+      "days": "Jours disponibles",
+      "time": "Moments disponibles",
+      "times": {
+        "morning": "Matin",
+        "afternoon": "Après-midi",
+        "evening": "Soir"
+      },
+      "interests": "Domaines d'intérêt",
+      "languages": "Langues",
+      "languageOptions": {
+        "english": "Anglais",
+        "french": "Français",
+        "spanish": "Espagnol",
+        "other": "Autre"
+      },
+      "consent": "J'accepte d'être recommandé aux organismes selon mon profil.",
+      "save": "Enregistrer le profil",
+      "errors": {
+        "city": "Veuillez choisir votre ville.",
+        "days": "Veuillez choisir au moins un jour disponible.",
+        "saveFailed": "Impossible d'enregistrer votre profil. Veuillez réessayer."
+      },
+      "reminderTitle": "Terminez la configuration de votre profil",
+      "reminderText": "Ajoutez votre ville et vos jours disponibles pour que les organismes puissent vous jumeler à des aînés et des occasions près de chez vous.",
+      "reminderButton": "Configurer le profil"
     }
   },
   "orgDashboard": {

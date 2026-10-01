@@ -4,16 +4,18 @@ import { useTranslation } from 'react-i18next';
 import {
   MdDashboard, MdPerson, MdCalendarToday, MdHistory,
   MdLogout, MdCloudUpload, MdCheckCircle,
-  MdLocationOn, MdAssignment,
+  MdLocationOn, MdAssignment, MdTune,
 } from 'react-icons/md';
 import Navbar from './Navbar';
 import './Dashboard.css';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
+import VolunteerMatchingProfile, { isMatchingProfileComplete } from './VolunteerMatchingProfile';
 
 const NAV_ITEMS = [
   { id: 'overview',      labelKey: 'common.overview',            icon: <MdDashboard /> },
+  { id: 'matching',      labelKey: 'dashboard.nav.matching',     icon: <MdTune /> },
   { id: 'applications',  labelKey: 'dashboard.nav.applications', icon: <MdAssignment /> },
   { id: 'profile',       labelKey: 'dashboard.nav.profile',      icon: <MdPerson /> },
   { id: 'shifts',        labelKey: 'dashboard.nav.shifts',       icon: <MdCalendarToday /> },
@@ -60,6 +62,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(() => getCurrentUser());
   const [applications, setApplications] = useState([]);
   const [activeSection, setActiveSection] = useState('overview');
+  const [volunteerData, setVolunteerData] = useState(null);
 
   useEffect(() => {
     if (user?.id) {
@@ -76,6 +79,7 @@ const Dashboard = () => {
           };
           localStorage.setItem('currentUser', JSON.stringify(updated));
           setUser(updated);
+          setVolunteerData(data);
           setProfileForm(form => ({
             ...form,
             firstName: data.firstName || '',
@@ -193,6 +197,16 @@ const Dashboard = () => {
   const renderOverview = () => (
     <>
       <h2 className="dashboard-section-title">{t('common.overview')}</h2>
+
+      {volunteerData && !isMatchingProfileComplete(volunteerData) && (
+        <div className="overview-card overview-card-reminder" style={{ marginBottom: 24 }}>
+          <div className="overview-card-label">{t('dashboard.matching.reminderTitle')}</div>
+          <p className="overview-card-hint">{t('dashboard.matching.reminderText')}</p>
+          <button type="button" className="overview-card-action" onClick={() => setActiveSection('matching')}>
+            {t('dashboard.matching.reminderButton')}
+          </button>
+        </div>
+      )}
 
       {/* #58 — Background check status */}
       <div className="overview-card">
@@ -513,6 +527,9 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':     return renderOverview();
+      case 'matching':     return volunteerData && (
+        <VolunteerMatchingProfile volunteer={volunteerData} onSaved={setVolunteerData} />
+      );
       case 'applications': return renderApplications();
       case 'profile':      return renderProfile();
       case 'shifts':       return renderShifts();

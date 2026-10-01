@@ -103,6 +103,38 @@ public class VolunteerController : ControllerBase {
         }
     }
 
+    [HttpPut("{id:int}/matching-profile")]
+    [Authorize]
+    public async Task<IActionResult> UpdateMatchingProfile(int id, VolunteerMatchingProfileRequest profile) {
+        try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Volunteer, id)) return Forbid();
+            var volunteer = await _context.Volunteers.FindAsync(id);
+            if (volunteer is null) return NotFound();
+            if (!ReferenceData.Cities.Contains(profile.City)) return BadRequest("Please choose a city.");
+            var days = Known(profile.AvailableDays, ReferenceData.Days);
+            var times = Known(profile.AvailableTimes, ReferenceData.TimesOfDay);
+            var interests = Known(profile.Interests, ReferenceData.HelpTypes);
+            var languages = Known(profile.Languages, ReferenceData.Languages);
+            if (days is null || times is null || interests is null || languages is null) return BadRequest("Unknown value.");
+            if (days.Count == 0) return BadRequest("Please choose at least one available day.");
+            volunteer.City = profile.City;
+            volunteer.AvailableDays = days;
+            volunteer.AvailableTimes = times;
+            volunteer.Interests = interests;
+            volunteer.Languages = languages;
+            volunteer.RecommendationConsent = profile.RecommendationConsent;
+            await _context.SaveChangesAsync();
+            return Ok(VolunteerResponse.From(volunteer));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    private static List<string>? Known(List<string> values, string[] allowed) {
+        var distinct = values.Distinct().ToList();
+        return distinct.All(allowed.Contains) ? distinct : null;
+    }
+
     [HttpDelete("{id:int}")]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteVolunteer(int id) {

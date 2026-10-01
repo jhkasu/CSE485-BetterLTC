@@ -13,4 +13,10 @@ public class Volunteer : IAccount {
     public string Phone { get; set; } = "";
     public string Address { get; set; } = "";
     public bool BackgroundCheckApproved { get; set; } = false;
+    public string City { get; set; } = "";
+    public List<string> AvailableDays { get; set; } = [];
+    public List<string> AvailableTimes { get; set; } = [];
+    public List<string> Interests { get; set; } = [];
+    public List<string> Languages { get; set; } = [];
+    public bool RecommendationConsent { get; set; }
 }
