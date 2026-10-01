@@ -10,10 +10,10 @@ public static class AccountEmails {
         return (email ?? "").Trim().ToLowerInvariant();
     }
 
-    public static async Task<bool> IsTaken(AppDbContext db, AdminAccount admin, string email) {
+    public static async Task<bool> IsTaken(AppDbContext db, string email) {
         string normalized = Normalize(email);
         if (normalized.Length == 0) return false;
-        if (Normalize(admin.Email) == normalized) return true;
+        if (await db.Admins.AnyAsync(a => a.Email.Trim().ToLower() == normalized)) return true;
         if (await db.Volunteers.AnyAsync(v => v.Email.Trim().ToLower() == normalized)) return true;
         return await db.Organizations.AnyAsync(o => o.Email.Trim().ToLower() == normalized);
     }

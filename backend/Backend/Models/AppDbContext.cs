@@ -6,6 +6,7 @@ public class AppDbContext : DbContext {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
     }
 
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<Volunteer> Volunteers { get; set; }
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<TeamMember> TeamMembers { get; set; }
@@ -15,6 +16,10 @@ public class AppDbContext : DbContext {
     public DbSet<Registration> Registrations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<Admin>()
+            .HasIndex(a => a.Email)
+            .IsUnique();
+
         modelBuilder.Entity<Listing>()
             .HasOne<Organization>()
             .WithMany()

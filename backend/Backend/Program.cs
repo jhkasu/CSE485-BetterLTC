@@ -18,7 +18,6 @@ builder.Services.AddControllers();
 var jwtSettings = JwtSettings.From(builder.Configuration);
 builder.Services.AddSingleton(jwtSettings);
 builder.Services.AddSingleton<TokenService>();
-builder.Services.AddSingleton(builder.Configuration.GetSection("Admin").Get<AdminAccount>() ?? new AdminAccount());
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
     options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters {
@@ -46,6 +45,7 @@ using (var scope = app.Services.CreateScope()) {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
     PasswordHashing.UpgradeLegacyPasswords(db);
+    (builder.Configuration.GetSection("Admin").Get<AdminAccount>() ?? new AdminAccount()).CreateFirstAdmin(db);
 }
 
 app.UseCors();
