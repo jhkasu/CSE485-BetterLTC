@@ -108,8 +108,8 @@ public class BackgroundCheckController : ControllerBase {
             if (id is null) return Forbid();
             var check = await _context.BackgroundChecks.FirstOrDefaultAsync(c => c.VolunteerId == id.Value);
             if (check is null || check.FileData is null) return NotFound();
-            if (check.Status != BackgroundCheckStatuses.Submitted) return BadRequest("Only a document that is still under review can be removed.");
             ClearDocument(check);
+            await SetVolunteerApproved(id.Value, false);
             await _context.SaveChangesAsync();
             return Ok(BackgroundCheckResponse.From(check, Today));
         } catch (Exception ex) {

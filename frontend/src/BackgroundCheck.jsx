@@ -121,6 +121,16 @@ function BackgroundCheck({ onChange }) {
       .finally(() => setBusy(false));
   };
 
+  const removeControls = (kind) => (confirmRemove ? (
+    <div className="bgc-confirm" role="alertdialog" aria-label={t(`dashboard.bgCheck.${kind}Confirm`)}>
+      <p>{t(`dashboard.bgCheck.${kind}Confirm`)}</p>
+      <button type="button" className="bgc-btn bgc-btn--danger" onClick={removeDocument} disabled={busy}>{t(`dashboard.bgCheck.${kind}Yes`)}</button>
+      <button type="button" className="bgc-btn-link" onClick={() => setConfirmRemove(false)}>{t('common.cancel')}</button>
+    </div>
+  ) : (
+    <button type="button" className="bgc-btn-link" onClick={() => setConfirmRemove(true)}>{t(`dashboard.bgCheck.${kind}`)}</button>
+  ));
+
   if (!check) return <p className="dashboard-placeholder">{t('common.loading')}</p>;
 
   const step = backgroundCheckStep(check.status, showUpload);
@@ -206,15 +216,7 @@ function BackgroundCheck({ onChange }) {
           <div className="bgc-card-body">
             <h3>{t('dashboard.bgCheck.steps.review')}</h3>
             <p>{t('dashboard.bgCheck.reviewText', { file: check.fileName, date: formatDate(check.submittedAt) })}</p>
-            {confirmRemove ? (
-              <div className="bgc-confirm" role="alertdialog" aria-label={t('dashboard.bgCheck.removeConfirm')}>
-                <p>{t('dashboard.bgCheck.removeConfirm')}</p>
-                <button type="button" className="bgc-btn bgc-btn--danger" onClick={removeDocument} disabled={busy}>{t('dashboard.bgCheck.removeYes')}</button>
-                <button type="button" className="bgc-btn-link" onClick={() => setConfirmRemove(false)}>{t('common.cancel')}</button>
-              </div>
-            ) : (
-              <button type="button" className="bgc-btn-link" onClick={() => setConfirmRemove(true)}>{t('dashboard.bgCheck.remove')}</button>
-            )}
+            {removeControls('remove')}
           </div>
         </div>
       )}
@@ -228,6 +230,7 @@ function BackgroundCheck({ onChange }) {
             {expiringSoon && (
               <p className="bgc-alert" role="alert"><MdErrorOutline aria-hidden="true" /> {t('dashboard.bgCheck.expiringSoon', { count: daysLeft })}</p>
             )}
+            {removeControls('withdraw')}
           </div>
         </div>
       )}

@@ -378,7 +378,10 @@
       },
       "remove": "Retirer le document",
       "removeConfirm": "Retirer ce document? Il sera supprimé définitivement et vous pourrez en téléverser un nouveau.",
-      "removeYes": "Retirer"
+      "removeYes": "Retirer",
+      "withdraw": "Retirer et supprimer",
+      "withdrawConfirm": "Supprimer votre document approuvé? Votre approbation sera annulée, vous ne serez plus jumelé à des aînés et vous devrez téléverser un nouveau document pour faire du bénévolat à nouveau.",
+      "withdrawYes": "Retirer et supprimer"
     },
     "profile": {
       "changePhoto": "Changer la photo",

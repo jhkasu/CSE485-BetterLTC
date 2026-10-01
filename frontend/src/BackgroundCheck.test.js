@@ -90,9 +90,18 @@ test('a document under review can be removed after confirming', async () => {
   expect(url).toMatch(/\/api\/background-checks\/me\/document$/);
 });
 
-test('an approved document cannot be removed by the volunteer', async () => {
-  global.fetch = jest.fn(() => respond({ status: 'Approved', expiresOn: inDays(400) }));
-  render(<BackgroundCheck />);
+test('an approved document can be withdrawn after a clear warning', async () => {
+  global.fetch = jest.fn((url, options = {}) => {
+    if (options.method === 'DELETE') return respond({ status: 'ConsentGiven' });
+    return respond({ status: 'Approved', expiresOn: inDays(400) });
+  });
+  const onChange = jest.fn();
+  render(<BackgroundCheck onChange={onChange} />);
   expect(await screen.findByText('Background check approved')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Remove document' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Withdraw and delete' }));
+  expect(screen.getByText(/approval will be cancelled/)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Withdraw and delete' }));
+  expect(await screen.findByRole('button', { name: 'Submit document' })).toBeInTheDocument();
+  expect(onChange).toHaveBeenLastCalledWith({ status: 'ConsentGiven' });
 });

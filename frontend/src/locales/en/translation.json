@@ -378,7 +378,10 @@
       },
       "remove": "Remove document",
       "removeConfirm": "Remove this document? It will be permanently deleted and you can upload a new one.",
-      "removeYes": "Remove"
+      "removeYes": "Remove",
+      "withdraw": "Withdraw and delete",
+      "withdrawConfirm": "Delete your approved document? Your background check approval will be cancelled, you will not be matched with seniors, and you will need to upload a new document to volunteer again.",
+      "withdrawYes": "Withdraw and delete"
     },
     "profile": {
       "changePhoto": "Change Photo",
