@@ -313,7 +313,8 @@
       "applications": "My Applications",
       "profile": "Profile Settings",
       "shifts": "Upcoming Shifts",
-      "history": "Volunteer History"
+      "history": "Volunteer History",
+      "matching": "Profile Setup"
     },
     "bgCheck": {
       "heading": "Background Check Status",
@@ -370,6 +371,36 @@
       "hours": "{{hours}} hrs",
       "totalHours": "Total Hours Volunteered",
       "hoursUnit": "hrs"
+    },
+    "matching": {
+      "lead": "Tell us where and when you can help so we can match you with the right opportunities.",
+      "city": "Location",
+      "selectCity": "Select your city",
+      "days": "Available Days",
+      "time": "Available Time",
+      "times": {
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening"
+      },
+      "interests": "Areas of Interest",
+      "languages": "Languages",
+      "languageOptions": {
+        "english": "English",
+        "french": "French",
+        "spanish": "Spanish",
+        "other": "Other"
+      },
+      "consent": "I agree to be recommended to organizations based on my profile.",
+      "save": "Save profile",
+      "errors": {
+        "city": "Please choose your city.",
+        "days": "Please choose at least one available day.",
+        "saveFailed": "Could not save your profile. Please try again."
+      },
+      "reminderTitle": "Complete your profile setup",
+      "reminderText": "Add your city and available days so organizations can match you with seniors and opportunities near you.",
+      "reminderButton": "Set up profile"
     }
   },
   "orgDashboard": {

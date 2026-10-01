@@ -140,3 +140,9 @@ test('shows an error when the current password is wrong', async () => {
   expect(await screen.findByText('Your current password is incorrect.')).toBeInTheDocument();
   expect(screen.queryByText('Password updated successfully!')).not.toBeInTheDocument();
 });
+
+test('reminds the volunteer to finish the profile setup and opens it', async () => {
+  renderDashboard();
+  fireEvent.click(await screen.findByRole('button', { name: 'Set up profile' }));
+  expect(await screen.findByLabelText(/location/i)).toBeInTheDocument();
+});

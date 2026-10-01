@@ -11,4 +11,10 @@ public static class ReferenceData {
         "Senior Care Support", "Meal Assistance", "Transportation Support", "Medical Assistance",
         "Mental Health Support", "Housing Support", "Other",
     ];
+
+    public static readonly string[] Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    public static readonly string[] TimesOfDay = ["Morning", "Afternoon", "Evening"];
+
+    public static readonly string[] Languages = ["English", "French", "Spanish", "Other"];
 }
