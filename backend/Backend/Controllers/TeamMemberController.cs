@@ -9,10 +9,10 @@ namespace Backend.Controllers;
 [Route("api/team-members")]
 [ApiController]
 public class TeamMemberController : ControllerBase {
-    private readonly UsersDbContext _context;
+    private readonly AppDbContext _context;
     private readonly IWebHostEnvironment _env;
 
-    public TeamMemberController(UsersDbContext context, IWebHostEnvironment env) {
+    public TeamMemberController(AppDbContext context, IWebHostEnvironment env) {
         _context = context;
         _env = env;
     }

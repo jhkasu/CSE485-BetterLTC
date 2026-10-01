@@ -9,18 +9,16 @@ namespace Backend.Controllers;
 [Route("api/listings")]
 [ApiController]
 public class ListingsController : ControllerBase {
-    private readonly ListingsDbContext _context;
-    private readonly UsersDbContext _users;
+    private readonly AppDbContext _context;
 
-    public ListingsController(ListingsDbContext context, UsersDbContext users) {
+    public ListingsController(AppDbContext context) {
         this._context = context;
-        this._users = users;
     }
 
     private async Task<Organization?> CurrentOrganization() {
         int? id = User.AccountId();
         if (!User.IsInRole(Roles.Organization) || id is null) return null;
-        return await _users.Organizations.FindAsync(id.Value);
+        return await _context.Organizations.FindAsync(id.Value);
     }
 
     [HttpGet]
@@ -40,7 +38,12 @@ public class ListingsController : ControllerBase {
             if (!User.IsInRole(Roles.Admin)) {
                 var org = await CurrentOrganization();
                 if (org is null || !org.IsApproved) return Forbid();
+                listing.OrganizationId = org.Id;
                 listing.OrgName = org.OrgName;
+            } else if (listing.OrganizationId is int ownerId) {
+                var owner = await _context.Organizations.FindAsync(ownerId);
+                if (owner is null) return BadRequest("Organization not found.");
+                listing.OrgName = owner.OrgName;
             }
             _context.Listings.Add(listing);
             await _context.SaveChangesAsync();
@@ -69,7 +72,7 @@ public class ListingsController : ControllerBase {
             if (listing is null) return NotFound();
             if (!User.IsInRole(Roles.Admin)) {
                 var org = await CurrentOrganization();
-                if (org is null || listing.OrgName != org.OrgName) return Forbid();
+                if (org is null || listing.OrganizationId != org.Id) return Forbid();
                 updated.OrgName = org.OrgName;
             }
             listing.ListingTitle = updated.ListingTitle;
@@ -96,7 +99,7 @@ public class ListingsController : ControllerBase {
             if (listing is null) return NotFound();
             if (!User.IsInRole(Roles.Admin)) {
                 var org = await CurrentOrganization();
-                if (org is null || listing.OrgName != org.OrgName) return Forbid();
+                if (org is null || listing.OrganizationId != org.Id) return Forbid();
             }
             _context.Listings.Remove(listing);
             await _context.SaveChangesAsync();

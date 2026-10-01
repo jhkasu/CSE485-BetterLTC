@@ -9,18 +9,16 @@ namespace Backend.Controllers;
 [Route("api/registrations")]
 [ApiController]
 public class RegistrationController : ControllerBase {
-    private readonly ListingsDbContext _context;
-    private readonly UsersDbContext _users;
+    private readonly AppDbContext _context;
 
-    public RegistrationController(ListingsDbContext context, UsersDbContext users) {
+    public RegistrationController(AppDbContext context) {
         _context = context;
-        _users = users;
     }
 
     private async Task<Organization?> CurrentOrganization() {
         int? id = User.AccountId();
         if (!User.IsInRole(Roles.Organization) || id is null) return null;
-        return await _users.Organizations.FindAsync(id.Value);
+        return await _context.Organizations.FindAsync(id.Value);
     }
 
     [HttpGet]
@@ -31,7 +29,7 @@ public class RegistrationController : ControllerBase {
             if (!User.IsInRole(Roles.Admin)) {
                 var org = await CurrentOrganization();
                 if (org is null) return Forbid();
-                query = query.Where(r => r.OrgName == org.OrgName);
+                query = query.Where(r => _context.Listings.Any(l => l.Id == r.ListingId && l.OrganizationId == org.Id));
             }
             var list = await query.OrderByDescending(r => r.Id).ToListAsync();
             return Ok(list);
@@ -62,7 +60,7 @@ public class RegistrationController : ControllerBase {
             if (!User.IsInRole(Roles.Admin)) {
                 var org = await CurrentOrganization();
                 var listing = await _context.Listings.FindAsync(listingId);
-                if (org is null || listing is null || listing.OrgName != org.OrgName) return Forbid();
+                if (org is null || listing is null || listing.OrganizationId != org.Id) return Forbid();
             }
             var list = await _context.Registrations
                 .Where(r => r.ListingId == listingId)
@@ -79,7 +77,7 @@ public class RegistrationController : ControllerBase {
     public async Task<IActionResult> Register([FromBody] Registration reg) {
         try {
             int? volunteerId = User.AccountId();
-            var volunteer = volunteerId is null ? null : await _users.Volunteers.FindAsync(volunteerId.Value);
+            var volunteer = volunteerId is null ? null : await _context.Volunteers.FindAsync(volunteerId.Value);
             if (volunteer is null) return Forbid();
             var listing = await _context.Listings.FindAsync(reg.ListingId);
             if (listing is null) return NotFound();
@@ -109,7 +107,8 @@ public class RegistrationController : ControllerBase {
             if (reg is null) return NotFound();
             if (!User.IsInRole(Roles.Admin)) {
                 var org = await CurrentOrganization();
-                if (org is null || reg.OrgName != org.OrgName) return Forbid();
+                var listing = await _context.Listings.FindAsync(reg.ListingId);
+                if (org is null || listing is null || listing.OrganizationId != org.Id) return Forbid();
             }
             reg.Status = status;
             await _context.SaveChangesAsync();

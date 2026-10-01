@@ -9,10 +9,10 @@ namespace Backend.Controllers;
 [Route("api/organizations")]
 [ApiController]
 public class OrganizationController : ControllerBase {
-    private readonly UsersDbContext _context;
+    private readonly AppDbContext _context;
     private readonly AdminAccount _admin;
 
-    public OrganizationController(UsersDbContext context, AdminAccount admin) {
+    public OrganizationController(AppDbContext context, AdminAccount admin) {
         this._context = context;
         this._admin = admin;
     }

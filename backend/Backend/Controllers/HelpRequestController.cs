@@ -9,9 +9,9 @@ namespace Backend.Controllers;
 [Route("api/help-requests")]
 [ApiController]
 public class HelpRequestController : ControllerBase {
-    private readonly UsersDbContext _context;
+    private readonly AppDbContext _context;
 
-    public HelpRequestController(UsersDbContext context) {
+    public HelpRequestController(AppDbContext context) {
         _context = context;
     }
 

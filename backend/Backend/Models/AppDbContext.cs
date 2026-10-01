@@ -1,0 +1,40 @@
+using Microsoft.EntityFrameworkCore;
+
+namespace Backend.Models;
+
+public class AppDbContext : DbContext {
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
+    }
+
+    public DbSet<Volunteer> Volunteers { get; set; }
+    public DbSet<Organization> Organizations { get; set; }
+    public DbSet<TeamMember> TeamMembers { get; set; }
+    public DbSet<OurWork> OurWorks { get; set; }
+    public DbSet<HelpRequest> HelpRequests { get; set; }
+    public DbSet<Listing> Listings { get; set; }
+    public DbSet<Registration> Registrations { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<Listing>()
+            .HasOne<Organization>()
+            .WithMany()
+            .HasForeignKey(l => l.OrganizationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Registration>()
+            .HasOne<Volunteer>()
+            .WithMany()
+            .HasForeignKey(r => r.VolunteerId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Registration>()
+            .HasOne<Listing>()
+            .WithMany()
+            .HasForeignKey(r => r.ListingId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Registration>()
+            .HasIndex(r => new { r.VolunteerId, r.ListingId })
+            .IsUnique();
+    }
+}

@@ -10,7 +10,7 @@ public static class AccountEmails {
         return (email ?? "").Trim().ToLowerInvariant();
     }
 
-    public static async Task<bool> IsTaken(UsersDbContext db, AdminAccount admin, string email) {
+    public static async Task<bool> IsTaken(AppDbContext db, AdminAccount admin, string email) {
         string normalized = Normalize(email);
         if (normalized.Length == 0) return false;
         if (Normalize(admin.Email) == normalized) return true;

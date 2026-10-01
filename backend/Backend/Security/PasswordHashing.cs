@@ -20,7 +20,7 @@ public static class PasswordHashing {
         return value.Length == 60 && value.StartsWith("$2");
     }
 
-    public static int UpgradeLegacyPasswords(UsersDbContext db) {
+    public static int UpgradeLegacyPasswords(AppDbContext db) {
         int upgraded = 0;
         foreach (var volunteer in db.Volunteers.ToList()) {
             if (IsHash(volunteer.Password)) continue;

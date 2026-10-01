@@ -36,23 +36,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddAuthorization();
 
-string usersDbConn = builder.Configuration.GetConnectionString("UsersDb")
-    ?? throw new ArgumentNullException("[Users Database Connection String] string is null");
-builder.Services.AddDbContext<UsersDbContext>(op => op.UseSqlite(usersDbConn));
-
-string listingsDbConn = builder.Configuration.GetConnectionString("ListingsDb")
-    ?? throw new ArgumentNullException("[Listings Database Connection String] string is null");
-builder.Services.AddDbContext<ListingsDbContext>(op => op.UseSqlite(listingsDbConn));
+string databaseConn = builder.Configuration.GetConnectionString("Database")
+    ?? throw new ArgumentNullException("[Database Connection String] string is null");
+builder.Services.AddDbContext<AppDbContext>(op => op.UseNpgsql(databaseConn));
 
 var app = builder.Build();
 
-// Apply pending migrations on startup in every environment so a fresh
-// deployment creates its own tables.
 using (var scope = app.Services.CreateScope()) {
-    var usersDb = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
-    usersDb.Database.Migrate();
-    PasswordHashing.UpgradeLegacyPasswords(usersDb);
-    scope.ServiceProvider.GetRequiredService<ListingsDbContext>().Database.Migrate();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+    PasswordHashing.UpgradeLegacyPasswords(db);
 }
 
 app.UseCors();
