@@ -4,14 +4,9 @@ import { useTranslation } from 'react-i18next';
 import './SignupForm.css';
 import apiFetch from './api';
 
-const SERVER_ERROR_KEYS = {
-  'Volunteer with this email already exists.': 'auth.errors.volunteerEmailExists',
-  'Organization with this email already exists.': 'auth.errors.orgEmailExists',
-};
-
-const toSubmitError = (message) => {
+const toSubmitError = (status, message) => {
+  if (status === 409) return { key: 'auth.errors.emailRegistered' };
   const trimmed = (message || '').trim();
-  if (SERVER_ERROR_KEYS[trimmed]) return { key: SERVER_ERROR_KEYS[trimmed] };
   if (trimmed) return { text: message };
   return { key: 'auth.errors.signUpFailed' };
 };
@@ -50,7 +45,7 @@ const SignupForm = () => {
     if (!formData.lastName) newErrors.lastName = 'auth.errors.lastNameRequired';
     else if (!nameRegex.test(formData.lastName)) newErrors.lastName = 'auth.errors.lettersOnly';
 
-    if (!emailRegex.test(formData.email)) newErrors.email = 'auth.errors.emailInvalid';
+    if (!emailRegex.test(formData.email.trim())) newErrors.email = 'auth.errors.emailInvalid';
     if (formData.password.length < 8) newErrors.password = 'auth.errors.passwordShort';
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'auth.errors.passwordMismatch';
 
@@ -70,7 +65,7 @@ const SignupForm = () => {
       const payload = {
         firstName: formData.firstName,
         lastName: formData.lastName,
-        email: formData.email,
+        email: formData.email.trim(),
         password: formData.password,
       };
       try {
@@ -83,7 +78,7 @@ const SignupForm = () => {
           navigate('/signin', { state: { success: 'auth.accountCreated' } });
         } else {
           const message = await res.text();
-          setErrors({ submit: toSubmitError(message) });
+          setErrors({ submit: toSubmitError(res.status, message) });
         }
       } catch (err) {
         setErrors({ submit: { key: 'common.serverUnreachable' } });
@@ -92,7 +87,7 @@ const SignupForm = () => {
       const payload = {
         orgName: formData.orgName,
         contactName: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
+        email: formData.email.trim(),
         password: formData.password,
         isApproved: false,
       };
@@ -106,7 +101,7 @@ const SignupForm = () => {
           navigate('/signin', { state: { success: 'auth.accountCreated' } });
         } else {
           const message = await res.text();
-          setErrors({ submit: toSubmitError(message) });
+          setErrors({ submit: toSubmitError(res.status, message) });
         }
       } catch (err) {
         setErrors({ submit: { key: 'common.serverUnreachable' } });

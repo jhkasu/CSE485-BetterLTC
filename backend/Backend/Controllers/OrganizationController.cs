@@ -10,9 +10,11 @@ namespace Backend.Controllers;
 [ApiController]
 public class OrganizationController : ControllerBase {
     private readonly UsersDbContext _context;
+    private readonly AdminAccount _admin;
 
-    public OrganizationController(UsersDbContext context) {
+    public OrganizationController(UsersDbContext context, AdminAccount admin) {
         this._context = context;
+        this._admin = admin;
     }
 
     [HttpGet]
@@ -29,10 +31,8 @@ public class OrganizationController : ControllerBase {
     [HttpPost]
     public async Task<IActionResult> AddOrganization(Organization org) {
         try {
-            
-            // Reject duplicate organization email before inserting
-            bool exists = await _context.Organizations.AnyAsync(o => o.Email == org.Email);
-            if (exists) return Conflict("Organization with this email already exists.");
+            org.Email = AccountEmails.Normalize(org.Email);
+            if (await AccountEmails.IsTaken(_context, _admin, org.Email)) return Conflict(AccountEmails.AlreadyRegistered);
             org.Password = PasswordHashing.Hash(org.Password);
             _context.Organizations.Add(org);
             await _context.SaveChangesAsync();

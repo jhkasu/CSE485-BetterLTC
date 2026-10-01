@@ -21,7 +21,8 @@ public class AuthController : ControllerBase {
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
         try {
-            if (_admin.Matches(request.Email, request.Password)) {
+            string email = AccountEmails.Normalize(request.Email);
+            if (_admin.Matches(email, request.Password)) {
                 string adminName = $"{_admin.FirstName} {_admin.LastName}".Trim();
                 return Ok(new {
                     token = _tokens.Create(0, Roles.Admin, _admin.Email, adminName),
@@ -29,7 +30,7 @@ public class AuthController : ControllerBase {
                 });
             }
 
-            var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.Email == request.Email);
+            var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.Email.Trim().ToLower() == email);
             if (volunteer is not null && PasswordHashing.Verify(request.Password, volunteer.Password)) {
                 var profile = VolunteerResponse.From(volunteer);
                 return Ok(new {
@@ -38,7 +39,7 @@ public class AuthController : ControllerBase {
                 });
             }
 
-            var org = await _context.Organizations.FirstOrDefaultAsync(o => o.Email == request.Email);
+            var org = await _context.Organizations.FirstOrDefaultAsync(o => o.Email.Trim().ToLower() == email);
             if (org is not null && PasswordHashing.Verify(request.Password, org.Password)) {
                 var profile = OrganizationResponse.From(org);
                 return Ok(new {

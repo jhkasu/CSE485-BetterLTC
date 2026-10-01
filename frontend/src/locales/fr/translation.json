@@ -235,8 +235,7 @@
       "orgNameRequired": "Le nom de l'organisme est obligatoire.",
       "invalidCredentials": "Courriel ou mot de passe invalide.",
       "signUpFailed": "L'inscription a échoué. Veuillez réessayer.",
-      "volunteerEmailExists": "Un compte de bénévole existe déjà avec ce courriel.",
-      "orgEmailExists": "Un compte d'organisme existe déjà avec ce courriel."
+      "emailRegistered": "Ce courriel est déjà enregistré."
     },
     "accountCreated": "Compte créé avec succès. Veuillez ouvrir une session.",
     "sessionExpired": "Votre session a expiré. Veuillez ouvrir une session de nouveau."
