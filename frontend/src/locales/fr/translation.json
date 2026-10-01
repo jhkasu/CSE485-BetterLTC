@@ -258,11 +258,19 @@
   "volunteer": {
     "eyebrow": "Bénévolat",
     "heading": "Trouvez une occasion près de chez vous",
-    "lead": "Chaque annonce provient d'un organisme vérifié. Choisissez une ville pour préciser la liste.",
+    "lead": "Chaque occasion provient d'un organisme vérifié. Filtrez par région, type d'aide ou jour.",
     "searchPlaceholder": "Entrez un mot-clé...",
     "empty": "Aucune occasion trouvée.",
     "emptyForKeyword": "Aucune occasion ne correspond à « {{keyword}} ».",
-    "otherCity": "Autre"
+    "otherCity": "Autre",
+    "filters": {
+      "area": "Région",
+      "helpType": "Type d'aide",
+      "days": "Jours",
+      "clear": "Tout effacer"
+    },
+    "count_one": "{{count}} occasion",
+    "count_other": "{{count}} occasions"
   },
   "volunteerDetail": {
     "back": "Retour aux occasions",
@@ -664,6 +672,12 @@
       "interest": "Correspond à vos intérêts",
       "speaks": "Parle {{languages}}",
       "interestedInHelp": "Intéressé par ce type d'aide"
+    },
+    "labels": {
+      "great": "Excellente compatibilité",
+      "good": "Bonne compatibilité",
+      "fair": "Compatibilité moyenne",
+      "low": "Faible compatibilité"
     }
   }
 }
