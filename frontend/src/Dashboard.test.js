@@ -105,3 +105,38 @@ test('shows an error when saving the profile fails', async () => {
   expect(await screen.findByText('Could not save your changes. Please try again.')).toBeInTheDocument();
   expect(screen.queryByText('Saved!')).not.toBeInTheDocument();
 });
+
+function fillPasswordForm(current, next) {
+  fireEvent.change(screen.getByPlaceholderText('Enter current password'), { target: { name: 'current', value: current } });
+  fireEvent.change(screen.getByPlaceholderText('Min. 8 characters'), { target: { name: 'newPass', value: next } });
+  fireEvent.change(screen.getByPlaceholderText('Re-enter new password'), { target: { name: 'confirm', value: next } });
+  fireEvent.click(screen.getByRole('button', { name: 'Update Password' }));
+}
+
+test('changes the password through the API', async () => {
+  global.fetch.mockImplementation((url, options = {}) => {
+    if (url.endsWith('/api/volunteers/7/password')) return Promise.resolve({ ok: true, status: 204, json: async () => ({}) });
+    if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
+    return respond(volunteer);
+  });
+  renderDashboard();
+  openSection('Profile Settings');
+  fillPasswordForm('oldpassword', 'newpassword1');
+  expect(await screen.findByText('Password updated successfully!')).toBeInTheDocument();
+  const [, options] = global.fetch.mock.calls.find(([url]) => url.endsWith('/api/volunteers/7/password'));
+  expect(options.method).toBe('PUT');
+  expect(JSON.parse(options.body)).toEqual({ currentPassword: 'oldpassword', newPassword: 'newpassword1' });
+});
+
+test('shows an error when the current password is wrong', async () => {
+  global.fetch.mockImplementation((url) => {
+    if (url.endsWith('/api/volunteers/7/password')) return Promise.resolve({ ok: false, status: 400, json: async () => ({}) });
+    if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
+    return respond(volunteer);
+  });
+  renderDashboard();
+  openSection('Profile Settings');
+  fillPasswordForm('wrongpassword', 'newpassword1');
+  expect(await screen.findByText('Your current password is incorrect.')).toBeInTheDocument();
+  expect(screen.queryByText('Password updated successfully!')).not.toBeInTheDocument();
+});

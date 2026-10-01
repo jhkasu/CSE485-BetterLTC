@@ -183,8 +183,22 @@ const Dashboard = () => {
       setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.newMismatch' });
       return;
     }
-    setPasswordMsg({ type: 'success', key: 'dashboard.profile.passwordUpdated' });
-    setPasswordForm({ current: '', newPass: '', confirm: '' });
+    apiFetch(`/api/volunteers/${user.id}/password`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentPassword: passwordForm.current, newPassword: passwordForm.newPass }),
+    })
+      .then(res => {
+        if (res.ok) {
+          setPasswordMsg({ type: 'success', key: 'dashboard.profile.passwordUpdated' });
+          setPasswordForm({ current: '', newPass: '', confirm: '' });
+        } else if (res.status === 400) {
+          setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.currentIncorrect' });
+        } else {
+          setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.passwordFailed' });
+        }
+      })
+      .catch(() => setPasswordMsg({ type: 'error', key: 'dashboard.profile.errors.passwordFailed' }));
   };
 
   const handleBgDocChange = (e) => {

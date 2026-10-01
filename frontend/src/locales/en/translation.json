@@ -280,7 +280,9 @@
       "errors": {
         "currentRequired": "Please enter your current password.",
         "newShort": "New password must be at least 8 characters.",
-        "newMismatch": "New passwords do not match."
+        "newMismatch": "New passwords do not match.",
+        "currentIncorrect": "Your current password is incorrect.",
+        "passwordFailed": "Could not update your password. Please try again."
       },
       "passwordUpdated": "Password updated successfully!",
       "photoAlt": "Profile",
