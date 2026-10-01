@@ -283,13 +283,14 @@
         "newMismatch": "Les nouveaux mots de passe ne correspondent pas."
       },
       "passwordUpdated": "Mot de passe mis à jour avec succès!",
-      "photoAlt": "Photo de profil"
+      "photoAlt": "Photo de profil",
+      "saveFailed": "Impossible d'enregistrer vos modifications. Veuillez réessayer."
     },
     "shifts": {
       "empty": "Aucun quart prévu.",
       "list": "Liste",
       "calendar": "Calendrier",
-      "approvedOn": "Approuvé le : {{date}}"
+      "noSchedule": "Horaire à venir"
     },
     "applications": {
       "empty": "Vous n'avez encore postulé pour aucune occasion.",
@@ -297,7 +298,9 @@
     },
     "history": {
       "empty": "Aucun historique de bénévolat pour le moment.",
-      "hours": "{{hours}} h"
+      "hours": "{{hours}} h",
+      "totalHours": "Total des heures de bénévolat",
+      "hoursUnit": "h"
     }
   },
   "orgDashboard": {
@@ -316,7 +319,13 @@
       "empty": "Aucun candidat pour le moment.",
       "listing": "Annonce",
       "approve": "Approuver",
-      "reject": "Refuser"
+      "reject": "Refuser",
+      "markCompleted": "Marquer comme terminé",
+      "editHours": "Modifier les heures",
+      "completeTitle": "Enregistrer les heures de bénévolat",
+      "hoursServed": "Heures effectuées",
+      "invalidHours": "Entrez un nombre d'heures entre 0,25 et 1000.",
+      "completeFailed": "Impossible d'enregistrer les heures. Veuillez réessayer."
     },
     "listings": {
       "add": "Ajouter une annonce",
@@ -429,7 +438,8 @@
     "applicationStatus": {
       "pending": "En attente",
       "approved": "Approuvée",
-      "rejected": "Refusée"
+      "rejected": "Refusée",
+      "completed": "Terminé"
     },
     "workCategories": {
       "campaign": "Campagne",

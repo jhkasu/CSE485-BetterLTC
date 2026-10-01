@@ -283,13 +283,14 @@
         "newMismatch": "New passwords do not match."
       },
       "passwordUpdated": "Password updated successfully!",
-      "photoAlt": "Profile"
+      "photoAlt": "Profile",
+      "saveFailed": "Could not save your changes. Please try again."
     },
     "shifts": {
       "empty": "No upcoming shifts scheduled.",
       "list": "List",
       "calendar": "Calendar",
-      "approvedOn": "Approved: {{date}}"
+      "noSchedule": "Schedule to be announced"
     },
     "applications": {
       "empty": "You have not applied to any opportunities yet.",
@@ -297,7 +298,9 @@
     },
     "history": {
       "empty": "No volunteer history yet.",
-      "hours": "{{hours}} hrs"
+      "hours": "{{hours}} hrs",
+      "totalHours": "Total Hours Volunteered",
+      "hoursUnit": "hrs"
     }
   },
   "orgDashboard": {
@@ -316,7 +319,13 @@
       "empty": "No applicants yet.",
       "listing": "Listing",
       "approve": "Approve",
-      "reject": "Reject"
+      "reject": "Reject",
+      "markCompleted": "Mark Completed",
+      "editHours": "Edit Hours",
+      "completeTitle": "Record Volunteer Hours",
+      "hoursServed": "Hours served",
+      "invalidHours": "Enter hours between 0.25 and 1000.",
+      "completeFailed": "Could not save the hours. Please try again."
     },
     "listings": {
       "add": "Add Listing",
@@ -429,7 +438,8 @@
     "applicationStatus": {
       "pending": "Pending",
       "approved": "Approved",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "completed": "Completed"
     },
     "workCategories": {
       "campaign": "Campaign",

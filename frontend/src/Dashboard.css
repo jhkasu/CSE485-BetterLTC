@@ -191,6 +191,12 @@
   border: 1px solid var(--color-danger-border);
 }
 
+.application-status-badge.completed {
+  background: var(--color-dark);
+  color: var(--color-on-dark);
+  border: 1px solid var(--color-dark);
+}
+
 .dashboard-placeholder {
   background-color: var(--color-surface);
   border: 2px dashed var(--color-border);
@@ -334,6 +340,13 @@
   font-family: var(--font-body);
   font-size: 18px;
   color: var(--color-success);
+  font-weight: 600;
+}
+
+.profile-error-msg {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--color-error);
   font-weight: 600;
 }
 
@@ -720,7 +733,7 @@
 
 /* ── Volunteer history (#60) ── */
 .history-summary {
-  background: var(--color-text);
+  background: var(--color-dark);
   border-radius: 8px;
   padding: 28px 36px;
   max-width: 300px;
@@ -730,7 +743,7 @@
 .history-summary-label {
   font-family: var(--font-body);
   font-size: 15px;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
   text-transform: uppercase;
   letter-spacing: 0;
   margin-bottom: 8px;
@@ -746,7 +759,7 @@
   font-family: var(--font-heading);
   font-size: 56px;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-on-dark);
   line-height: 1;
 }
 
@@ -754,7 +767,7 @@
   font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--color-on-dark-muted);
 }
 
 .history-list {

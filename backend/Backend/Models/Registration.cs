@@ -12,4 +12,6 @@ public class Registration {
     public string OrgName { get; set; } = "";
     public string RegisteredAt { get; set; } = "";
     public string Status { get; set; } = "Pending";
+    public double? HoursServed { get; set; }
+    public string CompletedAt { get; set; } = "";
 }

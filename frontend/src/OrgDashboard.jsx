@@ -48,6 +48,7 @@ const REGISTRATION_STATUS_KEYS = {
   Pending: 'options.applicationStatus.pending',
   Approved: 'options.applicationStatus.approved',
   Rejected: 'options.applicationStatus.rejected',
+  Completed: 'options.applicationStatus.completed',
 };
 
 const NAV_ITEMS = [
@@ -92,6 +93,9 @@ function OrgDashboard() {
   const [form, setForm] = useState({ listingTitle: '', description: '', location: '', days: [], category: '', status: 'Is Ongoing', startDate: '', endDate: '' });
   const [formError, setFormError] = useState('');
   const [deleteId, setDeleteId] = useState(null);
+  const [completing, setCompleting] = useState(null);
+  const [hoursInput, setHoursInput] = useState('');
+  const [hoursError, setHoursError] = useState('');
 
   useEffect(() => {
     if (user?.id) {
@@ -191,6 +195,34 @@ function OrgDashboard() {
       .catch(() => {});
   };
 
+  const openComplete = (reg) => {
+    setCompleting(reg);
+    setHoursInput(reg.hoursServed ? String(reg.hoursServed) : '');
+    setHoursError('');
+  };
+
+  const saveCompletion = () => {
+    const hours = Number(hoursInput);
+    if (!hoursInput || !Number.isFinite(hours) || hours < 0.25 || hours > 1000) {
+      setHoursError('orgDashboard.applicants.invalidHours');
+      return;
+    }
+    apiFetch(`/api/registrations/${completing.id}/complete`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hours }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('complete failed');
+        return res.json();
+      })
+      .then(updated => {
+        setRegistrations(registrations.map(r => r.id === updated.id ? updated : r));
+        setCompleting(null);
+      })
+      .catch(() => setHoursError('orgDashboard.applicants.completeFailed'));
+  };
+
   const deleteListing = (id) => {
     apiFetch(`/api/listings/${id}`, { method: 'DELETE' })
       .then(() => { setListings(listings.filter(l => l.id !== id)); setDeleteId(null); })
@@ -245,7 +277,10 @@ function OrgDashboard() {
                 <td>{r.volunteerEmail}</td>
                 <td>{r.listingTitle}</td>
                 <td>{r.registeredAt}</td>
-                <td><span className={`org-reg-badge ${r.status.toLowerCase()}`}>{REGISTRATION_STATUS_KEYS[r.status] ? t(REGISTRATION_STATUS_KEYS[r.status]) : r.status}</span></td>
+                <td>
+                  <span className={`org-reg-badge ${r.status.toLowerCase()}`}>{REGISTRATION_STATUS_KEYS[r.status] ? t(REGISTRATION_STATUS_KEYS[r.status]) : r.status}</span>
+                  {r.status === 'Completed' && <div className="org-reg-hours">{t('dashboard.history.hours', { hours: r.hoursServed })}</div>}
+                </td>
                 <td>
                   <div className="org-action-cell">
                     {r.status === 'Pending' && (
@@ -255,7 +290,13 @@ function OrgDashboard() {
                       </>
                     )}
                     {r.status === 'Approved' && (
-                      <button className="admin-action-btn revoke" onClick={() => updateRegistrationStatus(r.id, 'Rejected')}>{t('orgDashboard.applicants.reject')}</button>
+                      <>
+                        <button className="admin-action-btn approve" onClick={() => openComplete(r)}>{t('orgDashboard.applicants.markCompleted')}</button>
+                        <button className="admin-action-btn revoke" onClick={() => updateRegistrationStatus(r.id, 'Rejected')}>{t('orgDashboard.applicants.reject')}</button>
+                      </>
+                    )}
+                    {r.status === 'Completed' && (
+                      <button className="admin-action-btn approve" onClick={() => openComplete(r)}>{t('orgDashboard.applicants.editHours')}</button>
                     )}
                     {r.status === 'Rejected' && (
                       <button className="admin-action-btn approve" onClick={() => updateRegistrationStatus(r.id, 'Approved')}>{t('orgDashboard.applicants.approve')}</button>
@@ -266,6 +307,28 @@ function OrgDashboard() {
             ))}
           </tbody>
         </table>
+      )}
+      {completing && (
+        <Modal title={t('orgDashboard.applicants.completeTitle')} onClose={() => setCompleting(null)}>
+          <div className="org-form">
+            <p className="org-complete-summary">{completing.volunteerName} · {completing.listingTitle}</p>
+            <label htmlFor="hours-served">{t('orgDashboard.applicants.hoursServed')}</label>
+            <input
+              id="hours-served"
+              type="number"
+              min="0.25"
+              max="1000"
+              step="0.25"
+              value={hoursInput}
+              onChange={e => { setHoursInput(e.target.value); setHoursError(''); }}
+            />
+            {hoursError && <p className="org-form-error">{t(hoursError)}</p>}
+            <div className="org-form-actions">
+              <button className="org-save-btn" onClick={saveCompletion}>{t('common.save')}</button>
+              <button className="org-cancel-btn" onClick={() => setCompleting(null)}>{t('common.cancel')}</button>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

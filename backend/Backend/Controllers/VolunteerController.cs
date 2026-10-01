@@ -81,6 +81,28 @@ public class VolunteerController : ControllerBase {
         }
     }
 
+    [HttpPut("{id:int}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateVolunteer(int id, VolunteerUpdateRequest updated) {
+        try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Volunteer, id)) return Forbid();
+            var volunteer = await _context.Volunteers.FindAsync(id);
+            if (volunteer is null) return NotFound();
+            volunteer.FirstName = updated.FirstName.Trim();
+            volunteer.LastName = updated.LastName.Trim();
+            volunteer.Phone = updated.Phone.Trim();
+            volunteer.Address = updated.Address.Trim();
+            string fullName = $"{volunteer.FirstName} {volunteer.LastName}";
+            await _context.Registrations
+                .Where(r => r.VolunteerId == id)
+                .ExecuteUpdateAsync(s => s.SetProperty(r => r.VolunteerName, fullName));
+            await _context.SaveChangesAsync();
+            return Ok(VolunteerResponse.From(volunteer));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
     [HttpDelete("{id:int}")]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteVolunteer(int id) {
