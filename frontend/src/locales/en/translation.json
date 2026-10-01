@@ -457,6 +457,27 @@
       "reminderTitle": "Complete your profile setup",
       "reminderText": "Add your city and available days so organizations can match you with seniors and opportunities near you.",
       "reminderButton": "Set up profile"
+    },
+    "overview": {
+      "welcome": "Welcome back, {{name}}!",
+      "lead": "Here's what's happening with your volunteering.",
+      "recommended": "Recommended for you",
+      "viewAll": "View all",
+      "viewSchedule": "View schedule",
+      "viewHistory": "View history",
+      "noRecommendations": "No strong matches right now. Check the opportunities page for everything available."
+    },
+    "notifications": {
+      "heading": "Recent notifications",
+      "empty": "No notifications yet.",
+      "markRead": "Mark all as read",
+      "types": {
+        "ApplicationApproved": "Your application for {{subject}} was approved.",
+        "ApplicationRejected": "Your application for {{subject}} was not accepted.",
+        "HoursRecorded": "{{detail}} hours were recorded for {{subject}}.",
+        "BackgroundCheckApproved": "Your background check was approved. It is valid until {{date}}.",
+        "BackgroundCheckRejected": "Your background check document was not accepted: {{detail}}"
+      }
     }
   },
   "orgDashboard": {

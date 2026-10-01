@@ -15,6 +15,7 @@ public class AppDbContext : DbContext {
     public DbSet<Listing> Listings { get; set; }
     public DbSet<Registration> Registrations { get; set; }
     public DbSet<BackgroundCheck> BackgroundChecks { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -30,6 +31,9 @@ public class AppDbContext : DbContext {
         modelBuilder.Entity<BackgroundCheck>()
             .HasIndex(c => c.VolunteerId)
             .IsUnique();
+
+        modelBuilder.Entity<Notification>()
+            .HasIndex(n => new { n.AccountRole, n.AccountId, n.CreatedAt });
 
         modelBuilder.Entity<HelpRequest>()
             .HasOne<Organization>()

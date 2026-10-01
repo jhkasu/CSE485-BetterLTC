@@ -55,7 +55,7 @@ function renderDashboard() {
 }
 
 function openSection(name) {
-  fireEvent.click(screen.getByText(name));
+  fireEvent.click(screen.getAllByText(name)[0]);
 }
 
 test('shows approved registrations as upcoming shifts with their schedule', async () => {
@@ -145,4 +145,23 @@ test('reminds the volunteer to finish the profile setup and opens it', async () 
   renderDashboard();
   fireEvent.click(await screen.findByRole('button', { name: 'Set up profile' }));
   expect(await screen.findByLabelText(/location/i)).toBeInTheDocument();
+});
+
+test('overview shows the welcome, totals, and notifications from the server', async () => {
+  global.fetch.mockImplementation((url, options = {}) => {
+    if (url.endsWith('/api/registrations/volunteer/7')) return respond(registrations);
+    if (url.endsWith('/api/notifications/me')) {
+      return respond({ unread: 1, items: [{ id: 1, type: 'ApplicationApproved', subject: 'Reading Buddies', detail: 'Care Home', createdAt: new Date().toISOString(), read: false }] });
+    }
+    if (url.endsWith('/api/notifications/me/read')) return Promise.resolve({ ok: true, status: 204, json: async () => ({}) });
+    if (url.endsWith('/api/volunteers/7')) return respond(volunteer);
+    return respond([]);
+  });
+  renderDashboard();
+  expect(await screen.findByText('Welcome back, Ana!')).toBeInTheDocument();
+  expect(await screen.findByText('Your application for Reading Buddies was approved.')).toBeInTheDocument();
+  expect(screen.getByText('5.5')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Mark all as read' }));
+  expect(await screen.findByText('Your application for Reading Buddies was approved.')).toBeInTheDocument();
+  expect(global.fetch.mock.calls.some(([url, o]) => url.endsWith('/api/notifications/me/read') && o.method === 'PUT')).toBe(true);
 });

@@ -115,9 +115,13 @@ public class RegistrationController : ControllerBase {
             var reg = await _context.Registrations.FindAsync(id);
             if (reg is null) return NotFound();
             if (!await CanManage(reg)) return Forbid();
+            bool changed = reg.Status != status;
             reg.Status = status;
             reg.HoursServed = null;
             reg.CompletedAt = "";
+            if (changed && status != "Pending") {
+                Notify(reg.VolunteerId, status == Approved ? NotificationTypes.ApplicationApproved : NotificationTypes.ApplicationRejected, reg.ListingTitle, reg.OrgName);
+            }
             await _context.SaveChangesAsync();
             return Ok(reg);
         } catch (Exception ex) {
@@ -136,11 +140,23 @@ public class RegistrationController : ControllerBase {
             reg.Status = Completed;
             reg.HoursServed = request.Hours;
             reg.CompletedAt = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            Notify(reg.VolunteerId, NotificationTypes.HoursRecorded, reg.ListingTitle, request.Hours.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture));
             await _context.SaveChangesAsync();
             return Ok(reg);
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    private void Notify(int volunteerId, string type, string subject, string detail) {
+        _context.Notifications.Add(new Notification {
+            AccountRole = Roles.Volunteer,
+            AccountId = volunteerId,
+            Type = type,
+            Subject = subject,
+            Detail = detail,
+            CreatedAt = DateTime.UtcNow,
+        });
     }
 
     private async Task<bool> CanManage(Registration reg) {
