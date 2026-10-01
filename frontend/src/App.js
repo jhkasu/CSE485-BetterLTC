@@ -5,9 +5,7 @@ import Hero from './Hero';
 import Pillars from './Pillars';
 import HowItWorks from './HowItWorks';
 import ScrollToTop from './ScrollToTop';
-import RecentOpportunities from './RecentOpportunities';
 import NewsSection from './NewsSection';
-import VolunteerList from './VolunteerList';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import Dashboard from './Dashboard';
@@ -19,7 +17,6 @@ import OurHistoryPage from './OurHistory';
 import AdminDashboard from './AdminDashboard';
 import OurWorkPage from './OurWorkPage';
 import GetHelpPage from './GetHelpPage';
-import VolunteerDetail from './VolunteerDetail';
 import OrgDashboard from './OrgDashboard';
 import OrganizationPage from './OrganizationPage';
 import DirectoryPage from './DirectoryPage';
@@ -52,25 +49,10 @@ function Home() {
       <Hero />
       <HowItWorks />
       <Pillars />
-      <RecentOpportunities />
       <NewsSection />
       <Footer />
     </div>
   );
-}
-
-function VolunteerPage() {
-  return (
-    <div>
-      <Navbar />
-      <VolunteerList />
-      <Footer />
-    </div>
-  );
-}
-
-function VolunteerDetailPage() {
-  return <VolunteerDetail />;
 }
 
 function SignupPage() {
@@ -99,8 +81,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/volunteer" element={<VolunteerPage />} />
-        <Route path="/volunteer/:id" element={<VolunteerDetailPage />} />
+        <Route path="/volunteer/*" element={<Navigate to="/organizations" replace />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/about" element={<AboutPage />} />

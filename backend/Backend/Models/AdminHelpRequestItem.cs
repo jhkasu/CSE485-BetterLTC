@@ -17,18 +17,4 @@ public record AdminHelpRequestItem(
     DateTime? AcceptedAt,
     DateTime? ContactedAt,
     int? OrganizationId,
-    string OrganizationName,
-    string Alert);
-
-public static class HelpRequestAlerts {
-    public const string NoOrganization = "NoOrganization";
-    public const string NotContacted = "NotContacted";
-    public static readonly TimeSpan NoOrganizationAfter = TimeSpan.FromDays(3);
-    public static readonly TimeSpan NotContactedAfter = TimeSpan.FromDays(2);
-
-    public static string For(HelpRequest r, DateTime now) {
-        if (r.Status == HelpRequestStatuses.New && now - r.SubmittedAt > NoOrganizationAfter) return NoOrganization;
-        if (r.Status == HelpRequestStatuses.Accepted && r.AcceptedAt is not null && now - r.AcceptedAt > NotContactedAfter) return NotContacted;
-        return "";
-    }
-}
+    string OrganizationName);

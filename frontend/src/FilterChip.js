@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
+import './FilterChip.css';
 
 function FilterChip({ label, options, selected, onChange }) {
   const [open, setOpen] = useState(false);

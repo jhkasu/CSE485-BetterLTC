@@ -20,7 +20,6 @@ function toForm(volunteer) {
     availableTimes: volunteer?.availableTimes || [],
     interests: volunteer?.interests || [],
     languages: volunteer?.languages || [],
-    recommendationConsent: !!volunteer?.recommendationConsent,
   };
 }
 
@@ -108,11 +107,6 @@ function VolunteerMatchingProfile({ volunteer, onSaved }) {
           {checks('interests', HELP_TYPES.map(type => ({ value: type.value, label: t(type.labelKey) })), 'dashboard.matching.interests')}
           {checks('languages', LANGUAGES.map(lang => ({ value: lang, label: t(`dashboard.matching.languageOptions.${lang.toLowerCase()}`) })), 'dashboard.matching.languages')}
         </div>
-
-        <label className="vmp-consent">
-          <input type="checkbox" checked={form.recommendationConsent} onChange={e => update({ recommendationConsent: e.target.checked })} />
-          <span>{t('dashboard.matching.consent')}</span>
-        </label>
 
         {error && <p className="vmp-error" role="alert">{t(error)}</p>}
 

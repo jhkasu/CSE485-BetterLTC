@@ -123,3 +123,51 @@
     grid-template-columns: 1fr;
   }
 }
+
+.dir-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.dir-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dir-clear {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.dir-count {
+  font-size: 16px;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.dir-tag {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+
+.dir-empty {
+  font-size: 18px;
+  color: var(--color-text-muted);
+  padding: var(--space-5) 0;
+}

@@ -6,5 +6,4 @@ public class VolunteerMatchingProfileRequest {
     public List<string> AvailableTimes { get; set; } = [];
     public List<string> Interests { get; set; } = [];
     public List<string> Languages { get; set; } = [];
-    public bool RecommendationConsent { get; set; }
 }

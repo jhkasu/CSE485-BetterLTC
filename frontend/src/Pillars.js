@@ -7,7 +7,7 @@ const PILLARS = [
   {
     key: 'volunteer',
     image: '/care2.png',
-    link: '/volunteer',
+    link: '/organizations',
   },
   {
     key: 'organizations',

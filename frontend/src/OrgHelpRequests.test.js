@@ -69,7 +69,7 @@ test('detail shows contact details and marks the request as contacted', async ()
   expect(await screen.findByText('(306) 555-0123')).toBeInTheDocument();
   expect(screen.getByText('Help is for: Marie Tremblay')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Mark as contacted' }));
-  expect(await screen.findByText('The senior has been contacted and you can proceed with volunteer matching.')).toBeInTheDocument();
+  expect(await screen.findByText('The senior has been contacted.')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Mark as contacted' })).not.toBeInTheDocument();
 });
 
@@ -80,19 +80,4 @@ test('asks the organization to set up its profile before showing requests', asyn
   fireEvent.click(await screen.findByRole('button', { name: 'Set up profile' }));
   expect(onSetupProfile).toHaveBeenCalled();
   expect(screen.queryByText('There are no open requests right now.')).not.toBeInTheDocument();
-});
-
-test('detail lists recommended volunteers with their match score', async () => {
-  const recommended = [{
-    id: 9, firstName: 'Emily', lastName: 'Carter', city: 'Regina', availableDays: ['Tuesday', 'Thursday'],
-    availableTimes: [], languages: ['English', 'French'],
-    match: { score: 100, sameCity: true, interestMatch: true, matchingDays: [], sharedLanguages: ['English'] },
-  }];
-  global.fetch = jest.fn((url) => respond(url.endsWith('/recommended-volunteers') ? recommended : detail));
-  render(<HelpRequestDetail id={1} onBack={() => {}} />);
-  expect(await screen.findByRole('heading', { name: 'Emily Carter' })).toBeInTheDocument();
-  expect(screen.getByText('100%')).toBeInTheDocument();
-  expect(screen.getByText('Background check passed')).toBeInTheDocument();
-  expect(screen.getByText('Same city · Available Tue, Thu · Interested in this type of help · Speaks English')).toBeInTheDocument();
-  expect(screen.queryByText(/@/)).not.toBeInTheDocument();
 });

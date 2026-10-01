@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 using Backend.Security;
 using Backend.Email;
-using Backend.Matching;
 
 namespace Backend.Controllers;
 
@@ -24,7 +23,6 @@ public class HelpRequestController : ControllerBase {
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAll() {
         try {
-            var now = DateTime.UtcNow;
             var rows = await _context.HelpRequests
                 .OrderByDescending(r => r.SubmittedAt)
                 .GroupJoin(_context.Organizations, r => r.OrganizationId, o => o.Id, (r, orgs) => new { Request = r, Orgs = orgs })
@@ -47,8 +45,7 @@ public class HelpRequestController : ControllerBase {
                 x.Request.AcceptedAt,
                 x.Request.ContactedAt,
                 x.Request.OrganizationId,
-                x.OrgName,
-                HelpRequestAlerts.For(x.Request, now))));
+                x.OrgName)));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
@@ -130,39 +127,6 @@ public class HelpRequestController : ControllerBase {
             if (request is null) return NotFound();
             if (!await CanManage(request)) return Forbid();
             return Ok(HelpRequestDetailResponse.From(request));
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
-    [HttpGet("{id:int}/recommended-volunteers")]
-    [Authorize(Roles = Roles.OrganizationOrAdmin)]
-    public async Task<IActionResult> RecommendedVolunteers(int id) {
-        try {
-            var request = await _context.HelpRequests.FindAsync(id);
-            if (request is null) return NotFound();
-            if (!await CanManage(request)) return Forbid();
-            var today = DateOnly.FromDateTime(DateTime.UtcNow);
-            var volunteers = await _context.Volunteers
-                .Where(v => v.RecommendationConsent && v.BackgroundCheckApproved && v.City != "")
-                .Where(v => !_context.BackgroundChecks.Any(c => c.VolunteerId == v.Id && c.ExpiresOn != null && c.ExpiresOn < today))
-                .ToListAsync();
-            var ranked = volunteers
-                .Select(v => new { Volunteer = v, Match = MatchScoring.ForRequest(v, request) })
-                .Where(x => x.Match.Score > 0)
-                .OrderByDescending(x => x.Match.Score)
-                .ThenBy(x => x.Volunteer.FirstName)
-                .Take(10)
-                .Select(x => new RecommendedVolunteerResponse(
-                    x.Volunteer.Id,
-                    x.Volunteer.FirstName,
-                    x.Volunteer.LastName,
-                    x.Volunteer.City,
-                    x.Volunteer.AvailableDays,
-                    x.Volunteer.AvailableTimes,
-                    x.Volunteer.Languages,
-                    x.Match));
-            return Ok(ranked);
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }

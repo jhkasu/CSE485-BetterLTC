@@ -26,20 +26,6 @@ public class VolunteerController : ControllerBase {
         }
     }
 
-    [HttpPut("{id:int}/revoke-bgcheck")]
-    [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> RevokeBgCheck(int id) {
-        try {
-            var volunteer = await _context.Volunteers.FindAsync(id);
-            if (volunteer is null) return NotFound();
-            volunteer.BackgroundCheckApproved = false;
-            await _context.SaveChangesAsync();
-            return Ok(VolunteerResponse.From(volunteer));
-        } catch (Exception ex) {
-            return StatusCode(500, ex.Message);
-        }
-    }
-
     [HttpPost]
     public async Task<IActionResult> AddVolunteer(Volunteer volunteer) {
         try {
@@ -78,10 +64,6 @@ public class VolunteerController : ControllerBase {
             volunteer.LastName = updated.LastName.Trim();
             volunteer.Phone = updated.Phone.Trim();
             volunteer.Address = updated.Address.Trim();
-            string fullName = $"{volunteer.FirstName} {volunteer.LastName}";
-            await _context.Registrations
-                .Where(r => r.VolunteerId == id)
-                .ExecuteUpdateAsync(s => s.SetProperty(r => r.VolunteerName, fullName));
             await _context.SaveChangesAsync();
             return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {
@@ -108,7 +90,6 @@ public class VolunteerController : ControllerBase {
             volunteer.AvailableTimes = times;
             volunteer.Interests = interests;
             volunteer.Languages = languages;
-            volunteer.RecommendationConsent = profile.RecommendationConsent;
             await _context.SaveChangesAsync();
             return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {

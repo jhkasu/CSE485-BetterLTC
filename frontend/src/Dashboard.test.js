@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Dashboard from './Dashboard';
 import { setSession } from './auth/session';
 import { AccessibilityProvider } from './accessibility/AccessibilityContext';
@@ -13,15 +13,12 @@ const volunteer = {
   email: 'ana@example.test',
   phone: '306-555-0100',
   address: '1 Main St',
-  backgroundCheckApproved: true,
+  city: '',
+  availableDays: [],
+  availableTimes: [],
+  interests: [],
+  languages: ['English'],
 };
-
-const registrations = [
-  { id: 1, listingId: 10, listingTitle: 'Reading Buddies', orgName: 'Care Home', registeredAt: '2026-09-01', status: 'Approved', hoursServed: null, completedAt: '', location: 'Saskatoon', days: 'Monday, Wednesday', startDate: '2026-10-05', endDate: '2026-12-15' },
-  { id: 2, listingId: 11, listingTitle: 'Garden Day', orgName: 'Care Home', registeredAt: '2026-08-01', status: 'Completed', hoursServed: 3.5, completedAt: '2026-08-20', location: 'Regina', days: '', startDate: '', endDate: '' },
-  { id: 3, listingId: 12, listingTitle: 'Music Hour', orgName: 'Sunset Lodge', registeredAt: '2026-07-01', status: 'Completed', hoursServed: 2, completedAt: '2026-07-15', location: 'Saskatoon', days: '', startDate: '', endDate: '' },
-  { id: 4, listingId: 13, listingTitle: 'Bingo Night', orgName: 'Sunset Lodge', registeredAt: '2026-09-10', status: 'Pending', hoursServed: null, completedAt: '', location: 'Saskatoon', days: '', startDate: '', endDate: '' },
-];
 
 function respond(body, ok = true) {
   return Promise.resolve({ ok, status: ok ? 200 : 500, json: async () => body });
@@ -31,7 +28,6 @@ beforeEach(() => {
   window.localStorage.clear();
   setSession(makeToken({ sub: '7', role: 'volunteer', exp: futureExp() }), { id: 7, firstName: 'Ana', lastName: 'Lee', email: 'ana@example.test', role: 'volunteer' });
   global.fetch = jest.fn((url, options = {}) => {
-    if (url.endsWith('/api/registrations/volunteer/7')) return respond(registrations);
     if (url.endsWith('/api/volunteers/7') && options.method === 'PUT') {
       return respond({ ...volunteer, ...JSON.parse(options.body) });
     }
@@ -58,27 +54,12 @@ function openSection(name) {
   fireEvent.click(screen.getAllByText(name)[0]);
 }
 
-test('shows approved registrations as upcoming shifts with their schedule', async () => {
+test('shows only interests and profile in the menu, starting on interests', async () => {
   renderDashboard();
-  openSection('Upcoming Shifts');
-  const main = screen.getByRole('main');
-  await within(main).findByText('Reading Buddies');
-  expect(within(main).getByText('Reading Buddies')).toBeInTheDocument();
-  expect(within(main).getByText(/2026-10-05 – 2026-12-15 · Monday, Wednesday/)).toBeInTheDocument();
-  expect(within(main).queryByText('Garden Day')).not.toBeInTheDocument();
-  expect(within(main).queryByText('Bingo Night')).not.toBeInTheDocument();
-});
-
-test('shows completed registrations as history with total hours', async () => {
-  renderDashboard();
-  openSection('Volunteer History');
-  const main = screen.getByRole('main');
-  await within(main).findByText('Garden Day');
-  expect(within(main).getByText('Garden Day')).toBeInTheDocument();
-  expect(within(main).getByText('Music Hour')).toBeInTheDocument();
-  expect(within(main).getByText('3.5 hrs')).toBeInTheDocument();
-  expect(within(main).getByText('5.5')).toBeInTheDocument();
-  expect(within(main).queryByText('Reading Buddies')).not.toBeInTheDocument();
+  expect(await screen.findByLabelText(/location/i)).toBeInTheDocument();
+  expect(screen.queryByText('Upcoming Shifts')).not.toBeInTheDocument();
+  expect(screen.queryByText('Volunteer History')).not.toBeInTheDocument();
+  expect(screen.queryByText('Background Check')).not.toBeInTheDocument();
 });
 
 test('loads the profile from the API and saves edits through it', async () => {
@@ -94,7 +75,6 @@ test('loads the profile from the API and saves edits through it', async () => {
 
 test('shows an error when saving the profile fails', async () => {
   global.fetch.mockImplementation((url, options = {}) => {
-    if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
     if (options.method === 'PUT') return respond({}, false);
     return respond(volunteer);
   });
@@ -116,7 +96,6 @@ function fillPasswordForm(current, next) {
 test('changes the password through the API', async () => {
   global.fetch.mockImplementation((url, options = {}) => {
     if (url.endsWith('/api/auth/password')) return Promise.resolve({ ok: true, status: 204, json: async () => ({}) });
-    if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
     return respond(volunteer);
   });
   renderDashboard();
@@ -131,7 +110,6 @@ test('changes the password through the API', async () => {
 test('shows an error when the current password is wrong', async () => {
   global.fetch.mockImplementation((url) => {
     if (url.endsWith('/api/auth/password')) return Promise.resolve({ ok: false, status: 400, json: async () => ({}) });
-    if (url.endsWith('/api/registrations/volunteer/7')) return respond([]);
     return respond(volunteer);
   });
   renderDashboard();
@@ -139,29 +117,4 @@ test('shows an error when the current password is wrong', async () => {
   fillPasswordForm('wrongpassword', 'newpassword1');
   expect(await screen.findByText('Your current password is incorrect.')).toBeInTheDocument();
   expect(screen.queryByText('Password updated successfully!')).not.toBeInTheDocument();
-});
-
-test('reminds the volunteer to finish the profile setup and opens it', async () => {
-  renderDashboard();
-  fireEvent.click(await screen.findByRole('button', { name: 'Set up profile' }));
-  expect(await screen.findByLabelText(/location/i)).toBeInTheDocument();
-});
-
-test('overview shows the welcome, totals, and notifications from the server', async () => {
-  global.fetch.mockImplementation((url, options = {}) => {
-    if (url.endsWith('/api/registrations/volunteer/7')) return respond(registrations);
-    if (url.endsWith('/api/notifications/me')) {
-      return respond({ unread: 1, items: [{ id: 1, type: 'ApplicationApproved', subject: 'Reading Buddies', detail: 'Care Home', createdAt: new Date().toISOString(), read: false }] });
-    }
-    if (url.endsWith('/api/notifications/me/read')) return Promise.resolve({ ok: true, status: 204, json: async () => ({}) });
-    if (url.endsWith('/api/volunteers/7')) return respond(volunteer);
-    return respond([]);
-  });
-  renderDashboard();
-  expect(await screen.findByText('Welcome back, Ana!')).toBeInTheDocument();
-  expect(await screen.findByText('Your application for Reading Buddies was approved.')).toBeInTheDocument();
-  expect(screen.getByText('5.5')).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Mark all as read' }));
-  expect(await screen.findByText('Your application for Reading Buddies was approved.')).toBeInTheDocument();
-  expect(global.fetch.mock.calls.some(([url, o]) => url.endsWith('/api/notifications/me/read') && o.method === 'PUT')).toBe(true);
 });
