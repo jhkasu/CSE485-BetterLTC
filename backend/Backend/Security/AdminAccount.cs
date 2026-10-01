@@ -1,5 +1,4 @@
-using System.Security.Cryptography;
-using System.Text;
+using Backend.Models;
 
 namespace Backend.Security;
 
@@ -9,9 +8,17 @@ public class AdminAccount {
     public string FirstName { get; set; } = "Admin";
     public string LastName { get; set; } = "";
 
-    public bool Matches(string email, string password) {
-        if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrEmpty(Password)) return false;
-        if (!string.Equals(Email.Trim(), email.Trim(), StringComparison.OrdinalIgnoreCase)) return false;
-        return CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(Password), Encoding.UTF8.GetBytes(password));
+    public bool CreateFirstAdmin(AppDbContext db) {
+        if (db.Admins.Any()) return false;
+        string email = AccountEmails.Normalize(Email);
+        if (email.Length == 0 || string.IsNullOrEmpty(Password)) return false;
+        db.Admins.Add(new Admin {
+            FirstName = FirstName,
+            LastName = LastName,
+            Email = email,
+            Password = PasswordHashing.Hash(Password),
+        });
+        db.SaveChanges();
+        return true;
     }
 }

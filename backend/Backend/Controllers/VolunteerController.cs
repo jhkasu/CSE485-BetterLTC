@@ -10,11 +10,9 @@ namespace Backend.Controllers;
 [ApiController]
 public class VolunteerController : ControllerBase {
     private readonly AppDbContext _context;
-    private readonly AdminAccount _admin;
 
-    public VolunteerController(AppDbContext context, AdminAccount admin) {
+    public VolunteerController(AppDbContext context) {
         this._context = context;
-        this._admin = admin;
     }
 
     [HttpGet]
@@ -60,7 +58,7 @@ public class VolunteerController : ControllerBase {
     public async Task<IActionResult> AddVolunteer(Volunteer volunteer) {
         try {
             volunteer.Email = AccountEmails.Normalize(volunteer.Email);
-            if (await AccountEmails.IsTaken(_context, _admin, volunteer.Email)) return Conflict(AccountEmails.AlreadyRegistered);
+            if (await AccountEmails.IsTaken(_context, volunteer.Email)) return Conflict(AccountEmails.AlreadyRegistered);
             volunteer.Password = PasswordHashing.Hash(volunteer.Password);
             _context.Volunteers.Add(volunteer);
             await _context.SaveChangesAsync();

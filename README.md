@@ -33,7 +33,7 @@ Opens http://localhost:3000 in your browser. `copy .env.example .env` and `npm i
 On Mac use `cp` instead of `copy`.
 
 ## Test accounts
-- Admin, local only: kim@test.com / password123, set in `backend/Backend/appsettings.Development.json`. On Azure the admin comes from the `Admin__Email` and `Admin__Password` app settings, see below.
+- Admin, local only: kim@test.com / password123, set in `backend/Backend/appsettings.Development.json`. Admin accounts are stored in the database. When the database has no admin yet, the backend creates the first one from these settings on startup. On Azure it uses the `Admin__Email` and `Admin__Password` app settings, see below.
 - Volunteer and organization accounts: create one on the Sign Up page. Organization accounts must be approved by the admin before they can post listings.
 
 ## Config
@@ -94,7 +94,7 @@ Backend settings. `ConnectionStrings__Database` points the API at the server; th
 az webapp config appsettings set --name betterltc-test-api --resource-group betterltc-test-rg --settings "ConnectionStrings__Database=Host=betterltc-test-db.postgres.database.azure.com;Database=betterltc;Username=betterltcadmin;Password=<database password>;Ssl Mode=Require" "AllowedOrigins__0=https://betterltc-test-web.azurewebsites.net" "AllowedOrigins__1=http://localhost:3000"
 ```
 
-Admin account and token key. Pick your own values; they never go in the repository.
+First admin account and token key. Pick your own values; they never go in the repository. The admin settings are only read when the database has no admin yet, so changing them later does not change an existing admin.
 
 ```
 az webapp config appsettings set --name betterltc-test-api --resource-group betterltc-test-rg --settings "Admin__Email=<admin email>" "Admin__Password=<admin password>" "Jwt__Key=<random string of 32 or more characters>"

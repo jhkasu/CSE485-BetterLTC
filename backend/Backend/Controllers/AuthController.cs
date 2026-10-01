@@ -10,23 +10,22 @@ namespace Backend.Controllers;
 public class AuthController : ControllerBase {
     private readonly AppDbContext _context;
     private readonly TokenService _tokens;
-    private readonly AdminAccount _admin;
 
-    public AuthController(AppDbContext context, TokenService tokens, AdminAccount admin) {
+    public AuthController(AppDbContext context, TokenService tokens) {
         this._context = context;
         this._tokens = tokens;
-        this._admin = admin;
     }
 
     [HttpPost("signin")]
     public async Task<IActionResult> SignIn([FromBody] SignInRequest request) {
         try {
             string email = AccountEmails.Normalize(request.Email);
-            if (_admin.Matches(email, request.Password)) {
-                string adminName = $"{_admin.FirstName} {_admin.LastName}".Trim();
+            var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Email.Trim().ToLower() == email);
+            if (admin is not null && PasswordHashing.Verify(request.Password, admin.Password)) {
+                string adminName = $"{admin.FirstName} {admin.LastName}".Trim();
                 return Ok(new {
-                    token = _tokens.Create(0, Roles.Admin, _admin.Email, adminName),
-                    user = new { id = 0, firstName = _admin.FirstName, lastName = _admin.LastName, email = _admin.Email, role = Roles.Admin },
+                    token = _tokens.Create(admin.Id, Roles.Admin, admin.Email, adminName),
+                    user = new { admin.Id, admin.FirstName, admin.LastName, admin.Email, role = Roles.Admin },
                 });
             }
 
