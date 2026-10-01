@@ -16,6 +16,7 @@ import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import { HELP_TYPE_KEYS } from './helpTypes';
 import AdminBackgroundChecks from './AdminBackgroundChecks';
+import AdminMatchingStatus from './AdminMatchingStatus';
 
 
 const INIT_OPPORTUNITIES = [
@@ -35,7 +36,7 @@ const NAV_ITEMS = [
   { id: 'team',           labelKey: 'adminDashboard.nav.team',          icon: <MdGroups /> },
   { id: 'opportunities',  labelKey: 'adminDashboard.nav.opportunities', icon: <MdVolunteerActivism /> },
   { id: 'work',           labelKey: 'adminDashboard.nav.work',          icon: <MdWork /> },
-  { id: 'help',           labelKey: 'adminDashboard.nav.help',          icon: <MdHelpCenter /> },
+  { id: 'help',           labelKey: 'adminDashboard.nav.matching',      icon: <MdHelpCenter /> },
   { id: 'account',        labelKey: 'common.account',                   icon: <MdLock /> },
 ];
 
@@ -118,15 +119,6 @@ function AdminDashboard() {
       .catch(() => {});
   }, []);
 
-  const [helpRequests, setHelpRequests] = useState([]);
-  const [helpDeleteId, setHelpDeleteId] = useState(null);
-
-  useEffect(() => {
-    apiFetch(`/api/help-requests`)
-      .then(res => res.json())
-      .then(data => setHelpRequests(data))
-      .catch(() => {});
-  }, []);
 
   const nextId = (list) => Math.max(0, ...list.map(i => i.id)) + 1;
 
@@ -218,12 +210,6 @@ function AdminDashboard() {
     apiFetch(`/api/our-work/${id}`, { method: 'DELETE' })
       .then(() => { setWork(work.filter(w => w.id !== id)); setWorkDeleteId(null); })
       .catch(err => console.error('DELETE our-work failed:', err));
-  };
-
-  const deleteHelpRequest = (id) => {
-    apiFetch(`/api/help-requests/${id}`, { method: 'DELETE' })
-      .then(() => { setHelpRequests(helpRequests.filter(r => r.id !== id)); setHelpDeleteId(null); })
-      .catch(() => {});
   };
 
   const renderAccount = () => (
@@ -482,57 +468,6 @@ function AdminDashboard() {
     </div>
   );
 
-  const renderHelp = () => (
-    <div>
-      <h2 className="admin-section-title">{t('adminDashboard.help.heading')}</h2>
-      {helpRequests.length === 0 ? (
-        <p style={{ color: '#888', marginTop: 20 }}>{t('adminDashboard.help.empty')}</p>
-      ) : (
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>{t('common.name')}</th>
-              <th>{t('adminDashboard.help.helpType')}</th>
-              <th>{t('adminDashboard.help.city')}</th>
-              <th>{t('adminDashboard.help.contact')}</th>
-              <th>{t('common.status')}</th>
-              <th>{t('adminDashboard.help.submitted')}</th>
-              <th>{t('common.actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {helpRequests.map(r => (
-              <tr key={r.id}>
-                <td>
-                  {r.firstName} {r.lastName}
-                  {r.forFamilyMember && r.seniorName && <div className="admin-help-senior">{t('adminDashboard.help.forSenior', { name: r.seniorName })}</div>}
-                </td>
-                <td>{r.helpType}</td>
-                <td>{r.city || '—'}</td>
-                <td>
-                  {r.phone && <div>{r.phone}</div>}
-                  {r.email && <div>{r.email}</div>}
-                  {!r.phone && !r.email && '—'}
-                </td>
-                <td>{t(`options.helpRequestStatus.${(r.status || 'New').toLowerCase()}`, { defaultValue: r.status })}</td>
-                <td>{new Date(r.submittedAt).toLocaleDateString()}</td>
-                <td>
-                  <div className="admin-action-cell">
-                    {helpDeleteId === r.id ? (
-                      <DeleteConfirm onConfirm={() => deleteHelpRequest(r.id)} onCancel={() => setHelpDeleteId(null)} />
-                    ) : (
-                      <button className="admin-action-btn delete" onClick={() => setHelpDeleteId(r.id)}><MdDelete /></button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
-
   const toggleOrgApproval = (org) => {
     const endpoint = org.isApproved
       ? `/api/organizations/${org.id}/revoke`
@@ -604,7 +539,7 @@ function AdminDashboard() {
       case 'team':           return renderTeam();
       case 'opportunities':  return renderOpportunities();
       case 'work':           return renderWork();
-      case 'help':           return renderHelp();
+      case 'help':           return <AdminMatchingStatus />;
       case 'account':        return renderAccount();
       default:               return null;
     }

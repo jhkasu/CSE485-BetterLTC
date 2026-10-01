@@ -606,7 +606,8 @@
       "opportunities": "Occasions de bénévolat",
       "work": "Nos réalisations",
       "help": "Demandes d'aide",
-      "bgChecks": "Vérifications"
+      "bgChecks": "Vérifications",
+      "matching": "Suivi des jumelages"
     },
     "stats": {
       "totalVolunteers": "Total des bénévoles",
@@ -701,6 +702,37 @@
       "deleteFor": "Supprimer le document de {{name}}",
       "deleteTitle": "Supprimer le document de {{name}}",
       "deleteText": "{{file}} sera supprimé définitivement. Le bénévole ne sera plus approuvé et devra téléverser un nouveau document."
+    },
+    "matching": {
+      "heading": "Suivi des jumelages",
+      "lead": "Suivez chaque demande d'aide, de sa réception jusqu'au contact par un organisme.",
+      "tabs": {
+        "all": "Toutes",
+        "New": "En attente",
+        "Accepted": "Acceptées",
+        "Contacted": "Contactées",
+        "attention": "À surveiller"
+      },
+      "empty": "Aucune demande dans cette vue.",
+      "request": "Demande",
+      "organization": "Organisme",
+      "view": "Voir",
+      "alerts": {
+        "NoOrganization": "Aucun organisme après 3 jours",
+        "NotContacted": "Aucun contact après 2 jours"
+      },
+      "alertHelp": {
+        "NoOrganization": "Aucun organisme n'a accepté cette demande depuis plus de 3 jours. Communiquez avec un organisme qui dessert cette région, ou avec le demandeur directement.",
+        "NotContacted": "L'organisme a accepté cette demande il y a plus de 2 jours, mais n'a pas indiqué avoir contacté la personne. Faites un suivi auprès de l'organisme, ou libérez la demande pour qu'un autre organisme puisse la prendre."
+      },
+      "requester": "Demandeur",
+      "history": "Historique",
+      "confirm": {
+        "release": "Libérer cette demande? Elle redeviendra En attente pour qu'un autre organisme puisse l'accepter.",
+        "delete": "Supprimer définitivement cette demande? Cette action est irréversible."
+      },
+      "release": "Libérer",
+      "delete": "Supprimer"
     }
   },
   "options": {

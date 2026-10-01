@@ -24,8 +24,31 @@ public class HelpRequestController : ControllerBase {
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAll() {
         try {
-            var requests = await _context.HelpRequests.OrderByDescending(r => r.SubmittedAt).ToListAsync();
-            return Ok(requests);
+            var now = DateTime.UtcNow;
+            var rows = await _context.HelpRequests
+                .OrderByDescending(r => r.SubmittedAt)
+                .GroupJoin(_context.Organizations, r => r.OrganizationId, o => o.Id, (r, orgs) => new { Request = r, Orgs = orgs })
+                .SelectMany(x => x.Orgs.DefaultIfEmpty(), (x, o) => new { x.Request, OrgName = o == null ? "" : o.OrgName })
+                .ToListAsync();
+            return Ok(rows.Select(x => new AdminHelpRequestItem(
+                x.Request.Id,
+                x.Request.FirstName,
+                x.Request.LastName,
+                x.Request.Email,
+                x.Request.Phone,
+                x.Request.ContactMethod,
+                x.Request.HelpType,
+                x.Request.City,
+                x.Request.ForFamilyMember,
+                x.Request.SeniorName,
+                x.Request.Language,
+                x.Request.Status,
+                x.Request.SubmittedAt,
+                x.Request.AcceptedAt,
+                x.Request.ContactedAt,
+                x.Request.OrganizationId,
+                x.OrgName,
+                HelpRequestAlerts.For(x.Request, now))));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }

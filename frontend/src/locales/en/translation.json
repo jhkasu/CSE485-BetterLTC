@@ -606,7 +606,8 @@
       "opportunities": "Volunteer Opportunities",
       "work": "Our Work",
       "help": "Get Help",
-      "bgChecks": "Background Checks"
+      "bgChecks": "Background Checks",
+      "matching": "Matching Status"
     },
     "stats": {
       "totalVolunteers": "Total Volunteers",
@@ -701,6 +702,37 @@
       "deleteFor": "Delete document for {{name}}",
       "deleteTitle": "Delete document for {{name}}",
       "deleteText": "{{file}} will be permanently deleted. The volunteer will no longer be approved and must upload a new document."
+    },
+    "matching": {
+      "heading": "Matching Status",
+      "lead": "Track every help request from the moment it arrives until an organization reaches the person.",
+      "tabs": {
+        "all": "All",
+        "New": "Waiting",
+        "Accepted": "Accepted",
+        "Contacted": "Contacted",
+        "attention": "Needs attention"
+      },
+      "empty": "No requests in this view.",
+      "request": "Request",
+      "organization": "Organization",
+      "view": "View",
+      "alerts": {
+        "NoOrganization": "No organization after 3 days",
+        "NotContacted": "Not contacted after 2 days"
+      },
+      "alertHelp": {
+        "NoOrganization": "No organization has accepted this request in over 3 days. Reach out to an organization that serves this area, or contact the requester directly.",
+        "NotContacted": "The organization accepted this request more than 2 days ago but has not marked the person as contacted. Follow up with the organization, or release the request so another organization can take it."
+      },
+      "requester": "Requester",
+      "history": "History",
+      "confirm": {
+        "release": "Release this request? It goes back to Waiting so another organization can accept it.",
+        "delete": "Delete this request permanently? This cannot be undone."
+      },
+      "release": "Release",
+      "delete": "Delete"
     }
   },
   "options": {
