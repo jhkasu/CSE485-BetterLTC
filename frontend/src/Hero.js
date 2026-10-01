@@ -3,11 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Hero.css';
 
-const prefersReducedMotion =
-  typeof window !== 'undefined' &&
-  typeof window.matchMedia === 'function' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 function Hero() {
   const { t } = useTranslation();
   const heading = t('home.hero.heading');
@@ -23,13 +18,7 @@ function Hero() {
         </div>
       </div>
       <div className="hero-media" aria-hidden="true">
-        {prefersReducedMotion ? (
-          <img src="/care1.png" alt="" />
-        ) : (
-          <video autoPlay muted loop playsInline poster="/care1.png" tabIndex={-1}>
-            <source src="/hero.mp4" type="video/mp4" />
-          </video>
-        )}
+        <img src="/care1.png" alt="" />
       </div>
     </section>
   );

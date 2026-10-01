@@ -126,7 +126,7 @@ az webapp deploy --name betterltc-test-web --resource-group betterltc-test-rg --
 
 ### After every deploy, check these by hand
 
-1. Open the site. The homepage loads and the hero video plays.
+1. Open the site. The homepage loads with the hero photo.
 2. Sign up as a volunteer. You land on Sign In with a green success message.
 3. Sign up again with the same email. The form shows "Volunteer with this email already exists."
 4. Sign in as that volunteer. You land on the dashboard.
