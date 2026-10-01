@@ -12,6 +12,11 @@ public static class ReferenceData {
         "Mental Health Support", "Housing Support", "Other",
     ];
 
+    public static readonly string[] OrganizationCategories = [
+        "Health", "Seniors Services", "Youth", "Education", "Environment",
+        "Arts and Culture", "Community Services", "Other",
+    ];
+
     public static readonly string[] Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
     public static readonly string[] TimesOfDay = ["Morning", "Afternoon", "Evening"];

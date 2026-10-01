@@ -7,6 +7,7 @@ import Footer from './Footer';
 import apiFetch from './api';
 import API_BASE from './config';
 import { HELP_TYPE_KEYS } from './helpTypes';
+import { ORG_CATEGORY_KEYS } from './orgCategories';
 import ListingCard from './ListingCard';
 import { getSessionRole } from './auth/session';
 import './OrganizationPage.css';
@@ -25,7 +26,7 @@ export function websiteHost(website) {
   }
 }
 
-function initials(name) {
+export function initials(name) {
   return (name || '').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
 }
 
@@ -136,6 +137,12 @@ function OrganizationPage() {
 
           <aside className="orgp-card orgp-side" aria-label={t('orgPage.details')}>
             <h2>{t('orgPage.details')}</h2>
+            {(org.categories || []).length > 0 && (
+              <>
+                <h3>{t('orgPage.categories')}</h3>
+                <ul className="orgp-chips">{org.categories.map(c => <li key={c}>{ORG_CATEGORY_KEYS[c] ? t(ORG_CATEGORY_KEYS[c]) : c}</li>)}</ul>
+              </>
+            )}
             {areas.length > 0 && (
               <>
                 <h3>{t('orgPage.serviceAreas')}</h3>

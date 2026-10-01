@@ -9,13 +9,14 @@ public record OrganizationResponse(
     string Description,
     List<string> ServiceAreas,
     List<string> HelpTypes,
+    List<string> Categories,
     string NotificationEmail,
     string Website,
     long? LogoVersion) {
     public static OrganizationResponse From(Organization o) {
         return new OrganizationResponse(
             o.Id, o.OrgName, o.ContactName, o.Email, o.IsApproved,
-            o.Description, o.ServiceAreas, o.HelpTypes, o.NotificationEmail,
+            o.Description, o.ServiceAreas, o.HelpTypes, o.Categories, o.NotificationEmail,
             o.Website, OrganizationLogoVersion.For(o));
     }
 }
@@ -26,11 +27,12 @@ public record OrganizationPublicResponse(
     string Description,
     List<string> ServiceAreas,
     List<string> HelpTypes,
+    List<string> Categories,
     string Website,
     long? LogoVersion) {
     public static OrganizationPublicResponse From(Organization o) {
         return new OrganizationPublicResponse(
-            o.Id, o.OrgName, o.Description, o.ServiceAreas, o.HelpTypes,
+            o.Id, o.OrgName, o.Description, o.ServiceAreas, o.HelpTypes, o.Categories,
             o.Website, OrganizationLogoVersion.For(o));
     }
 }

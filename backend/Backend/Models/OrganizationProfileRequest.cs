@@ -7,6 +7,7 @@ public class OrganizationProfileRequest {
     [MaxLength(500)] public string Description { get; set; } = "";
     public List<string> ServiceAreas { get; set; } = [];
     public List<string> HelpTypes { get; set; } = [];
+    public List<string> Categories { get; set; } = [];
     [MaxLength(200)] public string NotificationEmail { get; set; } = "";
     [MaxLength(300)] public string Website { get; set; } = "";
 }

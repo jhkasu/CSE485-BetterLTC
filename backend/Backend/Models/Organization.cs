@@ -12,6 +12,7 @@ public class Organization : IAccount {
     public string Description { get; set; } = "";
     public List<string> ServiceAreas { get; set; } = [];
     public List<string> HelpTypes { get; set; } = [];
+    public List<string> Categories { get; set; } = [];
     public string NotificationEmail { get; set; } = "";
     public string Website { get; set; } = "";
     public DateTime? LogoUpdatedAt { get; set; }

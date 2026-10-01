@@ -53,7 +53,8 @@
     "dashboard": "Tableau de bord",
     "signIn": "Connexion",
     "signUp": "S'inscrire",
-    "donate": "Faire un don"
+    "donate": "Faire un don",
+    "directory": "Organismes"
   },
   "a11y": {
     "display": "Affichage",
@@ -603,7 +604,9 @@
       "website": "Site Web officiel",
       "websiteInvalid": "Veuillez entrer une adresse Web complète, comme https://www.example.org.",
       "viewPublic": "Voir votre page publique",
-      "publicPending": "Votre page publique sera visible une fois votre organisme approuvé par un administrateur."
+      "publicPending": "Votre page publique sera visible une fois votre organisme approuvé par un administrateur.",
+      "categories": "Catégories",
+      "categoriesHint": "Les bénévoles s'en servent pour vous trouver dans le répertoire."
     },
     "recommended": {
       "heading": "Bénévoles recommandés",
@@ -800,6 +803,16 @@
       "new": "Nouvelle",
       "accepted": "Acceptée",
       "contacted": "Contactée"
+    },
+    "orgCategories": {
+      "health": "Santé",
+      "seniors": "Services aux aînés",
+      "youth": "Jeunesse",
+      "education": "Éducation",
+      "environment": "Environnement",
+      "arts": "Arts et culture",
+      "community": "Services communautaires",
+      "other": "Autre"
     }
   },
   "matching": {
@@ -840,6 +853,21 @@
     "details": "Détails",
     "serviceAreas": "Régions desservies",
     "helpTypes": "Types d'aide",
-    "website": "Site Web"
+    "website": "Site Web",
+    "categories": "Catégories"
+  },
+  "directory": {
+    "eyebrow": "Répertoire",
+    "heading": "Trouver un organisme",
+    "lead": "Parcourez les organismes de la Saskatchewan selon leur domaine et les régions qu'ils desservent.",
+    "filters": {
+      "category": "Catégorie"
+    },
+    "count_one": "{{count}} organisme",
+    "count_other": "{{count}} organismes",
+    "empty": "Aucun organisme n'est encore inscrit.",
+    "emptyFiltered": "Aucun organisme ne correspond à ces filtres.",
+    "viewProfile": "Voir le profil",
+    "viewProfileOf": "Voir le profil de {{name}}"
   }
 }

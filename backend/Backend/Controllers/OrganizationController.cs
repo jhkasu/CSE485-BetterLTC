@@ -88,8 +88,10 @@ public class OrganizationController : ControllerBase {
             if (org is null) return NotFound();
             var areas = profile.ServiceAreas.Distinct().ToList();
             var helpTypes = profile.HelpTypes.Distinct().ToList();
+            var categories = profile.Categories.Distinct().ToList();
             if (areas.Any(a => !ReferenceData.Cities.Contains(a))) return BadRequest("Unknown service area.");
             if (helpTypes.Any(h => !ReferenceData.HelpTypes.Contains(h))) return BadRequest("Unknown help type.");
+            if (categories.Any(c => !ReferenceData.OrganizationCategories.Contains(c))) return BadRequest("Unknown category.");
             string notificationEmail = AccountEmails.Normalize(profile.NotificationEmail);
             if (notificationEmail.Length > 0 && !new EmailAddressAttribute().IsValid(notificationEmail)) return BadRequest("Invalid notification email.");
             string orgName = profile.OrgName.Trim();
@@ -101,6 +103,7 @@ public class OrganizationController : ControllerBase {
             org.Description = profile.Description.Trim();
             org.ServiceAreas = areas;
             org.HelpTypes = helpTypes;
+            org.Categories = categories;
             org.NotificationEmail = notificationEmail;
             org.Website = website;
             await _context.Listings
@@ -111,6 +114,19 @@ public class OrganizationController : ControllerBase {
                 .ExecuteUpdateAsync(s => s.SetProperty(r => r.OrgName, orgName));
             await _context.SaveChangesAsync();
             return Ok(OrganizationResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("directory")]
+    public async Task<IActionResult> GetDirectory([FromQuery] List<string> category, [FromQuery] List<string> area) {
+        try {
+            var query = _context.Organizations.AsNoTracking().Where(o => o.IsApproved);
+            if (category.Count > 0) query = query.Where(o => o.Categories.Any(c => category.Contains(c)));
+            if (area.Count > 0) query = query.Where(o => o.ServiceAreas.Any(a => area.Contains(a)));
+            var orgs = await query.OrderBy(o => o.OrgName).ToListAsync();
+            return Ok(orgs.Select(OrganizationPublicResponse.From));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
