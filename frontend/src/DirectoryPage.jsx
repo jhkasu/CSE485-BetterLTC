@@ -41,35 +41,34 @@ function DirectoryPage() {
   return (
     <div>
       <Navbar />
-      <header className="page-header page-header--plain">
-        <div className="page-header-text">
+      <header className="dir-hero">
+        <div className="dir-hero-inner container">
           <span className="eyebrow">{t('directory.eyebrow')}</span>
           <h1>{t('directory.heading')}</h1>
           <p>{t('directory.lead')}</p>
+          <div className="dir-toolbar">
+            <div className="dir-chips">
+              <FilterChip
+                label={t('directory.filters.category')}
+                options={ORG_CATEGORIES.map(c => ({ value: c.value, label: t(c.labelKey) }))}
+                selected={categories}
+                onChange={setCategories}
+              />
+              <FilterChip
+                label={t('volunteer.filters.area')}
+                options={CITIES.map(city => ({ value: city, label: cityLabel(city) }))}
+                selected={areas}
+                onChange={setAreas}
+              />
+              {anyFilter && (
+                <button type="button" className="dir-clear" onClick={() => { setCategories([]); setAreas([]); }}>{t('volunteer.filters.clear')}</button>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
       <main className="dir-page container">
-        <div className="dir-toolbar">
-          <div className="dir-chips">
-            <FilterChip
-              label={t('directory.filters.category')}
-              options={ORG_CATEGORIES.map(c => ({ value: c.value, label: t(c.labelKey) }))}
-              selected={categories}
-              onChange={setCategories}
-            />
-            <FilterChip
-              label={t('volunteer.filters.area')}
-              options={CITIES.map(city => ({ value: city, label: cityLabel(city) }))}
-              selected={areas}
-              onChange={setAreas}
-            />
-            {anyFilter && (
-              <button type="button" className="dir-clear" onClick={() => { setCategories([]); setAreas([]); }}>{t('volunteer.filters.clear')}</button>
-            )}
-          </div>
-        </div>
-
         {orgs === null ? (
           <p className="dir-count">{t('common.loading')}</p>
         ) : (
