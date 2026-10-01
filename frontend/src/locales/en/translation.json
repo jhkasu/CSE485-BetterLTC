@@ -378,7 +378,8 @@
       "listings": "My Listings",
       "applicants": "Applicants",
       "requests": "Request List",
-      "accepted": "Accepted Requests"
+      "accepted": "Accepted Requests",
+      "profile": "Profile"
     },
     "stats": {
       "activeListings": "Active Listings",
@@ -431,7 +432,9 @@
       "accept": "Accept request",
       "accepting": "Accepting...",
       "alreadyTaken": "Another organization already accepted this request.",
-      "acceptFailed": "Could not accept the request. Please try again."
+      "acceptFailed": "Could not accept the request. Please try again.",
+      "setupNeeded": "Choose your service areas and help types to see help requests that match your organization.",
+      "setupButton": "Set up profile"
     },
     "accepted": {
       "heading": "Accepted Requests",
@@ -460,6 +463,23 @@
       "release": "Release request",
       "releaseConfirm": "Release this request so another organization can accept it?",
       "releaseYes": "Release"
+    },
+    "profile": {
+      "heading": "Organization Profile",
+      "lead": "Manage your organization's information and choose which help requests you receive.",
+      "name": "Organization Name",
+      "description": "Description",
+      "descriptionPlaceholder": "Tell seniors and volunteers what your organization does.",
+      "serviceAreas": "Service Areas",
+      "serviceAreasHint": "You will see help requests from these areas.",
+      "helpTypes": "Help Types",
+      "helpTypesHint": "You will see requests for these types of help.",
+      "notificationEmail": "Notification Email",
+      "notificationEmailHint": "Where we send updates about requests. Leave empty to use your account email.",
+      "save": "Save changes",
+      "saved": "Saved!",
+      "saveFailed": "Could not save your profile. Please try again.",
+      "nameRequired": "Please enter your organization name."
     }
   },
   "adminDashboard": {
@@ -489,7 +509,9 @@
     "organizations": {
       "empty": "No organizations registered yet.",
       "organization": "Organization",
-      "contact": "Contact"
+      "contact": "Contact",
+      "serves": "Serves",
+      "notSet": "Not set"
     },
     "team": {
       "addMember": "Add Member",

@@ -41,7 +41,7 @@ function HelpTypeIcon({ type }) {
   return <div className="hr-icon" aria-hidden="true">{HELP_TYPE_ICONS[type] || <MdHelpOutline />}</div>;
 }
 
-export function HelpRequestList({ onAccepted }) {
+export function HelpRequestList({ onAccepted, needsProfile, onSetupProfile }) {
   const labels = useHelpRequestLabels();
   const { t } = labels;
   const [requests, setRequests] = useState(null);
@@ -109,9 +109,16 @@ export function HelpRequestList({ onAccepted }) {
 
       {message && <p className="hr-message" role="alert">{t(message)}</p>}
 
+      {needsProfile && (
+        <div className="hr-setup">
+          <p>{t('orgDashboard.requests.setupNeeded')}</p>
+          <button type="button" className="hr-accept-btn" onClick={onSetupProfile}>{t('orgDashboard.requests.setupButton')}</button>
+        </div>
+      )}
+
       {requests === null ? (
         <p className="org-empty">{t('common.loading')}</p>
-      ) : visible.length === 0 ? (
+      ) : needsProfile ? null : visible.length === 0 ? (
         <p className="org-empty">{t(requests.length === 0 ? 'orgDashboard.requests.empty' : 'orgDashboard.requests.noMatch')}</p>
       ) : (
         <ul className="hr-list">

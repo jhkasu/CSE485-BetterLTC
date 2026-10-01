@@ -378,7 +378,8 @@
       "listings": "Mes annonces",
       "applicants": "Candidats",
       "requests": "Liste des demandes",
-      "accepted": "Demandes acceptées"
+      "accepted": "Demandes acceptées",
+      "profile": "Profil"
     },
     "stats": {
       "activeListings": "Annonces actives",
@@ -431,7 +432,9 @@
       "accept": "Accepter la demande",
       "accepting": "Acceptation...",
       "alreadyTaken": "Un autre organisme a déjà accepté cette demande.",
-      "acceptFailed": "Impossible d'accepter la demande. Veuillez réessayer."
+      "acceptFailed": "Impossible d'accepter la demande. Veuillez réessayer.",
+      "setupNeeded": "Choisissez vos régions desservies et vos types d'aide pour voir les demandes qui correspondent à votre organisme.",
+      "setupButton": "Configurer le profil"
     },
     "accepted": {
       "heading": "Demandes acceptées",
@@ -460,6 +463,23 @@
       "release": "Libérer la demande",
       "releaseConfirm": "Libérer cette demande pour qu'un autre organisme puisse l'accepter?",
       "releaseYes": "Libérer"
+    },
+    "profile": {
+      "heading": "Profil de l'organisme",
+      "lead": "Gérez les renseignements de votre organisme et choisissez les demandes d'aide que vous recevez.",
+      "name": "Nom de l'organisme",
+      "description": "Description",
+      "descriptionPlaceholder": "Expliquez aux aînés et aux bénévoles ce que fait votre organisme.",
+      "serviceAreas": "Régions desservies",
+      "serviceAreasHint": "Vous verrez les demandes d'aide de ces régions.",
+      "helpTypes": "Types d'aide",
+      "helpTypesHint": "Vous verrez les demandes pour ces types d'aide.",
+      "notificationEmail": "Courriel pour les avis",
+      "notificationEmailHint": "Adresse où nous envoyons les mises à jour sur les demandes. Laissez vide pour utiliser le courriel de votre compte.",
+      "save": "Enregistrer",
+      "saved": "Enregistré!",
+      "saveFailed": "Impossible d'enregistrer votre profil. Veuillez réessayer.",
+      "nameRequired": "Veuillez entrer le nom de votre organisme."
     }
   },
   "adminDashboard": {
@@ -489,7 +509,9 @@
     "organizations": {
       "empty": "Aucun organisme inscrit pour le moment.",
       "organization": "Organisme",
-      "contact": "Personne-ressource"
+      "contact": "Personne-ressource",
+      "serves": "Dessert",
+      "notSet": "Non défini"
     },
     "team": {
       "addMember": "Ajouter un membre",

@@ -14,6 +14,7 @@ import API_BASE from './config';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
+import { HELP_TYPE_KEYS } from './helpTypes';
 
 
 const INIT_OPPORTUNITIES = [
@@ -553,6 +554,7 @@ function AdminDashboard() {
               <th>{t('adminDashboard.organizations.organization')}</th>
               <th>{t('adminDashboard.organizations.contact')}</th>
               <th>{t('common.email')}</th>
+              <th>{t('adminDashboard.organizations.serves')}</th>
               <th>{t('common.status')}</th>
               <th>{t('common.actions')}</th>
             </tr>
@@ -563,6 +565,14 @@ function AdminDashboard() {
                 <td>{org.orgName}</td>
                 <td>{org.contactName}</td>
                 <td>{org.email}</td>
+                <td className="admin-org-serves">
+                  {org.serviceAreas?.length || org.helpTypes?.length ? (
+                    <>
+                      <div>{(org.serviceAreas || []).map(city => (city === 'Other' ? t('volunteer.otherCity') : city)).join(', ') || '—'}</div>
+                      <div className="admin-help-senior">{(org.helpTypes || []).map(type => (HELP_TYPE_KEYS[type] ? t(HELP_TYPE_KEYS[type]) : type)).join(', ') || '—'}</div>
+                    </>
+                  ) : t('adminDashboard.organizations.notSet')}
+                </td>
                 <td>
                   <span className={`bg-badge ${org.isApproved ? 'approved' : 'pending'}`}>
                     {org.isApproved ? t('options.applicationStatus.approved') : t('options.applicationStatus.pending')}

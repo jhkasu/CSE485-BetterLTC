@@ -68,9 +68,11 @@ public class HelpRequestController : ControllerBase {
     [Authorize(Roles = Roles.Organization)]
     public async Task<IActionResult> GetOpen() {
         try {
-            if (await CurrentApprovedOrganization() is null) return Forbid();
+            var org = await CurrentApprovedOrganization();
+            if (org is null) return Forbid();
             var requests = await _context.HelpRequests
                 .Where(r => r.Status == HelpRequestStatuses.New && r.OrganizationId == null)
+                .Where(r => org.ServiceAreas.Contains(r.City) && org.HelpTypes.Contains(r.HelpType))
                 .OrderBy(r => r.SubmittedAt)
                 .ToListAsync();
             return Ok(requests.Select(OpenHelpRequestResponse.From));
@@ -114,7 +116,9 @@ public class HelpRequestController : ControllerBase {
         try {
             var org = await CurrentApprovedOrganization();
             if (org is null) return Forbid();
-            if (!await _context.HelpRequests.AnyAsync(r => r.Id == id)) return NotFound();
+            var target = await _context.HelpRequests.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id);
+            if (target is null) return NotFound();
+            if (!org.Serves(target.City, target.HelpType)) return Forbid();
             int updated = await _context.HelpRequests
                 .Where(r => r.Id == id && r.Status == HelpRequestStatuses.New && r.OrganizationId == null)
                 .ExecuteUpdateAsync(s => s

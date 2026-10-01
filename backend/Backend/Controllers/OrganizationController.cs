@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,40 @@ public class OrganizationController : ControllerBase {
             org.ContactName = updated.ContactName;
             org.Email = updated.Email;
             org.IsApproved = updated.IsApproved;
+            await _context.SaveChangesAsync();
+            return Ok(OrganizationResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/profile")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> UpdateProfile(int id, OrganizationProfileRequest profile) {
+        try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Organization, id)) return Forbid();
+            var org = await _context.Organizations.FindAsync(id);
+            if (org is null) return NotFound();
+            var areas = profile.ServiceAreas.Distinct().ToList();
+            var helpTypes = profile.HelpTypes.Distinct().ToList();
+            if (areas.Any(a => !ReferenceData.Cities.Contains(a))) return BadRequest("Unknown service area.");
+            if (helpTypes.Any(h => !ReferenceData.HelpTypes.Contains(h))) return BadRequest("Unknown help type.");
+            string notificationEmail = AccountEmails.Normalize(profile.NotificationEmail);
+            if (notificationEmail.Length > 0 && !new EmailAddressAttribute().IsValid(notificationEmail)) return BadRequest("Invalid notification email.");
+            string orgName = profile.OrgName.Trim();
+            if (orgName.Length == 0) return BadRequest("Organization name is required.");
+
+            org.OrgName = orgName;
+            org.Description = profile.Description.Trim();
+            org.ServiceAreas = areas;
+            org.HelpTypes = helpTypes;
+            org.NotificationEmail = notificationEmail;
+            await _context.Listings
+                .Where(l => l.OrganizationId == id)
+                .ExecuteUpdateAsync(s => s.SetProperty(l => l.OrgName, orgName));
+            await _context.Registrations
+                .Where(r => _context.Listings.Any(l => l.Id == r.ListingId && l.OrganizationId == id))
+                .ExecuteUpdateAsync(s => s.SetProperty(r => r.OrgName, orgName));
             await _context.SaveChangesAsync();
             return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
