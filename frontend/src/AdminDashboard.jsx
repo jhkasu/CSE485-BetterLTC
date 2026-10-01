@@ -491,8 +491,8 @@ function AdminDashboard() {
             <tr>
               <th>{t('common.name')}</th>
               <th>{t('adminDashboard.help.helpType')}</th>
-              <th>{t('common.email')}</th>
-              <th>{t('common.phone')}</th>
+              <th>{t('adminDashboard.help.city')}</th>
+              <th>{t('adminDashboard.help.contact')}</th>
               <th>{t('adminDashboard.help.submitted')}</th>
               <th>{t('common.actions')}</th>
             </tr>
@@ -500,10 +500,17 @@ function AdminDashboard() {
           <tbody>
             {helpRequests.map(r => (
               <tr key={r.id}>
-                <td>{r.firstName} {r.lastName}</td>
+                <td>
+                  {r.firstName} {r.lastName}
+                  {r.forFamilyMember && r.seniorName && <div className="admin-help-senior">{t('adminDashboard.help.forSenior', { name: r.seniorName })}</div>}
+                </td>
                 <td>{r.helpType}</td>
-                <td>{r.email}</td>
-                <td>{r.phone ? r.phone.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : '—'}</td>
+                <td>{r.city || '—'}</td>
+                <td>
+                  {r.phone && <div>{r.phone}</div>}
+                  {r.email && <div>{r.email}</div>}
+                  {!r.phone && !r.email && '—'}
+                </td>
                 <td>{new Date(r.submittedAt).toLocaleDateString()}</td>
                 <td>
                   <div className="admin-action-cell">

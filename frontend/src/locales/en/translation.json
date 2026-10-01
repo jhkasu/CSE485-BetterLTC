@@ -110,17 +110,55 @@
     "news": {
       "eyebrow": "Our work",
       "heading": "Latest news"
+    },
+    "howItWorks": {
+      "heading": "How It Works",
+      "lead": "From a simple request to meaningful support.",
+      "steps": {
+        "request": {
+          "title": "Senior Request",
+          "text": "A senior or family member submits a help request."
+        },
+        "match": {
+          "title": "Auto Match",
+          "text": "The request is sent to the right organization."
+        },
+        "accept": {
+          "title": "Organization Accepts",
+          "text": "A local organization accepts the request."
+        },
+        "contact": {
+          "title": "Contact",
+          "text": "The organization contacts the senior."
+        },
+        "assign": {
+          "title": "Volunteer Assigned",
+          "text": "A screened volunteer is assigned."
+        },
+        "service": {
+          "title": "Service & Log Hours",
+          "text": "Help is provided and hours are recorded."
+        }
+      },
+      "rolesHeading": "Three roles. One community.",
+      "roles": {
+        "seniors": {
+          "title": "Seniors",
+          "text": "Get the help you need"
+        },
+        "organizations": {
+          "title": "Organizations",
+          "text": "Provide the right support"
+        },
+        "volunteers": {
+          "title": "Volunteers",
+          "text": "Make a difference"
+        }
+      }
     }
   },
   "getHelp": {
-    "eyebrow": "Get help",
-    "heading": "We are here to help",
-    "lead": "Need support with meals, rides, home visits, or care for an older adult? Tell us a little about your situation and a real person will call you back.",
     "form": {
-      "helpType": "How can we help?",
-      "chooseOne": "Choose one",
-      "tellUsMore": "Tell us more",
-      "send": "Send request",
       "sending": "Sending..."
     },
     "success": {
@@ -135,6 +173,30 @@
       "item2": "Every volunteer has passed a background check",
       "item3": "There is no cost to you or your family",
       "item4": "You can pause or stop the help at any time"
+    },
+    "request": {
+      "heading": "Request help",
+      "lead": "Tell us what you need. We'll match you with the right organization in your area.",
+      "helpType": "Type of help needed",
+      "selectHelpType": "Select help type",
+      "city": "Your area / city",
+      "selectCity": "Select your area",
+      "contactMethod": "Preferred contact method",
+      "selectContactMethod": "Select contact method",
+      "methods": {
+        "phone": "Phone",
+        "email": "Email"
+      },
+      "phone": "Phone number",
+      "email": "Email address",
+      "family": "This request is submitted by a family member on behalf of a senior.",
+      "seniorName": "Senior's full name",
+      "consent": "I agree to share my information with partner organizations so they can contact me about my request.",
+      "consentRequired": "Please agree to share your information so an organization can contact you.",
+      "submit": "Submit request",
+      "quote": "“A little help makes a big difference.”",
+      "photoAlt": "A volunteer clears snow while a senior watches from the window",
+      "requiredNote": "Fields marked * are required."
     }
   },
   "about": {
@@ -410,7 +472,10 @@
       "heading": "Help Requests",
       "empty": "No requests submitted yet.",
       "helpType": "Help Type",
-      "submitted": "Submitted"
+      "submitted": "Submitted",
+      "city": "City",
+      "contact": "Contact",
+      "forSenior": "For {{name}}"
     },
     "editor": {
       "linkPrompt": "URL",

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,12 +28,32 @@ public class HelpRequestController : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(HelpRequest request) {
+    public async Task<IActionResult> Create(HelpRequestCreateRequest request) {
         try {
-            request.SubmittedAt = DateTime.UtcNow;
-            _context.HelpRequests.Add(request);
+            if (!request.ConsentGiven) return BadRequest("Consent is required.");
+            if (request.ContactMethod != "Phone" && request.ContactMethod != "Email") return BadRequest("Invalid contact method.");
+            string phone = request.Phone.Trim();
+            string email = AccountEmails.Normalize(request.Email);
+            if (request.ContactMethod == "Phone" && phone.Count(char.IsDigit) < 10) return BadRequest("A phone number is required.");
+            if (request.ContactMethod == "Email" && !new EmailAddressAttribute().IsValid(email)) return BadRequest("A valid email is required.");
+            if (request.ForFamilyMember && string.IsNullOrWhiteSpace(request.SeniorName)) return BadRequest("The senior's name is required.");
+            var helpRequest = new HelpRequest {
+                FirstName = request.FirstName.Trim(),
+                LastName = request.LastName.Trim(),
+                Email = email,
+                Phone = phone,
+                HelpType = request.HelpType.Trim(),
+                City = request.City.Trim(),
+                ContactMethod = request.ContactMethod,
+                ForFamilyMember = request.ForFamilyMember,
+                SeniorName = request.ForFamilyMember ? request.SeniorName.Trim() : "",
+                ConsentGiven = true,
+                Status = "New",
+                SubmittedAt = DateTime.UtcNow,
+            };
+            _context.HelpRequests.Add(helpRequest);
             await _context.SaveChangesAsync();
-            return Ok(request);
+            return Ok(new { helpRequest.Id, helpRequest.Status });
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }

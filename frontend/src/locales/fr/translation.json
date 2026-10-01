@@ -110,17 +110,55 @@
     "news": {
       "eyebrow": "Nos réalisations",
       "heading": "Dernières nouvelles"
+    },
+    "howItWorks": {
+      "heading": "Comment ça marche",
+      "lead": "D'une simple demande à un soutien concret.",
+      "steps": {
+        "request": {
+          "title": "Demande de l'aîné",
+          "text": "Un aîné ou un proche envoie une demande d'aide."
+        },
+        "match": {
+          "title": "Jumelage automatique",
+          "text": "La demande est envoyée au bon organisme."
+        },
+        "accept": {
+          "title": "L'organisme accepte",
+          "text": "Un organisme local accepte la demande."
+        },
+        "contact": {
+          "title": "Prise de contact",
+          "text": "L'organisme communique avec l'aîné."
+        },
+        "assign": {
+          "title": "Bénévole assigné",
+          "text": "Un bénévole vérifié est assigné."
+        },
+        "service": {
+          "title": "Service et heures",
+          "text": "L'aide est fournie et les heures sont enregistrées."
+        }
+      },
+      "rolesHeading": "Trois rôles. Une communauté.",
+      "roles": {
+        "seniors": {
+          "title": "Aînés",
+          "text": "Obtenez l'aide dont vous avez besoin"
+        },
+        "organizations": {
+          "title": "Organismes",
+          "text": "Offrez le bon soutien"
+        },
+        "volunteers": {
+          "title": "Bénévoles",
+          "text": "Faites une différence"
+        }
+      }
     }
   },
   "getHelp": {
-    "eyebrow": "Obtenir de l'aide",
-    "heading": "Nous sommes là pour vous aider",
-    "lead": "Besoin d'un coup de main pour les repas, le transport, les visites à domicile ou les soins d'une personne aînée? Parlez-nous un peu de votre situation et une vraie personne vous rappellera.",
     "form": {
-      "helpType": "Comment pouvons-nous vous aider?",
-      "chooseOne": "Choisir une option",
-      "tellUsMore": "Dites-nous-en plus",
-      "send": "Envoyer la demande",
       "sending": "Envoi en cours..."
     },
     "success": {
@@ -135,6 +173,30 @@
       "item2": "Chaque bénévole a fait l'objet d'une vérification des antécédents",
       "item3": "Aucuns frais pour vous ni pour votre famille",
       "item4": "Vous pouvez suspendre ou arrêter l'aide en tout temps"
+    },
+    "request": {
+      "heading": "Demander de l'aide",
+      "lead": "Dites-nous ce dont vous avez besoin. Nous vous mettrons en lien avec le bon organisme de votre région.",
+      "helpType": "Type d'aide nécessaire",
+      "selectHelpType": "Choisissez un type d'aide",
+      "city": "Votre région / ville",
+      "selectCity": "Choisissez votre région",
+      "contactMethod": "Moyen de contact préféré",
+      "selectContactMethod": "Choisissez un moyen de contact",
+      "methods": {
+        "phone": "Téléphone",
+        "email": "Courriel"
+      },
+      "phone": "Numéro de téléphone",
+      "email": "Adresse courriel",
+      "family": "Cette demande est faite par un membre de la famille au nom d'un aîné.",
+      "seniorName": "Nom complet de l'aîné",
+      "consent": "J'accepte de partager mes renseignements avec les organismes partenaires afin qu'ils puissent me joindre au sujet de ma demande.",
+      "consentRequired": "Veuillez accepter de partager vos renseignements pour qu'un organisme puisse vous joindre.",
+      "submit": "Envoyer la demande",
+      "quote": "« Un petit coup de main fait une grande différence. »",
+      "photoAlt": "Un bénévole déneige l'entrée pendant qu'une aînée regarde par la fenêtre",
+      "requiredNote": "Les champs marqués d'un * sont obligatoires."
     }
   },
   "about": {
@@ -410,7 +472,10 @@
       "heading": "Demandes d'aide",
       "empty": "Aucune demande soumise pour le moment.",
       "helpType": "Type d'aide",
-      "submitted": "Soumise le"
+      "submitted": "Soumise le",
+      "city": "Ville",
+      "contact": "Contact",
+      "forSenior": "Pour {{name}}"
     },
     "editor": {
       "linkPrompt": "URL",

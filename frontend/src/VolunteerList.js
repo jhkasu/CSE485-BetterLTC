@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './VolunteerList.css';
 import apiFetch from './api';
-
-const CITIES = ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current', 'Yorkton', 'North Battleford', 'Estevan', 'Weyburn', 'Lloydminster', 'Humboldt', 'Melfort', 'Melville', 'Kindersley', 'Tisdale', 'Other'];
+import CITIES from './saskatchewanCities';
 
 function VolunteerList() {
   const navigate = useNavigate();
