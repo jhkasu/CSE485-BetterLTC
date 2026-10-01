@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Backend.Models;
 using Backend.Security;
 using Backend.Email;
+using Backend.Files;
 
 var builder = WebApplication.CreateBuilder(args);
 string[] allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? [];
@@ -46,7 +47,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope()) {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    bool seedResources = db.Database.GetPendingMigrations().Any(m => m.EndsWith(StarterResources.MigrationName));
     db.Database.Migrate();
+    if (seedResources) StarterResources.Seed(db, app.Environment.ContentRootPath);
     PasswordHashing.UpgradeLegacyPasswords(db);
     (builder.Configuration.GetSection("Admin").Get<AdminAccount>() ?? new AdminAccount()).CreateFirstAdmin(db);
 }

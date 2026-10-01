@@ -17,6 +17,10 @@ public static class ReferenceData {
         "Arts and Culture", "Community Services", "Other",
     ];
 
+    public static readonly string[] ResourceAudiences = ["Organizations", "Volunteers"];
+
+    public static readonly string[] ResourceTopics = ["Onboarding", "Screening", "Recognition", "Feedback", "Inclusivity"];
+
     public static readonly string[] Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
     public static readonly string[] TimesOfDay = ["Morning", "Afternoon", "Evening"];

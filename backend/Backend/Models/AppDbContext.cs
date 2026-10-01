@@ -13,6 +13,8 @@ public class AppDbContext : DbContext {
     public DbSet<OurWork> OurWorks { get; set; }
     public DbSet<HelpRequest> HelpRequests { get; set; }
     public DbSet<OrganizationLogo> OrganizationLogos { get; set; }
+    public DbSet<Resource> Resources { get; set; }
+    public DbSet<ResourceFile> ResourceFiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -23,6 +25,12 @@ public class AppDbContext : DbContext {
             .HasOne<Organization>()
             .WithOne()
             .HasForeignKey<OrganizationLogo>(l => l.OrganizationId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ResourceFile>()
+            .HasOne<Resource>()
+            .WithOne()
+            .HasForeignKey<ResourceFile>(f => f.ResourceId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<HelpRequest>()
