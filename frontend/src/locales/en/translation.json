@@ -258,11 +258,19 @@
   "volunteer": {
     "eyebrow": "Volunteer",
     "heading": "Find an opportunity near you",
-    "lead": "Every listing comes from a verified organization. Pick a city to narrow the list.",
+    "lead": "Every listing comes from a verified organization. Filter by area, type of help, or day.",
     "searchPlaceholder": "Enter a keyword...",
     "empty": "No opportunities found.",
     "emptyForKeyword": "No opportunities match \"{{keyword}}\".",
-    "otherCity": "Other"
+    "otherCity": "Other",
+    "filters": {
+      "area": "Area",
+      "helpType": "Type of help",
+      "days": "Days",
+      "clear": "Clear all"
+    },
+    "count_one": "{{count}} opportunity",
+    "count_other": "{{count}} opportunities"
   },
   "volunteerDetail": {
     "back": "Back to opportunities",
@@ -664,6 +672,12 @@
       "interest": "Matches your interests",
       "speaks": "Speaks {{languages}}",
       "interestedInHelp": "Interested in this type of help"
+    },
+    "labels": {
+      "great": "Great match",
+      "good": "Good match",
+      "fair": "Fair match",
+      "low": "Low match"
     }
   }
 }

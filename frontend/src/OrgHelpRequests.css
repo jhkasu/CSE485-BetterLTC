@@ -60,15 +60,6 @@
   cursor: pointer;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
 .hr-message {
   color: var(--color-danger);
   background: var(--color-danger-bg);
