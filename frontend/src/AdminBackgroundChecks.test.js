@@ -56,3 +56,16 @@ test('rejecting needs a reason', async () => {
   expect(within(dialog).getByRole('alert')).toHaveTextContent('Please give a reason.');
   expect(global.fetch.mock.calls.some(([u]) => u.endsWith('/reject'))).toBe(false);
 });
+
+test('deletes a document after confirming', async () => {
+  render(<AdminBackgroundChecks />);
+  await screen.findByText('Emily Carter');
+  fireEvent.click(screen.getByRole('button', { name: 'Delete document for Emily Carter' }));
+  const dialog = screen.getByRole('dialog');
+  expect(within(dialog).getByText(/emily.pdf will be permanently deleted/)).toBeInTheDocument();
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Delete' }));
+  await screen.findByText('Emily Carter');
+  const [url, options] = global.fetch.mock.calls.find(([, o]) => o && o.method === 'DELETE');
+  expect(url).toMatch(/\/api\/background-checks\/1\/document$/);
+  expect(options.method).toBe('DELETE');
+});

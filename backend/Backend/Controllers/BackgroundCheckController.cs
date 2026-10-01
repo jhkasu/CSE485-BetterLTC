@@ -100,6 +100,40 @@ public class BackgroundCheckController : ControllerBase {
         }
     }
 
+    [HttpDelete("me/document")]
+    [Authorize(Roles = Roles.Volunteer)]
+    public async Task<IActionResult> RemoveMine() {
+        try {
+            int? id = User.AccountId();
+            if (id is null) return Forbid();
+            var check = await _context.BackgroundChecks.FirstOrDefaultAsync(c => c.VolunteerId == id.Value);
+            if (check is null || check.FileData is null) return NotFound();
+            if (check.Status != BackgroundCheckStatuses.Submitted) return BadRequest("Only a document that is still under review can be removed.");
+            ClearDocument(check);
+            await _context.SaveChangesAsync();
+            return Ok(BackgroundCheckResponse.From(check, Today));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:int}/document")]
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> DeleteDocument(int id) {
+        try {
+            var check = await _context.BackgroundChecks.FindAsync(id);
+            if (check is null || check.FileData is null) return NotFound();
+            ClearDocument(check);
+            check.ReviewedAt = DateTime.UtcNow;
+            check.ReviewedByAdminId = User.AccountId();
+            await SetVolunteerApproved(check.VolunteerId, false);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
     [HttpGet]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetAll() {
@@ -204,6 +238,17 @@ public class BackgroundCheckController : ControllerBase {
             RejectionReason = c.RejectionReason,
             ExpiresOn = c.ExpiresOn,
         });
+    }
+
+    private static void ClearDocument(BackgroundCheck check) {
+        check.FileData = null;
+        check.FileName = "";
+        check.ContentType = "";
+        check.FileSize = 0;
+        check.SubmittedAt = null;
+        check.ExpiresOn = null;
+        check.RejectionReason = "";
+        check.Status = BackgroundCheckStatuses.ConsentGiven;
     }
 
     private async Task SetVolunteerApproved(int volunteerId, bool approved) {

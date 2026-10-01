@@ -74,3 +74,25 @@ test('shows the expiry date and warns when it is close', async () => {
   expect(await screen.findByText('Background check approved')).toBeInTheDocument();
   expect(screen.getByRole('alert')).toHaveTextContent('expires in 12 days');
 });
+
+test('a document under review can be removed after confirming', async () => {
+  global.fetch = jest.fn((url, options = {}) => {
+    if (options.method === 'DELETE') return respond({ status: 'ConsentGiven' });
+    return respond({ status: 'Submitted', fileName: 'wrong-file.pdf', submittedAt: '2026-10-01T12:00:00Z' });
+  });
+  render(<BackgroundCheck />);
+  fireEvent.click(await screen.findByRole('button', { name: 'Remove document' }));
+  expect(screen.getByText(/permanently deleted/)).toBeInTheDocument();
+  expect(global.fetch.mock.calls.some(([, o]) => o && o.method === 'DELETE')).toBe(false);
+  fireEvent.click(screen.getByRole('button', { name: 'Remove' }));
+  expect(await screen.findByRole('button', { name: 'Submit document' })).toBeInTheDocument();
+  const [url] = global.fetch.mock.calls.find(([, o]) => o && o.method === 'DELETE');
+  expect(url).toMatch(/\/api\/background-checks\/me\/document$/);
+});
+
+test('an approved document cannot be removed by the volunteer', async () => {
+  global.fetch = jest.fn(() => respond({ status: 'Approved', expiresOn: inDays(400) }));
+  render(<BackgroundCheck />);
+  expect(await screen.findByText('Background check approved')).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Remove document' })).not.toBeInTheDocument();
+});

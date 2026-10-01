@@ -373,8 +373,12 @@
       "errors": {
         "type": "Please choose a PDF, JPG, or PNG file.",
         "size": "The file must be 5 MB or smaller.",
-        "upload": "Could not upload the document. Please try again."
-      }
+        "upload": "Could not upload the document. Please try again.",
+        "remove": "Could not remove the document. Please try again."
+      },
+      "remove": "Remove document",
+      "removeConfirm": "Remove this document? It will be permanently deleted and you can upload a new one.",
+      "removeYes": "Remove"
     },
     "profile": {
       "changePhoto": "Change Photo",
@@ -668,7 +672,11 @@
       "reasonPlaceholder": "For example: The document is blurry. Please upload a clearer copy.",
       "reasonRequired": "Please give a reason.",
       "expiryInFuture": "Please choose a date in the future.",
-      "openFailed": "Could not open the document."
+      "openFailed": "Could not open the document.",
+      "delete": "Delete",
+      "deleteFor": "Delete document for {{name}}",
+      "deleteTitle": "Delete document for {{name}}",
+      "deleteText": "{{file}} will be permanently deleted. The volunteer will no longer be approved and must upload a new document."
     }
   },
   "options": {
