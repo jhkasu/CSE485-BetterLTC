@@ -162,8 +162,12 @@
       "sending": "Envoi en cours..."
     },
     "success": {
-      "heading": "Merci d'avoir communiqué avec nous",
-      "text": "Nous avons bien reçu votre demande et nous vous répondrons dans un délai de deux jours ouvrables.",
+      "heading": "Votre demande a été envoyée!",
+      "text": "Merci de nous avoir contactés. Un organisme partenaire communiquera avec vous bientôt pour discuter des prochaines étapes.",
+      "willCall": "Il vous appellera au {{phone}}.",
+      "emailSent": "Nous avons envoyé un courriel de confirmation à {{email}}.",
+      "emergency": "Ce service n'est pas destiné aux urgences. En cas d'urgence, composez le 911.",
+      "backHome": "Retour à l'accueil",
       "another": "Envoyer une autre demande"
     },
     "expect": {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { MdCheck } from 'react-icons/md';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './GetHelpPage.css';
@@ -35,9 +37,10 @@ const EMPTY_FORM = {
 };
 
 function GetHelpPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [form, setForm] = useState(EMPTY_FORM);
   const [status, setStatus] = useState(null);
+  const [submitted, setSubmitted] = useState(null);
   const [error, setError] = useState('');
 
   const formatPhone = (value) => {
@@ -70,9 +73,12 @@ function GetHelpPage() {
           phone: form.contactMethod === 'Phone' ? form.phone : '',
           email: form.contactMethod === 'Email' ? form.email : '',
           seniorName: form.forFamilyMember ? form.seniorName : '',
+          language: i18n.language,
         }),
       });
       if (!res.ok) throw new Error();
+      const data = await res.json().catch(() => ({}));
+      setSubmitted({ method: form.contactMethod, phone: form.phone, email: form.email, emailSent: !!data.emailSent });
       setStatus('success');
       setForm(EMPTY_FORM);
     } catch {
@@ -89,10 +95,17 @@ function GetHelpPage() {
         <div className="request-help-inner">
           <div className="request-help-card">
             {status === 'success' ? (
-              <div className="gethelp-success">
-                <h2>{t('getHelp.success.heading')}</h2>
+              <div className="gethelp-success" role="status">
+                <div className="gethelp-success-icon" aria-hidden="true"><MdCheck /></div>
+                <h1 className="request-help-title">{t('getHelp.success.heading')}</h1>
                 <p>{t('getHelp.success.text')}</p>
-                <button className="btn btn-outline" onClick={() => setStatus(null)}>{t('getHelp.success.another')}</button>
+                {submitted?.method === 'Phone' && <p>{t('getHelp.success.willCall', { phone: submitted.phone })}</p>}
+                {submitted?.emailSent && <p>{t('getHelp.success.emailSent', { email: submitted.email })}</p>}
+                <p className="gethelp-success-emergency">{t('getHelp.success.emergency')}</p>
+                <div className="gethelp-success-actions">
+                  <Link className="btn btn-primary btn-lg" to="/">{t('getHelp.success.backHome')}</Link>
+                  <button type="button" className="btn btn-outline btn-lg" onClick={() => setStatus(null)}>{t('getHelp.success.another')}</button>
+                </div>
               </div>
             ) : (
               <>

@@ -6,7 +6,7 @@ import { AccessibilityProvider } from './accessibility/AccessibilityContext';
 
 beforeEach(() => {
   window.localStorage.clear();
-  global.fetch = jest.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => ({ id: 1, status: 'New' }) }));
+  global.fetch = jest.fn(() => Promise.resolve({ ok: true, status: 200, json: async () => ({ id: 1, status: 'New', emailSent: false }) }));
 });
 
 afterEach(() => {
@@ -63,7 +63,9 @@ test('sends a family member request with the senior name and only the chosen con
   fireEvent.change(screen.getByLabelText(/senior's full name/i), { target: { name: 'seniorName', value: 'Marie Tremblay' } });
   fireEvent.click(screen.getByLabelText(/i agree to share my information/i));
   fireEvent.click(screen.getByRole('button', { name: 'Submit request' }));
-  expect(await screen.findByText(/thank you for reaching out/i)).toBeInTheDocument();
+  expect(await screen.findByText('Your request has been submitted!')).toBeInTheDocument();
+  expect(screen.getByText('They will call you at (306) 555-0123.')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Back to home' })).toHaveAttribute('href', '/');
   const [url, options] = global.fetch.mock.calls[0];
   expect(url).toMatch(/\/api\/help-requests$/);
   expect(JSON.parse(options.body)).toEqual({
@@ -77,5 +79,17 @@ test('sends a family member request with the senior name and only the chosen con
     forFamilyMember: true,
     seniorName: 'Marie Tremblay',
     consentGiven: true,
+    language: 'en',
   });
+});
+
+test('confirms the email when the request is sent by email', async () => {
+  global.fetch.mockImplementation(() => Promise.resolve({ ok: true, status: 200, json: async () => ({ id: 2, status: 'New', emailSent: true }) }));
+  renderPage();
+  fillBasics('Email');
+  fireEvent.change(screen.getByLabelText(/email address/i), { target: { name: 'email', value: 'rose@example.test' } });
+  fireEvent.click(screen.getByLabelText(/i agree to share my information/i));
+  fireEvent.click(screen.getByRole('button', { name: 'Submit request' }));
+  expect(await screen.findByText('We sent a confirmation email to rose@example.test.')).toBeInTheDocument();
+  expect(JSON.parse(global.fetch.mock.calls[0][1].body).phone).toBe('');
 });
