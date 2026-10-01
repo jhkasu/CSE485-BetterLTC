@@ -376,7 +376,9 @@
     "role": "Organization",
     "nav": {
       "listings": "My Listings",
-      "applicants": "Applicants"
+      "applicants": "Applicants",
+      "requests": "Request List",
+      "accepted": "Accepted Requests"
     },
     "stats": {
       "activeListings": "Active Listings",
@@ -413,6 +415,51 @@
       "heading": "Account Pending Approval",
       "text": "Your organization account is currently under review. An admin will approve your account before you can post listings.",
       "notify": "We will notify you once your account has been approved."
+    },
+    "requests": {
+      "heading": "Help Requests",
+      "lead": "Browse open help requests from seniors and families in Saskatchewan. Accept the ones that fit your organization's capacity. Contact details are shown after you accept.",
+      "searchLabel": "Search requests",
+      "searchPlaceholder": "Search by area or help type...",
+      "allAreas": "All areas",
+      "allTypes": "All help types",
+      "empty": "There are no open requests right now.",
+      "noMatch": "No requests match your filters.",
+      "submitted": "Submitted {{date}}",
+      "prefers": "Prefers {{method}}",
+      "familyRequest": "Submitted by a family member",
+      "accept": "Accept request",
+      "accepting": "Accepting...",
+      "alreadyTaken": "Another organization already accepted this request.",
+      "acceptFailed": "Could not accept the request. Please try again."
+    },
+    "accepted": {
+      "heading": "Accepted Requests",
+      "empty": "You have not accepted any requests yet.",
+      "view": "View details"
+    },
+    "detail": {
+      "back": "Back to list",
+      "heading": "Request Details",
+      "steps": {
+        "received": "Received",
+        "accepted": "Accepted",
+        "contacted": "Contacted",
+        "volunteerAssigned": "Volunteer Assigned",
+        "completed": "Completed"
+      },
+      "contactInfo": "Contact Information",
+      "preferred": "Preferred contact: {{method}}",
+      "additional": "Additional Info",
+      "requestFor": "Help is for: {{name}}",
+      "familyNote": "Submitted by a family member on behalf of the senior.",
+      "selfNote": "Submitted by the senior.",
+      "acceptedBanner": "Please contact them using their preferred contact method, then mark the request as contacted.",
+      "contactedBanner": "The senior has been contacted and you can proceed with volunteer matching.",
+      "markContacted": "Mark as contacted",
+      "release": "Release request",
+      "releaseConfirm": "Release this request so another organization can accept it?",
+      "releaseYes": "Release"
     }
   },
   "adminDashboard": {
@@ -536,6 +583,11 @@
       "fri": "Fri",
       "sat": "Sat",
       "sun": "Sun"
+    },
+    "helpRequestStatus": {
+      "new": "New",
+      "accepted": "Accepted",
+      "contacted": "Contacted"
     }
   }
 }

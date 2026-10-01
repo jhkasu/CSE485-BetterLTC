@@ -493,6 +493,7 @@ function AdminDashboard() {
               <th>{t('adminDashboard.help.helpType')}</th>
               <th>{t('adminDashboard.help.city')}</th>
               <th>{t('adminDashboard.help.contact')}</th>
+              <th>{t('common.status')}</th>
               <th>{t('adminDashboard.help.submitted')}</th>
               <th>{t('common.actions')}</th>
             </tr>
@@ -511,6 +512,7 @@ function AdminDashboard() {
                   {r.email && <div>{r.email}</div>}
                   {!r.phone && !r.email && '—'}
                 </td>
+                <td>{t(`options.helpRequestStatus.${(r.status || 'New').toLowerCase()}`, { defaultValue: r.status })}</td>
                 <td>{new Date(r.submittedAt).toLocaleDateString()}</td>
                 <td>
                   <div className="admin-action-cell">

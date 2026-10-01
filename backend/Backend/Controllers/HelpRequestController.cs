@@ -51,7 +51,7 @@ public class HelpRequestController : ControllerBase {
                 ForFamilyMember = request.ForFamilyMember,
                 SeniorName = request.ForFamilyMember ? request.SeniorName.Trim() : "",
                 ConsentGiven = true,
-                Status = "New",
+                Status = HelpRequestStatuses.New,
                 SubmittedAt = DateTime.UtcNow,
             };
             _context.HelpRequests.Add(helpRequest);
@@ -62,6 +62,121 @@ public class HelpRequestController : ControllerBase {
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
         }
+    }
+
+    [HttpGet("open")]
+    [Authorize(Roles = Roles.Organization)]
+    public async Task<IActionResult> GetOpen() {
+        try {
+            if (await CurrentApprovedOrganization() is null) return Forbid();
+            var requests = await _context.HelpRequests
+                .Where(r => r.Status == HelpRequestStatuses.New && r.OrganizationId == null)
+                .OrderBy(r => r.SubmittedAt)
+                .ToListAsync();
+            return Ok(requests.Select(OpenHelpRequestResponse.From));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("accepted")]
+    [Authorize(Roles = Roles.Organization)]
+    public async Task<IActionResult> GetAccepted() {
+        try {
+            var org = await CurrentApprovedOrganization();
+            if (org is null) return Forbid();
+            var requests = await _context.HelpRequests
+                .Where(r => r.OrganizationId == org.Id)
+                .OrderByDescending(r => r.AcceptedAt)
+                .ToListAsync();
+            return Ok(requests.Select(HelpRequestDetailResponse.From));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpGet("{id:int}")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> GetOne(int id) {
+        try {
+            var request = await _context.HelpRequests.FindAsync(id);
+            if (request is null) return NotFound();
+            if (!await CanManage(request)) return Forbid();
+            return Ok(HelpRequestDetailResponse.From(request));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/accept")]
+    [Authorize(Roles = Roles.Organization)]
+    public async Task<IActionResult> Accept(int id) {
+        try {
+            var org = await CurrentApprovedOrganization();
+            if (org is null) return Forbid();
+            if (!await _context.HelpRequests.AnyAsync(r => r.Id == id)) return NotFound();
+            int updated = await _context.HelpRequests
+                .Where(r => r.Id == id && r.Status == HelpRequestStatuses.New && r.OrganizationId == null)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(r => r.Status, HelpRequestStatuses.Accepted)
+                    .SetProperty(r => r.OrganizationId, org.Id)
+                    .SetProperty(r => r.AcceptedAt, DateTime.UtcNow));
+            if (updated == 0) return Conflict("This request was already accepted.");
+            var request = await _context.HelpRequests.AsNoTracking().FirstAsync(r => r.Id == id);
+            return Ok(HelpRequestDetailResponse.From(request));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/contacted")]
+    [Authorize(Roles = Roles.Organization)]
+    public async Task<IActionResult> MarkContacted(int id) {
+        try {
+            var org = await CurrentApprovedOrganization();
+            if (org is null) return Forbid();
+            var request = await _context.HelpRequests.FindAsync(id);
+            if (request is null) return NotFound();
+            if (request.OrganizationId != org.Id) return Forbid();
+            if (request.Status != HelpRequestStatuses.Accepted) return BadRequest("Only accepted requests can be marked as contacted.");
+            request.Status = HelpRequestStatuses.Contacted;
+            request.ContactedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return Ok(HelpRequestDetailResponse.From(request));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/release")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> Release(int id) {
+        try {
+            var request = await _context.HelpRequests.FindAsync(id);
+            if (request is null) return NotFound();
+            if (!await CanManage(request) || request.OrganizationId is null) return Forbid();
+            request.Status = HelpRequestStatuses.New;
+            request.OrganizationId = null;
+            request.AcceptedAt = null;
+            request.ContactedAt = null;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    private async Task<Organization?> CurrentApprovedOrganization() {
+        int? id = User.AccountId();
+        if (!User.IsInRole(Roles.Organization) || id is null) return null;
+        var org = await _context.Organizations.FindAsync(id.Value);
+        return org is { IsApproved: true } ? org : null;
+    }
+
+    private async Task<bool> CanManage(HelpRequest request) {
+        if (User.IsInRole(Roles.Admin)) return true;
+        var org = await CurrentApprovedOrganization();
+        return org is not null && request.OrganizationId == org.Id;
     }
 
     [HttpDelete("{id:int}")]

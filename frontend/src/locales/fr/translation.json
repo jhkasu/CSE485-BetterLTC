@@ -376,7 +376,9 @@
     "role": "Organisme",
     "nav": {
       "listings": "Mes annonces",
-      "applicants": "Candidats"
+      "applicants": "Candidats",
+      "requests": "Liste des demandes",
+      "accepted": "Demandes acceptées"
     },
     "stats": {
       "activeListings": "Annonces actives",
@@ -413,6 +415,51 @@
       "heading": "Compte en attente d'approbation",
       "text": "Le compte de votre organisme est en cours d'examen. Un administrateur doit l'approuver avant que vous puissiez publier des annonces.",
       "notify": "Nous vous aviserons dès que votre compte aura été approuvé."
+    },
+    "requests": {
+      "heading": "Demandes d'aide",
+      "lead": "Consultez les demandes d'aide ouvertes des aînés et des familles de la Saskatchewan. Acceptez celles qui correspondent à la capacité de votre organisme. Les coordonnées s'affichent une fois la demande acceptée.",
+      "searchLabel": "Rechercher des demandes",
+      "searchPlaceholder": "Rechercher par région ou type d'aide...",
+      "allAreas": "Toutes les régions",
+      "allTypes": "Tous les types d'aide",
+      "empty": "Il n'y a aucune demande ouverte pour le moment.",
+      "noMatch": "Aucune demande ne correspond à vos filtres.",
+      "submitted": "Envoyée le {{date}}",
+      "prefers": "Préfère : {{method}}",
+      "familyRequest": "Envoyée par un membre de la famille",
+      "accept": "Accepter la demande",
+      "accepting": "Acceptation...",
+      "alreadyTaken": "Un autre organisme a déjà accepté cette demande.",
+      "acceptFailed": "Impossible d'accepter la demande. Veuillez réessayer."
+    },
+    "accepted": {
+      "heading": "Demandes acceptées",
+      "empty": "Vous n'avez encore accepté aucune demande.",
+      "view": "Voir les détails"
+    },
+    "detail": {
+      "back": "Retour à la liste",
+      "heading": "Détails de la demande",
+      "steps": {
+        "received": "Reçue",
+        "accepted": "Acceptée",
+        "contacted": "Contactée",
+        "volunteerAssigned": "Bénévole assigné",
+        "completed": "Terminée"
+      },
+      "contactInfo": "Coordonnées",
+      "preferred": "Moyen de contact préféré : {{method}}",
+      "additional": "Renseignements supplémentaires",
+      "requestFor": "L'aide est pour : {{name}}",
+      "familyNote": "Envoyée par un membre de la famille au nom de l'aîné.",
+      "selfNote": "Envoyée par l'aîné.",
+      "acceptedBanner": "Veuillez communiquer avec la personne par son moyen de contact préféré, puis indiquer que la demande a été contactée.",
+      "contactedBanner": "L'aîné a été contacté et vous pouvez passer au jumelage avec un bénévole.",
+      "markContacted": "Indiquer comme contactée",
+      "release": "Libérer la demande",
+      "releaseConfirm": "Libérer cette demande pour qu'un autre organisme puisse l'accepter?",
+      "releaseYes": "Libérer"
     }
   },
   "adminDashboard": {
@@ -536,6 +583,11 @@
       "fri": "Ven",
       "sat": "Sam",
       "sun": "Dim"
+    },
+    "helpRequestStatus": {
+      "new": "Nouvelle",
+      "accepted": "Acceptée",
+      "contacted": "Contactée"
     }
   }
 }

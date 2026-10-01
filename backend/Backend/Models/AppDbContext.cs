@@ -20,6 +20,15 @@ public class AppDbContext : DbContext {
             .HasIndex(a => a.Email)
             .IsUnique();
 
+        modelBuilder.Entity<HelpRequest>()
+            .HasOne<Organization>()
+            .WithMany()
+            .HasForeignKey(r => r.OrganizationId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<HelpRequest>()
+            .HasIndex(r => r.Status);
+
         modelBuilder.Entity<Listing>()
             .HasOne<Organization>()
             .WithMany()
