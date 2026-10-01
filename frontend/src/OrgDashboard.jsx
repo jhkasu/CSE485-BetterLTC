@@ -8,12 +8,7 @@ import './OrgDashboard.css';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
-
-const SK_CITIES = [
-  'Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current',
-  'Yorkton', 'North Battleford', 'Estevan', 'Weyburn', 'Lloydminster',
-  'Humboldt', 'Melfort', 'Melville', 'Kindersley', 'Tisdale', 'Other',
-];
+import SK_CITIES from './saskatchewanCities';
 
 const DAYS_OF_WEEK = [
   { value: 'Monday', labelKey: 'options.days.monday' },

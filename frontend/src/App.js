@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import Pillars from './Pillars';
+import HowItWorks from './HowItWorks';
+import ScrollToTop from './ScrollToTop';
 import RecentOpportunities from './RecentOpportunities';
 import NewsSection from './NewsSection';
 import VolunteerList from './VolunteerList';
@@ -46,6 +48,7 @@ function Home() {
     <div>
       <Navbar />
       <Hero />
+      <HowItWorks />
       <Pillars />
       <RecentOpportunities />
       <NewsSection />
@@ -91,6 +94,7 @@ function SigninPage() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/volunteer" element={<VolunteerPage />} />

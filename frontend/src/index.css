@@ -32,6 +32,9 @@
   --color-warning: #7a5c00;
   --color-warning-bg: #fff8e1;
   --color-warning-border: #ffe082;
+  --color-role-org: #2f5fa8;
+  --color-role-volunteer: #7a4fb0;
+  --color-on-role: #ffffff;
 
   --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.08);

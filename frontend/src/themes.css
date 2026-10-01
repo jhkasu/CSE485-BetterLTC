@@ -7,6 +7,9 @@
 */
 
 html[data-contrast='dark'] {
+  --color-role-org: #5b8bd6;
+  --color-role-volunteer: #a37ad6;
+  --color-on-role: #0e0e10;
   color-scheme: dark;
   --color-bg: #161618;
   --color-surface: #1f1f23;
@@ -45,6 +48,9 @@ html[data-contrast='dark'] {
 }
 
 html[data-contrast='high'] {
+  --color-role-org: #ffffff;
+  --color-role-volunteer: #ffffff;
+  --color-on-role: #000000;
   color-scheme: dark;
   --color-bg: #000000;
   --color-surface: #000000;
