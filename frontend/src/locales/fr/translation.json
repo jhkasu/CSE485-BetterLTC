@@ -373,8 +373,12 @@
       "errors": {
         "type": "Veuillez choisir un fichier PDF, JPG ou PNG.",
         "size": "Le fichier doit faire 5 Mo ou moins.",
-        "upload": "Impossible de téléverser le document. Veuillez réessayer."
-      }
+        "upload": "Impossible de téléverser le document. Veuillez réessayer.",
+        "remove": "Impossible de retirer le document. Veuillez réessayer."
+      },
+      "remove": "Retirer le document",
+      "removeConfirm": "Retirer ce document? Il sera supprimé définitivement et vous pourrez en téléverser un nouveau.",
+      "removeYes": "Retirer"
     },
     "profile": {
       "changePhoto": "Changer la photo",
@@ -668,7 +672,11 @@
       "reasonPlaceholder": "Par exemple : Le document est flou. Veuillez téléverser une copie plus claire.",
       "reasonRequired": "Veuillez indiquer une raison.",
       "expiryInFuture": "Veuillez choisir une date future.",
-      "openFailed": "Impossible d'ouvrir le document."
+      "openFailed": "Impossible d'ouvrir le document.",
+      "delete": "Supprimer",
+      "deleteFor": "Supprimer le document de {{name}}",
+      "deleteTitle": "Supprimer le document de {{name}}",
+      "deleteText": "{{file}} sera supprimé définitivement. Le bénévole ne sera plus approuvé et devra téléverser un nouveau document."
     }
   },
   "options": {

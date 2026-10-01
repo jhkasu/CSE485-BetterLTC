@@ -63,6 +63,16 @@ function AdminBackgroundChecks() {
 
   const submitDialog = () => {
     const { mode, check } = dialog;
+    if (mode === 'delete') {
+      apiFetch(`/api/background-checks/${check.id}/document`, { method: 'DELETE' })
+        .then(res => {
+          if (!res.ok) throw new Error('delete failed');
+          setDialog(null);
+          load();
+        })
+        .catch(() => setError('common.genericError'));
+      return;
+    }
     if (mode === 'reject' && !reason.trim()) {
       setError('adminDashboard.bgChecks.reasonRequired');
       return;
@@ -159,6 +169,11 @@ function AdminBackgroundChecks() {
                     {check.fileName && (check.status === 'Submitted' || check.status === 'Approved') && (
                       <button type="button" className="admin-action-btn revoke" onClick={() => openDialog('reject', check)}>{t('adminDashboard.bgChecks.reject')}</button>
                     )}
+                    {check.fileName && (
+                      <button type="button" className="admin-action-btn revoke" onClick={() => openDialog('delete', check)} aria-label={t('adminDashboard.bgChecks.deleteFor', { name: check.volunteerName })}>
+                        {t('adminDashboard.bgChecks.delete')}
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>
@@ -172,13 +187,15 @@ function AdminBackgroundChecks() {
           <div className="admin-modal" role="dialog" aria-modal="true" aria-labelledby="bgc-dialog-title" onClick={e => e.stopPropagation()}>
             <div className="admin-modal-header">
               <h3 id="bgc-dialog-title">
-                {t(dialog.mode === 'approve' ? 'adminDashboard.bgChecks.approveTitle' : 'adminDashboard.bgChecks.rejectTitle', { name: dialog.check.volunteerName })}
+                {t(`adminDashboard.bgChecks.${dialog.mode}Title`, { name: dialog.check.volunteerName })}
               </h3>
               <button className="admin-modal-close" onClick={() => setDialog(null)} aria-label={t('common.cancel')}><MdClose /></button>
             </div>
             <div className="admin-modal-body">
               <div className="admin-form">
-                {dialog.mode === 'approve' ? (
+                {dialog.mode === 'delete' ? (
+                  <p className="admin-dialog-text">{t('adminDashboard.bgChecks.deleteText', { file: dialog.check.fileName })}</p>
+                ) : dialog.mode === 'approve' ? (
                   <>
                     <label htmlFor="bgc-expires">{t('adminDashboard.bgChecks.expiresOn')}</label>
                     <input id="bgc-expires" type="date" value={expiresOn} onChange={e => { setExpiresOn(e.target.value); setError(''); }} />
@@ -191,8 +208,8 @@ function AdminBackgroundChecks() {
                 )}
                 {error && <p className="admin-error" role="alert">{t(error)}</p>}
                 <div className="admin-form-actions">
-                  <button className="admin-save-btn" onClick={submitDialog}>
-                    {t(dialog.mode === 'approve' ? 'adminDashboard.bgChecks.approve' : 'adminDashboard.bgChecks.reject')}
+                  <button className={`admin-save-btn${dialog.mode === 'delete' ? ' admin-save-btn--danger' : ''}`} onClick={submitDialog}>
+                    {t(`adminDashboard.bgChecks.${dialog.mode}`)}
                   </button>
                   <button className="admin-cancel-btn" onClick={() => setDialog(null)}>{t('common.cancel')}</button>
                 </div>

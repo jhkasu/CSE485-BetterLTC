@@ -36,6 +36,7 @@ function BackgroundCheck({ onChange }) {
   const [file, setFile] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [confirmRemove, setConfirmRemove] = useState(false);
 
   useEffect(() => {
     apiFetch('/api/background-checks/me')
@@ -100,6 +101,23 @@ function BackgroundCheck({ onChange }) {
         updateCheck(data);
       })
       .catch(() => setError('dashboard.bgCheck.errors.upload'))
+      .finally(() => setBusy(false));
+  };
+
+  const removeDocument = () => {
+    setBusy(true);
+    setError('');
+    apiFetch('/api/background-checks/me/document', { method: 'DELETE' })
+      .then(res => {
+        if (!res.ok) throw new Error('remove failed');
+        return res.json();
+      })
+      .then(data => {
+        setConfirmRemove(false);
+        setShowUpload(true);
+        updateCheck(data);
+      })
+      .catch(() => setError('dashboard.bgCheck.errors.remove'))
       .finally(() => setBusy(false));
   };
 
@@ -188,6 +206,15 @@ function BackgroundCheck({ onChange }) {
           <div className="bgc-card-body">
             <h3>{t('dashboard.bgCheck.steps.review')}</h3>
             <p>{t('dashboard.bgCheck.reviewText', { file: check.fileName, date: formatDate(check.submittedAt) })}</p>
+            {confirmRemove ? (
+              <div className="bgc-confirm" role="alertdialog" aria-label={t('dashboard.bgCheck.removeConfirm')}>
+                <p>{t('dashboard.bgCheck.removeConfirm')}</p>
+                <button type="button" className="bgc-btn bgc-btn--danger" onClick={removeDocument} disabled={busy}>{t('dashboard.bgCheck.removeYes')}</button>
+                <button type="button" className="bgc-btn-link" onClick={() => setConfirmRemove(false)}>{t('common.cancel')}</button>
+              </div>
+            ) : (
+              <button type="button" className="bgc-btn-link" onClick={() => setConfirmRemove(true)}>{t('dashboard.bgCheck.remove')}</button>
+            )}
           </div>
         </div>
       )}

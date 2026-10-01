@@ -571,3 +571,20 @@
   padding: 10px 14px;
   font-size: 15px;
 }
+
+.admin-save-btn--danger {
+  background-color: var(--color-danger-solid);
+  border-color: var(--color-danger-solid);
+  color: var(--color-on-solid);
+}
+
+.admin-save-btn--danger:hover {
+  background-color: var(--color-danger-solid-hover);
+}
+
+.admin-dialog-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0 0 8px 0;
+}

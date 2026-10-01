@@ -190,6 +190,42 @@
   cursor: not-allowed;
 }
 
+.bgc-btn--danger {
+  background-color: var(--color-danger-solid);
+  color: var(--color-on-solid);
+}
+
+.bgc-btn--danger:hover {
+  background-color: var(--color-danger-solid-hover);
+}
+
+.bgc-btn-link {
+  background: none;
+  border: none;
+  padding: 8px 0;
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bgc-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding: 16px;
+  border-radius: 6px;
+  background: var(--color-danger-bg);
+}
+
+.bgc-confirm p {
+  flex-basis: 100%;
+  margin: 0 !important;
+  color: var(--color-text) !important;
+}
+
 .bgc-alert {
   display: flex;
   align-items: flex-start;
