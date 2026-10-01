@@ -9,9 +9,9 @@ namespace Backend.Controllers;
 [Route("api/our-work")]
 [ApiController]
 public class OurWorkController : ControllerBase {
-    private readonly UsersDbContext _context;
+    private readonly AppDbContext _context;
 
-    public OurWorkController(UsersDbContext context) {
+    public OurWorkController(AppDbContext context) {
         _context = context;
     }
 

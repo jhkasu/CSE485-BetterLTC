@@ -8,11 +8,11 @@ namespace Backend.Controllers;
 [Route("api/auth")]
 [ApiController]
 public class AuthController : ControllerBase {
-    private readonly UsersDbContext _context;
+    private readonly AppDbContext _context;
     private readonly TokenService _tokens;
     private readonly AdminAccount _admin;
 
-    public AuthController(UsersDbContext context, TokenService tokens, AdminAccount admin) {
+    public AuthController(AppDbContext context, TokenService tokens, AdminAccount admin) {
         this._context = context;
         this._tokens = tokens;
         this._admin = admin;

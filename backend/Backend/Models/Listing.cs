@@ -8,6 +8,7 @@ public class Listing {
     public string Description { get; set; } = "";
     [Required] public string Location { get; set; } = "";
     public string Days { get; set; } = "";
+    public int? OrganizationId { get; set; }
     [Required] public string OrgName { get; set; } = "";
     [Required] public string Status { get; set; } = "";
     public string ListingDate { get; set; } = "";

@@ -9,10 +9,10 @@ namespace Backend.Controllers;
 [Route("api/volunteers")]
 [ApiController]
 public class VolunteerController : ControllerBase {
-    private readonly UsersDbContext _context;
+    private readonly AppDbContext _context;
     private readonly AdminAccount _admin;
 
-    public VolunteerController(UsersDbContext context, AdminAccount admin) {
+    public VolunteerController(AppDbContext context, AdminAccount admin) {
         this._context = context;
         this._admin = admin;
     }
