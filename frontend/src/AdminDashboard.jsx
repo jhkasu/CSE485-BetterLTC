@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
-  MdClose, MdOpenInNew, MdBusiness, MdLock, MdFolder, MdQuiz,
+  MdClose, MdOpenInNew, MdBusiness, MdLock, MdFolder, MdQuiz, MdFormatQuote,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ import { HELP_TYPE_KEYS } from './helpTypes';
 import AdminHelpRequests from './AdminHelpRequests';
 import AdminResources from './AdminResources';
 import AdminFaqs from './AdminFaqs';
+import AdminTestimonials from './AdminTestimonials';
 
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
@@ -25,6 +26,7 @@ const NAV_ITEMS = [
   { id: 'organizations',  labelKey: 'adminDashboard.nav.organizations', icon: <MdBusiness /> },
   { id: 'team',           labelKey: 'adminDashboard.nav.team',          icon: <MdGroups /> },
   { id: 'work',           labelKey: 'adminDashboard.nav.work',          icon: <MdWork /> },
+  { id: 'testimonials',   labelKey: 'adminDashboard.nav.testimonials',  icon: <MdFormatQuote /> },
   { id: 'resources',      labelKey: 'adminDashboard.nav.resources',     icon: <MdFolder /> },
   { id: 'faq',            labelKey: 'adminDashboard.nav.faq',           icon: <MdQuiz /> },
   { id: 'help',           labelKey: 'adminDashboard.nav.help',          icon: <MdHelpCenter /> },
@@ -434,6 +436,7 @@ function AdminDashboard() {
       case 'organizations':  return renderOrganizations();
       case 'team':           return renderTeam();
       case 'work':           return renderWork();
+      case 'testimonials':   return <AdminTestimonials />;
       case 'resources':      return <AdminResources />;
       case 'faq':            return <AdminFaqs />;
       case 'help':           return <AdminHelpRequests />;

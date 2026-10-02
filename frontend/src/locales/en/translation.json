@@ -466,7 +466,8 @@
       "work": "Our Work",
       "help": "Help Requests",
       "resources": "Resources",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "testimonials": "Testimonials"
     },
     "stats": {
       "totalVolunteers": "Total Volunteers",
@@ -764,6 +765,49 @@
       "title": "Volunteering across generations",
       "text": "Mentorship pairs, mixed-age teams, and roles suited to older adults.",
       "cta": "Learn more"
+    }
+  },
+  "testimonials": {
+    "eyebrow": "In their words",
+    "heading": "What people are saying",
+    "previous": "Previous testimonial",
+    "next": "Next testimonial",
+    "position": "Testimonial {{current}} of {{total}}",
+    "moreStories": "Read more stories",
+    "roles": {
+      "Volunteer": "Volunteer",
+      "Organization": "Organization",
+      "Family": "Family member"
+    },
+    "admin": {
+      "heading": "Testimonials",
+      "lead": "Short quotes shown on the home page. Longer stories belong on Our Work.",
+      "add": "Add Testimonial",
+      "edit": "Edit Testimonial",
+      "empty": "No testimonials yet.",
+      "quote": "Quote",
+      "person": "Person",
+      "shown": "On site",
+      "visible": "Shown",
+      "hidden": "Hidden",
+      "showOf": "Show {{name}}'s testimonial on the site",
+      "editOf": "Edit {{name}}'s testimonial",
+      "deleteOf": "Delete {{name}}'s testimonial",
+      "deleteConfirm": "Delete this testimonial?",
+      "quoteEn": "Quote (English)",
+      "quoteFr": "Quote (French)",
+      "name": "First name",
+      "role": "Role",
+      "city": "City",
+      "photo": "Photo (optional, JPG or PNG, up to 2 MB)",
+      "removePhoto": "Remove current photo",
+      "showOnSite": "Show on the site",
+      "consentHint": "Only publish a quote, name, or photo with the person's permission.",
+      "errors": {
+        "required": "Please enter the English quote and a first name.",
+        "photoType": "Please choose a JPG or PNG image.",
+        "photoSize": "The image must be 2 MB or smaller."
+      }
     }
   }
 }
