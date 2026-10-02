@@ -701,3 +701,23 @@
     margin-bottom: 8px;
   }
 }
+
+.admin-faq-group {
+  margin-bottom: 28px;
+}
+
+.admin-faq-topic {
+  font-size: 20px;
+  margin: 20px 0 10px 0;
+  color: var(--color-text);
+}
+
+.admin-faq-actions {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.admin-action-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

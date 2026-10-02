@@ -59,6 +59,7 @@ function Navbar() {
               <Link to="/about/mission" onClick={() => setAboutOpen(false)}>{t('nav.missionVision')}</Link>
               <Link to="/about/history" onClick={() => setAboutOpen(false)}>{t('nav.ourHistory')}</Link>
               <Link to="/about/team" onClick={() => setAboutOpen(false)}>{t('nav.ourTeam')}</Link>
+              <Link to="/faq" onClick={() => setAboutOpen(false)}>{t('nav.faq')}</Link>
             </div>
           )}
         </li>

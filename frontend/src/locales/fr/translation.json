@@ -54,7 +54,8 @@
     "signIn": "Connexion",
     "signUp": "S'inscrire",
     "donate": "Faire un don",
-    "resources": "Ressources"
+    "resources": "Ressources",
+    "faq": "FAQ"
   },
   "a11y": {
     "display": "Affichage",
@@ -461,7 +462,8 @@
       "team": "Notre équipe",
       "work": "Nos réalisations",
       "help": "Demandes d'aide",
-      "resources": "Ressources"
+      "resources": "Ressources",
+      "faq": "FAQ"
     },
     "stats": {
       "totalVolunteers": "Total des bénévoles",
@@ -677,6 +679,44 @@
       "replaceFile": "Remplacer le fichier (facultatif)",
       "currentFile": "Fichier actuel : {{name}}",
       "fileHint": "PDF ou Word (.docx), 5 Mo maximum."
+    }
+  },
+  "faq": {
+    "eyebrow": "Aide",
+    "heading": "Foire aux questions",
+    "lead": "Des réponses rapides sur les premiers pas, les vérifications des antécédents, l'assurance et la formation.",
+    "search": "Rechercher une question",
+    "topics": "Sujets",
+    "topic": "Sujet",
+    "topicNames": {
+      "GettingStarted": "Premiers pas",
+      "BackgroundChecks": "Vérification des antécédents",
+      "Insurance": "Assurance et responsabilité",
+      "Training": "Formation"
+    },
+    "empty": "Aucune question pour le moment.",
+    "noMatch": "Aucune question ne correspond à « {{keyword}} ».",
+    "moreTitle": "Vous avez encore une question?",
+    "moreText": "Chaque organisme peut répondre aux questions sur ses rôles, ses vérifications et sa formation.",
+    "findOrganization": "Trouver un organisme",
+    "browseResources": "Voir les ressources",
+    "admin": {
+      "heading": "FAQ",
+      "lead": "Questions et réponses affichées sur la page publique FAQ.",
+      "add": "Ajouter une question",
+      "edit": "Modifier la question",
+      "questionEn": "Question (anglais)",
+      "answerEn": "Réponse (anglais)",
+      "questionFr": "Question (français)",
+      "answerFr": "Réponse (français)",
+      "frenchHint": "Si le texte français est vide, le texte anglais s'affiche en français.",
+      "englishRequired": "Veuillez entrer la question et la réponse en anglais.",
+      "noFrench": "Pas encore de version française",
+      "editOf": "Modifier {{question}}",
+      "deleteOf": "Supprimer {{question}}",
+      "moveUp": "Monter : {{question}}",
+      "moveDown": "Descendre : {{question}}",
+      "deleteConfirm": "Supprimer cette question?"
     }
   }
 }
