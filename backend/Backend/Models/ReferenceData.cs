@@ -23,6 +23,8 @@ public static class ReferenceData {
 
     public static readonly string[] FaqTopics = ["GettingStarted", "BackgroundChecks", "Insurance", "Training"];
 
+    public static readonly string[] TestimonialRoles = ["Volunteer", "Organization", "Family"];
+
     public static readonly string[] Days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
     public static readonly string[] TimesOfDay = ["Morning", "Afternoon", "Evening"];

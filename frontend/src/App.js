@@ -24,6 +24,7 @@ import ResourcesPage from './ResourcesPage';
 import FaqPage from './FaqPage';
 import IntergenerationalPage from './IntergenerationalPage';
 import IntergenerationalTeaser from './IntergenerationalTeaser';
+import TestimonialsSection from './TestimonialsSection';
 import { getSessionRole } from './auth/session';
 
 function PrivateRoute({ children }) {
@@ -54,6 +55,7 @@ function Home() {
       <HowItWorks />
       <Pillars />
       <IntergenerationalTeaser />
+      <TestimonialsSection />
       <NewsSection />
       <Footer />
     </div>

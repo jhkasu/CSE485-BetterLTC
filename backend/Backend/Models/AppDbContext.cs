@@ -16,6 +16,8 @@ public class AppDbContext : DbContext {
     public DbSet<Resource> Resources { get; set; }
     public DbSet<ResourceFile> ResourceFiles { get; set; }
     public DbSet<FaqItem> FaqItems { get; set; }
+    public DbSet<Testimonial> Testimonials { get; set; }
+    public DbSet<TestimonialPhoto> TestimonialPhotos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -32,6 +34,12 @@ public class AppDbContext : DbContext {
             .HasOne<Resource>()
             .WithOne()
             .HasForeignKey<ResourceFile>(f => f.ResourceId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<TestimonialPhoto>()
+            .HasOne<Testimonial>()
+            .WithOne()
+            .HasForeignKey<TestimonialPhoto>(p => p.TestimonialId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<HelpRequest>()

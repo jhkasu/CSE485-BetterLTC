@@ -721,3 +721,27 @@
   opacity: 0.35;
   cursor: default;
 }
+
+.admin-quote-cell {
+  max-width: 420px;
+  font-style: italic;
+}
+
+.admin-form .admin-toggle,
+.admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.admin-form .admin-toggle input,
+.admin-toggle input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+}

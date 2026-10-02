@@ -466,7 +466,8 @@
       "work": "Nos réalisations",
       "help": "Demandes d'aide",
       "resources": "Ressources",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "testimonials": "Témoignages"
     },
     "stats": {
       "totalVolunteers": "Total des bénévoles",
@@ -764,6 +765,49 @@
       "title": "Le bénévolat entre générations",
       "text": "Jumelages de mentorat, équipes de tous âges et rôles adaptés aux aînés.",
       "cta": "En savoir plus"
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Dans leurs mots",
+    "heading": "Ce qu'on en dit",
+    "previous": "Témoignage précédent",
+    "next": "Témoignage suivant",
+    "position": "Témoignage {{current}} sur {{total}}",
+    "moreStories": "Lire d'autres histoires",
+    "roles": {
+      "Volunteer": "Bénévole",
+      "Organization": "Organisme",
+      "Family": "Membre de la famille"
+    },
+    "admin": {
+      "heading": "Témoignages",
+      "lead": "Courtes citations affichées sur la page d'accueil. Les histoires plus longues vont dans Nos réalisations.",
+      "add": "Ajouter un témoignage",
+      "edit": "Modifier le témoignage",
+      "empty": "Aucun témoignage pour le moment.",
+      "quote": "Citation",
+      "person": "Personne",
+      "shown": "Sur le site",
+      "visible": "Affiché",
+      "hidden": "Masqué",
+      "showOf": "Afficher le témoignage de {{name}} sur le site",
+      "editOf": "Modifier le témoignage de {{name}}",
+      "deleteOf": "Supprimer le témoignage de {{name}}",
+      "deleteConfirm": "Supprimer ce témoignage?",
+      "quoteEn": "Citation (anglais)",
+      "quoteFr": "Citation (français)",
+      "name": "Prénom",
+      "role": "Rôle",
+      "city": "Ville",
+      "photo": "Photo (facultative, JPG ou PNG, 2 Mo maximum)",
+      "removePhoto": "Retirer la photo actuelle",
+      "showOnSite": "Afficher sur le site",
+      "consentHint": "Ne publiez une citation, un nom ou une photo qu'avec la permission de la personne.",
+      "errors": {
+        "required": "Veuillez entrer la citation en anglais et un prénom.",
+        "photoType": "Veuillez choisir une image JPG ou PNG.",
+        "photoSize": "L'image doit faire 2 Mo ou moins."
+      }
     }
   }
 }
