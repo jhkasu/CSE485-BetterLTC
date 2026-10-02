@@ -20,6 +20,7 @@ import AdminResources from './AdminResources';
 import AdminFaqs from './AdminFaqs';
 import AdminTestimonials from './AdminTestimonials';
 import AdminStatistics from './AdminStatistics';
+import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
 
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
@@ -65,6 +66,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const user = getCurrentUser();
   const [activeSection, setActiveSection] = useState('overview');
+  const menu = useDashboardMenu();
 
   const [volunteers, setVolunteers] = useState([]);
 
@@ -448,38 +450,49 @@ function AdminDashboard() {
     }
   };
 
+  const current = NAV_ITEMS.find(item => item.id === activeSection);
+  const choose = (id) => {
+    setActiveSection(id);
+    menu.setOpen(false);
+  };
+
   return (
     <div className="admin-page">
-      <div className="admin-layout">
-        <aside className="admin-sidebar">
+      <div className="admin-layout dash-layout">
+        <DashboardTopBar menu={menu} panelId="admin-sidebar" title={current ? t(current.labelKey) : ''} />
+        <DashboardBackdrop menu={menu} />
+        <aside id="admin-sidebar" ref={menu.panelRef} className={`admin-sidebar dash-sidebar${menu.open ? ' dash-sidebar--open' : ''}`}>
           <div className="admin-sidebar-header">
             <div className="admin-sidebar-title">{t('adminDashboard.panel')}</div>
             <div className="admin-sidebar-user">{user?.firstName} {user?.lastName}</div>
+            <DashboardMenuClose menu={menu} />
           </div>
-          <div className="admin-sidebar-nav">
+          <div className="admin-sidebar-nav" role="navigation" aria-label={t('adminDashboard.panel')}>
             {NAV_ITEMS.map(item => (
-              <div
+              <button
+                type="button"
                 key={item.id}
-                className={`admin-nav-item ${activeSection === item.id ? 'active' : ''}`}
-                onClick={() => setActiveSection(item.id)}
+                className={`admin-nav-item dash-nav-btn ${activeSection === item.id ? 'active' : ''}`}
+                aria-current={activeSection === item.id ? 'page' : undefined}
+                onClick={() => choose(item.id)}
               >
-                <span className="admin-nav-icon">{item.icon}</span>
+                <span className="admin-nav-icon" aria-hidden="true">{item.icon}</span>
                 {t(item.labelKey)}
-              </div>
+              </button>
             ))}
           </div>
           <div className="admin-sidebar-display">
             <AccessibilityMenu placement="above" className="a11y-menu-sidebar" />
             <LanguageToggle className="language-toggle-sidebar" />
           </div>
-          <div className="admin-sidebar-viewsite" onClick={() => navigate('/')}>
-            <MdOpenInNew /> {t('common.viewSite')}
-          </div>
-          <div className="admin-sidebar-logout" onClick={handleLogout}>
-            <MdLogout /> {t('common.logOut')}
-          </div>
+          <button type="button" className="admin-sidebar-viewsite dash-nav-btn" onClick={() => navigate('/')}>
+            <MdOpenInNew aria-hidden="true" /> {t('common.viewSite')}
+          </button>
+          <button type="button" className="admin-sidebar-logout dash-nav-btn" onClick={handleLogout}>
+            <MdLogout aria-hidden="true" /> {t('common.logOut')}
+          </button>
         </aside>
-        <main className="admin-main">
+        <main className="admin-main dash-main">
           {renderContent()}
         </main>
       </div>

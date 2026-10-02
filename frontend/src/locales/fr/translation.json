@@ -844,5 +844,9 @@
       "/signup": "Inscription",
       "/signin": "Connexion"
     }
+  },
+  "dashboardMenu": {
+    "menu": "Menu",
+    "close": "Fermer le menu"
   }
 }

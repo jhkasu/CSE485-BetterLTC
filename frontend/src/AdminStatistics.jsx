@@ -17,7 +17,9 @@ function DailyChart({ daily, language, t }) {
   const max = niceMax(Math.max(0, ...daily.map(d => d.count)));
   const ticks = [0, max / 2, max];
   const format = (date, options) => new Date(`${date}T12:00:00Z`).toLocaleDateString(language, options);
-  const labelEvery = daily.length > 30 ? 14 : daily.length > 7 ? 5 : 1;
+  const labelEvery = daily.length > 30 ? 14 : daily.length > 7 ? 7 : 1;
+  const last = daily.length - 1;
+  const showLabel = (i) => i % labelEvery === 0 || (i === last && last % labelEvery >= labelEvery / 2);
 
   return (
     <figure className="stats-chart" aria-labelledby="stats-chart-title">
@@ -50,7 +52,7 @@ function DailyChart({ daily, language, t }) {
       </div>
       <div className="stats-xlabels" aria-hidden="true">
         {daily.map((d, i) => (
-          <span key={d.date}>{(i % labelEvery === 0 || i === daily.length - 1) ? format(d.date, { month: 'short', day: 'numeric' }) : ''}</span>
+          <span key={d.date}>{showLabel(i) ? format(d.date, { month: 'short', day: 'numeric' }) : ''}</span>
         ))}
       </div>
       <details className="stats-table">

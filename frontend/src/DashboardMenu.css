@@ -1,0 +1,134 @@
+:where(.dash-nav-btn) {
+  width: 100%;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  text-align: left;
+}
+
+.dash-nav-btn:focus-visible,
+.dash-close:focus-visible,
+.dash-menu-btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: -3px;
+}
+
+.dash-topbar,
+.dash-close,
+.dash-backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .dash-layout {
+    flex-direction: column;
+  }
+
+  .dash-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    background: var(--color-dark);
+    color: var(--color-on-dark);
+  }
+
+  .dash-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-on-dark-border);
+    border-radius: 6px;
+    background: none;
+    color: var(--color-on-dark);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .dash-menu-btn svg {
+    font-size: 22px;
+  }
+
+  .dash-topbar-title {
+    font-size: 17px;
+    font-weight: 600;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dash-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    width: min(300px, 85vw);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.2s, visibility 0.2s;
+  }
+
+  .dash-sidebar > * {
+    flex-shrink: 0;
+  }
+
+  .dash-sidebar--open {
+    transform: none;
+    visibility: visible;
+  }
+
+  .dash-close {
+    display: inline-flex;
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--color-on-dark);
+    font-size: 26px;
+    cursor: pointer;
+  }
+
+  .dash-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .dash-main {
+    padding: 20px 16px 40px;
+    min-width: 0;
+  }
+
+  .dash-main .admin-section-header,
+  .dash-main .org-section-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dash-main table {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-sidebar {
+    transition: none;
+  }
+}
