@@ -18,6 +18,8 @@ public class AppDbContext : DbContext {
     public DbSet<FaqItem> FaqItems { get; set; }
     public DbSet<Testimonial> Testimonials { get; set; }
     public DbSet<TestimonialPhoto> TestimonialPhotos { get; set; }
+    public DbSet<PageViewDaily> PageViewDailies { get; set; }
+    public DbSet<ResourceDownloadDaily> ResourceDownloadDailies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -40,6 +42,20 @@ public class AppDbContext : DbContext {
             .HasOne<Testimonial>()
             .WithOne()
             .HasForeignKey<TestimonialPhoto>(p => p.TestimonialId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PageViewDaily>()
+            .HasIndex(v => new { v.Date, v.Path })
+            .IsUnique();
+
+        modelBuilder.Entity<ResourceDownloadDaily>()
+            .HasIndex(d => new { d.Date, d.ResourceId })
+            .IsUnique();
+
+        modelBuilder.Entity<ResourceDownloadDaily>()
+            .HasOne<Resource>()
+            .WithMany()
+            .HasForeignKey(d => d.ResourceId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<HelpRequest>()

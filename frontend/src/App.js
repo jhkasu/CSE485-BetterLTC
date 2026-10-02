@@ -5,6 +5,7 @@ import Hero from './Hero';
 import Pillars from './Pillars';
 import HowItWorks from './HowItWorks';
 import ScrollToTop from './ScrollToTop';
+import PageViewTracker from './PageViewTracker';
 import NewsSection from './NewsSection';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
@@ -86,6 +87,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <PageViewTracker />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/volunteer/*" element={<Navigate to="/organizations" replace />} />

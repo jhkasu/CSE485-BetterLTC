@@ -467,7 +467,8 @@
       "help": "Demandes d'aide",
       "resources": "Ressources",
       "faq": "FAQ",
-      "testimonials": "Témoignages"
+      "testimonials": "Témoignages",
+      "statistics": "Statistiques"
     },
     "stats": {
       "totalVolunteers": "Total des bénévoles",
@@ -808,6 +809,40 @@
         "photoType": "Veuillez choisir une image JPG ou PNG.",
         "photoSize": "L'image doit faire 2 Mo ou moins."
       }
+    }
+  },
+  "statistics": {
+    "heading": "Statistiques",
+    "lead": "Comment le site public est utilisé. Servez-vous-en pour choisir les pages à mettre à jour en premier.",
+    "range": "Période",
+    "lastDays_one": "Dernier {{count}} jour",
+    "lastDays_other": "{{count}} derniers jours",
+    "totalViews": "Visites de pages",
+    "averagePerDay": "Visites par jour",
+    "totalDownloads": "Téléchargements de ressources",
+    "dailyTitle": "Visites par jour",
+    "views": "visites",
+    "chartAlt": "Diagramme à barres des visites quotidiennes sur les {{days}} derniers jours, {{total}} visites au total. Ouvrez le tableau ci-dessous pour chaque jour.",
+    "showTable": "Afficher sous forme de tableau",
+    "topPages": "Pages les plus visitées",
+    "topOrganizations": "Profils d'organismes les plus consultés",
+    "topResources": "Ressources les plus téléchargées",
+    "noData": "Aucune visite enregistrée pour le moment.",
+    "privacy": "Comptes seulement. Aucun témoin, adresse IP ou renseignement personnel n'est conservé. Les pages d'administration et les tableaux de bord ne sont pas comptés.",
+    "pages": {
+      "/": "Accueil",
+      "/get-help": "Obtenir de l'aide",
+      "/about": "À propos",
+      "/about/mission": "Mission",
+      "/about/history": "Notre histoire",
+      "/about/team": "Notre équipe",
+      "/our-work": "Nos réalisations",
+      "/organizations": "Répertoire des organismes",
+      "/resources": "Ressources",
+      "/faq": "FAQ",
+      "/intergenerational": "Entre générations",
+      "/signup": "Inscription",
+      "/signin": "Connexion"
     }
   }
 }
