@@ -8,6 +8,7 @@ public class OrganizationProfileRequest {
     public List<string> ServiceAreas { get; set; } = [];
     public List<string> HelpTypes { get; set; } = [];
     public List<string> Categories { get; set; } = [];
+    public bool OffersIntergenerational { get; set; }
     [MaxLength(200)] public string NotificationEmail { get; set; } = "";
     [MaxLength(300)] public string Website { get; set; } = "";
 }

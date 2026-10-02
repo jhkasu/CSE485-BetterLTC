@@ -34,6 +34,7 @@ function toForm(org) {
     serviceAreas: org?.serviceAreas || [],
     helpTypes: org?.helpTypes || [],
     categories: org?.categories || [],
+    offersIntergenerational: !!org?.offersIntergenerational,
     notificationEmail: org?.notificationEmail || '',
     website: org?.website || '',
   };
@@ -263,6 +264,18 @@ function OrgProfile({ org, onSaved }) {
               'orgDashboard.profile.categories',
               'orgDashboard.profile.categoriesHint',
             )}
+
+            <label className="org-profile-check org-profile-intergen">
+              <input
+                type="checkbox"
+                checked={form.offersIntergenerational}
+                onChange={e => update({ offersIntergenerational: e.target.checked })}
+              />
+              <span>
+                {t('orgDashboard.profile.intergenerational')}
+                <span className="org-profile-hint">{t('orgDashboard.profile.intergenerationalHint')}</span>
+              </span>
+            </label>
 
             {checkboxGroup(
               'helpTypes',

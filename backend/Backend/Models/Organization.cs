@@ -13,6 +13,7 @@ public class Organization : IAccount {
     public List<string> ServiceAreas { get; set; } = [];
     public List<string> HelpTypes { get; set; } = [];
     public List<string> Categories { get; set; } = [];
+    public bool OffersIntergenerational { get; set; }
     public string NotificationEmail { get; set; } = "";
     public string Website { get; set; } = "";
     public DateTime? LogoUpdatedAt { get; set; }

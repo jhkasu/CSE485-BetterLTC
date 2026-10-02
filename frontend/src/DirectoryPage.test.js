@@ -6,7 +6,7 @@ import { AccessibilityProvider } from './accessibility/AccessibilityContext';
 
 const orgs = [
   { id: 4, orgName: 'Prairie Care', description: 'We help seniors stay connected.', serviceAreas: ['Regina', 'Saskatoon'], helpTypes: [], categories: ['Seniors Services', 'Health'], website: '', logoVersion: 12 },
-  { id: 7, orgName: 'Green Youth', description: '', serviceAreas: ['Regina'], helpTypes: [], categories: ['Youth'], website: '', logoVersion: null },
+  { id: 7, orgName: 'Green Youth', description: '', serviceAreas: ['Regina'], helpTypes: [], categories: ['Youth'], offersIntergenerational: true, website: '', logoVersion: null },
 ];
 
 function respond(body) {
@@ -35,6 +35,7 @@ afterEach(() => {
 test('builds the directory query from filters', () => {
   expect(directoryQuery([], [])).toBe('/api/organizations/directory');
   expect(directoryQuery(['Health', 'Youth'], ['Regina'])).toBe('/api/organizations/directory?category=Health&category=Youth&area=Regina');
+  expect(directoryQuery([], [], true)).toBe('/api/organizations/directory?intergenerational=true');
 });
 
 test('lists organizations as cards that link to their profile', async () => {
@@ -63,4 +64,16 @@ test('says when nothing matches', async () => {
   global.fetch = jest.fn(() => respond([]));
   renderPage();
   expect(await screen.findByText('No organizations are listed yet.')).toBeInTheDocument();
+});
+
+test('filters to organizations with intergenerational roles and shows the badge', async () => {
+  renderPage();
+  await screen.findByRole('link', { name: 'Prairie Care' });
+  expect(screen.getAllByText('Intergenerational roles')).toHaveLength(2);
+  global.fetch.mockImplementation(() => respond([orgs[1]]));
+  const toggle = screen.getByRole('button', { name: 'Intergenerational roles' });
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  expect(await screen.findByText('1 organization')).toBeInTheDocument();
+  expect(global.fetch.mock.calls.at(-1)[0]).toMatch(/intergenerational=true$/);
 });

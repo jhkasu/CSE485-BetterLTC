@@ -170,3 +170,17 @@
   color: var(--color-text-muted);
   padding: var(--space-5) 0;
 }
+
+.dir-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}

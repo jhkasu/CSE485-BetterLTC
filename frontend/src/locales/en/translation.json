@@ -55,7 +55,8 @@
     "signUp": "Sign Up",
     "donate": "Donate now",
     "resources": "Resources",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "intergenerational": "Across Generations"
   },
   "a11y": {
     "display": "Display",
@@ -451,7 +452,9 @@
       "viewPublic": "View your public page",
       "publicPending": "Your public page will be visible once an administrator approves your organization.",
       "categories": "Categories",
-      "categoriesHint": "Volunteers use these to find you in the directory."
+      "categoriesHint": "Volunteers use these to find you in the directory.",
+      "intergenerational": "We offer intergenerational roles",
+      "intergenerationalHint": "Mentorship pairs, mixed-age teams, or roles suited to older adults. You'll appear on the Across Generations page."
     }
   },
   "adminDashboard": {
@@ -626,14 +629,16 @@
     "heading": "Find an Organization",
     "lead": "Browse Saskatchewan organizations by the kind of work they do and where they serve.",
     "filters": {
-      "category": "Category"
+      "category": "Category",
+      "intergenerational": "Intergenerational roles"
     },
     "count_one": "{{count}} organization",
     "count_other": "{{count}} organizations",
     "empty": "No organizations are listed yet.",
     "emptyFiltered": "No organizations match these filters.",
     "viewProfile": "View profile",
-    "viewProfileOf": "View {{name}} profile"
+    "viewProfileOf": "View {{name}} profile",
+    "intergenerationalBadge": "Intergenerational roles"
   },
   "resources": {
     "eyebrow": "Resource Library",
@@ -717,6 +722,48 @@
       "moveUp": "Move up: {{question}}",
       "moveDown": "Move down: {{question}}",
       "deleteConfirm": "Delete this question?"
+    }
+  },
+  "intergen": {
+    "eyebrow": "Across Generations",
+    "heading": "Volunteering Across Generations",
+    "lead": "Older and younger volunteers bring different strengths. Working side by side builds friendships, shares skills, and makes communities stronger.",
+    "waysTitle": "Three ways to take part",
+    "ways": {
+      "mentorship": {
+        "title": "Mentorship pairs",
+        "text": "An experienced volunteer is paired with a younger one, or a young volunteer helps an older adult with something new, like using a phone or tablet."
+      },
+      "teams": {
+        "title": "Mixed-age teams",
+        "text": "Volunteers of different ages work together on the same project, such as a community meal, a garden, or a seasonal event."
+      },
+      "suited": {
+        "title": "Roles suited to older adults",
+        "text": "Flexible hours, lower physical demand, and roles that use skills and life experience, such as reading, phone check-ins, or teaching a craft."
+      }
+    },
+    "older": {
+      "title": "For older adults who want to volunteer",
+      "point1": "Look for roles with flexible schedules, or ask if a role can be shared.",
+      "point2": "Your skills and life experience are valuable. Ask about mentoring or skills-based roles.",
+      "point3": "Tell the organization about any physical limits so they can suggest a good fit.",
+      "cta": "Read common questions"
+    },
+    "organizations": {
+      "title": "For organizations",
+      "point1": "Pair new volunteers with experienced ones for their first few shifts.",
+      "point2": "Offer short or flexible shifts and roles that can be done sitting down or by phone.",
+      "point3": "Check in with mixed-age teams so everyone feels welcome and heard.",
+      "cta": "Download free templates"
+    },
+    "listTitle": "Organizations with intergenerational roles",
+    "listEmpty": "No organizations have listed intergenerational roles yet.",
+    "allOrganizations": "See all organizations",
+    "teaser": {
+      "title": "Volunteering across generations",
+      "text": "Mentorship pairs, mixed-age teams, and roles suited to older adults.",
+      "cta": "Learn more"
     }
   }
 }

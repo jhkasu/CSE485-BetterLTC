@@ -22,6 +22,8 @@ import OrganizationPage from './OrganizationPage';
 import DirectoryPage from './DirectoryPage';
 import ResourcesPage from './ResourcesPage';
 import FaqPage from './FaqPage';
+import IntergenerationalPage from './IntergenerationalPage';
+import IntergenerationalTeaser from './IntergenerationalTeaser';
 import { getSessionRole } from './auth/session';
 
 function PrivateRoute({ children }) {
@@ -51,6 +53,7 @@ function Home() {
       <Hero />
       <HowItWorks />
       <Pillars />
+      <IntergenerationalTeaser />
       <NewsSection />
       <Footer />
     </div>
@@ -95,6 +98,7 @@ function App() {
         <Route path="/organizations" element={<DirectoryPage />} />
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/faq" element={<FaqPage />} />
+        <Route path="/intergenerational" element={<IntergenerationalPage />} />
         <Route path="/organizations/:id" element={<OrganizationPage />} />
         <Route
           path="/dashboard"
