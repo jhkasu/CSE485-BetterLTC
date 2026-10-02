@@ -21,6 +21,7 @@ import OrgDashboard from './OrgDashboard';
 import OrganizationPage from './OrganizationPage';
 import DirectoryPage from './DirectoryPage';
 import ResourcesPage from './ResourcesPage';
+import FaqPage from './FaqPage';
 import { getSessionRole } from './auth/session';
 
 function PrivateRoute({ children }) {
@@ -93,6 +94,7 @@ function App() {
         <Route path="/get-help" element={<GetHelpPage />} />
         <Route path="/organizations" element={<DirectoryPage />} />
         <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/faq" element={<FaqPage />} />
         <Route path="/organizations/:id" element={<OrganizationPage />} />
         <Route
           path="/dashboard"

@@ -47,9 +47,10 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope()) {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    bool seedResources = db.Database.GetPendingMigrations().Any(m => m.EndsWith(StarterResources.MigrationName));
+    var pending = db.Database.GetPendingMigrations().ToList();
     db.Database.Migrate();
-    if (seedResources) StarterResources.Seed(db, app.Environment.ContentRootPath);
+    if (pending.Any(m => m.EndsWith(StarterResources.MigrationName))) StarterResources.Seed(db, app.Environment.ContentRootPath);
+    if (pending.Any(m => m.EndsWith(StarterFaqs.MigrationName))) StarterFaqs.Seed(db);
     PasswordHashing.UpgradeLegacyPasswords(db);
     (builder.Configuration.GetSection("Admin").Get<AdminAccount>() ?? new AdminAccount()).CreateFirstAdmin(db);
 }

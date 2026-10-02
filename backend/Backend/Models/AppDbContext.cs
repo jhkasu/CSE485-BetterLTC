@@ -15,6 +15,7 @@ public class AppDbContext : DbContext {
     public DbSet<OrganizationLogo> OrganizationLogos { get; set; }
     public DbSet<Resource> Resources { get; set; }
     public DbSet<ResourceFile> ResourceFiles { get; set; }
+    public DbSet<FaqItem> FaqItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
