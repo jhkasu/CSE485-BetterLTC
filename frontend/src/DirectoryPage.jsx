@@ -41,8 +41,8 @@ function DirectoryPage() {
   return (
     <div>
       <Navbar />
-      <header className="dir-hero">
-        <div className="dir-hero-inner container">
+      <header className="band-header">
+        <div className="band-header-inner container">
           <span className="eyebrow">{t('directory.eyebrow')}</span>
           <h1>{t('directory.heading')}</h1>
           <p>{t('directory.lead')}</p>

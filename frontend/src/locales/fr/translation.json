@@ -53,7 +53,8 @@
     "dashboard": "Tableau de bord",
     "signIn": "Connexion",
     "signUp": "S'inscrire",
-    "donate": "Faire un don"
+    "donate": "Faire un don",
+    "resources": "Ressources"
   },
   "a11y": {
     "display": "Affichage",
@@ -459,7 +460,8 @@
       "organizations": "Organismes",
       "team": "Notre équipe",
       "work": "Nos réalisations",
-      "help": "Demandes d'aide"
+      "help": "Demandes d'aide",
+      "resources": "Ressources"
     },
     "stats": {
       "totalVolunteers": "Total des bénévoles",
@@ -630,5 +632,51 @@
     "emptyFiltered": "Aucun organisme ne correspond à ces filtres.",
     "viewProfile": "Voir le profil",
     "viewProfileOf": "Voir le profil de {{name}}"
+  },
+  "resources": {
+    "eyebrow": "Centre de ressources",
+    "heading": "Modèles et guides",
+    "lead": "Des modèles gratuits et prêts à utiliser pour accueillir, soutenir et remercier les bénévoles. Téléchargez-les et adaptez-les à votre équipe.",
+    "tabs": {
+      "Organizations": "Pour les organismes",
+      "Volunteers": "Pour les bénévoles"
+    },
+    "audience": "Public",
+    "topic": "Sujet",
+    "file": "Fichier",
+    "audiences": {
+      "Organizations": "Organismes",
+      "Volunteers": "Bénévoles"
+    },
+    "topics": {
+      "Onboarding": "Accueil",
+      "Screening": "Vérification",
+      "Recognition": "Reconnaissance",
+      "Feedback": "Rétroaction",
+      "Inclusivity": "Inclusion"
+    },
+    "download": "Télécharger",
+    "downloadOf": "Télécharger {{title}} ({{type}}, {{size}})",
+    "empty": "Aucune ressource pour le moment.",
+    "emptyFiltered": "Aucune ressource ne correspond à ce sujet.",
+    "errors": {
+      "type": "Veuillez choisir un fichier PDF ou Word (.docx).",
+      "size": "Le fichier doit faire 5 Mo ou moins.",
+      "title": "Veuillez entrer un titre.",
+      "file": "Veuillez choisir un fichier.",
+      "save": "Impossible d'enregistrer cette ressource. Veuillez réessayer."
+    },
+    "admin": {
+      "heading": "Centre de ressources",
+      "lead": "Modèles et guides affichés sur la page publique Ressources.",
+      "add": "Ajouter une ressource",
+      "edit": "Modifier la ressource",
+      "editOf": "Modifier {{title}}",
+      "deleteOf": "Supprimer {{title}}",
+      "deleteConfirm": "Supprimer cette ressource?",
+      "replaceFile": "Remplacer le fichier (facultatif)",
+      "currentFile": "Fichier actuel : {{name}}",
+      "fileHint": "PDF ou Word (.docx), 5 Mo maximum."
+    }
   }
 }

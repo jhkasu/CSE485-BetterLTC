@@ -63,6 +63,7 @@ function Navbar() {
           )}
         </li>
         <li><Link to="/organizations">{t('nav.volunteer')}</Link></li>
+        <li><Link to="/resources">{t('nav.resources')}</Link></li>
         <li><Link to="/our-work">{t('nav.ourWork')}</Link></li>
       </ul>
 

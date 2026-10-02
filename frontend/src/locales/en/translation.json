@@ -53,7 +53,8 @@
     "dashboard": "Dashboard",
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "donate": "Donate now"
+    "donate": "Donate now",
+    "resources": "Resources"
   },
   "a11y": {
     "display": "Display",
@@ -459,7 +460,8 @@
       "organizations": "Organizations",
       "team": "Our Team",
       "work": "Our Work",
-      "help": "Help Requests"
+      "help": "Help Requests",
+      "resources": "Resources"
     },
     "stats": {
       "totalVolunteers": "Total Volunteers",
@@ -630,5 +632,51 @@
     "emptyFiltered": "No organizations match these filters.",
     "viewProfile": "View profile",
     "viewProfileOf": "View {{name}} profile"
+  },
+  "resources": {
+    "eyebrow": "Resource Library",
+    "heading": "Templates and Guides",
+    "lead": "Free, ready-to-use templates for welcoming, supporting, and thanking volunteers. Download and adapt them for your own team.",
+    "tabs": {
+      "Organizations": "For Organizations",
+      "Volunteers": "For Volunteers"
+    },
+    "audience": "Audience",
+    "topic": "Topic",
+    "file": "File",
+    "audiences": {
+      "Organizations": "Organizations",
+      "Volunteers": "Volunteers"
+    },
+    "topics": {
+      "Onboarding": "Onboarding",
+      "Screening": "Screening",
+      "Recognition": "Recognition",
+      "Feedback": "Feedback",
+      "Inclusivity": "Inclusivity"
+    },
+    "download": "Download",
+    "downloadOf": "Download {{title}} ({{type}}, {{size}})",
+    "empty": "No resources here yet.",
+    "emptyFiltered": "No resources match this topic.",
+    "errors": {
+      "type": "Please choose a PDF or Word (.docx) file.",
+      "size": "The file must be 5 MB or smaller.",
+      "title": "Please enter a title.",
+      "file": "Please choose a file.",
+      "save": "We couldn't save this resource. Please try again."
+    },
+    "admin": {
+      "heading": "Resource Library",
+      "lead": "Templates and guides shown on the public Resources page.",
+      "add": "Add Resource",
+      "edit": "Edit Resource",
+      "editOf": "Edit {{title}}",
+      "deleteOf": "Delete {{title}}",
+      "deleteConfirm": "Delete this resource?",
+      "replaceFile": "Replace file (optional)",
+      "currentFile": "Current file: {{name}}",
+      "fileHint": "PDF or Word (.docx), up to 5 MB."
+    }
   }
 }
