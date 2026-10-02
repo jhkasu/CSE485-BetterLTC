@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
   MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
-  MdClose, MdOpenInNew, MdBusiness, MdLock, MdFolder, MdQuiz, MdFormatQuote,
+  MdClose, MdOpenInNew, MdBusiness, MdLock, MdFolder, MdQuiz, MdFormatQuote, MdInsights,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +19,11 @@ import AdminHelpRequests from './AdminHelpRequests';
 import AdminResources from './AdminResources';
 import AdminFaqs from './AdminFaqs';
 import AdminTestimonials from './AdminTestimonials';
+import AdminStatistics from './AdminStatistics';
 
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
+  { id: 'statistics',     labelKey: 'adminDashboard.nav.statistics',    icon: <MdInsights /> },
   { id: 'users',          labelKey: 'adminDashboard.nav.users',         icon: <MdPeople /> },
   { id: 'organizations',  labelKey: 'adminDashboard.nav.organizations', icon: <MdBusiness /> },
   { id: 'team',           labelKey: 'adminDashboard.nav.team',          icon: <MdGroups /> },
@@ -432,6 +434,7 @@ function AdminDashboard() {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':       return renderOverview();
+      case 'statistics':     return <AdminStatistics />;
       case 'users':          return renderUsers();
       case 'organizations':  return renderOrganizations();
       case 'team':           return renderTeam();

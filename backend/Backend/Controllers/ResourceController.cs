@@ -40,6 +40,7 @@ public class ResourceController : ControllerBase {
             var resource = await _context.Resources.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id);
             var file = await _context.ResourceFiles.AsNoTracking().FirstOrDefaultAsync(f => f.ResourceId == id);
             if (resource is null || file is null) return NotFound();
+            await StatisticsController.RecordDownload(_context, id, Request.Headers.UserAgent);
             return File(file.Data, resource.ContentType, resource.FileName);
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);

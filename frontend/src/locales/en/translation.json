@@ -467,7 +467,8 @@
       "help": "Help Requests",
       "resources": "Resources",
       "faq": "FAQ",
-      "testimonials": "Testimonials"
+      "testimonials": "Testimonials",
+      "statistics": "Statistics"
     },
     "stats": {
       "totalVolunteers": "Total Volunteers",
@@ -808,6 +809,40 @@
         "photoType": "Please choose a JPG or PNG image.",
         "photoSize": "The image must be 2 MB or smaller."
       }
+    }
+  },
+  "statistics": {
+    "heading": "Statistics",
+    "lead": "How people use the public site. Use this to decide which pages to update first.",
+    "range": "Date range",
+    "lastDays_one": "Last {{count}} day",
+    "lastDays_other": "Last {{count}} days",
+    "totalViews": "Page visits",
+    "averagePerDay": "Visits per day",
+    "totalDownloads": "Resource downloads",
+    "dailyTitle": "Visits per day",
+    "views": "visits",
+    "chartAlt": "Bar chart of daily page visits over the last {{days}} days, {{total}} visits in total. Open the table below for each day.",
+    "showTable": "Show as a table",
+    "topPages": "Most visited pages",
+    "topOrganizations": "Most viewed organization profiles",
+    "topResources": "Most downloaded resources",
+    "noData": "No visits recorded yet.",
+    "privacy": "Counts only. No cookies, IP addresses, or personal information are stored. Admin and dashboard pages are not counted.",
+    "pages": {
+      "/": "Home",
+      "/get-help": "Get Help",
+      "/about": "About Us",
+      "/about/mission": "Mission",
+      "/about/history": "Our History",
+      "/about/team": "Our Team",
+      "/our-work": "Our Work",
+      "/organizations": "Organization Directory",
+      "/resources": "Resources",
+      "/faq": "FAQ",
+      "/intergenerational": "Across Generations",
+      "/signup": "Sign Up",
+      "/signin": "Sign In"
     }
   }
 }
