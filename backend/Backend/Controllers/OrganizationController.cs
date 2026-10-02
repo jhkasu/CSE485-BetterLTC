@@ -104,6 +104,7 @@ public class OrganizationController : ControllerBase {
             org.ServiceAreas = areas;
             org.HelpTypes = helpTypes;
             org.Categories = categories;
+            org.OffersIntergenerational = profile.OffersIntergenerational;
             org.NotificationEmail = notificationEmail;
             org.Website = website;
             await _context.SaveChangesAsync();
@@ -114,11 +115,12 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpGet("directory")]
-    public async Task<IActionResult> GetDirectory([FromQuery] List<string> category, [FromQuery] List<string> area) {
+    public async Task<IActionResult> GetDirectory([FromQuery] List<string> category, [FromQuery] List<string> area, [FromQuery] bool intergenerational = false) {
         try {
             var query = _context.Organizations.AsNoTracking().Where(o => o.IsApproved);
             if (category.Count > 0) query = query.Where(o => o.Categories.Any(c => category.Contains(c)));
             if (area.Count > 0) query = query.Where(o => o.ServiceAreas.Any(a => area.Contains(a)));
+            if (intergenerational) query = query.Where(o => o.OffersIntergenerational);
             var orgs = await query.OrderBy(o => o.OrgName).ToListAsync();
             return Ok(orgs.Select(OrganizationPublicResponse.From));
         } catch (Exception ex) {

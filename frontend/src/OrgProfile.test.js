@@ -32,6 +32,7 @@ test('saves service areas, help types, and details to the profile API', async ()
   fireEvent.click(screen.getByRole('checkbox', { name: 'Regina' }));
   fireEvent.click(screen.getByRole('checkbox', { name: 'Transportation Support' }));
   fireEvent.click(screen.getByRole('checkbox', { name: 'Health' }));
+  fireEvent.click(screen.getByRole('checkbox', { name: /We offer intergenerational roles/ }));
   fireEvent.change(screen.getByLabelText('Description'), { target: { value: 'Rides for seniors.' } });
   fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
   expect(await screen.findByText('Saved!')).toBeInTheDocument();
@@ -44,6 +45,7 @@ test('saves service areas, help types, and details to the profile API', async ()
     serviceAreas: ['Saskatoon'],
     helpTypes: ['Transportation Support'],
     categories: ['Health'],
+    offersIntergenerational: true,
     notificationEmail: '',
     website: '',
   });

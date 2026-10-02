@@ -55,7 +55,8 @@
     "signUp": "S'inscrire",
     "donate": "Faire un don",
     "resources": "Ressources",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "intergenerational": "Entre générations"
   },
   "a11y": {
     "display": "Affichage",
@@ -451,7 +452,9 @@
       "viewPublic": "Voir votre page publique",
       "publicPending": "Votre page publique sera visible une fois votre organisme approuvé par un administrateur.",
       "categories": "Catégories",
-      "categoriesHint": "Les bénévoles s'en servent pour vous trouver dans le répertoire."
+      "categoriesHint": "Les bénévoles s'en servent pour vous trouver dans le répertoire.",
+      "intergenerational": "Nous offrons des rôles intergénérationnels",
+      "intergenerationalHint": "Jumelages de mentorat, équipes de tous âges ou rôles adaptés aux aînés. Vous figurerez sur la page Entre générations."
     }
   },
   "adminDashboard": {
@@ -626,14 +629,16 @@
     "heading": "Trouver un organisme",
     "lead": "Parcourez les organismes de la Saskatchewan selon leur domaine et les régions qu'ils desservent.",
     "filters": {
-      "category": "Catégorie"
+      "category": "Catégorie",
+      "intergenerational": "Rôles intergénérationnels"
     },
     "count_one": "{{count}} organisme",
     "count_other": "{{count}} organismes",
     "empty": "Aucun organisme n'est encore inscrit.",
     "emptyFiltered": "Aucun organisme ne correspond à ces filtres.",
     "viewProfile": "Voir le profil",
-    "viewProfileOf": "Voir le profil de {{name}}"
+    "viewProfileOf": "Voir le profil de {{name}}",
+    "intergenerationalBadge": "Rôles intergénérationnels"
   },
   "resources": {
     "eyebrow": "Centre de ressources",
@@ -717,6 +722,48 @@
       "moveUp": "Monter : {{question}}",
       "moveDown": "Descendre : {{question}}",
       "deleteConfirm": "Supprimer cette question?"
+    }
+  },
+  "intergen": {
+    "eyebrow": "Entre générations",
+    "heading": "Le bénévolat entre générations",
+    "lead": "Les bénévoles plus âgés et plus jeunes ont des forces différentes. Travailler côte à côte crée des liens, permet de partager des compétences et renforce les communautés.",
+    "waysTitle": "Trois façons de participer",
+    "ways": {
+      "mentorship": {
+        "title": "Jumelages de mentorat",
+        "text": "Un bénévole expérimenté est jumelé à un plus jeune, ou un jeune bénévole aide une personne aînée à apprendre quelque chose de nouveau, comme utiliser un téléphone ou une tablette."
+      },
+      "teams": {
+        "title": "Équipes de tous âges",
+        "text": "Des bénévoles de différents âges travaillent ensemble sur un même projet, comme un repas communautaire, un jardin ou un événement saisonnier."
+      },
+      "suited": {
+        "title": "Rôles adaptés aux aînés",
+        "text": "Horaires flexibles, moins d'effort physique et rôles qui misent sur les compétences et l'expérience de vie, comme la lecture, les appels d'amitié ou l'enseignement d'un artisanat."
+      }
+    },
+    "older": {
+      "title": "Pour les aînés qui veulent faire du bénévolat",
+      "point1": "Cherchez des rôles aux horaires flexibles, ou demandez si un rôle peut être partagé.",
+      "point2": "Vos compétences et votre expérience de vie sont précieuses. Renseignez-vous sur le mentorat ou les rôles axés sur les compétences.",
+      "point3": "Parlez à l'organisme de vos limites physiques pour qu'il vous propose un rôle qui vous convient.",
+      "cta": "Lire les questions fréquentes"
+    },
+    "organizations": {
+      "title": "Pour les organismes",
+      "point1": "Jumelez les nouveaux bénévoles à des bénévoles expérimentés pour leurs premiers quarts.",
+      "point2": "Offrez des quarts courts ou flexibles et des rôles qui peuvent se faire assis ou par téléphone.",
+      "point3": "Faites le point avec les équipes de tous âges pour que chacun se sente accueilli et écouté.",
+      "cta": "Télécharger des modèles gratuits"
+    },
+    "listTitle": "Organismes offrant des rôles intergénérationnels",
+    "listEmpty": "Aucun organisme n'a encore indiqué offrir des rôles intergénérationnels.",
+    "allOrganizations": "Voir tous les organismes",
+    "teaser": {
+      "title": "Le bénévolat entre générations",
+      "text": "Jumelages de mentorat, équipes de tous âges et rôles adaptés aux aînés.",
+      "cta": "En savoir plus"
     }
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { MdLocationOn, MdArrowForward } from 'react-icons/md';
+import { MdLocationOn, MdArrowForward, MdDiversity3 } from 'react-icons/md';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import apiFetch from './api';
@@ -11,10 +11,11 @@ import FilterChip from './FilterChip';
 import { initials, logoUrl } from './OrganizationPage';
 import './DirectoryPage.css';
 
-export function directoryQuery(categories, areas) {
+export function directoryQuery(categories, areas, intergenerational = false) {
   const params = new URLSearchParams();
   categories.forEach(c => params.append('category', c));
   areas.forEach(a => params.append('area', a));
+  if (intergenerational) params.append('intergenerational', 'true');
   const query = params.toString();
   return `/api/organizations/directory${query ? `?${query}` : ''}`;
 }
@@ -24,19 +25,20 @@ function DirectoryPage() {
   const [orgs, setOrgs] = useState(null);
   const [categories, setCategories] = useState([]);
   const [areas, setAreas] = useState([]);
+  const [intergenerational, setIntergenerational] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    apiFetch(directoryQuery(categories, areas))
+    apiFetch(directoryQuery(categories, areas, intergenerational))
       .then(res => (res.ok ? res.json() : []))
       .then(data => { if (!cancelled) setOrgs(Array.isArray(data) ? data : []); })
       .catch(() => { if (!cancelled) setOrgs([]); });
     return () => { cancelled = true; };
-  }, [categories, areas]);
+  }, [categories, areas, intergenerational]);
 
   const cityLabel = (city) => (city === 'Other' ? t('volunteer.otherCity') : city);
   const categoryLabel = (c) => (ORG_CATEGORY_KEYS[c] ? t(ORG_CATEGORY_KEYS[c]) : c);
-  const anyFilter = categories.length > 0 || areas.length > 0;
+  const anyFilter = categories.length > 0 || areas.length > 0 || intergenerational;
 
   return (
     <div>
@@ -60,8 +62,16 @@ function DirectoryPage() {
                 selected={areas}
                 onChange={setAreas}
               />
-              {anyFilter && (
-                <button type="button" className="dir-clear" onClick={() => { setCategories([]); setAreas([]); }}>{t('volunteer.filters.clear')}</button>
+              <button
+              type="button"
+              className={`filter-chip-btn${intergenerational ? ' filter-chip-btn--active' : ''}`}
+              aria-pressed={intergenerational}
+              onClick={() => setIntergenerational(v => !v)}
+            >
+              <MdDiversity3 aria-hidden="true" /> {t('directory.filters.intergenerational')}
+            </button>
+            {anyFilter && (
+                <button type="button" className="dir-clear" onClick={() => { setCategories([]); setAreas([]); setIntergenerational(false); }}>{t('volunteer.filters.clear')}</button>
               )}
             </div>
           </div>
@@ -90,6 +100,9 @@ function DirectoryPage() {
                           <Link to={`/organizations/${org.id}`}>{org.orgName}</Link>
                         </h2>
                       </div>
+                      {org.offersIntergenerational && (
+                        <p className="dir-badge"><MdDiversity3 aria-hidden="true" /> {t('directory.intergenerationalBadge')}</p>
+                      )}
                       {(org.categories || []).length > 0 && (
                         <ul className="dir-tags" aria-label={t('orgPage.categories')}>
                           {org.categories.map(c => <li key={c} className="dir-tag">{categoryLabel(c)}</li>)}

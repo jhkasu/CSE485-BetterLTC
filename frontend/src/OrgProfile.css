@@ -226,3 +226,20 @@ textarea.org-profile-input {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.org-profile-intergen {
+  align-items: flex-start;
+  margin: -4px 0 24px 0;
+  font-weight: 600;
+}
+
+.org-profile-intergen input {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.org-profile-intergen .org-profile-hint {
+  display: block;
+  font-weight: 400;
+  margin: 2px 0 0 0;
+}
