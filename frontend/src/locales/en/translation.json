@@ -123,7 +123,7 @@
         },
         "connect": {
           "title": "Get in Touch",
-          "text": "Contact the organization from its page."
+          "text": "Tell the organization you are interested from its page."
         },
         "start": {
           "title": "Start Volunteering",
@@ -357,6 +357,25 @@
       "categoriesHint": "Volunteers use these to find you in the directory.",
       "intergenerational": "We offer intergenerational roles",
       "intergenerationalHint": "Mentorship pairs, mixed-age teams, or roles suited to older adults. You'll appear on the Across Generations page."
+    },
+    "roles": {
+      "heading": "Volunteer Roles",
+      "lead": "List the kinds of volunteers you usually need. They appear on your public page, where volunteers can tell you they are interested.",
+      "empty": "You haven't listed any roles yet.",
+      "add": "Add a role",
+      "title": "Role title",
+      "titlePlaceholder": "e.g. Friendly visitor",
+      "time": "Time needed",
+      "timePlaceholder": "e.g. 2 hours a week",
+      "description": "Description",
+      "descriptionPlaceholder": "What the volunteer will do.",
+      "save": "Save role",
+      "editLabel": "Edit {{title}}",
+      "deleteLabel": "Delete {{title}}",
+      "deleteConfirm": "Delete this role?",
+      "titleRequired": "Please enter a role title.",
+      "saveFailed": "Could not save the role. Please try again.",
+      "limit": "You can list up to {{count}} roles."
     }
   },
   "adminDashboard": {
@@ -488,7 +507,34 @@
     "details": "Details",
     "serviceAreas": "Service areas",
     "website": "Website",
-    "categories": "Categories"
+    "categories": "Categories",
+    "roles": {
+      "heading": "Volunteer Roles",
+      "interested": "I'm interested",
+      "interestedIn": "I'm interested in {{title}}"
+    },
+    "interest": {
+      "heading": "Interested in volunteering here?",
+      "lead": "Send your details to {{name}}. They will contact you directly.",
+      "name": "Your name",
+      "phone": "Phone (optional)",
+      "role": "Role",
+      "anyRole": "Any role",
+      "message": "Message (optional)",
+      "messagePlaceholder": "Tell them a little about yourself and when you are available.",
+      "consent": "I agree to share these details with {{name}} so they can contact me.",
+      "send": "Send",
+      "sending": "Sending...",
+      "sentHeading": "Message sent!",
+      "sentText": "{{name}} will contact you directly. Thank you for offering your time.",
+      "another": "Send another message",
+      "errors": {
+        "required": "Please enter your name and email.",
+        "email": "Please enter a valid email.",
+        "consent": "Please agree to share your details.",
+        "unavailable": "We couldn't send your message right now. Please try again later."
+      }
+    }
   },
   "directory": {
     "eyebrow": "Directory",

@@ -462,6 +462,36 @@ namespace Backend.Migrations
                     b.ToTable("Volunteers");
                 });
 
+            modelBuilder.Entity("Backend.Models.VolunteerRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TimeCommitment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("VolunteerRoles");
+                });
+
             modelBuilder.Entity("Backend.Models.OrganizationLogo", b =>
                 {
                     b.HasOne("Backend.Models.Organization", null)
@@ -494,6 +524,15 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Models.Testimonial", null)
                         .WithOne()
                         .HasForeignKey("Backend.Models.TestimonialPhoto", "TestimonialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Backend.Models.VolunteerRole", b =>
+                {
+                    b.HasOne("Backend.Models.Organization", null)
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

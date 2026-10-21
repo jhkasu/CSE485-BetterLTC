@@ -24,6 +24,7 @@ public class AzureEmailSender : IEmailSender {
                 _settings.Sender,
                 to,
                 new EmailContent(message.Subject) { Html = message.Html, PlainText = message.Text });
+            if (message.ReplyTo.Length > 0) email.ReplyTo.Add(new EmailAddress(message.ReplyTo));
             await _client.SendAsync(WaitUntil.Started, email);
             return true;
         } catch (Exception ex) {

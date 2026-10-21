@@ -19,6 +19,7 @@ public class AppDbContext : DbContext {
     public DbSet<TestimonialPhoto> TestimonialPhotos { get; set; }
     public DbSet<PageViewDaily> PageViewDailies { get; set; }
     public DbSet<ResourceDownloadDaily> ResourceDownloadDailies { get; set; }
+    public DbSet<VolunteerRole> VolunteerRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -55,6 +56,12 @@ public class AppDbContext : DbContext {
             .HasOne<Resource>()
             .WithMany()
             .HasForeignKey(d => d.ResourceId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<VolunteerRole>()
+            .HasOne<Organization>()
+            .WithMany()
+            .HasForeignKey(r => r.OrganizationId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
