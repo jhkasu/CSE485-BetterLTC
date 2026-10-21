@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { MdOpenInNew, MdLocationOn } from 'react-icons/md';
+import { MdOpenInNew, MdLocationOn, MdSchedule } from 'react-icons/md';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import apiFetch from './api';
 import API_BASE from './config';
 import { ORG_CATEGORY_KEYS } from './orgCategories';
+import ExpressInterestForm from './ExpressInterestForm';
 import './OrganizationPage.css';
 
 const AREA_PREVIEW = 3;
@@ -31,14 +32,29 @@ function OrganizationPage() {
   const { id } = useParams();
   const { t } = useTranslation();
   const [org, setOrg] = useState(undefined);
+  const [roles, setRoles] = useState([]);
+  const [roleId, setRoleId] = useState('');
 
   useEffect(() => {
     setOrg(undefined);
+    setRoles([]);
+    setRoleId('');
     apiFetch(`/api/organizations/${id}/public`)
       .then(res => (res.ok ? res.json() : null))
       .then(setOrg)
       .catch(() => setOrg(null));
+    apiFetch(`/api/organizations/${id}/roles`)
+      .then(res => (res.ok ? res.json() : []))
+      .then(setRoles)
+      .catch(() => {});
   }, [id]);
+
+  const chooseRole = (role) => {
+    setRoleId(String(role.id));
+    const section = document.getElementById('orgp-interest');
+    if (section?.scrollIntoView) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('interest-name')?.focus({ preventScroll: true });
+  };
 
   const cityLabel = (city) => (city === 'Other' ? t('volunteer.otherCity') : city);
 
@@ -100,6 +116,37 @@ function OrganizationPage() {
                 <p className="orgp-description">{org.description}</p>
               </section>
             )}
+
+            {roles.length > 0 && (
+              <section className="orgp-card orgp-roles" aria-labelledby="orgp-roles">
+                <h2 id="orgp-roles">{t('orgPage.roles.heading')}</h2>
+                <ul className="orgp-role-list">
+                  {roles.map(role => (
+                    <li key={role.id} className="orgp-role">
+                      <div className="orgp-role-text">
+                        <h3>{role.title}</h3>
+                        {role.timeCommitment && <p className="orgp-role-time"><MdSchedule aria-hidden="true" /> {role.timeCommitment}</p>}
+                        {role.description && <p className="orgp-role-description">{role.description}</p>}
+                      </div>
+                      <button
+                        type="button"
+                        className="orgp-role-btn"
+                        onClick={() => chooseRole(role)}
+                        aria-label={t('orgPage.roles.interestedIn', { title: role.title })}
+                      >
+                        {t('orgPage.roles.interested')}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            <section className="orgp-card orgp-interest" id="orgp-interest" aria-labelledby="orgp-interest-title">
+              <h2 id="orgp-interest-title">{t('orgPage.interest.heading')}</h2>
+              <p className="orgp-interest-lead">{t('orgPage.interest.lead', { name: org.orgName })}</p>
+              <ExpressInterestForm org={org} roles={roles} roleId={roleId} onRoleChange={setRoleId} />
+            </section>
           </div>
 
           <aside className="orgp-card orgp-side" aria-label={t('orgPage.details')}>

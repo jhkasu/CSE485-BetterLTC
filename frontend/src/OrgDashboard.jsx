@@ -9,6 +9,7 @@ import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import OrgProfile from './OrgProfile';
+import OrgRoles from './OrgRoles';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
 
 const NAV_ITEMS = [
@@ -102,15 +103,18 @@ function OrgDashboard() {
         </aside>
         <main className="org-main dash-main">
           {activeSection === 'profile' && orgProfile && (
-            <OrgProfile
-              org={orgProfile}
-              onSaved={(saved) => {
-                setOrgProfile(saved);
-                const updated = { ...user, orgName: saved.orgName };
-                localStorage.setItem('currentUser', JSON.stringify(updated));
-                setUser(updated);
-              }}
-            />
+            <>
+              <OrgProfile
+                org={orgProfile}
+                onSaved={(saved) => {
+                  setOrgProfile(saved);
+                  const updated = { ...user, orgName: saved.orgName };
+                  localStorage.setItem('currentUser', JSON.stringify(updated));
+                  setUser(updated);
+                }}
+              />
+              <OrgRoles orgId={orgProfile.id} />
+            </>
           )}
           {activeSection === 'account' && (
             <div>

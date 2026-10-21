@@ -1,0 +1,151 @@
+.org-roles {
+  max-width: 1000px;
+  margin-top: 48px;
+}
+
+.org-roles-empty {
+  font-size: 17px;
+  color: var(--color-text-muted);
+  margin: 0 0 20px 0;
+}
+
+.org-roles-list {
+  list-style: none;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+.org-role {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.org-role:first-child {
+  padding-top: 0;
+}
+
+.org-role-text {
+  min-width: 0;
+}
+
+.org-role-text h3 {
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.org-role-time {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin: 4px 0 0 0;
+}
+
+.org-role-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 8px 0 0 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.org-role-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.org-roles-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.org-roles-count {
+  align-self: flex-end;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0 0 16px 0;
+}
+
+.org-roles-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.org-roles-secondary,
+.org-roles-danger,
+.org-roles-add {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.org-roles-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border);
+}
+
+.org-roles-secondary:hover {
+  background: var(--color-bg);
+}
+
+.org-roles-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1.5px solid var(--color-danger);
+}
+
+.org-roles-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--color-accent);
+  border: 1.5px solid var(--color-accent);
+}
+
+.org-roles-add:hover {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+@media (max-width: 900px) {
+  .org-roles {
+    margin-top: 32px;
+  }
+
+  .org-role {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .org-role-actions {
+    justify-content: flex-start;
+  }
+
+  .org-roles-form-actions .org-profile-save {
+    width: auto;
+    flex: 1;
+  }
+}

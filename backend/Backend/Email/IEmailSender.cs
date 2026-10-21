@@ -4,4 +4,4 @@ public interface IEmailSender {
     Task<bool> SendAsync(string to, OutgoingEmail message);
 }
 
-public record OutgoingEmail(string Subject, string Html, string Text);
+public record OutgoingEmail(string Subject, string Html, string Text, string ReplyTo = "");

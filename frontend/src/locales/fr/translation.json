@@ -123,7 +123,7 @@
         },
         "connect": {
           "title": "Prenez contact",
-          "text": "Communiquez avec l'organisme à partir de sa page."
+          "text": "Signalez votre intérêt à l'organisme à partir de sa page."
         },
         "start": {
           "title": "Commencez",
@@ -357,6 +357,25 @@
       "categoriesHint": "Les bénévoles s'en servent pour vous trouver dans le répertoire.",
       "intergenerational": "Nous offrons des rôles intergénérationnels",
       "intergenerationalHint": "Jumelages de mentorat, équipes de tous âges ou rôles adaptés aux aînés. Vous figurerez sur la page Entre générations."
+    },
+    "roles": {
+      "heading": "Rôles bénévoles",
+      "lead": "Indiquez les types de bénévoles dont vous avez habituellement besoin. Ils s'affichent sur votre page publique, où les bénévoles peuvent vous signaler leur intérêt.",
+      "empty": "Vous n'avez encore indiqué aucun rôle.",
+      "add": "Ajouter un rôle",
+      "title": "Titre du rôle",
+      "titlePlaceholder": "p. ex. Visiteur amical",
+      "time": "Temps requis",
+      "timePlaceholder": "p. ex. 2 heures par semaine",
+      "description": "Description",
+      "descriptionPlaceholder": "Ce que fera le bénévole.",
+      "save": "Enregistrer le rôle",
+      "editLabel": "Modifier {{title}}",
+      "deleteLabel": "Supprimer {{title}}",
+      "deleteConfirm": "Supprimer ce rôle?",
+      "titleRequired": "Veuillez entrer un titre de rôle.",
+      "saveFailed": "Impossible d'enregistrer le rôle. Veuillez réessayer.",
+      "limit": "Vous pouvez indiquer jusqu'à {{count}} rôles."
     }
   },
   "adminDashboard": {
@@ -488,7 +507,34 @@
     "details": "Détails",
     "serviceAreas": "Régions desservies",
     "website": "Site Web",
-    "categories": "Catégories"
+    "categories": "Catégories",
+    "roles": {
+      "heading": "Rôles bénévoles",
+      "interested": "Ça m'intéresse",
+      "interestedIn": "{{title}} m'intéresse"
+    },
+    "interest": {
+      "heading": "Envie de faire du bénévolat ici?",
+      "lead": "Envoyez vos coordonnées à {{name}}. L'organisme communiquera directement avec vous.",
+      "name": "Votre nom",
+      "phone": "Téléphone (facultatif)",
+      "role": "Rôle",
+      "anyRole": "Tout rôle",
+      "message": "Message (facultatif)",
+      "messagePlaceholder": "Parlez un peu de vous et de vos disponibilités.",
+      "consent": "J'accepte de communiquer ces renseignements à {{name}} pour qu'on puisse me joindre.",
+      "send": "Envoyer",
+      "sending": "Envoi en cours...",
+      "sentHeading": "Message envoyé!",
+      "sentText": "{{name}} communiquera directement avec vous. Merci d'offrir votre temps.",
+      "another": "Envoyer un autre message",
+      "errors": {
+        "required": "Veuillez entrer votre nom et votre courriel.",
+        "email": "Veuillez entrer un courriel valide.",
+        "consent": "Veuillez accepter de communiquer vos renseignements.",
+        "unavailable": "Impossible d'envoyer votre message pour le moment. Veuillez réessayer plus tard."
+      }
+    }
   },
   "directory": {
     "eyebrow": "Répertoire",
