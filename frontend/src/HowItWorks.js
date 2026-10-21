@@ -2,22 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  MdPerson, MdAccountBalance, MdApartment, MdPhone,
+  MdSearch, MdInfoOutline, MdMailOutline, MdFolder,
   MdBusiness, MdVolunteerActivism, MdChevronRight,
 } from 'react-icons/md';
 import './HowItWorks.css';
 
 const STEPS = [
-  { key: 'request', icon: <MdPerson /> },
-  { key: 'match', icon: <MdAccountBalance /> },
-  { key: 'accept', icon: <MdApartment /> },
-  { key: 'contact', icon: <MdPhone /> },
+  { key: 'find', icon: <MdSearch /> },
+  { key: 'learn', icon: <MdInfoOutline /> },
+  { key: 'connect', icon: <MdMailOutline /> },
+  { key: 'start', icon: <MdVolunteerActivism /> },
 ];
 
 const ROLES = [
-  { key: 'seniors', icon: <MdPerson />, link: '/get-help' },
-  { key: 'organizations', icon: <MdBusiness />, link: '/signup' },
   { key: 'volunteers', icon: <MdVolunteerActivism />, link: '/organizations' },
+  { key: 'organizations', icon: <MdBusiness />, link: '/signup' },
+  { key: 'resources', icon: <MdFolder />, link: '/resources' },
 ];
 
 function HowItWorks() {

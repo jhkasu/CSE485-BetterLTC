@@ -13,8 +13,8 @@ function Hero() {
         <h1 id="hero-heading">{splitAt > 0 ? <>{heading.slice(0, splitAt)}<br />{heading.slice(splitAt + 1)}</> : heading}</h1>
         <p>{t('home.hero.lead')}</p>
         <div className="hero-actions">
-          <Link className="btn btn-primary btn-lg" to="/get-help">{t('home.hero.needHelp')}</Link>
-          <Link className="btn btn-dark btn-lg" to="/organizations">{t('home.hero.wantToVolunteer')}</Link>
+          <Link className="btn btn-primary btn-lg" to="/organizations">{t('home.hero.wantToVolunteer')}</Link>
+          <Link className="btn btn-dark btn-lg" to="/signup">{t('home.hero.forOrganizations')}</Link>
         </div>
       </div>
       <div className="hero-media" aria-hidden="true">

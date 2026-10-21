@@ -5,8 +5,8 @@ import DirectoryPage, { directoryQuery } from './DirectoryPage';
 import { AccessibilityProvider } from './accessibility/AccessibilityContext';
 
 const orgs = [
-  { id: 4, orgName: 'Prairie Care', description: 'We help seniors stay connected.', serviceAreas: ['Regina', 'Saskatoon'], helpTypes: [], categories: ['Seniors Services', 'Health'], website: '', logoVersion: 12 },
-  { id: 7, orgName: 'Green Youth', description: '', serviceAreas: ['Regina'], helpTypes: [], categories: ['Youth'], offersIntergenerational: true, website: '', logoVersion: null },
+  { id: 4, orgName: 'Prairie Care', description: 'We help seniors stay connected.', serviceAreas: ['Regina', 'Saskatoon'], categories: ['Seniors Services', 'Health'], website: '', logoVersion: 12 },
+  { id: 7, orgName: 'Green Youth', description: '', serviceAreas: ['Regina'], categories: ['Youth'], offersIntergenerational: true, website: '', logoVersion: null },
 ];
 
 function respond(body) {

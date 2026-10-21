@@ -94,85 +94,6 @@ namespace Backend.Migrations
                     b.ToTable("FaqItems");
                 });
 
-            modelBuilder.Entity("Backend.Models.HelpRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("AcceptedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("ConsentGiven")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ContactMethod")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ContactedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("ForFamilyMember")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("HelpType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SeniorName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("Status");
-
-                    b.ToTable("HelpRequests");
-                });
-
             modelBuilder.Entity("Backend.Models.Organization", b =>
                 {
                     b.Property<int>("Id")
@@ -196,10 +117,6 @@ namespace Backend.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.PrimitiveCollection<List<string>>("HelpTypes")
-                        .IsRequired()
-                        .HasColumnType("text[]");
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
@@ -543,14 +460,6 @@ namespace Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Volunteers");
-                });
-
-            modelBuilder.Entity("Backend.Models.HelpRequest", b =>
-                {
-                    b.HasOne("Backend.Models.Organization", null)
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Backend.Models.OrganizationLogo", b =>

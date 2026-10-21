@@ -6,7 +6,7 @@ import { AccessibilityProvider } from './accessibility/AccessibilityContext';
 
 const org = {
   id: 4, orgName: 'Prairie Care', description: 'We help seniors stay connected.',
-  serviceAreas: ['Regina', 'Saskatoon'], helpTypes: ['Companionship'],
+  serviceAreas: ['Regina', 'Saskatoon'],
   website: 'https://www.prairiecare.org', logoVersion: 99,
 };
 

@@ -6,7 +6,6 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import apiFetch from './api';
 import API_BASE from './config';
-import { HELP_TYPE_KEYS } from './helpTypes';
 import { ORG_CATEGORY_KEYS } from './orgCategories';
 import './OrganizationPage.css';
 
@@ -42,7 +41,6 @@ function OrganizationPage() {
   }, [id]);
 
   const cityLabel = (city) => (city === 'Other' ? t('volunteer.otherCity') : city);
-  const typeLabel = (type) => (HELP_TYPE_KEYS[type] ? t(HELP_TYPE_KEYS[type]) : type);
 
   if (org === undefined) {
     return (
@@ -116,12 +114,6 @@ function OrganizationPage() {
               <>
                 <h3>{t('orgPage.serviceAreas')}</h3>
                 <ul className="orgp-chips">{areas.map(a => <li key={a}>{cityLabel(a)}</li>)}</ul>
-              </>
-            )}
-            {(org.helpTypes || []).length > 0 && (
-              <>
-                <h3>{t('orgPage.helpTypes')}</h3>
-                <ul className="orgp-chips">{org.helpTypes.map(h => <li key={h}>{typeLabel(h)}</li>)}</ul>
               </>
             )}
             {org.website && (

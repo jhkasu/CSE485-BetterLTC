@@ -11,7 +11,6 @@ public class AppDbContext : DbContext {
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<TeamMember> TeamMembers { get; set; }
     public DbSet<OurWork> OurWorks { get; set; }
-    public DbSet<HelpRequest> HelpRequests { get; set; }
     public DbSet<OrganizationLogo> OrganizationLogos { get; set; }
     public DbSet<Resource> Resources { get; set; }
     public DbSet<ResourceFile> ResourceFiles { get; set; }
@@ -57,13 +56,5 @@ public class AppDbContext : DbContext {
             .WithMany()
             .HasForeignKey(d => d.ResourceId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<HelpRequest>()
-            .HasOne<Organization>()
-            .WithMany()
-            .HasForeignKey(r => r.OrganizationId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        modelBuilder.Entity<HelpRequest>()
-            .HasIndex(r => r.Status);    }
+    }
 }

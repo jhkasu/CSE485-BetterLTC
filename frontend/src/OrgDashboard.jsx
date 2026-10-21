@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdLogout, MdOpenInNew, MdLock, MdInbox, MdAssignmentTurnedIn, MdBusiness } from 'react-icons/md';
+import { MdLogout, MdOpenInNew, MdLock, MdBusiness } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
@@ -8,13 +8,10 @@ import './OrgDashboard.css';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
-import { HelpRequestList, AcceptedRequestList, HelpRequestDetail } from './OrgHelpRequests';
 import OrgProfile from './OrgProfile';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
 
 const NAV_ITEMS = [
-  { id: 'requests', labelKey: 'orgDashboard.nav.requests', icon: <MdInbox /> },
-  { id: 'accepted', labelKey: 'orgDashboard.nav.accepted', icon: <MdAssignmentTurnedIn /> },
   { id: 'profile', labelKey: 'orgDashboard.nav.profile', icon: <MdBusiness /> },
   { id: 'account', labelKey: 'common.account', icon: <MdLock /> },
 ];
@@ -23,9 +20,8 @@ function OrgDashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [user, setUser] = useState(() => getCurrentUser());
-  const [activeSection, setActiveSection] = useState('requests');
+  const [activeSection, setActiveSection] = useState('profile');
   const menu = useDashboardMenu();
-  const [requestDetailId, setRequestDetailId] = useState(null);
   const [orgProfile, setOrgProfile] = useState(null);
 
   useEffect(() => {
@@ -65,7 +61,6 @@ function OrgDashboard() {
   const current = NAV_ITEMS.find(item => item.id === activeSection);
   const choose = (id) => {
     setActiveSection(id);
-    setRequestDetailId(null);
     menu.setOpen(false);
   };
 
@@ -106,16 +101,6 @@ function OrgDashboard() {
           </button>
         </aside>
         <main className="org-main dash-main">
-          {activeSection === 'requests' && (
-            <HelpRequestList
-              needsProfile={!!orgProfile && (!orgProfile.serviceAreas?.length || !orgProfile.helpTypes?.length)}
-              onSetupProfile={() => setActiveSection('profile')}
-              onAccepted={(id) => { setActiveSection('accepted'); setRequestDetailId(id); }}
-            />
-          )}
-          {activeSection === 'accepted' && (requestDetailId
-            ? <HelpRequestDetail id={requestDetailId} onBack={() => setRequestDetailId(null)} />
-            : <AcceptedRequestList onOpen={setRequestDetailId} />)}
           {activeSection === 'profile' && orgProfile && (
             <OrgProfile
               org={orgProfile}

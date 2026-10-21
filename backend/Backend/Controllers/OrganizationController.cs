@@ -87,10 +87,8 @@ public class OrganizationController : ControllerBase {
             var org = await _context.Organizations.FindAsync(id);
             if (org is null) return NotFound();
             var areas = profile.ServiceAreas.Distinct().ToList();
-            var helpTypes = profile.HelpTypes.Distinct().ToList();
             var categories = profile.Categories.Distinct().ToList();
             if (areas.Any(a => !ReferenceData.Cities.Contains(a))) return BadRequest("Unknown service area.");
-            if (helpTypes.Any(h => !ReferenceData.HelpTypes.Contains(h))) return BadRequest("Unknown help type.");
             if (categories.Any(c => !ReferenceData.OrganizationCategories.Contains(c))) return BadRequest("Unknown category.");
             string notificationEmail = AccountEmails.Normalize(profile.NotificationEmail);
             if (notificationEmail.Length > 0 && !new EmailAddressAttribute().IsValid(notificationEmail)) return BadRequest("Invalid notification email.");
@@ -102,7 +100,6 @@ public class OrganizationController : ControllerBase {
             org.OrgName = orgName;
             org.Description = profile.Description.Trim();
             org.ServiceAreas = areas;
-            org.HelpTypes = helpTypes;
             org.Categories = categories;
             org.OffersIntergenerational = profile.OffersIntergenerational;
             org.NotificationEmail = notificationEmail;

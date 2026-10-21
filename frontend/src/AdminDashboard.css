@@ -503,12 +503,6 @@
   background: var(--color-bg);
 }
 
-.admin-help-senior {
-  font-size: 14px;
-  color: var(--color-text-muted);
-  margin-top: 2px;
-}
-
 .admin-org-serves {
   max-width: 260px;
   font-size: 14px;
