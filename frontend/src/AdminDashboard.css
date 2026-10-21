@@ -739,3 +739,60 @@
   margin: 0;
   padding: 0;
 }
+
+.admin-org-registry {
+  font-size: 14px;
+  min-width: 170px;
+}
+
+.admin-registry-number {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.admin-registry-type,
+.admin-registry-missing {
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.admin-registry-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  margin-right: 10px;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.admin-reject-reason {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-top: 6px;
+  max-width: 220px;
+  overflow-wrap: anywhere;
+}
+
+.admin-org-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-reject-hint {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+}
+
+.admin-reject-error {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 15px;
+  margin: 8px 0 0 0;
+}

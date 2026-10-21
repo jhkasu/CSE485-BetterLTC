@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './SignupForm.css';
 import apiFetch from './api';
+import RegistryFields from './RegistryFields';
+import { normalizeRegistryNumber, registryError } from './registry';
 
 const toSubmitError = (status, message) => {
   if (status === 409) return { key: 'auth.errors.emailRegistered' };
@@ -23,6 +25,8 @@ const SignupForm = () => {
     role: 'volunteer',
     orgName: '',
     contactName: '',
+    registryType: '',
+    registryNumber: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -51,6 +55,8 @@ const SignupForm = () => {
 
     if (formData.role === 'organization') {
       if (!formData.orgName) newErrors.orgName = 'auth.errors.orgNameRequired';
+      const registry = registryError(formData.registryType, formData.registryNumber);
+      if (registry) newErrors.registry = registry;
     }
 
     setErrors(newErrors);
@@ -89,7 +95,8 @@ const SignupForm = () => {
         contactName: `${formData.firstName} ${formData.lastName}`,
         email: formData.email.trim(),
         password: formData.password,
-        isApproved: false,
+        registryType: formData.registryType,
+        registryNumber: normalizeRegistryNumber(formData.registryNumber),
       };
       try {
         const res = await apiFetch(`/api/organizations`, {
@@ -143,6 +150,13 @@ const SignupForm = () => {
                 placeholder={t('auth.placeholders.orgName')}
               />
               {errors.orgName && <p className="error">{t(errors.orgName)}</p>}
+              <RegistryFields
+                idPrefix="signup-registry"
+                type={formData.registryType}
+                number={formData.registryNumber}
+                error={errors.registry}
+                onChange={changes => setFormData(prev => ({ ...prev, ...changes }))}
+              />
             </>
           )}
 
