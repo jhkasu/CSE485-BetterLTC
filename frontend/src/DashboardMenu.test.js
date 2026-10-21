@@ -13,7 +13,7 @@ beforeEach(() => {
     ok: true,
     status: 200,
     json: async () => (url.endsWith('/api/organizations/3')
-      ? { id: 3, orgName: 'Care Home', isApproved: true, description: '', serviceAreas: ['Regina'], helpTypes: ['Meal Assistance'], categories: [], notificationEmail: '', website: '', logoVersion: null }
+      ? { id: 3, orgName: 'Care Home', isApproved: true, description: '', serviceAreas: ['Regina'], categories: [], notificationEmail: '', website: '', logoVersion: null }
       : []),
   }));
 });
@@ -38,11 +38,11 @@ test('the menu button opens the navigation and choosing a section closes it', as
   expect(button).toHaveAttribute('aria-expanded', 'false');
   fireEvent.click(button);
   expect(button).toHaveAttribute('aria-expanded', 'true');
-  expect(screen.getByRole('button', { name: 'Request List' })).toHaveAttribute('aria-current', 'page');
-  fireEvent.click(screen.getByRole('button', { name: 'Profile' }));
-  expect(button).toHaveAttribute('aria-expanded', 'false');
   expect(screen.getByRole('button', { name: 'Profile' })).toHaveAttribute('aria-current', 'page');
-  expect(await screen.findByLabelText(/organization name/i)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Account' }));
+  expect(button).toHaveAttribute('aria-expanded', 'false');
+  expect(screen.getByRole('button', { name: 'Account' })).toHaveAttribute('aria-current', 'page');
+  expect(await screen.findByLabelText(/current password/i)).toBeInTheDocument();
 });
 
 test('Escape and the close button close the menu and return focus', () => {

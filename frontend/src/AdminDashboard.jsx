@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MdDashboard, MdPeople, MdGroups, MdWork,
-  MdHelpCenter, MdLogout, MdAdd, MdEdit, MdDelete,
+  MdLogout, MdAdd, MdEdit, MdDelete,
   MdClose, MdOpenInNew, MdBusiness, MdLock, MdFolder, MdQuiz, MdFormatQuote, MdInsights,
 } from 'react-icons/md';
 import RichTextEditor from './RichTextEditor';
@@ -14,8 +14,6 @@ import API_BASE from './config';
 import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
-import { HELP_TYPE_KEYS } from './helpTypes';
-import AdminHelpRequests from './AdminHelpRequests';
 import AdminResources from './AdminResources';
 import AdminFaqs from './AdminFaqs';
 import AdminTestimonials from './AdminTestimonials';
@@ -32,7 +30,6 @@ const NAV_ITEMS = [
   { id: 'testimonials',   labelKey: 'adminDashboard.nav.testimonials',  icon: <MdFormatQuote /> },
   { id: 'resources',      labelKey: 'adminDashboard.nav.resources',     icon: <MdFolder /> },
   { id: 'faq',            labelKey: 'adminDashboard.nav.faq',           icon: <MdQuiz /> },
-  { id: 'help',           labelKey: 'adminDashboard.nav.help',          icon: <MdHelpCenter /> },
   { id: 'account',        labelKey: 'common.account',                   icon: <MdLock /> },
 ];
 
@@ -405,12 +402,9 @@ function AdminDashboard() {
                 <td>{org.contactName}</td>
                 <td>{org.email}</td>
                 <td className="admin-org-serves">
-                  {org.serviceAreas?.length || org.helpTypes?.length ? (
-                    <>
-                      <div>{(org.serviceAreas || []).map(city => (city === 'Other' ? t('volunteer.otherCity') : city)).join(', ') || '—'}</div>
-                      <div className="admin-help-senior">{(org.helpTypes || []).map(type => (HELP_TYPE_KEYS[type] ? t(HELP_TYPE_KEYS[type]) : type)).join(', ') || '—'}</div>
-                    </>
-                  ) : t('adminDashboard.organizations.notSet')}
+                  {org.serviceAreas?.length
+                    ? org.serviceAreas.map(city => (city === 'Other' ? t('volunteer.otherCity') : city)).join(', ')
+                    : t('adminDashboard.organizations.notSet')}
                 </td>
                 <td>
                   <span className={`bg-badge ${org.isApproved ? 'approved' : 'pending'}`}>
@@ -444,7 +438,6 @@ function AdminDashboard() {
       case 'testimonials':   return <AdminTestimonials />;
       case 'resources':      return <AdminResources />;
       case 'faq':            return <AdminFaqs />;
-      case 'help':           return <AdminHelpRequests />;
       case 'account':        return renderAccount();
       default:               return null;
     }

@@ -11,7 +11,7 @@ namespace Backend.Controllers;
 [ApiController]
 public class StatisticsController : ControllerBase {
     public static readonly HashSet<string> TrackedPaths = [
-        "/", "/get-help", "/about", "/about/mission", "/about/history", "/about/team",
+        "/", "/about", "/about/mission", "/about/history", "/about/team",
         "/our-work", "/organizations", "/resources", "/faq", "/intergenerational", "/signup", "/signin",
     ];
     public static readonly int[] AllowedRanges = [7, 30, 90];

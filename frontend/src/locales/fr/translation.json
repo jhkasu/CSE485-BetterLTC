@@ -43,7 +43,6 @@
     "ariaMain": "Navigation principale",
     "menu": "Menu",
     "logoHome": "Accueil de VolunteerConnect Saskatchewan",
-    "getHelp": "Obtenir de l'aide",
     "aboutUs": "À propos",
     "missionVision": "Mission et vision",
     "ourHistory": "Notre histoire",
@@ -83,8 +82,8 @@
   "home": {
     "hero": {
       "heading": "Soigner. Relier. Rassembler.",
-      "lead": "De l'aide gratuite pour les aînés de la Saskatchewan, offerte par des voisins qui ont leur bien-être à cœur.",
-      "needHelp": "J'ai besoin d'aide",
+      "lead": "Relier les bénévoles aux organismes partout en Saskatchewan.",
+      "forOrganizations": "Je suis un organisme",
       "wantToVolunteer": "Je veux faire du bénévolat"
     },
     "pillars": {
@@ -112,86 +111,40 @@
     },
     "howItWorks": {
       "heading": "Comment ça marche",
-      "lead": "D'une simple demande à un soutien concret.",
+      "lead": "De la recherche d'un organisme à votre première journée.",
       "steps": {
-        "request": {
-          "title": "Demande de l'aîné",
-          "text": "Un aîné ou un proche envoie une demande d'aide."
+        "find": {
+          "title": "Trouvez un organisme",
+          "text": "Parcourez les organismes par catégorie et par région."
         },
-        "match": {
-          "title": "Jumelage automatique",
-          "text": "La demande est envoyée au bon organisme."
+        "learn": {
+          "title": "Découvrez-le",
+          "text": "Voyez ce que fait chaque organisme et où il est présent."
         },
-        "accept": {
-          "title": "L'organisme accepte",
-          "text": "Un organisme local accepte la demande."
+        "connect": {
+          "title": "Prenez contact",
+          "text": "Communiquez avec l'organisme à partir de sa page."
         },
-        "contact": {
-          "title": "Prise de contact",
-          "text": "L'organisme communique avec l'aîné."
+        "start": {
+          "title": "Commencez",
+          "text": "L'organisme vous accueille et vous aide à démarrer."
         }
       },
-      "rolesHeading": "Trois rôles. Une communauté.",
+      "rolesHeading": "Par où commencer",
       "roles": {
-        "seniors": {
-          "title": "Aînés",
-          "text": "Obtenez l'aide dont vous avez besoin"
+        "volunteers": {
+          "title": "Bénévoles",
+          "text": "Trouvez un organisme près de chez vous"
         },
         "organizations": {
           "title": "Organismes",
-          "text": "Offrez le bon soutien"
+          "text": "Ajoutez votre organisme au répertoire"
         },
-        "volunteers": {
-          "title": "Bénévoles",
-          "text": "Faites une différence"
+        "resources": {
+          "title": "Ressources",
+          "text": "Modèles et guides"
         }
       }
-    }
-  },
-  "getHelp": {
-    "form": {
-      "sending": "Envoi en cours..."
-    },
-    "success": {
-      "heading": "Votre demande a été envoyée!",
-      "text": "Merci de nous avoir contactés. Un organisme partenaire communiquera avec vous bientôt pour discuter des prochaines étapes.",
-      "willCall": "Il vous appellera au {{phone}}.",
-      "emailSent": "Nous avons envoyé un courriel de confirmation à {{email}}.",
-      "emergency": "Ce service n'est pas destiné aux urgences. En cas d'urgence, composez le 911.",
-      "backHome": "Retour à l'accueil",
-      "another": "Envoyer une autre demande"
-    },
-    "expect": {
-      "eyebrow": "À quoi s'attendre",
-      "heading": "Simple, gratuit et local",
-      "item1": "Une coordonnatrice ou un coordonnateur des bénévoles vous rappelle dans un délai de deux jours ouvrables",
-      "item2": "Chaque bénévole a fait l'objet d'une vérification des antécédents",
-      "item3": "Aucuns frais pour vous ni pour votre famille",
-      "item4": "Vous pouvez suspendre ou arrêter l'aide en tout temps"
-    },
-    "request": {
-      "heading": "Demander de l'aide",
-      "lead": "Dites-nous ce dont vous avez besoin. Nous vous mettrons en lien avec le bon organisme de votre région.",
-      "helpType": "Type d'aide nécessaire",
-      "selectHelpType": "Choisissez un type d'aide",
-      "city": "Votre région / ville",
-      "selectCity": "Choisissez votre région",
-      "contactMethod": "Moyen de contact préféré",
-      "selectContactMethod": "Choisissez un moyen de contact",
-      "methods": {
-        "phone": "Téléphone",
-        "email": "Courriel"
-      },
-      "phone": "Numéro de téléphone",
-      "email": "Adresse courriel",
-      "family": "Cette demande est faite par un membre de la famille au nom d'un aîné.",
-      "seniorName": "Nom complet de l'aîné",
-      "consent": "J'accepte de partager mes renseignements avec les organismes partenaires afin qu'ils puissent me joindre au sujet de ma demande.",
-      "consentRequired": "Veuillez accepter de partager vos renseignements pour qu'un organisme puisse vous joindre.",
-      "submit": "Envoyer la demande",
-      "quote": "« Un petit coup de main fait une grande différence. »",
-      "photoAlt": "Un bénévole déneige l'entrée pendant qu'une aînée regarde par la fenêtre",
-      "requiredNote": "Les champs marqués d'un * sont obligatoires."
     }
   },
   "about": {
@@ -363,8 +316,6 @@
   "orgDashboard": {
     "role": "Organisme",
     "nav": {
-      "requests": "Liste des demandes",
-      "accepted": "Demandes acceptées",
       "profile": "Profil"
     },
     "pending": {
@@ -372,65 +323,16 @@
       "text": "Le compte de votre organisme est en cours d'examen. Un administrateur doit l'approuver avant que vous puissiez publier des annonces.",
       "notify": "Nous vous aviserons dès que votre compte aura été approuvé."
     },
-    "requests": {
-      "heading": "Demandes d'aide",
-      "lead": "Consultez les demandes d'aide ouvertes des aînés et des familles de la Saskatchewan. Acceptez celles qui correspondent à la capacité de votre organisme. Les coordonnées s'affichent une fois la demande acceptée.",
-      "searchLabel": "Rechercher des demandes",
-      "searchPlaceholder": "Rechercher par région ou type d'aide...",
-      "allAreas": "Toutes les régions",
-      "allTypes": "Tous les types d'aide",
-      "empty": "Il n'y a aucune demande ouverte pour le moment.",
-      "noMatch": "Aucune demande ne correspond à vos filtres.",
-      "submitted": "Envoyée le {{date}}",
-      "prefers": "Préfère : {{method}}",
-      "familyRequest": "Envoyée par un membre de la famille",
-      "accept": "Accepter la demande",
-      "accepting": "Acceptation...",
-      "alreadyTaken": "Un autre organisme a déjà accepté cette demande.",
-      "acceptFailed": "Impossible d'accepter la demande. Veuillez réessayer.",
-      "setupNeeded": "Choisissez vos régions desservies et vos types d'aide pour voir les demandes qui correspondent à votre organisme.",
-      "setupButton": "Configurer le profil"
-    },
-    "accepted": {
-      "heading": "Demandes acceptées",
-      "empty": "Vous n'avez encore accepté aucune demande.",
-      "view": "Voir les détails"
-    },
-    "detail": {
-      "back": "Retour à la liste",
-      "heading": "Détails de la demande",
-      "steps": {
-        "received": "Reçue",
-        "accepted": "Acceptée",
-        "contacted": "Contactée",
-        "volunteerAssigned": "Bénévole assigné",
-        "completed": "Terminée"
-      },
-      "contactInfo": "Coordonnées",
-      "preferred": "Moyen de contact préféré : {{method}}",
-      "additional": "Renseignements supplémentaires",
-      "requestFor": "L'aide est pour : {{name}}",
-      "familyNote": "Envoyée par un membre de la famille au nom de l'aîné.",
-      "selfNote": "Envoyée par l'aîné.",
-      "acceptedBanner": "Veuillez communiquer avec la personne par son moyen de contact préféré, puis indiquer que la demande a été contactée.",
-      "contactedBanner": "L'aîné a été contacté.",
-      "markContacted": "Indiquer comme contactée",
-      "release": "Libérer la demande",
-      "releaseConfirm": "Libérer cette demande pour qu'un autre organisme puisse l'accepter?",
-      "releaseYes": "Libérer"
-    },
     "profile": {
       "heading": "Profil de l'organisme",
-      "lead": "Gérez les renseignements de votre organisme et choisissez les demandes d'aide que vous recevez.",
+      "lead": "Gérez les renseignements de votre organisme et la façon dont il apparaît dans le répertoire.",
       "name": "Nom de l'organisme",
       "description": "Description",
-      "descriptionPlaceholder": "Expliquez aux aînés et aux bénévoles ce que fait votre organisme.",
+      "descriptionPlaceholder": "Expliquez aux bénévoles ce que fait votre organisme.",
       "serviceAreas": "Régions desservies",
-      "serviceAreasHint": "Vous verrez les demandes d'aide de ces régions.",
-      "helpTypes": "Types d'aide",
-      "helpTypesHint": "Vous verrez les demandes pour ces types d'aide.",
+      "serviceAreasHint": "Les régions où votre organisme est présent. Les bénévoles peuvent filtrer le répertoire par région.",
       "notificationEmail": "Courriel pour les avis",
-      "notificationEmailHint": "Adresse où nous envoyons les mises à jour sur les demandes. Laissez vide pour utiliser le courriel de votre compte.",
+      "notificationEmailHint": "L'adresse où nous envoyons les messages destinés à votre organisme. Laissez vide pour utiliser l'adresse de votre compte.",
       "save": "Enregistrer",
       "saved": "Enregistré!",
       "saveFailed": "Impossible d'enregistrer votre profil. Veuillez réessayer.",
@@ -464,7 +366,6 @@
       "organizations": "Organismes",
       "team": "Notre équipe",
       "work": "Nos réalisations",
-      "help": "Demandes d'aide",
       "resources": "Ressources",
       "faq": "FAQ",
       "testimonials": "Témoignages",
@@ -487,7 +388,7 @@
       "empty": "Aucun organisme inscrit pour le moment.",
       "organization": "Organisme",
       "contact": "Personne-ressource",
-      "serves": "Dessert",
+      "serves": "Régions desservies",
       "notSet": "Non défini"
     },
     "team": {
@@ -512,15 +413,6 @@
       "newPost": "Nouvelle publication",
       "editPost": "Modifier la publication"
     },
-    "help": {
-      "heading": "Demandes d'aide",
-      "empty": "Aucune demande soumise pour le moment.",
-      "helpType": "Type d'aide",
-      "submitted": "Soumise le",
-      "city": "Ville",
-      "contact": "Contact",
-      "forSenior": "Pour {{name}}"
-    },
     "editor": {
       "linkPrompt": "URL",
       "youtubePrompt": "URL YouTube",
@@ -530,28 +422,6 @@
       "link": "Lien",
       "image": "Image",
       "placeholder": "Rédigez votre publication ici..."
-    },
-    "matching": {
-      "heading": "Demandes d'aide",
-      "lead": "Toutes les demandes envoyées par le formulaire d'aide, et l'organisme qui s'en occupe.",
-      "tabs": {
-        "all": "Toutes",
-        "New": "En attente",
-        "Accepted": "Acceptées",
-        "Contacted": "Contactées"
-      },
-      "empty": "Aucune demande dans cette vue.",
-      "request": "Demande",
-      "organization": "Organisme",
-      "view": "Voir",
-      "requester": "Demandeur",
-      "history": "Historique",
-      "confirm": {
-        "release": "Libérer cette demande? Elle redeviendra En attente pour qu'un autre organisme puisse l'accepter.",
-        "delete": "Supprimer définitivement cette demande? Cette action est irréversible."
-      },
-      "release": "Libérer",
-      "delete": "Supprimer"
     }
   },
   "options": {
@@ -594,11 +464,6 @@
       "sat": "Sam",
       "sun": "Dim"
     },
-    "helpRequestStatus": {
-      "new": "Nouvelle",
-      "accepted": "Acceptée",
-      "contacted": "Contactée"
-    },
     "orgCategories": {
       "health": "Santé",
       "seniors": "Services aux aînés",
@@ -622,7 +487,6 @@
     "about": "À propos",
     "details": "Détails",
     "serviceAreas": "Régions desservies",
-    "helpTypes": "Types d'aide",
     "website": "Site Web",
     "categories": "Catégories"
   },

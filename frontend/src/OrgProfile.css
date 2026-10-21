@@ -123,6 +123,28 @@ textarea.org-profile-input {
   margin-top: 8px;
 }
 
+.org-profile-save {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border: 1px solid var(--color-accent);
+}
+
+.org-profile-save:hover {
+  background: var(--color-accent-hover);
+}
+
+.org-profile-save:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 .org-profile-saved {
   font-size: 16px;
   font-weight: 700;
@@ -137,6 +159,10 @@ textarea.org-profile-input {
   .org-profile-grid {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+
+  .org-profile-save {
+    width: 100%;
   }
 }
 

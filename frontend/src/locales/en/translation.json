@@ -43,7 +43,6 @@
     "ariaMain": "Main",
     "menu": "Menu",
     "logoHome": "VolunteerConnect Saskatchewan home",
-    "getHelp": "Get Help",
     "aboutUs": "About Us",
     "missionVision": "Mission & Vision",
     "ourHistory": "Our History",
@@ -83,8 +82,8 @@
   "home": {
     "hero": {
       "heading": "Care. Connect. Community.",
-      "lead": "Free help for seniors in Saskatchewan, from neighbours who care.",
-      "needHelp": "I need help",
+      "lead": "Connecting volunteers with organizations across Saskatchewan.",
+      "forOrganizations": "I'm an organization",
       "wantToVolunteer": "I want to volunteer"
     },
     "pillars": {
@@ -112,86 +111,40 @@
     },
     "howItWorks": {
       "heading": "How It Works",
-      "lead": "From a simple request to meaningful support.",
+      "lead": "From finding an organization to your first day.",
       "steps": {
-        "request": {
-          "title": "Senior Request",
-          "text": "A senior or family member submits a help request."
+        "find": {
+          "title": "Find an Organization",
+          "text": "Browse organizations by category and area."
         },
-        "match": {
-          "title": "Auto Match",
-          "text": "The request is sent to the right organization."
+        "learn": {
+          "title": "Learn About Them",
+          "text": "See what each organization does and where it works."
         },
-        "accept": {
-          "title": "Organization Accepts",
-          "text": "A local organization accepts the request."
+        "connect": {
+          "title": "Get in Touch",
+          "text": "Contact the organization from its page."
         },
-        "contact": {
-          "title": "Contact",
-          "text": "The organization contacts the senior."
+        "start": {
+          "title": "Start Volunteering",
+          "text": "The organization welcomes you and helps you get started."
         }
       },
-      "rolesHeading": "Three roles. One community.",
+      "rolesHeading": "Where to start",
       "roles": {
-        "seniors": {
-          "title": "Seniors",
-          "text": "Get the help you need"
+        "volunteers": {
+          "title": "Volunteers",
+          "text": "Find an organization near you"
         },
         "organizations": {
           "title": "Organizations",
-          "text": "Provide the right support"
+          "text": "Add your organization to the directory"
         },
-        "volunteers": {
-          "title": "Volunteers",
-          "text": "Make a difference"
+        "resources": {
+          "title": "Resources",
+          "text": "Templates and guides"
         }
       }
-    }
-  },
-  "getHelp": {
-    "form": {
-      "sending": "Sending..."
-    },
-    "success": {
-      "heading": "Your request has been submitted!",
-      "text": "Thank you for reaching out. A partner organization will contact you soon to discuss next steps.",
-      "willCall": "They will call you at {{phone}}.",
-      "emailSent": "We sent a confirmation email to {{email}}.",
-      "emergency": "This service is not for emergencies. In an emergency, call 911.",
-      "backHome": "Back to home",
-      "another": "Send another request"
-    },
-    "expect": {
-      "eyebrow": "What to expect",
-      "heading": "Simple, free, and local",
-      "item1": "A volunteer coordinator calls you back within two business days",
-      "item2": "Every volunteer has passed a background check",
-      "item3": "There is no cost to you or your family",
-      "item4": "You can pause or stop the help at any time"
-    },
-    "request": {
-      "heading": "Request help",
-      "lead": "Tell us what you need. We'll match you with the right organization in your area.",
-      "helpType": "Type of help needed",
-      "selectHelpType": "Select help type",
-      "city": "Your area / city",
-      "selectCity": "Select your area",
-      "contactMethod": "Preferred contact method",
-      "selectContactMethod": "Select contact method",
-      "methods": {
-        "phone": "Phone",
-        "email": "Email"
-      },
-      "phone": "Phone number",
-      "email": "Email address",
-      "family": "This request is submitted by a family member on behalf of a senior.",
-      "seniorName": "Senior's full name",
-      "consent": "I agree to share my information with partner organizations so they can contact me about my request.",
-      "consentRequired": "Please agree to share your information so an organization can contact you.",
-      "submit": "Submit request",
-      "quote": "“A little help makes a big difference.”",
-      "photoAlt": "A volunteer clears snow while a senior watches from the window",
-      "requiredNote": "Fields marked * are required."
     }
   },
   "about": {
@@ -363,8 +316,6 @@
   "orgDashboard": {
     "role": "Organization",
     "nav": {
-      "requests": "Request List",
-      "accepted": "Accepted Requests",
       "profile": "Profile"
     },
     "pending": {
@@ -372,65 +323,16 @@
       "text": "Your organization account is currently under review. An admin will approve your account before you can post listings.",
       "notify": "We will notify you once your account has been approved."
     },
-    "requests": {
-      "heading": "Help Requests",
-      "lead": "Browse open help requests from seniors and families in Saskatchewan. Accept the ones that fit your organization's capacity. Contact details are shown after you accept.",
-      "searchLabel": "Search requests",
-      "searchPlaceholder": "Search by area or help type...",
-      "allAreas": "All areas",
-      "allTypes": "All help types",
-      "empty": "There are no open requests right now.",
-      "noMatch": "No requests match your filters.",
-      "submitted": "Submitted {{date}}",
-      "prefers": "Prefers {{method}}",
-      "familyRequest": "Submitted by a family member",
-      "accept": "Accept request",
-      "accepting": "Accepting...",
-      "alreadyTaken": "Another organization already accepted this request.",
-      "acceptFailed": "Could not accept the request. Please try again.",
-      "setupNeeded": "Choose your service areas and help types to see help requests that match your organization.",
-      "setupButton": "Set up profile"
-    },
-    "accepted": {
-      "heading": "Accepted Requests",
-      "empty": "You have not accepted any requests yet.",
-      "view": "View details"
-    },
-    "detail": {
-      "back": "Back to list",
-      "heading": "Request Details",
-      "steps": {
-        "received": "Received",
-        "accepted": "Accepted",
-        "contacted": "Contacted",
-        "volunteerAssigned": "Volunteer Assigned",
-        "completed": "Completed"
-      },
-      "contactInfo": "Contact Information",
-      "preferred": "Preferred contact: {{method}}",
-      "additional": "Additional Info",
-      "requestFor": "Help is for: {{name}}",
-      "familyNote": "Submitted by a family member on behalf of the senior.",
-      "selfNote": "Submitted by the senior.",
-      "acceptedBanner": "Please contact them using their preferred contact method, then mark the request as contacted.",
-      "contactedBanner": "The senior has been contacted.",
-      "markContacted": "Mark as contacted",
-      "release": "Release request",
-      "releaseConfirm": "Release this request so another organization can accept it?",
-      "releaseYes": "Release"
-    },
     "profile": {
       "heading": "Organization Profile",
-      "lead": "Manage your organization's information and choose which help requests you receive.",
+      "lead": "Manage your organization's information and how it appears in the directory.",
       "name": "Organization Name",
       "description": "Description",
-      "descriptionPlaceholder": "Tell seniors and volunteers what your organization does.",
+      "descriptionPlaceholder": "Tell volunteers what your organization does.",
       "serviceAreas": "Service Areas",
-      "serviceAreasHint": "You will see help requests from these areas.",
-      "helpTypes": "Help Types",
-      "helpTypesHint": "You will see requests for these types of help.",
+      "serviceAreasHint": "Where your organization works. Volunteers can filter the directory by area.",
       "notificationEmail": "Notification Email",
-      "notificationEmailHint": "Where we send updates about requests. Leave empty to use your account email.",
+      "notificationEmailHint": "Where we send messages for your organization. Leave empty to use your account email.",
       "save": "Save changes",
       "saved": "Saved!",
       "saveFailed": "Could not save your profile. Please try again.",
@@ -464,7 +366,6 @@
       "organizations": "Organizations",
       "team": "Our Team",
       "work": "Our Work",
-      "help": "Help Requests",
       "resources": "Resources",
       "faq": "FAQ",
       "testimonials": "Testimonials",
@@ -487,7 +388,7 @@
       "empty": "No organizations registered yet.",
       "organization": "Organization",
       "contact": "Contact",
-      "serves": "Serves",
+      "serves": "Service Areas",
       "notSet": "Not set"
     },
     "team": {
@@ -512,15 +413,6 @@
       "newPost": "New Post",
       "editPost": "Edit Post"
     },
-    "help": {
-      "heading": "Help Requests",
-      "empty": "No requests submitted yet.",
-      "helpType": "Help Type",
-      "submitted": "Submitted",
-      "city": "City",
-      "contact": "Contact",
-      "forSenior": "For {{name}}"
-    },
     "editor": {
       "linkPrompt": "URL",
       "youtubePrompt": "YouTube URL",
@@ -530,28 +422,6 @@
       "link": "Link",
       "image": "Image",
       "placeholder": "Write your post here..."
-    },
-    "matching": {
-      "heading": "Help Requests",
-      "lead": "Every help request submitted through Get Help, and which organization has it.",
-      "tabs": {
-        "all": "All",
-        "New": "Waiting",
-        "Accepted": "Accepted",
-        "Contacted": "Contacted"
-      },
-      "empty": "No requests in this view.",
-      "request": "Request",
-      "organization": "Organization",
-      "view": "View",
-      "requester": "Requester",
-      "history": "History",
-      "confirm": {
-        "release": "Release this request? It goes back to Waiting so another organization can accept it.",
-        "delete": "Delete this request permanently? This cannot be undone."
-      },
-      "release": "Release",
-      "delete": "Delete"
     }
   },
   "options": {
@@ -594,11 +464,6 @@
       "sat": "Sat",
       "sun": "Sun"
     },
-    "helpRequestStatus": {
-      "new": "New",
-      "accepted": "Accepted",
-      "contacted": "Contacted"
-    },
     "orgCategories": {
       "health": "Health",
       "seniors": "Seniors' Services",
@@ -622,7 +487,6 @@
     "about": "About",
     "details": "Details",
     "serviceAreas": "Service areas",
-    "helpTypes": "Types of help",
     "website": "Website",
     "categories": "Categories"
   },

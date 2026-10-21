@@ -14,7 +14,7 @@ beforeEach(() => {
   window.localStorage.clear();
   setSession(makeToken({ sub: '3', role: 'organization', exp: futureExp() }), { id: 3, orgName: 'Care Home', isApproved: true, role: 'organization' });
   global.fetch = jest.fn((url) => {
-    if (url.endsWith('/api/organizations/3')) return respond({ id: 3, orgName: 'Care Home', isApproved: true, description: '', serviceAreas: ['Regina'], helpTypes: ['Meal Assistance'], categories: [], notificationEmail: '', website: '', logoVersion: null });
+    if (url.endsWith('/api/organizations/3')) return respond({ id: 3, orgName: 'Care Home', isApproved: true, description: '', serviceAreas: ['Regina'], categories: [], notificationEmail: '', website: '', logoVersion: null });
     return respond([]);
   });
 });
@@ -33,11 +33,11 @@ function renderDashboard() {
   );
 }
 
-test('opens on the request list and has no listings or applicants', async () => {
+test('opens on the profile and has no help request sections', async () => {
   renderDashboard();
-  expect(await screen.findByRole('heading', { name: 'Help Requests' })).toBeInTheDocument();
-  expect(screen.queryByText('My Listings')).not.toBeInTheDocument();
-  expect(screen.queryByText('Applicants')).not.toBeInTheDocument();
-  fireEvent.click(screen.getByText('Profile'));
   expect(await screen.findByLabelText(/organization name/i)).toBeInTheDocument();
+  expect(screen.queryByText('Help Requests')).not.toBeInTheDocument();
+  expect(screen.queryByText('Accepted Requests')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Account' }));
+  expect(screen.queryByLabelText(/organization name/i)).not.toBeInTheDocument();
 });

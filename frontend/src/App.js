@@ -17,7 +17,6 @@ import OurTeamPage from './OurTeamPage';
 import OurHistoryPage from './OurHistory';
 import AdminDashboard from './AdminDashboard';
 import OurWorkPage from './OurWorkPage';
-import GetHelpPage from './GetHelpPage';
 import OrgDashboard from './OrgDashboard';
 import OrganizationPage from './OrganizationPage';
 import DirectoryPage from './DirectoryPage';
@@ -98,7 +97,7 @@ function App() {
         <Route path="/about/team" element={<OurTeamPage />} />
         <Route path="/about/history" element={<OurHistoryPage />} />
         <Route path="/our-work" element={<OurWorkPage />} />
-        <Route path="/get-help" element={<GetHelpPage />} />
+        <Route path="/get-help" element={<Navigate to="/organizations" replace />} />
         <Route path="/organizations" element={<DirectoryPage />} />
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/faq" element={<FaqPage />} />

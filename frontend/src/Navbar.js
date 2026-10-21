@@ -45,7 +45,6 @@ function Navbar() {
         <span aria-hidden="true">☰</span>
       </button>
       <ul id="main-menu" className={menuOpen ? 'open' : ''}>
-        <li><Link to="/get-help">{t('nav.getHelp')}</Link></li>
         <li
           className="about-nav-item"
           onMouseEnter={() => setAboutOpen(true)}

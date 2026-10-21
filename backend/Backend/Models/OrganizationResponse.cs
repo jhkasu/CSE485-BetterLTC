@@ -8,7 +8,6 @@ public record OrganizationResponse(
     bool IsApproved,
     string Description,
     List<string> ServiceAreas,
-    List<string> HelpTypes,
     List<string> Categories,
     bool OffersIntergenerational,
     string NotificationEmail,
@@ -17,7 +16,7 @@ public record OrganizationResponse(
     public static OrganizationResponse From(Organization o) {
         return new OrganizationResponse(
             o.Id, o.OrgName, o.ContactName, o.Email, o.IsApproved,
-            o.Description, o.ServiceAreas, o.HelpTypes, o.Categories, o.OffersIntergenerational, o.NotificationEmail,
+            o.Description, o.ServiceAreas, o.Categories, o.OffersIntergenerational, o.NotificationEmail,
             o.Website, OrganizationLogoVersion.For(o));
     }
 }
@@ -27,14 +26,13 @@ public record OrganizationPublicResponse(
     string OrgName,
     string Description,
     List<string> ServiceAreas,
-    List<string> HelpTypes,
     List<string> Categories,
     bool OffersIntergenerational,
     string Website,
     long? LogoVersion) {
     public static OrganizationPublicResponse From(Organization o) {
         return new OrganizationPublicResponse(
-            o.Id, o.OrgName, o.Description, o.ServiceAreas, o.HelpTypes, o.Categories, o.OffersIntergenerational,
+            o.Id, o.OrgName, o.Description, o.ServiceAreas, o.Categories, o.OffersIntergenerational,
             o.Website, OrganizationLogoVersion.For(o));
     }
 }

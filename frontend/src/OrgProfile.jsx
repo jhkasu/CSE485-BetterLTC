@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdOpenInNew } from 'react-icons/md';
 import apiFetch from './api';
-import HELP_TYPES from './helpTypes';
 import SK_CITIES from './saskatchewanCities';
 import ORG_CATEGORIES from './orgCategories';
 import './OrgProfile.css';
@@ -32,7 +31,6 @@ function toForm(org) {
     orgName: org?.orgName || '',
     description: org?.description || '',
     serviceAreas: org?.serviceAreas || [],
-    helpTypes: org?.helpTypes || [],
     categories: org?.categories || [],
     offersIntergenerational: !!org?.offersIntergenerational,
     notificationEmail: org?.notificationEmail || '',
@@ -277,13 +275,6 @@ function OrgProfile({ org, onSaved }) {
               </span>
             </label>
 
-            {checkboxGroup(
-              'helpTypes',
-              HELP_TYPES.map(type => ({ value: type.value, label: t(type.labelKey) })),
-              'orgDashboard.profile.helpTypes',
-              'orgDashboard.profile.helpTypesHint',
-            )}
-
             <label className="org-profile-label" htmlFor="org-notification-email">{t('orgDashboard.profile.notificationEmail')}</label>
             <input
               id="org-notification-email"
@@ -301,7 +292,7 @@ function OrgProfile({ org, onSaved }) {
 
         <div className="org-profile-actions">
           {status === 'saved' && <span className="org-profile-saved" role="status">{t('orgDashboard.profile.saved')}</span>}
-          <button type="submit" className="hr-accept-btn" disabled={status === 'saving'}>
+          <button type="submit" className="org-profile-save" disabled={status === 'saving'}>
             {t('orgDashboard.profile.save')}
           </button>
         </div>

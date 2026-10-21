@@ -7,7 +7,7 @@ import { futureExp, makeToken } from './auth/testToken';
 
 const org = {
   id: 3, orgName: 'Care Home', contactName: 'Bo', email: 'org@example.test', isApproved: true,
-  description: '', serviceAreas: ['Regina'], helpTypes: [], notificationEmail: '',
+  description: '', serviceAreas: ['Regina'], notificationEmail: '',
 };
 
 function renderProfile(onSaved = () => {}, value = org) {
@@ -23,14 +23,13 @@ afterEach(() => {
   delete global.fetch;
 });
 
-test('saves service areas, help types, and details to the profile API', async () => {
+test('saves service areas, categories, and details to the profile API', async () => {
   global.fetch = jest.fn((url, options) => Promise.resolve({ ok: true, status: 200, json: async () => ({ ...org, ...JSON.parse(options.body) }) }));
   const onSaved = jest.fn();
   renderProfile(onSaved);
   expect(screen.getByRole('checkbox', { name: 'Regina' })).toBeChecked();
   fireEvent.click(screen.getByRole('checkbox', { name: 'Saskatoon' }));
   fireEvent.click(screen.getByRole('checkbox', { name: 'Regina' }));
-  fireEvent.click(screen.getByRole('checkbox', { name: 'Transportation Support' }));
   fireEvent.click(screen.getByRole('checkbox', { name: 'Health' }));
   fireEvent.click(screen.getByRole('checkbox', { name: /We offer intergenerational roles/ }));
   fireEvent.change(screen.getByLabelText('Description'), { target: { value: 'Rides for seniors.' } });
@@ -43,7 +42,6 @@ test('saves service areas, help types, and details to the profile API', async ()
     orgName: 'Care Home',
     description: 'Rides for seniors.',
     serviceAreas: ['Saskatoon'],
-    helpTypes: ['Transportation Support'],
     categories: ['Health'],
     offersIntergenerational: true,
     notificationEmail: '',
