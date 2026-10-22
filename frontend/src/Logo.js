@@ -1,7 +1,7 @@
 import React from 'react';
 
-// Horizontal wordmark. Dark parts follow the current text color and the green
-// follows --color-accent, so the logo adapts to every contrast theme.
+// Horizontal wordmark. Dark parts follow the current text color and the accent parts
+// follow --color-accent, so the logo adapts to every contrast theme.
 function Logo({ className, title = 'VolunteerConnect Saskatchewan' }) {
   return (
     <svg

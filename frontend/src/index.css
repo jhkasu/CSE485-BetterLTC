@@ -1,13 +1,14 @@
 :root {
-  --color-bg: #f4f4f4;
+  --color-bg: #f4f6fb;
   --color-surface: #ffffff;
-  --color-dark: #1d1d20;
-  --color-text: #1d1d20;
-  --color-text-muted: #5b5b5b;
-  --color-border: #d9d9d9;
-  --color-accent: #0ea15b;
-  --color-accent-hover: #0c8a4e;
-  --color-dark-hover: #000000;
+  --color-dark: #1f2f5c;
+  --color-text: #1c2033;
+  --color-text-muted: #4a5068;
+  --color-border: #d9dee8;
+  --color-accent: #1d5fbf;
+  --color-accent-hover: #174c99;
+  --color-highlight: #e3a008;
+  --color-dark-hover: #16224a;
   --color-on-dark: #ffffff;
   --color-on-dark-muted: rgba(255, 255, 255, 0.65);
   --color-on-dark-faint: rgba(255, 255, 255, 0.45);
@@ -15,9 +16,9 @@
   --color-on-accent: #ffffff;
   --color-on-text: #ffffff;
   --font-scale: 1;
-  --color-placeholder: #767676;
+  --color-placeholder: #6b7186;
   --color-error: #c0392b;
-  --color-focus: #1d1d20;
+  --color-focus: #1d5fbf;
   --color-on-solid: #ffffff;
   --color-success: #1a7a3a;
   --color-success-bg: #e6f4ea;
@@ -36,11 +37,20 @@
   --color-role-volunteer: #7a4fb0;
   --color-on-role: #ffffff;
 
-  --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: 0 8px 24px rgba(28, 32, 51, 0.14);
+  --shadow-card: 0 1px 3px rgba(28, 32, 51, 0.08);
 
   --font-heading: 'Noticia Text', Georgia, serif;
   --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
+
+  --text-xs: 14px;
+  --text-sm: 16px;
+  --text-base: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 44px;
+  --text-4xl: 56px;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -50,7 +60,9 @@
   --space-6: 48px;
   --space-7: 80px;
 
-  --radius: 4px;
+  --radius: 6px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
   --max-width: 1200px;
 }
 
@@ -170,21 +182,40 @@ h1, h2, h3 {
 }
 
 .btn-outline {
-  background-color: transparent;
+  background-color: var(--color-surface);
+  color: var(--color-dark);
+  border: 1.5px solid var(--color-dark);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-bg);
+}
+
+html[data-contrast='dark'] .btn-outline {
   color: var(--color-text);
   border-color: var(--color-text);
 }
 
-.btn-outline:hover {
-  background-color: var(--color-text);
-  color: var(--color-on-text);
+.dark-band .btn-outline {
+  background-color: transparent;
+  color: var(--color-on-dark);
+  border-color: var(--color-on-dark);
+}
+
+.dark-band .btn-outline:hover {
+  background-color: var(--color-dark-hover);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .arrow-link {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-accent);
   text-decoration: none;
   white-space: nowrap;
 }
