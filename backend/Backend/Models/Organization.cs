@@ -9,6 +9,9 @@ public class Organization : IAccount {
     [Required] public string Email { get; set; } = "";
     [Required] public string Password { get; set; } = "";
     public bool IsApproved { get; set; } = false;
+    public string RegistryType { get; set; } = "";
+    public string RegistryNumber { get; set; } = "";
+    public string RejectionReason { get; set; } = "";
     public string Description { get; set; } = "";
     public List<string> ServiceAreas { get; set; } = [];
     public List<string> Categories { get; set; } = [];

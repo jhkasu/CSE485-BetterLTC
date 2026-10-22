@@ -6,6 +6,9 @@ public record OrganizationResponse(
     string ContactName,
     string Email,
     bool IsApproved,
+    string RegistryType,
+    string RegistryNumber,
+    string RejectionReason,
     string Description,
     List<string> ServiceAreas,
     List<string> Categories,
@@ -16,6 +19,7 @@ public record OrganizationResponse(
     public static OrganizationResponse From(Organization o) {
         return new OrganizationResponse(
             o.Id, o.OrgName, o.ContactName, o.Email, o.IsApproved,
+            o.RegistryType, o.RegistryNumber, o.RejectionReason,
             o.Description, o.ServiceAreas, o.Categories, o.OffersIntergenerational, o.NotificationEmail,
             o.Website, OrganizationLogoVersion.For(o));
     }

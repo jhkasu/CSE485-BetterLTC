@@ -10,6 +10,7 @@ import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import OrgProfile from './OrgProfile';
 import OrgRoles from './OrgRoles';
+import OrgPending from './OrgPending';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
 
 const NAV_ITEMS = [
@@ -45,18 +46,7 @@ function OrgDashboard() {
   };
 
   if (!user?.isApproved) {
-    return (
-      <div className="org-page">
-        <div className="org-pending-wrap">
-          <div className="org-pending-box">
-            <h2>{t('orgDashboard.pending.heading')}</h2>
-            <p>{t('orgDashboard.pending.text')}</p>
-            <p>{t('orgDashboard.pending.notify')}</p>
-            <button className="org-cancel-btn" onClick={handleLogout}>{t('common.logOut')}</button>
-          </div>
-        </div>
-      </div>
-    );
+    return <OrgPending org={orgProfile} onUpdated={setOrgProfile} onLogout={handleLogout} />;
   }
 
   const current = NAV_ITEMS.find(item => item.id === activeSection);
