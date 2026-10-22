@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend.Email;
 using Backend.Models;
 using Backend.Security;
 
@@ -11,10 +12,14 @@ namespace Backend.Controllers;
 public class AuthController : ControllerBase {
     private readonly AppDbContext _context;
     private readonly TokenService _tokens;
+    private readonly IEmailSender _email;
+    private readonly SiteOrigins _site;
 
-    public AuthController(AppDbContext context, TokenService tokens) {
+    public AuthController(AppDbContext context, TokenService tokens, IEmailSender email, SiteOrigins site) {
         this._context = context;
         this._tokens = tokens;
+        _email = email;
+        _site = site;
     }
 
     [HttpPost("signin")]
@@ -64,6 +69,55 @@ public class AuthController : ControllerBase {
             if (account is null) return Forbid();
             if (!PasswordHashing.Verify(request.CurrentPassword, account.Password)) return BadRequest("Current password is incorrect.");
             account.Password = PasswordHashing.Hash(request.NewPassword);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request) {
+        try {
+            string normalized = AccountEmails.Normalize(request.Email);
+            if (normalized.Length == 0) return NoContent();
+            var found = await PasswordResets.FindByEmail(_context, normalized);
+            string? site = _site.For(Request);
+            if (found is null || site is null) return NoContent();
+            var now = DateTime.UtcNow;
+            var previous = await _context.PasswordResetTokens
+                .Where(t => t.Role == found.Role && t.AccountId == found.Id && t.UsedAt == null)
+                .ToListAsync();
+            if (previous.Any(t => t.CreatedAt > now - PasswordResets.ResendWait)) return NoContent();
+            _context.PasswordResetTokens.RemoveRange(previous);
+            string token = PasswordResets.NewToken();
+            _context.PasswordResetTokens.Add(new PasswordResetToken {
+                Role = found.Role,
+                AccountId = found.Id,
+                TokenHash = PasswordResets.Hash(token),
+                CreatedAt = now,
+                ExpiresAt = now + PasswordResets.Lifetime,
+            });
+            await _context.SaveChangesAsync();
+            bool french = request.Language.StartsWith("fr", StringComparison.OrdinalIgnoreCase);
+            await _email.SendAsync(found.Email, PasswordResetEmails.Link($"{site}/reset-password?token={token}", french));
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword(ResetPasswordRequest request) {
+        try {
+            const string invalid = "This link is invalid or has expired.";
+            string hash = PasswordResets.Hash(request.Token.Trim());
+            var reset = await _context.PasswordResetTokens.FirstOrDefaultAsync(t => t.TokenHash == hash);
+            if (reset is null || reset.UsedAt is not null || reset.ExpiresAt <= DateTime.UtcNow) return BadRequest(invalid);
+            var account = await PasswordResets.FindById(_context, reset.Role, reset.AccountId);
+            if (account is null) return BadRequest(invalid);
+            account.Password = PasswordHashing.Hash(request.NewPassword);
+            reset.UsedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return NoContent();
         } catch (Exception ex) {
