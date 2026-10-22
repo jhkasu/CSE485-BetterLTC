@@ -8,6 +8,7 @@ import apiFetch from './api';
 import API_BASE from './config';
 import { ORG_CATEGORY_KEYS } from './orgCategories';
 import ExpressInterestForm from './ExpressInterestForm';
+import usePageTitle from './usePageTitle';
 import './OrganizationPage.css';
 
 const AREA_PREVIEW = 3;
@@ -34,6 +35,7 @@ function OrganizationPage() {
   const [org, setOrg] = useState(undefined);
   const [roles, setRoles] = useState([]);
   const [roleId, setRoleId] = useState('');
+  usePageTitle(org ? org.orgName : t(org === null ? 'orgPage.notFound' : 'directory.heading'));
 
   useEffect(() => {
     setOrg(undefined);

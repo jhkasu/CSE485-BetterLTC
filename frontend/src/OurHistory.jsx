@@ -6,6 +6,7 @@ import './OurHistoryPage.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import usePageTitle from './usePageTitle';
 
 const historyData = [
   {
@@ -75,6 +76,7 @@ function HistorySection({ years, titleKey, descriptionKey, photos }) {
 
 function OurHistoryPage() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.ourHistory'));
   return (
     <div>
       <Navbar />

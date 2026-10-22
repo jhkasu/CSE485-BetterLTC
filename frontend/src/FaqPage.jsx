@@ -7,9 +7,11 @@ import Footer from './Footer';
 import apiFetch from './api';
 import { FAQ_TOPICS, faqText } from './faqOptions';
 import './FaqPage.css';
+import usePageTitle from './usePageTitle';
 
 function FaqPage() {
   const { t, i18n } = useTranslation();
+  usePageTitle(t('nav.faq'));
   const [items, setItems] = useState(null);
   const [keyword, setKeyword] = useState('');
 

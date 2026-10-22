@@ -8,6 +8,7 @@ import apiFetch from './api';
 import { directoryQuery } from './DirectoryPage';
 import { initials, logoUrl } from './OrganizationPage';
 import './IntergenerationalPage.css';
+import usePageTitle from './usePageTitle';
 
 const WAYS = [
   { key: 'mentorship', icon: <MdHandshake /> },
@@ -17,6 +18,7 @@ const WAYS = [
 
 function IntergenerationalPage() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.intergenerational'));
   const [orgs, setOrgs] = useState(null);
 
   useEffect(() => {

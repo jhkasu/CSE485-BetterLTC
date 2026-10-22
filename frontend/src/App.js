@@ -26,6 +26,8 @@ import IntergenerationalPage from './IntergenerationalPage';
 import IntergenerationalTeaser from './IntergenerationalTeaser';
 import TestimonialsSection from './TestimonialsSection';
 import { getSessionRole } from './auth/session';
+import { useTranslation } from 'react-i18next';
+import usePageTitle from './usePageTitle';
 
 function PrivateRoute({ children }) {
   const role = getSessionRole();
@@ -48,6 +50,7 @@ function OrgRoute({ children }) {
 }
 
 function Home() {
+  usePageTitle('');
   return (
     <div>
       <Navbar />
@@ -63,6 +66,8 @@ function Home() {
 }
 
 function SignupPage() {
+  const { t } = useTranslation();
+  usePageTitle(t('nav.signUp'));
   return (
     <div>
       <Navbar />
@@ -73,6 +78,8 @@ function SignupPage() {
 }
 
 function SigninPage() {
+  const { t } = useTranslation();
+  usePageTitle(t('nav.signIn'));
   return (
     <div>
       <Navbar />

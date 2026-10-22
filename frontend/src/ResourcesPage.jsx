@@ -8,9 +8,11 @@ import API_BASE from './config';
 import FilterChip from './FilterChip';
 import { RESOURCE_AUDIENCES, RESOURCE_TOPICS, formatFileSize } from './resourceOptions';
 import './ResourcesPage.css';
+import usePageTitle from './usePageTitle';
 
 function ResourcesPage() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.resources'));
   const [resources, setResources] = useState(null);
   const [audience, setAudience] = useState(RESOURCE_AUDIENCES[0]);
   const [topics, setTopics] = useState([]);
