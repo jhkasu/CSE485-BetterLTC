@@ -74,13 +74,18 @@
 
 .forgot-password {
   font-size: 16px;
-  color: var(--color-text-muted);
-  cursor: pointer;
   text-align: right;
   margin: -16px 0 var(--space-4) 0;
 }
 
-.forgot-password:hover {
+.forgot-password a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.forgot-password a:hover,
+.forgot-password a:focus-visible {
+  color: var(--color-text);
   text-decoration: underline;
 }
 

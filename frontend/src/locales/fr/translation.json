@@ -320,8 +320,15 @@
     },
     "pending": {
       "heading": "Compte en attente d'approbation",
-      "text": "Le compte de votre organisme est en cours d'examen. Un administrateur doit l'approuver avant que vous puissiez publier des annonces.",
-      "notify": "Nous vous aviserons dès que votre compte aura été approuvé."
+      "text": "Votre organisme est en cours d'examen. Un administrateur vérifie votre numéro d'enregistrement avant que votre organisme paraisse dans le répertoire.",
+      "notify": "Nous vous écrirons une fois l'examen terminé.",
+      "rejectedHeading": "Votre organisme doit être revu",
+      "rejectedText": "Nous n'avons pas encore pu approuver votre organisme. Veuillez vérifier votre numéro d'enregistrement et le soumettre de nouveau.",
+      "reason": "Raison :",
+      "sent": "Soumis pour examen. Nous vous écrirons une fois la vérification terminée.",
+      "change": "Modifier le numéro d'enregistrement",
+      "missing": "Ajoutez votre numéro d'enregistrement pour que nous puissions examiner votre organisme.",
+      "submit": "Soumettre pour examen"
     },
     "profile": {
       "heading": "Profil de l'organisme",
@@ -408,7 +415,15 @@
       "organization": "Organisme",
       "contact": "Personne-ressource",
       "serves": "Régions desservies",
-      "notSet": "Non défini"
+      "notSet": "Non défini",
+      "registration": "Enregistrement",
+      "notProvided": "Non fourni",
+      "reject": "Refuser",
+      "rejectTitle": "Refuser {{name}}",
+      "reason": "Raison",
+      "reasonPlaceholder": "p. ex. Le numéro d'enregistrement ne correspond pas à cet organisme.",
+      "reasonHint": "L'organisme voit cette raison et la reçoit par courriel.",
+      "reasonRequired": "Veuillez indiquer une raison."
     },
     "team": {
       "addMember": "Ajouter un membre",
@@ -758,5 +773,43 @@
   "dashboardMenu": {
     "menu": "Menu",
     "close": "Fermer le menu"
+  },
+  "registry": {
+    "typeLabel": "Type d'enregistrement",
+    "types": {
+      "Charity": "Organisme de bienfaisance enregistré",
+      "Nonprofit": "Société sans but lucratif"
+    },
+    "numberLabel": "Numéro d'enregistrement",
+    "hints": {
+      "choose": "Choisissez un type pour voir le format du numéro.",
+      "Charity": "Votre numéro d'organisme de bienfaisance de l'Agence du revenu du Canada, comme 123456789RR0001.",
+      "Nonprofit": "Votre numéro de société du registre des sociétés de la Saskatchewan ou de Corporations Canada (6 à 10 chiffres)."
+    },
+    "errors": {
+      "type": "Indiquez si vous êtes un organisme de bienfaisance enregistré ou une société sans but lucratif.",
+      "Charity": "Un numéro d'organisme de bienfaisance ressemble à 123456789RR0001.",
+      "Nonprofit": "Un numéro de société compte de 6 à 10 chiffres."
+    },
+    "lookup": {
+      "cra": "Liste des organismes de l'ARC",
+      "saskatchewan": "Registre de la Saskatchewan",
+      "federal": "Corporations Canada"
+    }
+  },
+  "reset": {
+    "forgotHeading": "Mot de passe oublié",
+    "forgotLead": "Entrez le courriel que vous utilisez pour vous connecter. Nous vous enverrons un lien pour choisir un nouveau mot de passe.",
+    "sendLink": "Envoyer le lien",
+    "sent": "Si un compte utilise {{email}}, nous lui avons envoyé un lien pour réinitialiser le mot de passe.",
+    "sentNote": "Le lien fonctionne une seule fois et expire dans une heure. Si vous ne voyez pas le courriel, vérifiez vos courriels indésirables.",
+    "backToSignIn": "Retour à la connexion",
+    "resetHeading": "Choisir un nouveau mot de passe",
+    "resetLead": "Entrez un nouveau mot de passe d'au moins 8 caractères.",
+    "newPassword": "Nouveau mot de passe",
+    "save": "Enregistrer le nouveau mot de passe",
+    "invalid": "Ce lien n'est pas valide ou a expiré. Les liens de réinitialisation fonctionnent une seule fois et expirent après une heure.",
+    "requestNew": "Demander un nouveau lien",
+    "done": "Votre mot de passe a été modifié. Veuillez vous connecter avec votre nouveau mot de passe."
   }
 }

@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend.Email;
 using Backend.Files;
 using Backend.Models;
 using Backend.Security;
@@ -19,9 +20,11 @@ public class OrganizationController : ControllerBase {
     };
 
     private readonly AppDbContext _context;
+    private readonly IEmailSender _email;
 
-    public OrganizationController(AppDbContext context) {
+    public OrganizationController(AppDbContext context, IEmailSender email) {
         this._context = context;
+        _email = email;
     }
 
     [HttpGet]
@@ -36,11 +39,23 @@ public class OrganizationController : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddOrganization(Organization org) {
+    public async Task<IActionResult> AddOrganization(OrganizationSignupRequest request) {
         try {
-            org.Email = AccountEmails.Normalize(org.Email);
-            if (await AccountEmails.IsTaken(_context, org.Email)) return Conflict(AccountEmails.AlreadyRegistered);
-            org.Password = PasswordHashing.Hash(org.Password);
+            string email = AccountEmails.Normalize(request.Email);
+            if (request.OrgName.Trim().Length == 0 || request.ContactName.Trim().Length == 0) return BadRequest("Organization and contact names are required.");
+            if (!new EmailAddressAttribute().IsValid(email)) return BadRequest("A valid email is required.");
+            string number = Registry.Normalize(request.RegistryNumber);
+            string? registryError = Registry.Validate(request.RegistryType, number);
+            if (registryError is not null) return BadRequest(registryError);
+            if (await AccountEmails.IsTaken(_context, email)) return Conflict(AccountEmails.AlreadyRegistered);
+            var org = new Organization {
+                OrgName = request.OrgName.Trim(),
+                ContactName = request.ContactName.Trim(),
+                Email = email,
+                Password = PasswordHashing.Hash(request.Password),
+                RegistryType = request.RegistryType,
+                RegistryNumber = number,
+            };
             _context.Organizations.Add(org);
             await _context.SaveChangesAsync();
             return Ok(OrganizationResponse.From(org));
@@ -201,14 +216,57 @@ public class OrganizationController : ControllerBase {
         }
     }
 
+    [HttpPut("{id:int}/registry")]
+    [Authorize(Roles = Roles.OrganizationOrAdmin)]
+    public async Task<IActionResult> UpdateRegistry(int id, OrganizationRegistryRequest request) {
+        try {
+            if (!User.IsInRole(Roles.Admin) && !User.IsAccount(Roles.Organization, id)) return Forbid();
+            var org = await _context.Organizations.FindAsync(id);
+            if (org is null) return NotFound();
+            if (org.IsApproved) return BadRequest("The registration number of an approved organization cannot be changed.");
+            string number = Registry.Normalize(request.RegistryNumber);
+            string? registryError = Registry.Validate(request.RegistryType, number);
+            if (registryError is not null) return BadRequest(registryError);
+            org.RegistryType = request.RegistryType;
+            org.RegistryNumber = number;
+            org.RejectionReason = "";
+            await _context.SaveChangesAsync();
+            return Ok(OrganizationResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
     [HttpPut("{id:int}/approve")]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> ApproveOrganization(int id) {
         try {
             var org = await _context.Organizations.FindAsync(id);
             if (org is null) return NotFound();
-            org.IsApproved = true;
+            if (!org.IsApproved) {
+                org.IsApproved = true;
+                org.RejectionReason = "";
+                await _context.SaveChangesAsync();
+                await _email.SendAsync(org.Email, OrganizationEmails.Approved(org.ContactName, org.OrgName));
+            }
+            return Ok(OrganizationResponse.From(org));
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPut("{id:int}/reject")]
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> RejectOrganization(int id, OrganizationRejectRequest request) {
+        try {
+            var org = await _context.Organizations.FindAsync(id);
+            if (org is null) return NotFound();
+            string reason = request.Reason.Trim();
+            if (reason.Length == 0) return BadRequest("A reason is required.");
+            org.IsApproved = false;
+            org.RejectionReason = reason;
             await _context.SaveChangesAsync();
+            await _email.SendAsync(org.Email, OrganizationEmails.Rejected(org.ContactName, org.OrgName, reason));
             return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);

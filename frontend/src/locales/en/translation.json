@@ -320,8 +320,15 @@
     },
     "pending": {
       "heading": "Account Pending Approval",
-      "text": "Your organization account is currently under review. An admin will approve your account before you can post listings.",
-      "notify": "We will notify you once your account has been approved."
+      "text": "Your organization is being reviewed. An administrator checks your registration number before your organization appears in the directory.",
+      "notify": "We will email you once your organization has been reviewed.",
+      "rejectedHeading": "Your Organization Needs Another Look",
+      "rejectedText": "We could not approve your organization yet. Please check your registration number and send it again.",
+      "reason": "Reason:",
+      "sent": "Sent for review. We will email you once it has been checked.",
+      "change": "Change registration number",
+      "missing": "Add your registration number so we can review your organization.",
+      "submit": "Send for review"
     },
     "profile": {
       "heading": "Organization Profile",
@@ -408,7 +415,15 @@
       "organization": "Organization",
       "contact": "Contact",
       "serves": "Service Areas",
-      "notSet": "Not set"
+      "notSet": "Not set",
+      "registration": "Registration",
+      "notProvided": "Not provided",
+      "reject": "Reject",
+      "rejectTitle": "Reject {{name}}",
+      "reason": "Reason",
+      "reasonPlaceholder": "e.g. The registration number does not match this organization.",
+      "reasonHint": "The organization sees this reason and receives it by email.",
+      "reasonRequired": "Please enter a reason."
     },
     "team": {
       "addMember": "Add Member",
@@ -758,5 +773,43 @@
   "dashboardMenu": {
     "menu": "Menu",
     "close": "Close menu"
+  },
+  "registry": {
+    "typeLabel": "Registration type",
+    "types": {
+      "Charity": "Registered charity",
+      "Nonprofit": "Non-profit corporation"
+    },
+    "numberLabel": "Registration number",
+    "hints": {
+      "choose": "Choose a type to see the number format.",
+      "Charity": "Your charity number from the Canada Revenue Agency, like 123456789RR0001.",
+      "Nonprofit": "Your corporation number from the Saskatchewan Corporate Registry or Corporations Canada (6 to 10 digits)."
+    },
+    "errors": {
+      "type": "Choose whether you are a registered charity or a non-profit corporation.",
+      "Charity": "A charity number looks like 123456789RR0001.",
+      "Nonprofit": "A corporation number has 6 to 10 digits."
+    },
+    "lookup": {
+      "cra": "CRA charity list",
+      "saskatchewan": "Saskatchewan registry",
+      "federal": "Corporations Canada"
+    }
+  },
+  "reset": {
+    "forgotHeading": "Forgot Password",
+    "forgotLead": "Enter the email you use to sign in. We will send you a link to choose a new password.",
+    "sendLink": "Send reset link",
+    "sent": "If an account uses {{email}}, we sent it a link to reset the password.",
+    "sentNote": "The link works once and expires in one hour. If you don't see the email, check your spam folder.",
+    "backToSignIn": "Back to sign in",
+    "resetHeading": "Choose a New Password",
+    "resetLead": "Enter a new password with at least 8 characters.",
+    "newPassword": "New Password",
+    "save": "Save new password",
+    "invalid": "This link is invalid or has expired. Reset links work once and expire after one hour.",
+    "requestNew": "Request a new link",
+    "done": "Your password has been changed. Please sign in with your new password."
   }
 }

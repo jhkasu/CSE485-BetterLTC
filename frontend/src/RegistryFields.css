@@ -1,0 +1,53 @@
+.registry-fields {
+  text-align: left;
+}
+
+.registry-types {
+  border: none;
+  margin: 0 0 var(--space-4) 0;
+  padding: 0;
+}
+
+.registry-types legend {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+  padding: 0;
+}
+
+.registry-fields .registry-type {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  cursor: pointer;
+}
+
+.registry-fields .registry-type input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.registry-fields .registry-hint {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: calc(-1 * var(--space-4)) 0 var(--space-4) 0;
+}
+
+.registry-fields .registry-error {
+  margin-top: calc(-1 * var(--space-3));
+}

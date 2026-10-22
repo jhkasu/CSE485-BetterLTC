@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './SignupForm.css';
 import apiFetch from './api';
@@ -102,8 +102,8 @@ const SigninForm = () => {
           {errors.password && <p className="error">{t(errors.password)}</p>}
           {errors.auth && <p className="error">{t(errors.auth)}</p>}
 
-          <p className="forgot-password" onClick={() => navigate('/forgot-password')}>
-            {t('auth.forgotPassword')}
+          <p className="forgot-password">
+            <Link to="/forgot-password">{t('auth.forgotPassword')}</Link>
           </p>
 
           <button type="submit">{t('nav.signIn')}</button>
