@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './AboutPage.css';
+import usePageTitle from './usePageTitle';
 
 const SECTIONS = [
   {
@@ -26,6 +27,7 @@ const SECTIONS = [
 function AboutPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  usePageTitle(t('nav.aboutUs'));
 
   return (
     <div>

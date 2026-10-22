@@ -6,6 +6,7 @@ import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
 import './Navbar.css';
 import { clearSession, getCurrentUser } from './auth/session';
+import SITE_LINKS from './siteLinks';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -94,7 +95,9 @@ function Navbar() {
       )}
       </div>
 
-      <button className="donate-btn">{t('nav.donate')}</button>
+      {SITE_LINKS.donate && (
+        <a className="donate-btn" href={SITE_LINKS.donate} target="_blank" rel="noreferrer">{t('nav.donate')}</a>
+      )}
     </nav>
     </header>
   );

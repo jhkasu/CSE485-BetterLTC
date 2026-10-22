@@ -116,6 +116,9 @@ nav ul li:hover {
   flex-shrink: 0;
   white-space: nowrap;
   align-self: stretch;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   background-color: var(--color-dark);
   color: var(--color-on-dark);
   border: none;

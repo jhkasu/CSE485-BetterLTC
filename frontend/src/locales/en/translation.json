@@ -77,7 +77,8 @@
     "tagline": "Connecting communities through care.",
     "contactUs": "Contact Us",
     "followUs": "Follow Us",
-    "rights": "© {{year}} VolunteerConnect Saskatchewan. All rights reserved."
+    "rights": "© {{year}} VolunteerConnect Saskatchewan. All rights reserved.",
+    "explore": "Explore"
   },
   "home": {
     "hero": {

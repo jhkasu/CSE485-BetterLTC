@@ -8,6 +8,7 @@ import apiFetch from './api';
 import { clearSession, getCurrentUser } from './auth/session';
 import ChangePasswordForm from './auth/ChangePasswordForm';
 import VolunteerMatchingProfile from './VolunteerMatchingProfile';
+import usePageTitle from './usePageTitle';
 
 const NAV_ITEMS = [
   { id: 'matching', labelKey: 'dashboard.nav.matching', icon: <MdTune /> },
@@ -17,6 +18,7 @@ const NAV_ITEMS = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  usePageTitle(t('nav.dashboard'));
   const [user, setUser] = useState(() => getCurrentUser());
   const [activeSection, setActiveSection] = useState('matching');
   const [volunteerData, setVolunteerData] = useState(null);
