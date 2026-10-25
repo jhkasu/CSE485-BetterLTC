@@ -1,5 +1,4 @@
 const SITE_LINKS = {
-  donate: '',
   contactEmail: '',
   social: [
     { id: 'facebook', label: 'Facebook', url: '' },

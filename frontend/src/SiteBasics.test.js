@@ -31,7 +31,7 @@ test('the footer shows no placeholder contact details or empty social links', ()
   expect(screen.getByRole('link', { name: 'Resources' })).toHaveAttribute('href', '/resources');
 });
 
-test('the navbar hides the donate button until a donation link is set', () => {
+test('the navbar has no donate button', () => {
   renderWithRouter(<Navbar />);
   expect(screen.queryByText('Donate now')).not.toBeInTheDocument();
 });

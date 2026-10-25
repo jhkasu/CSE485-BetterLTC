@@ -112,28 +112,6 @@ nav ul li:hover {
   color: var(--color-on-text);
 }
 
-.donate-btn {
-  flex-shrink: 0;
-  white-space: nowrap;
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  background-color: var(--color-dark);
-  color: var(--color-on-dark);
-  border: none;
-  padding: 0 var(--space-6);
-  font-family: var(--font-body);
-  font-size: 24px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 150ms ease-out;
-}
-
-.donate-btn:hover {
-  background-color: var(--color-dark-hover);
-}
-
 /* About Us dropdown */
 .about-nav-item {
   position: relative;
@@ -240,10 +218,6 @@ nav ul li:hover {
   .utility-bar {
     padding: 6px var(--space-3);
   }
-
-  .donate-btn {
-    display: none;
-  }
 }
 
 @media (max-width: 1600px) and (min-width: 1280px) {
@@ -268,10 +242,6 @@ nav ul li:hover {
   }
   .nav-actions {
     margin-right: var(--space-3);
-  }
-  .donate-btn {
-    font-size: 19px;
-    padding: 0 var(--space-4);
   }
 }
 

@@ -76,8 +76,7 @@ code {
 
 .dark-band :focus-visible,
 .footer :focus-visible,
-.btn-dark:focus-visible,
-.donate-btn:focus-visible {
+.btn-dark:focus-visible {
   outline-color: var(--color-on-dark);
   outline-offset: -6px;
 }
