@@ -139,6 +139,18 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("RegistryNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RegistryType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RejectionReason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.PrimitiveCollection<List<string>>("ServiceAreas")
                         .IsRequired()
                         .HasColumnType("text[]");
