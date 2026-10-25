@@ -4,9 +4,11 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import missionContent from './missionContent';
 import './MissionPage.css';
+import usePageTitle from './usePageTitle';
 
 function MissionPage() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.missionVision'));
   return (
     <div>
       <Navbar />

@@ -19,6 +19,7 @@ import AdminFaqs from './AdminFaqs';
 import AdminTestimonials from './AdminTestimonials';
 import AdminStatistics from './AdminStatistics';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
+import usePageTitle from './usePageTitle';
 import { LOOKUP_LINKS, REGISTRY_TYPES } from './registry';
 
 const NAV_ITEMS = [
@@ -61,6 +62,7 @@ function DeleteConfirm({ onConfirm, onCancel }) {
 
 function AdminDashboard() {
   const { t } = useTranslation();
+  usePageTitle(t('adminDashboard.panel'));
   const navigate = useNavigate();
   const user = getCurrentUser();
   const [activeSection, setActiveSection] = useState('overview');

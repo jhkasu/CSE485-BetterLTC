@@ -93,8 +93,6 @@ function Navbar() {
         </>
       )}
       </div>
-
-      <button className="donate-btn">{t('nav.donate')}</button>
     </nav>
     </header>
   );

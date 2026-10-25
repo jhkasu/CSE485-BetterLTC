@@ -12,6 +12,7 @@ import OrgProfile from './OrgProfile';
 import OrgRoles from './OrgRoles';
 import OrgPending from './OrgPending';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
+import usePageTitle from './usePageTitle';
 
 const NAV_ITEMS = [
   { id: 'profile', labelKey: 'orgDashboard.nav.profile', icon: <MdBusiness /> },
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
 
 function OrgDashboard() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.dashboard'));
   const navigate = useNavigate();
   const [user, setUser] = useState(() => getCurrentUser());
   const [activeSection, setActiveSection] = useState('profile');

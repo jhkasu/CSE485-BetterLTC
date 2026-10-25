@@ -4,11 +4,13 @@ import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import apiFetch from './api';
+import usePageTitle from './usePageTitle';
 import './SignupForm.css';
 import './PasswordReset.css';
 
 function ResetPasswordPage() {
   const { t } = useTranslation();
+  usePageTitle(t('reset.resetHeading'));
   const navigate = useNavigate();
   const location = useLocation();
   const token = new URLSearchParams(location.search).get('token') || '';

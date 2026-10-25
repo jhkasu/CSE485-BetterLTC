@@ -5,9 +5,11 @@ import Footer from './Footer';
 import './OurTeamPage.css';
 import API_BASE from './config';
 import apiFetch from './api';
+import usePageTitle from './usePageTitle';
 
 function OurTeamPage() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.ourTeam'));
   const [members, setMembers] = useState([]);
 
   useEffect(() => {

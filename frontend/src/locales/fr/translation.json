@@ -52,7 +52,6 @@
     "dashboard": "Tableau de bord",
     "signIn": "Connexion",
     "signUp": "S'inscrire",
-    "donate": "Faire un don",
     "resources": "Ressources",
     "faq": "FAQ",
     "intergenerational": "Entre générations"
@@ -77,7 +76,8 @@
     "tagline": "Rapprocher les communautés par l'entraide.",
     "contactUs": "Nous joindre",
     "followUs": "Suivez-nous",
-    "rights": "© {{year}} VolunteerConnect Saskatchewan. Tous droits réservés."
+    "rights": "© {{year}} VolunteerConnect Saskatchewan. Tous droits réservés.",
+    "explore": "Explorer"
   },
   "home": {
     "hero": {

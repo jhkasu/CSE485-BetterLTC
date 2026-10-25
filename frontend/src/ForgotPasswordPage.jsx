@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import apiFetch from './api';
+import usePageTitle from './usePageTitle';
 import './SignupForm.css';
 import './PasswordReset.css';
 
@@ -11,6 +12,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function ForgotPasswordPage() {
   const { t, i18n } = useTranslation();
+  usePageTitle(t('reset.forgotHeading'));
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [status, setStatus] = useState(null);

@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './OurWorkPage.css';
 import apiFetch from './api';
+import usePageTitle from './usePageTitle';
 
 function extractYoutubeId(url) {
   const match = url.match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -41,6 +42,7 @@ function stripHtml(html) {
 
 function OurWorkPage() {
   const { t } = useTranslation();
+  usePageTitle(t('nav.ourWork'));
   const [posts, setPosts] = useState([]);
   const [selected, setSelected] = useState(null);
 

@@ -52,7 +52,6 @@
     "dashboard": "Dashboard",
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "donate": "Donate now",
     "resources": "Resources",
     "faq": "FAQ",
     "intergenerational": "Across Generations"
@@ -77,7 +76,8 @@
     "tagline": "Connecting communities through care.",
     "contactUs": "Contact Us",
     "followUs": "Follow Us",
-    "rights": "© {{year}} VolunteerConnect Saskatchewan. All rights reserved."
+    "rights": "© {{year}} VolunteerConnect Saskatchewan. All rights reserved.",
+    "explore": "Explore"
   },
   "home": {
     "hero": {

@@ -10,6 +10,7 @@ import ORG_CATEGORIES, { ORG_CATEGORY_KEYS } from './orgCategories';
 import FilterChip from './FilterChip';
 import { initials, logoUrl } from './OrganizationPage';
 import './DirectoryPage.css';
+import usePageTitle from './usePageTitle';
 
 export function directoryQuery(categories, areas, intergenerational = false) {
   const params = new URLSearchParams();
@@ -22,6 +23,7 @@ export function directoryQuery(categories, areas, intergenerational = false) {
 
 function DirectoryPage() {
   const { t } = useTranslation();
+  usePageTitle(t('directory.heading'));
   const [orgs, setOrgs] = useState(null);
   const [categories, setCategories] = useState([]);
   const [areas, setAreas] = useState([]);
