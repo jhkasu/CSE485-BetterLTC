@@ -796,5 +796,20 @@
       "saskatchewan": "Saskatchewan registry",
       "federal": "Corporations Canada"
     }
+  },
+  "reset": {
+    "forgotHeading": "Forgot Password",
+    "forgotLead": "Enter the email you use to sign in. We will send you a link to choose a new password.",
+    "sendLink": "Send reset link",
+    "sent": "If an account uses {{email}}, we sent it a link to reset the password.",
+    "sentNote": "The link works once and expires in one hour. If you don't see the email, check your spam folder.",
+    "backToSignIn": "Back to sign in",
+    "resetHeading": "Choose a New Password",
+    "resetLead": "Enter a new password with at least 8 characters.",
+    "newPassword": "New Password",
+    "save": "Save new password",
+    "invalid": "This link is invalid or has expired. Reset links work once and expire after one hour.",
+    "requestNew": "Request a new link",
+    "done": "Your password has been changed. Please sign in with your new password."
   }
 }
