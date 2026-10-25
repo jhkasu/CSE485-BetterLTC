@@ -9,6 +9,8 @@ import PageViewTracker from './PageViewTracker';
 import NewsSection from './NewsSection';
 import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
+import ForgotPasswordPage from './ForgotPasswordPage';
+import ResetPasswordPage from './ResetPasswordPage';
 import Dashboard from './Dashboard';
 import Footer from './Footer';
 import MissionPage from './MissionPage';
@@ -99,6 +101,8 @@ function App() {
         <Route path="/volunteer/*" element={<Navigate to="/organizations" replace />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/about/mission" element={<MissionPage />} />
         <Route path="/about/team" element={<OurTeamPage />} />

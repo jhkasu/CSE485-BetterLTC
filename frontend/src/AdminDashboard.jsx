@@ -20,6 +20,7 @@ import AdminTestimonials from './AdminTestimonials';
 import AdminStatistics from './AdminStatistics';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
 import usePageTitle from './usePageTitle';
+import { LOOKUP_LINKS, REGISTRY_TYPES } from './registry';
 
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
@@ -77,6 +78,9 @@ function AdminDashboard() {
   }, []);
 
   const [organizations, setOrganizations] = useState([]);
+  const [rejecting, setRejecting] = useState(null);
+  const [rejectReason, setRejectReason] = useState('');
+  const [rejectError, setRejectError] = useState('');
 
   useEffect(() => {
     apiFetch(`/api/organizations`)
@@ -370,14 +374,65 @@ function AdminDashboard() {
     </div>
   );
 
+  const replaceOrganization = (updated) => setOrganizations(current => current.map(o => (o.id === updated.id ? updated : o)));
+
   const toggleOrgApproval = (org) => {
     const endpoint = org.isApproved
       ? `/api/organizations/${org.id}/revoke`
       : `/api/organizations/${org.id}/approve`;
     apiFetch(endpoint, { method: 'PUT' })
       .then(res => res.json())
-      .then(updated => setOrganizations(organizations.map(o => o.id === updated.id ? updated : o)))
+      .then(replaceOrganization)
       .catch(() => {});
+  };
+
+  const openReject = (org) => {
+    setRejecting(org);
+    setRejectReason('');
+    setRejectError('');
+  };
+
+  const submitReject = () => {
+    if (!rejectReason.trim()) {
+      setRejectError('adminDashboard.organizations.reasonRequired');
+      return;
+    }
+    apiFetch(`/api/organizations/${rejecting.id}/reject`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason: rejectReason.trim() }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('reject failed');
+        return res.json();
+      })
+      .then(updated => {
+        replaceOrganization(updated);
+        setRejecting(null);
+      })
+      .catch(() => setRejectError('common.genericError'));
+  };
+
+  const orgStatus = (org) => {
+    if (org.isApproved) return 'approved';
+    return org.rejectionReason ? 'rejected' : 'pending';
+  };
+
+  const renderRegistry = (org) => {
+    if (!org.registryNumber) return <span className="admin-registry-missing">{t('adminDashboard.organizations.notProvided')}</span>;
+    const type = REGISTRY_TYPES.find(option => option.value === org.registryType);
+    return (
+      <>
+        <div className="admin-registry-number">{org.registryNumber}</div>
+        {type && <div className="admin-registry-type">{t(type.labelKey)}</div>}
+        {(LOOKUP_LINKS[org.registryType] || []).map(link => (
+          <a key={link.url} className="admin-registry-link" href={link.url} target="_blank" rel="noopener noreferrer">
+            {t(link.labelKey)} <MdOpenInNew aria-hidden="true" />
+            <span className="visually-hidden"> ({t('orgPage.newTab')})</span>
+          </a>
+        ))}
+      </>
+    );
   };
 
   const renderOrganizations = () => (
@@ -392,6 +447,7 @@ function AdminDashboard() {
               <th>{t('adminDashboard.organizations.organization')}</th>
               <th>{t('adminDashboard.organizations.contact')}</th>
               <th>{t('common.email')}</th>
+              <th>{t('adminDashboard.organizations.registration')}</th>
               <th>{t('adminDashboard.organizations.serves')}</th>
               <th>{t('common.status')}</th>
               <th>{t('common.actions')}</th>
@@ -403,28 +459,59 @@ function AdminDashboard() {
                 <td>{org.orgName}</td>
                 <td>{org.contactName}</td>
                 <td>{org.email}</td>
+                <td className="admin-org-registry">{renderRegistry(org)}</td>
                 <td className="admin-org-serves">
                   {org.serviceAreas?.length
                     ? org.serviceAreas.map(city => (city === 'Other' ? t('volunteer.otherCity') : city)).join(', ')
                     : t('adminDashboard.organizations.notSet')}
                 </td>
                 <td>
-                  <span className={`bg-badge ${org.isApproved ? 'approved' : 'pending'}`}>
-                    {org.isApproved ? t('options.applicationStatus.approved') : t('options.applicationStatus.pending')}
-                  </span>
+                  <span className={`bg-badge ${orgStatus(org)}`}>{t(`options.applicationStatus.${orgStatus(org)}`)}</span>
+                  {orgStatus(org) === 'rejected' && <div className="admin-reject-reason">{org.rejectionReason}</div>}
                 </td>
                 <td>
-                  <button
-                    className={`admin-action-btn ${org.isApproved ? 'revoke' : 'approve'}`}
-                    onClick={() => toggleOrgApproval(org)}
-                  >
-                    {org.isApproved ? t('adminDashboard.volunteers.revoke') : t('adminDashboard.volunteers.approve')}
-                  </button>
+                  <div className="admin-org-actions">
+                    {org.isApproved ? (
+                      <button className="admin-action-btn revoke" onClick={() => toggleOrgApproval(org)}>
+                        {t('adminDashboard.volunteers.revoke')}
+                      </button>
+                    ) : (
+                      <>
+                        <button className="admin-action-btn approve" onClick={() => toggleOrgApproval(org)}>
+                          {t('adminDashboard.volunteers.approve')}
+                        </button>
+                        <button className="admin-action-btn revoke" onClick={() => openReject(org)}>
+                          {t('adminDashboard.organizations.reject')}
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      )}
+      {rejecting && (
+        <Modal title={t('adminDashboard.organizations.rejectTitle', { name: rejecting.orgName })} onClose={() => setRejecting(null)}>
+          <div className="admin-form">
+            <label htmlFor="reject-reason">{t('adminDashboard.organizations.reason')}</label>
+            <textarea
+              id="reject-reason"
+              rows={4}
+              maxLength={500}
+              value={rejectReason}
+              placeholder={t('adminDashboard.organizations.reasonPlaceholder')}
+              onChange={e => { setRejectReason(e.target.value); setRejectError(''); }}
+            />
+            <p className="admin-reject-hint">{t('adminDashboard.organizations.reasonHint')}</p>
+            {rejectError && <p className="admin-reject-error" role="alert">{t(rejectError)}</p>}
+            <div className="admin-form-actions">
+              <button className="admin-save-btn" onClick={submitReject}>{t('adminDashboard.organizations.reject')}</button>
+              <button className="admin-cancel-btn" onClick={() => setRejecting(null)}>{t('common.cancel')}</button>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

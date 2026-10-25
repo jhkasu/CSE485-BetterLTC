@@ -20,6 +20,7 @@ public class AppDbContext : DbContext {
     public DbSet<PageViewDaily> PageViewDailies { get; set; }
     public DbSet<ResourceDownloadDaily> ResourceDownloadDailies { get; set; }
     public DbSet<VolunteerRole> VolunteerRoles { get; set; }
+    public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -63,5 +64,12 @@ public class AppDbContext : DbContext {
             .WithMany()
             .HasForeignKey(r => r.OrganizationId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PasswordResetToken>()
+            .HasIndex(t => t.TokenHash)
+            .IsUnique();
+
+        modelBuilder.Entity<PasswordResetToken>()
+            .HasIndex(t => new { t.Role, t.AccountId });
     }
 }

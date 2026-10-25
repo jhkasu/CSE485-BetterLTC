@@ -55,6 +55,8 @@ test('an organization email that is already registered shows the message', async
   renderSignup();
   fireEvent.click(screen.getByRole('button', { name: /i represent an organization/i }));
   fill(i18n.t('auth.placeholders.orgName'), 'Prairie Care');
+  fireEvent.click(screen.getByRole('radio', { name: 'Registered charity' }));
+  fireEvent.change(screen.getByLabelText('Registration number'), { target: { value: '123456789RR0001' } });
   fillForm('amy@example.test');
   fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
   expect(await screen.findByText('This email is already registered.')).toBeInTheDocument();
@@ -77,4 +79,25 @@ test('extra spaces around the email are removed before signing up', async () => 
   fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
   expect(await screen.findByText('Sign in page')).toBeInTheDocument();
   expect(JSON.parse(global.fetch.mock.calls[0][1].body).email).toBe('Amy@Example.TEST');
+});
+
+test('an organization needs a valid registration number', async () => {
+  global.fetch.mockResolvedValue({ ok: true, status: 200, text: async () => '' });
+  renderSignup();
+  fireEvent.click(screen.getByRole('button', { name: /i represent an organization/i }));
+  fill(i18n.t('auth.placeholders.orgName'), 'Prairie Care');
+  fillForm('amy@example.test');
+  fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
+  expect(screen.getByRole('alert')).toHaveTextContent('Choose whether you are a registered charity or a non-profit corporation.');
+  fireEvent.click(screen.getByRole('radio', { name: 'Registered charity' }));
+  fireEvent.change(screen.getByLabelText('Registration number'), { target: { value: '12345' } });
+  fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
+  expect(screen.getByRole('alert')).toHaveTextContent('123456789RR0001');
+  expect(global.fetch).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByLabelText('Registration number'), { target: { value: '123456789 rr 0001' } });
+  fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
+  expect(await screen.findByText('Sign in page')).toBeInTheDocument();
+  const body = JSON.parse(global.fetch.mock.calls[0][1].body);
+  expect(body).toEqual(expect.objectContaining({ registryType: 'Charity', registryNumber: '123456789RR0001' }));
+  expect(body).not.toHaveProperty('isApproved');
 });
