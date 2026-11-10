@@ -323,15 +323,16 @@
     },
     "pending": {
       "heading": "Compte en attente d'approbation",
-      "text": "Votre organisme est en cours d'examen. Un administrateur vérifie votre numéro d'enregistrement avant que votre organisme paraisse dans le répertoire.",
+      "text": "Votre organisme est en cours d'examen. Un administrateur vérifie votre organisme avant qu'il paraisse dans le répertoire.",
       "notify": "Nous vous écrirons une fois l'examen terminé.",
       "rejectedHeading": "Votre organisme doit être revu",
       "rejectedText": "Nous n'avons pas encore pu approuver votre organisme. Veuillez vérifier votre numéro d'enregistrement et le soumettre de nouveau.",
       "reason": "Raison :",
       "sent": "Soumis pour examen. Nous vous écrirons une fois la vérification terminée.",
       "change": "Modifier le numéro d'enregistrement",
-      "missing": "Ajoutez votre numéro d'enregistrement pour que nous puissions examiner votre organisme.",
-      "submit": "Soumettre pour examen"
+      "missing": "Vous pouvez ajouter un numéro d'organisme de bienfaisance ou de société sans but lucratif pour nous aider à examiner votre organisme plus rapidement.",
+      "submit": "Soumettre pour examen",
+      "add": "Ajouter un numéro d'enregistrement"
     },
     "profile": {
       "heading": "Profil de l'organisme",
@@ -463,7 +464,8 @@
       "submitterRequired": "Veuillez entrer le nom de la personne qui remplit ce formulaire.",
       "consentRequired": "Veuillez cocher toutes les cases d'autorisation et de consentement.",
       "representativeRequired": "Veuillez entrer le nom du représentant autorisé."
-    }
+    },
+    "hideStreetAddress": "Masquer notre adresse municipale et notre code postal sur la page publique (afficher seulement la ville et la province)"
   },
   "adminDashboard": {
     "panel": "Panneau d'administration",
@@ -959,11 +961,11 @@
     "typeLabel": "Type d'enregistrement",
     "types": {
       "Charity": "Organisme de bienfaisance enregistré",
-      "Nonprofit": "Société sans but lucratif"
+      "Nonprofit": "Société sans but lucratif",
+      "none": "Nous n'en avons pas"
     },
     "numberLabel": "Numéro d'enregistrement",
     "hints": {
-      "choose": "Choisissez un type pour voir le format du numéro.",
       "Charity": "Votre numéro d'organisme de bienfaisance de l'Agence du revenu du Canada, comme 123456789RR0001.",
       "Nonprofit": "Votre numéro de société du registre des sociétés de la Saskatchewan ou de Corporations Canada (6 à 10 chiffres)."
     },
@@ -976,7 +978,8 @@
       "cra": "Liste des organismes de l'ARC",
       "saskatchewan": "Registre de la Saskatchewan",
       "federal": "Corporations Canada"
-    }
+    },
+    "optional": "Facultatif. Si votre organisme a un numéro d'organisme de bienfaisance ou de société sans but lucratif, l'ajouter nous aide à examiner votre organisme plus rapidement."
   },
   "reset": {
     "forgotHeading": "Mot de passe oublié",

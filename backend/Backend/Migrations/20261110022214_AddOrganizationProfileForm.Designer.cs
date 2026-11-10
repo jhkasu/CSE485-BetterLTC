@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261110021348_AddOrganizationProfileForm")]
+    [Migration("20261110022214_AddOrganizationProfileForm")]
     partial class AddOrganizationProfileForm
     {
         /// <inheritdoc />
@@ -212,6 +212,9 @@ namespace Backend.Migrations
                     b.Property<string>("Goals")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("HideStreetAddress")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Instagram")
                         .IsRequired()

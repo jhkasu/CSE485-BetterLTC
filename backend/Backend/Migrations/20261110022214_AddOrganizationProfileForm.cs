@@ -102,6 +102,13 @@ namespace Backend.Migrations
                 nullable: false,
                 defaultValue: "");
 
+            migrationBuilder.AddColumn<bool>(
+                name: "HideStreetAddress",
+                table: "Organizations",
+                type: "boolean",
+                nullable: false,
+                defaultValue: false);
+
             migrationBuilder.AddColumn<string>(
                 name: "Instagram",
                 table: "Organizations",
@@ -349,6 +356,10 @@ namespace Backend.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Goals",
+                table: "Organizations");
+
+            migrationBuilder.DropColumn(
+                name: "HideStreetAddress",
                 table: "Organizations");
 
             migrationBuilder.DropColumn(

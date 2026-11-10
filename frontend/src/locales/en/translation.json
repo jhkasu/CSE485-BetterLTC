@@ -323,15 +323,16 @@
     },
     "pending": {
       "heading": "Account Pending Approval",
-      "text": "Your organization is being reviewed. An administrator checks your registration number before your organization appears in the directory.",
+      "text": "Your organization is being reviewed. An administrator checks your organization before it appears in the directory.",
       "notify": "We will email you once your organization has been reviewed.",
       "rejectedHeading": "Your Organization Needs Another Look",
       "rejectedText": "We could not approve your organization yet. Please check your registration number and send it again.",
       "reason": "Reason:",
       "sent": "Sent for review. We will email you once it has been checked.",
       "change": "Change registration number",
-      "missing": "Add your registration number so we can review your organization.",
-      "submit": "Send for review"
+      "missing": "You can add a charity or non-profit corporation number to help us review your organization faster.",
+      "submit": "Send for review",
+      "add": "Add registration number"
     },
     "profile": {
       "heading": "Organization Profile",
@@ -463,7 +464,8 @@
       "submitterRequired": "Please enter the name of the person submitting this form.",
       "consentRequired": "Please check all authorization and consent boxes.",
       "representativeRequired": "Please enter the name of the authorized representative."
-    }
+    },
+    "hideStreetAddress": "Hide our street address and postal code on the public page (show only the city and province)"
   },
   "adminDashboard": {
     "panel": "Admin Panel",
@@ -959,11 +961,11 @@
     "typeLabel": "Registration type",
     "types": {
       "Charity": "Registered charity",
-      "Nonprofit": "Non-profit corporation"
+      "Nonprofit": "Non-profit corporation",
+      "none": "We don't have one"
     },
     "numberLabel": "Registration number",
     "hints": {
-      "choose": "Choose a type to see the number format.",
       "Charity": "Your charity number from the Canada Revenue Agency, like 123456789RR0001.",
       "Nonprofit": "Your corporation number from the Saskatchewan Corporate Registry or Corporations Canada (6 to 10 digits)."
     },
@@ -976,7 +978,8 @@
       "cra": "CRA charity list",
       "saskatchewan": "Saskatchewan registry",
       "federal": "Corporations Canada"
-    }
+    },
+    "optional": "Optional. If your organization has a charity or non-profit corporation number, adding it helps us review your organization faster."
   },
   "reset": {
     "forgotHeading": "Forgot Password",

@@ -210,6 +210,9 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("HideStreetAddress")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Instagram")
                         .IsRequired()
                         .HasColumnType("text");

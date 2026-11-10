@@ -110,7 +110,7 @@ function OrganizationPage() {
   const languages = withOther(org.serviceLanguages, org.serviceLanguageOther, SERVICE_LANGUAGES);
   const scopes = withOther(org.geographicScope, '', GEOGRAPHIC_SCOPES);
   const orgType = org.orgType === 'Other' && org.orgTypeOther ? org.orgTypeOther : (org.orgType ? labelFor(ORG_TYPES, org.orgType, t) : '');
-  const location = [org.city, org.province].filter(Boolean).join(', ');
+  const location = [org.streetAddress, org.city, org.province, org.postalCode].filter(Boolean).join(', ');
   const socials = SOCIAL_LINKS.filter(([field]) => org[field]).concat(org.otherSocial ? [['otherSocial', websiteHost(org.otherSocial)]] : []);
   const areaSummary = areas.length > AREA_PREVIEW
     ? t('orgPage.servesMore', { areas: areas.slice(0, AREA_PREVIEW).map(cityLabel).join(', '), count: areas.length - AREA_PREVIEW })

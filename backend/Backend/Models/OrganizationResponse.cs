@@ -9,8 +9,10 @@ public class OrganizationPublicResponse {
     public List<string> GeographicScope { get; set; } = [];
     public string CommunitiesServed { get; set; } = "";
     public List<string> ServiceAreas { get; set; } = [];
+    public string StreetAddress { get; set; } = "";
     public string City { get; set; } = "";
     public string Province { get; set; } = "";
+    public string PostalCode { get; set; } = "";
     public string AdditionalLocations { get; set; } = "";
     public string Website { get; set; } = "";
     public string Facebook { get; set; } = "";
@@ -53,8 +55,10 @@ public class OrganizationPublicResponse {
         GeographicScope = o.GeographicScope;
         CommunitiesServed = o.CommunitiesServed;
         ServiceAreas = o.ServiceAreas;
+        StreetAddress = o.HideStreetAddress ? "" : o.StreetAddress;
         City = o.City;
         Province = o.Province;
+        PostalCode = o.HideStreetAddress ? "" : o.PostalCode;
         AdditionalLocations = o.AdditionalLocations;
         Website = o.Website;
         Facebook = o.Facebook;
@@ -93,8 +97,7 @@ public class OrganizationResponse : OrganizationPublicResponse {
     public string RejectionReason { get; set; } = "";
     public string NotificationEmail { get; set; } = "";
     public string LegalName { get; set; } = "";
-    public string StreetAddress { get; set; } = "";
-    public string PostalCode { get; set; } = "";
+    public bool HideStreetAddress { get; set; }
     public string ContactPosition { get; set; } = "";
     public string ContactPhone { get; set; } = "";
     public string UpdateContact { get; set; } = "";
@@ -115,8 +118,6 @@ public class OrganizationResponse : OrganizationPublicResponse {
             RejectionReason = o.RejectionReason,
             NotificationEmail = o.NotificationEmail,
             LegalName = o.LegalName,
-            StreetAddress = o.StreetAddress,
-            PostalCode = o.PostalCode,
             ContactPosition = o.ContactPosition,
             ContactPhone = o.ContactPhone,
             UpdateContact = o.UpdateContact,
@@ -128,6 +129,9 @@ public class OrganizationResponse : OrganizationPublicResponse {
             ConsentedAt = o.ConsentedAt,
         };
         response.Fill(o);
+        response.StreetAddress = o.StreetAddress;
+        response.PostalCode = o.PostalCode;
+        response.HideStreetAddress = o.HideStreetAddress;
         return response;
     }
 }

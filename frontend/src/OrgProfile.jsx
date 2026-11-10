@@ -63,6 +63,7 @@ function toForm(org) {
     city: org?.city || '',
     province: org?.province || 'Saskatchewan',
     postalCode: org?.postalCode || '',
+    hideStreetAddress: !!org?.hideStreetAddress,
     additionalLocations: org?.additionalLocations || '',
     website: org?.website || '',
     facebook: org?.facebook || '',
@@ -414,6 +415,10 @@ function OrgProfile({ org, onSaved }) {
               <div>{textField('province', 'orgForm.province', { maxLength: 100 })}</div>
               <div>{textField('postalCode', 'orgForm.postalCode', { maxLength: 20 })}</div>
             </div>
+            <label className="org-profile-check">
+              <input type="checkbox" checked={form.hideStreetAddress} onChange={e => update({ hideStreetAddress: e.target.checked })} />
+              <span>{t('orgForm.hideStreetAddress')}</span>
+            </label>
           </fieldset>
           {textField('additionalLocations', 'orgForm.additionalLocations', { rows: 2, maxLength: 500 })}
 

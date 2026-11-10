@@ -47,7 +47,7 @@ public class OrganizationController : ControllerBase {
             if (request.OrgName.Trim().Length == 0 || request.ContactName.Trim().Length == 0) return BadRequest("Organization and contact names are required.");
             if (!new EmailAddressAttribute().IsValid(email)) return BadRequest("A valid email is required.");
             string number = Registry.Normalize(request.RegistryNumber);
-            string? registryError = Registry.Validate(request.RegistryType, number);
+            string? registryError = Registry.ValidateOptional(request.RegistryType, number);
             if (registryError is not null) return BadRequest(registryError);
             if (await AccountEmails.IsTaken(_context, email)) return Conflict(AccountEmails.AlreadyRegistered);
             var org = new Organization {
@@ -213,7 +213,7 @@ public class OrganizationController : ControllerBase {
             if (org is null) return NotFound();
             if (org.IsApproved) return BadRequest("The registration number of an approved organization cannot be changed.");
             string number = Registry.Normalize(request.RegistryNumber);
-            string? registryError = Registry.Validate(request.RegistryType, number);
+            string? registryError = Registry.ValidateOptional(request.RegistryType, number);
             if (registryError is not null) return BadRequest(registryError);
             org.RegistryType = request.RegistryType;
             org.RegistryNumber = number;

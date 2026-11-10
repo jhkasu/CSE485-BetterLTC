@@ -15,6 +15,7 @@ public class OrganizationProfileRequest {
     [MaxLength(100)] public string City { get; set; } = "";
     [MaxLength(100)] public string Province { get; set; } = "";
     [MaxLength(20)] public string PostalCode { get; set; } = "";
+    public bool HideStreetAddress { get; set; }
     [MaxLength(500)] public string AdditionalLocations { get; set; } = "";
     [MaxLength(300)] public string Website { get; set; } = "";
     [MaxLength(300)] public string Facebook { get; set; } = "";

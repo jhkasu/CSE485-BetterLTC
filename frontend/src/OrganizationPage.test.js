@@ -127,7 +127,7 @@ test('shows the questionnaire answers an organization chose to share', async () 
     tagline: 'No senior alone',
     mission: 'Help seniors stay home.',
     orgType: 'Other', orgTypeOther: 'Seniors network',
-    yearEstablished: 1998, city: 'Regina', province: 'Saskatchewan',
+    yearEstablished: 1998, streetAddress: '1 Main St', city: 'Regina', province: 'Saskatchewan', postalCode: 'S4P 1A1',
     categories: ['Food Security', 'Other'], categoryOther: 'Rides',
     populationsServed: ['Seniors'], serviceLanguages: ['Cree'], languageServices: 'Home visits',
     facebook: 'https://facebook.com/prairiecare',
@@ -137,7 +137,7 @@ test('shows the questionnaire answers an organization chose to share', async () 
   expect(screen.getByText('Help seniors stay home.')).toBeInTheDocument();
   expect(screen.getByText('Seniors network')).toBeInTheDocument();
   expect(screen.getByText('1998')).toBeInTheDocument();
-  expect(screen.getByText('Regina, Saskatchewan')).toBeInTheDocument();
+  expect(screen.getByText('1 Main St, Regina, Saskatchewan, S4P 1A1')).toBeInTheDocument();
   expect(screen.getByText('Food Security')).toBeInTheDocument();
   expect(screen.getByText('Rides')).toBeInTheDocument();
   expect(screen.getByText('Cree')).toBeInTheDocument();

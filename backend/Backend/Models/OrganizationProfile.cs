@@ -67,6 +67,7 @@ public static class OrganizationProfile {
         org.City = r.City.Trim();
         org.Province = r.Province.Trim();
         org.PostalCode = r.PostalCode.Trim().ToUpperInvariant();
+        org.HideStreetAddress = r.HideStreetAddress;
         org.AdditionalLocations = r.AdditionalLocations.Trim();
         org.Website = r.Website.Trim();
         org.Facebook = r.Facebook.Trim();

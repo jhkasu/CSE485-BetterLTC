@@ -31,6 +31,7 @@ public class Organization : IAccount {
     public string City { get; set; } = "";
     public string Province { get; set; } = "";
     public string PostalCode { get; set; } = "";
+    public bool HideStreetAddress { get; set; }
     public string AdditionalLocations { get; set; } = "";
     public string Facebook { get; set; } = "";
     public string Instagram { get; set; } = "";

@@ -56,6 +56,7 @@ test('saves the profile with the sponsor questionnaire fields', async () => {
   fireEvent.change(screen.getByLabelText('Facebook'), { target: { value: 'facebook.com/carehome' } });
   fireEvent.change(screen.getByLabelText(/organization's mission/i), { target: { value: 'Help seniors stay home.' } });
   fireEvent.click(screen.getByRole('radio', { name: 'Annually' }));
+  fireEvent.click(screen.getByRole('checkbox', { name: /Hide our street address/ }));
   fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
   expect(await screen.findByText('Saved!')).toBeInTheDocument();
   const [url, options] = global.fetch.mock.calls[0];
@@ -73,6 +74,7 @@ test('saves the profile with the sponsor questionnaire fields', async () => {
     facebook: 'https://facebook.com/carehome',
     mission: 'Help seniors stay home.',
     reviewFrequency: 'Annually',
+    hideStreetAddress: true,
     confirmAuthorized: true,
     confirmUpdates: true,
   }));

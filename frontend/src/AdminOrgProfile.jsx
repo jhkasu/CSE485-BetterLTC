@@ -43,6 +43,7 @@ function AdminOrgProfile({ org }) {
       ['orgDashboard.profile.serviceAreas', (org.serviceAreas || []).map(city => (city === 'Other' ? t('volunteer.otherCity') : city)).join(', ')],
       ['orgForm.communitiesServed', org.communitiesServed],
       ['orgForm.address', address],
+      ['orgForm.hideStreetAddress', org.hideStreetAddress ? t('adminDashboard.organizations.yes') : t('adminDashboard.organizations.no')],
       ['orgForm.additionalLocations', org.additionalLocations],
       ['orgDashboard.profile.website', org.website],
     ]],
