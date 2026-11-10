@@ -19,17 +19,76 @@
   padding: 32px;
 }
 
-.org-profile-grid {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 40px;
+.org-form-section {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.org-profile-column {
+.org-form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.org-form-heading {
+  font-size: 24px;
+  margin: 0 0 16px 0;
+}
+
+.org-form-heading + .org-profile-hint {
+  margin: -8px 0 20px 0;
+}
+
+.org-form-pair,
+.org-form-trio {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+}
+
+.org-form-trio {
+  grid-template-columns: 2fr 2fr 1fr;
+}
+
+.org-form-pair > div,
+.org-form-trio > div {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
+
+.org-form-other {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  margin-top: 12px;
+}
+
+.org-form-readonly {
+  font-size: 17px;
+  color: var(--color-text);
+  padding: 12px 0;
+  margin: 0 0 4px 0;
+}
+
+.org-form-consents {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.org-form-consents .org-profile-check {
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.org-form-consents .org-profile-check input {
+  margin-top: 3px;
+}
+
 
 .org-profile-label,
 .org-profile-group legend {
@@ -100,6 +159,7 @@ textarea.org-profile-input {
 }
 
 .org-profile-check input {
+  flex: none;
   width: 20px;
   height: 20px;
   margin: 0;
@@ -156,9 +216,9 @@ textarea.org-profile-input {
     padding: 20px;
   }
 
-  .org-profile-grid {
+  .org-form-pair,
+  .org-form-trio {
     grid-template-columns: 1fr;
-    gap: 0;
   }
 
   .org-profile-save {

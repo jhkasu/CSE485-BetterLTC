@@ -51,8 +51,10 @@ test('a rejected organization sees the reason and sends a corrected number', asy
   expect(screen.getByRole('heading', { name: 'Account Pending Approval' })).toBeInTheDocument();
 });
 
-test('an organization without a number is asked to add one', () => {
+test('an organization without a number can wait for review or add one', () => {
   render(<OrgPending org={{ ...base, registryType: '', registryNumber: '' }} onUpdated={() => {}} onLogout={() => {}} />);
-  expect(screen.getByText('Add your registration number so we can review your organization.')).toBeInTheDocument();
+  expect(screen.getByText(/You can add a charity or non-profit corporation number/)).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Send for review' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Add registration number' }));
   expect(screen.getByRole('button', { name: 'Send for review' })).toBeInTheDocument();
 });

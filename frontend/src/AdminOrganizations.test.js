@@ -58,3 +58,42 @@ test('shows the registration number with lookup links and rejects with a reason'
   expect(call[1].method).toBe('PUT');
   expect(JSON.parse(call[1].body)).toEqual({ reason: 'The number belongs to another charity.' });
 });
+
+test('shows every questionnaire answer, including the private admin section', async () => {
+  const completed = {
+    ...pending,
+    legalName: 'Care Home Society Inc.', orgType: 'Other', orgTypeOther: 'Seniors network',
+    streetAddress: '1 Main St', city: 'Regina', province: 'Saskatchewan', postalCode: 'S4P 1A1',
+    contactPosition: 'Volunteer Coordinator', contactPhone: '306-555-0100',
+    updateContact: 'Other', updateContactDetails: 'Sam Lee, sam@example.test',
+    reviewFrequency: 'Annually', engagementInterests: ['Non-Profit Networking'],
+    adminComments: 'Call before noon.', representativeName: 'Bo', consentedAt: '2026-11-01T12:00:00Z',
+  };
+  global.fetch.mockImplementation((url, options) => {
+    if (url.endsWith('/api/organizations') && !options?.method) return respond([completed, legacy]);
+    return respond([]);
+  });
+  render(
+    <AccessibilityProvider>
+      <MemoryRouter>
+        <AdminDashboard />
+      </MemoryRouter>
+    </AccessibilityProvider>,
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'Organizations' }));
+  const row = (await screen.findByText('Care Home')).closest('tr');
+  fireEvent.click(within(row).getByRole('button', { name: 'Details' }));
+  expect(screen.getByRole('heading', { name: 'Care Home profile' })).toBeInTheDocument();
+  expect(screen.getByText('Care Home Society Inc.')).toBeInTheDocument();
+  expect(screen.getByText('Other: Seniors network')).toBeInTheDocument();
+  expect(screen.getByText('1 Main St, Regina, Saskatchewan, S4P 1A1')).toBeInTheDocument();
+  expect(screen.getByText('306-555-0100')).toBeInTheDocument();
+  expect(screen.getByText('Other: Sam Lee, sam@example.test')).toBeInTheDocument();
+  expect(screen.getByText('Annually')).toBeInTheDocument();
+  expect(screen.getByText('Non-Profit Networking')).toBeInTheDocument();
+  expect(screen.getByText('Call before noon.')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: '' }));
+  fireEvent.click(within(screen.getByText('Old Org').closest('tr')).getByRole('button', { name: 'Details' }));
+  expect(screen.getByText('This organization has not completed the profile form yet.')).toBeInTheDocument();
+});

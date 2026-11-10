@@ -81,14 +81,14 @@ test('extra spaces around the email are removed before signing up', async () => 
   expect(JSON.parse(global.fetch.mock.calls[0][1].body).email).toBe('Amy@Example.TEST');
 });
 
-test('an organization needs a valid registration number', async () => {
+test('a registration number is optional, but one that is given must be valid', async () => {
   global.fetch.mockResolvedValue({ ok: true, status: 200, text: async () => '' });
   renderSignup();
   fireEvent.click(screen.getByRole('button', { name: /i represent an organization/i }));
   fill(i18n.t('auth.placeholders.orgName'), 'Prairie Care');
   fillForm('amy@example.test');
-  fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
-  expect(screen.getByRole('alert')).toHaveTextContent('Choose whether you are a registered charity or a non-profit corporation.');
+  expect(screen.getByRole('radio', { name: "We don't have one" })).toBeChecked();
+  expect(screen.queryByLabelText('Registration number')).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('radio', { name: 'Registered charity' }));
   fireEvent.change(screen.getByLabelText('Registration number'), { target: { value: '12345' } });
   fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
@@ -100,4 +100,15 @@ test('an organization needs a valid registration number', async () => {
   const body = JSON.parse(global.fetch.mock.calls[0][1].body);
   expect(body).toEqual(expect.objectContaining({ registryType: 'Charity', registryNumber: '123456789RR0001' }));
   expect(body).not.toHaveProperty('isApproved');
+});
+
+test('an organization can sign up without a registration number', async () => {
+  global.fetch.mockResolvedValue({ ok: true, status: 200, text: async () => '' });
+  renderSignup();
+  fireEvent.click(screen.getByRole('button', { name: /i represent an organization/i }));
+  fill(i18n.t('auth.placeholders.orgName'), 'Prairie Care');
+  fillForm('amy@example.test');
+  fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
+  expect(await screen.findByText('Sign in page')).toBeInTheDocument();
+  expect(JSON.parse(global.fetch.mock.calls[0][1].body)).toEqual(expect.objectContaining({ registryType: '', registryNumber: '' }));
 });

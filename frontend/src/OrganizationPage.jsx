@@ -7,11 +7,27 @@ import Footer from './Footer';
 import apiFetch from './api';
 import API_BASE from './config';
 import { ORG_CATEGORY_KEYS } from './orgCategories';
+import { GEOGRAPHIC_SCOPES, ORG_TYPES, POPULATIONS, SERVICE_LANGUAGES, labelFor } from './orgProfileOptions';
 import ExpressInterestForm from './ExpressInterestForm';
 import usePageTitle from './usePageTitle';
 import './OrganizationPage.css';
 
 const AREA_PREVIEW = 3;
+const ABOUT_SECTIONS = [
+  ['mission', 'orgPage.mission'],
+  ['vision', 'orgPage.vision'],
+  ['coreValues', 'orgPage.values'],
+  ['story', 'orgPage.story'],
+  ['uniqueness', 'orgPage.unique'],
+  ['goals', 'orgPage.goals'],
+];
+const SOCIAL_LINKS = [
+  ['facebook', 'Facebook'],
+  ['instagram', 'Instagram'],
+  ['linkedIn', 'LinkedIn'],
+  ['youTube', 'YouTube'],
+  ['tikTok', 'TikTok'],
+];
 
 export function logoUrl(org) {
   return org?.logoVersion ? `${API_BASE}/api/organizations/${org.id}/logo?v=${org.logoVersion}` : null;
@@ -86,6 +102,16 @@ function OrganizationPage() {
 
   const logo = logoUrl(org);
   const areas = org.serviceAreas || [];
+  const about = org.description || org.shortDescription;
+  const aboutSections = ABOUT_SECTIONS.filter(([field]) => org[field]);
+  const withOther = (values, other, list) => (values || []).map(v => (v === 'Other' && other ? other : labelFor(list, v, t)));
+  const focusAreas = (org.categories || []).map(c => (c === 'Other' && org.categoryOther ? org.categoryOther : (ORG_CATEGORY_KEYS[c] ? t(ORG_CATEGORY_KEYS[c]) : c)));
+  const populations = withOther(org.populationsServed, org.populationOther, POPULATIONS);
+  const languages = withOther(org.serviceLanguages, org.serviceLanguageOther, SERVICE_LANGUAGES);
+  const scopes = withOther(org.geographicScope, '', GEOGRAPHIC_SCOPES);
+  const orgType = org.orgType === 'Other' && org.orgTypeOther ? org.orgTypeOther : (org.orgType ? labelFor(ORG_TYPES, org.orgType, t) : '');
+  const location = [org.streetAddress, org.city, org.province, org.postalCode].filter(Boolean).join(', ');
+  const socials = SOCIAL_LINKS.filter(([field]) => org[field]).concat(org.otherSocial ? [['otherSocial', websiteHost(org.otherSocial)]] : []);
   const areaSummary = areas.length > AREA_PREVIEW
     ? t('orgPage.servesMore', { areas: areas.slice(0, AREA_PREVIEW).map(cityLabel).join(', '), count: areas.length - AREA_PREVIEW })
     : t('orgPage.serves', { areas: areas.map(cityLabel).join(', ') });
@@ -100,6 +126,7 @@ function OrganizationPage() {
           </div>
           <div className="orgp-identity">
             <h1 id="orgp-name">{org.orgName}</h1>
+            {org.tagline && <p className="orgp-tagline">{org.tagline}</p>}
             {areas.length > 0 && <p className="orgp-areas"><MdLocationOn aria-hidden="true" /> {areaSummary}</p>}
           </div>
           {org.website && (
@@ -112,10 +139,16 @@ function OrganizationPage() {
 
         <div className="orgp-layout">
           <div className="orgp-main">
-            {org.description && (
+            {(about || aboutSections.length > 0) && (
               <section className="orgp-card orgp-about" aria-labelledby="orgp-about">
                 <h2 id="orgp-about">{t('orgPage.about')}</h2>
-                <p className="orgp-description">{org.description}</p>
+                {about && <p className="orgp-description">{about}</p>}
+                {aboutSections.map(([field, key]) => (
+                  <div key={field} className="orgp-about-part">
+                    <h3>{t(key)}</h3>
+                    <p className="orgp-description">{org[field]}</p>
+                  </div>
+                ))}
               </section>
             )}
 
@@ -153,10 +186,59 @@ function OrganizationPage() {
 
           <aside className="orgp-card orgp-side" aria-label={t('orgPage.details')}>
             <h2>{t('orgPage.details')}</h2>
-            {(org.categories || []).length > 0 && (
+            {orgType && (
+              <>
+                <h3>{t('orgPage.orgType')}</h3>
+                <p className="orgp-fact">{orgType}</p>
+              </>
+            )}
+            {org.yearEstablished && (
+              <>
+                <h3>{t('orgPage.established')}</h3>
+                <p className="orgp-fact">{org.yearEstablished}</p>
+              </>
+            )}
+            {location && (
+              <>
+                <h3>{t('orgPage.location')}</h3>
+                <p className="orgp-fact">{location}</p>
+              </>
+            )}
+            {focusAreas.length > 0 && (
               <>
                 <h3>{t('orgPage.categories')}</h3>
-                <ul className="orgp-chips">{org.categories.map(c => <li key={c}>{ORG_CATEGORY_KEYS[c] ? t(ORG_CATEGORY_KEYS[c]) : c}</li>)}</ul>
+                <ul className="orgp-chips">{focusAreas.map(c => <li key={c}>{c}</li>)}</ul>
+              </>
+            )}
+            {populations.length > 0 && (
+              <>
+                <h3>{t('orgPage.populations')}</h3>
+                <ul className="orgp-chips">{populations.map(p => <li key={p}>{p}</li>)}</ul>
+              </>
+            )}
+            {scopes.length > 0 && (
+              <>
+                <h3>{t('orgPage.geoScope')}</h3>
+                <ul className="orgp-chips">{scopes.map(s => <li key={s}>{s}</li>)}</ul>
+              </>
+            )}
+            {org.communitiesServed && (
+              <>
+                <h3>{t('orgPage.communities')}</h3>
+                <p className="orgp-fact">{org.communitiesServed}</p>
+              </>
+            )}
+            {org.additionalLocations && (
+              <>
+                <h3>{t('orgPage.additionalLocations')}</h3>
+                <p className="orgp-fact">{org.additionalLocations}</p>
+              </>
+            )}
+            {languages.length > 0 && (
+              <>
+                <h3>{t('orgPage.languages')}</h3>
+                <ul className="orgp-chips">{languages.map(l => <li key={l}>{l}</li>)}</ul>
+                {org.languageServices && <p className="orgp-fact">{org.languageServices}</p>}
               </>
             )}
             {areas.length > 0 && (
@@ -172,6 +254,21 @@ function OrganizationPage() {
                   {websiteHost(org.website)} <MdOpenInNew aria-hidden="true" />
                   <span className="visually-hidden"> ({t('orgPage.newTab')})</span>
                 </a>
+              </>
+            )}
+            {socials.length > 0 && (
+              <>
+                <h3>{t('orgPage.social')}</h3>
+                <ul className="orgp-links">
+                  {socials.map(([field, name]) => (
+                    <li key={field}>
+                      <a className="orgp-link" href={org[field]} target="_blank" rel="noopener noreferrer">
+                        {name} <MdOpenInNew aria-hidden="true" />
+                        <span className="visually-hidden"> ({t('orgPage.newTab')})</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </>
             )}
           </aside>

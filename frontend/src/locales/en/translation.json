@@ -323,22 +323,20 @@
     },
     "pending": {
       "heading": "Account Pending Approval",
-      "text": "Your organization is being reviewed. An administrator checks your registration number before your organization appears in the directory.",
+      "text": "Your organization is being reviewed. An administrator checks your organization before it appears in the directory.",
       "notify": "We will email you once your organization has been reviewed.",
       "rejectedHeading": "Your Organization Needs Another Look",
       "rejectedText": "We could not approve your organization yet. Please check your registration number and send it again.",
       "reason": "Reason:",
       "sent": "Sent for review. We will email you once it has been checked.",
       "change": "Change registration number",
-      "missing": "Add your registration number so we can review your organization.",
-      "submit": "Send for review"
+      "missing": "You can add a charity or non-profit corporation number to help us review your organization faster.",
+      "submit": "Send for review",
+      "add": "Add registration number"
     },
     "profile": {
       "heading": "Organization Profile",
       "lead": "Manage your organization's information and how it appears in the directory.",
-      "name": "Organization Name",
-      "description": "Description",
-      "descriptionPlaceholder": "Tell volunteers what your organization does.",
       "serviceAreas": "Service Areas",
       "serviceAreasHint": "Where your organization works. Volunteers can filter the directory by area.",
       "notificationEmail": "Notification Email",
@@ -346,7 +344,6 @@
       "save": "Save changes",
       "saved": "Saved!",
       "saveFailed": "Could not save your profile. Please try again.",
-      "nameRequired": "Please enter your organization name.",
       "logo": "Logo or photo",
       "logoPreview": "Current logo",
       "noLogo": "No logo yet",
@@ -363,8 +360,6 @@
       "websiteInvalid": "Please enter a full website address, like https://www.example.org.",
       "viewPublic": "View your public page",
       "publicPending": "Your public page will be visible once an administrator approves your organization.",
-      "categories": "Categories",
-      "categoriesHint": "Volunteers use these to find you in the directory.",
       "intergenerational": "We offer intergenerational roles",
       "intergenerationalHint": "Mentorship pairs, mixed-age teams, or roles suited to older adults. You'll appear on the Across Generations page."
     },
@@ -387,6 +382,90 @@
       "saveFailed": "Could not save the role. Please try again.",
       "limit": "You can list up to {{count}} roles."
     }
+  },
+  "orgForm": {
+    "sections": {
+      "identification": "Organization Identification",
+      "about": "About Your Organization",
+      "aboutLead": "Your story, purpose and community impact.",
+      "focus": "Areas of Focus and Populations Served",
+      "admin": "Profile Management and Administration",
+      "adminLead": "This section is for website administration and will not be published.",
+      "consent": "Authorization and Consent"
+    },
+    "legalName": "Legal name of organization",
+    "publicName": "Public or operating name (if different)",
+    "publicNameHint": "This name appears in the directory. Leave it empty to use the legal name.",
+    "orgType": "Organization type",
+    "otherSpecify": "Please specify",
+    "yearEstablished": "Year established",
+    "registration": "Registration information",
+    "registrationNone": "Not provided",
+    "registrationHint": "Checked by an administrator when you signed up.",
+    "geoScope": "Geographic area served",
+    "communitiesServed": "Specific communities or regions served",
+    "address": "Primary organization address",
+    "street": "Street address",
+    "city": "City/Town",
+    "province": "Province/Territory",
+    "postalCode": "Postal code",
+    "additionalLocations": "Additional locations or service areas",
+    "social": "Organization social media accounts",
+    "socialOther": "Other",
+    "tagline": "Organization tagline or slogan",
+    "shortDescription": "Short organization description",
+    "shortDescriptionHint": "50 to 100 words. Explain who you are, what you do, and who you serve. This appears in directory search results.",
+    "wordCount_one": "{{count}} word",
+    "wordCount_other": "{{count}} words",
+    "fullDescription": "Full organization description",
+    "fullDescriptionHint": "150 to 300 words recommended. Tell visitors about your history, purpose, and the work you do in the community.",
+    "mission": "What is your organization's mission?",
+    "vision": "What is your organization's vision?",
+    "values": "What are your organization's core values?",
+    "story": "What inspired the creation of your organization?",
+    "storyHint": "Share a brief history or story about why your organization was established.",
+    "unique": "What makes your organization unique?",
+    "uniqueHint": "Describe your approach, community connections, specialized services, or other qualities that distinguish your work.",
+    "goals": "What are your organization's primary goals or priorities?",
+    "focusAreas": "Primary areas of focus",
+    "focusAreasHint": "Select all that apply. Volunteers use these to find you in the directory.",
+    "populations": "Who does your organization primarily serve?",
+    "populationsHint": "Select all that apply.",
+    "languages": "Languages other than English in which you provide services",
+    "languageServices": "Which services are available in these languages?",
+    "submitter": "Name of person submitting this form",
+    "position": "Position or relationship to organization",
+    "adminEmail": "Administrative email address",
+    "adminEmailHint": "This is the email you sign in with.",
+    "adminPhone": "Administrative telephone number",
+    "updateContact": "Who should be contacted for future profile updates?",
+    "updateContactDetails": "Name and email",
+    "reviewFrequency": "How often would you like to review or update your profile?",
+    "engagement": "Would you like to receive information about additional community engagement opportunities?",
+    "comments": "Additional comments or information",
+    "consentAuthorized": "I confirm that I am authorized to submit information on behalf of this organization.",
+    "consentAccurate": "I confirm that the information provided is accurate to the best of my knowledge.",
+    "consentPublication": "I authorize the website administrator to publish the approved organization profile information, links and submitted media on the community directory website.",
+    "consentMedia": "I confirm that appropriate permissions and consents have been obtained for any photographs, videos, testimonials or personal information submitted for publication.",
+    "consentUpdates": "I understand that our organization is responsible for informing the website administrator when information changes or is no longer current.",
+    "representative": "Authorized representative name",
+    "lastConfirmed": "Last confirmed on {{date}}.",
+    "errors": {
+      "legalNameRequired": "Please enter the legal name of your organization.",
+      "orgTypeRequired": "Please choose an organization type.",
+      "otherRequired": "Please fill in the \"Please specify\" box for each \"Other\" you checked.",
+      "yearInvalid": "Please enter a valid year.",
+      "geoRequired": "Please choose the geographic area you serve.",
+      "addressRequired": "Please enter the full primary address.",
+      "socialInvalid": "Social media links must be full addresses, like https://www.facebook.com/yourpage.",
+      "shortDescriptionWords": "The short description must be 50 to 100 words.",
+      "focusRequired": "Please choose at least one area of focus.",
+      "populationRequired": "Please choose who your organization serves.",
+      "submitterRequired": "Please enter the name of the person submitting this form.",
+      "consentRequired": "Please check all authorization and consent boxes.",
+      "representativeRequired": "Please enter the name of the authorized representative."
+    },
+    "hideStreetAddress": "Hide our street address and postal code on the public page (show only the city and province)"
   },
   "adminDashboard": {
     "panel": "Admin Panel",
@@ -426,7 +505,13 @@
       "reason": "Reason",
       "reasonPlaceholder": "e.g. The registration number does not match this organization.",
       "reasonHint": "The organization sees this reason and receives it by email.",
-      "reasonRequired": "Please enter a reason."
+      "reasonRequired": "Please enter a reason.",
+      "details": "Details",
+      "profileTitle": "{{name}} profile",
+      "profileIncomplete": "This organization has not completed the profile form yet.",
+      "consentedOn": "Confirmed on",
+      "yes": "Yes",
+      "no": "No"
     },
     "team": {
       "addMember": "Add Member",
@@ -502,14 +587,94 @@
       "sun": "Sun"
     },
     "orgCategories": {
-      "health": "Health",
-      "seniors": "Seniors' Services",
-      "youth": "Youth",
-      "education": "Education",
-      "environment": "Environment",
-      "arts": "Arts and Culture",
-      "community": "Community Services",
+      "seniors": "Seniors and Healthy Aging",
+      "health": "Health Care and Wellness",
+      "mentalHealth": "Mental Health and Wellbeing",
+      "disability": "Disability Services and Accessibility",
+      "childrenYouth": "Children and Youth",
+      "education": "Education and Literacy",
+      "employment": "Employment and Career Development",
+      "indigenous": "Indigenous Communities and Reconciliation",
+      "newcomers": "Newcomer and Immigrant Support",
+      "poverty": "Poverty Reduction",
+      "food": "Food Security",
+      "housing": "Housing and Homelessness",
+      "isolation": "Social Isolation and Community Connection",
+      "familyCaregivers": "Family and Caregiver Support",
+      "arts": "Arts, Culture and Heritage",
+      "sports": "Sports and Recreation",
+      "environment": "Environment and Sustainability",
+      "animals": "Animal Welfare",
+      "emergency": "Emergency Response and Disaster Relief",
+      "humanRights": "Human Rights and Social Justice",
+      "safety": "Community Safety",
+      "research": "Research and Innovation",
       "other": "Other"
+    },
+    "orgTypes": {
+      "charity": "Registered Charity",
+      "nonprofit": "Incorporated Non-Profit Organization",
+      "community": "Community-Based Organization",
+      "indigenous": "Indigenous-Led Organization",
+      "grassroots": "Grassroots or Volunteer-Led Initiative",
+      "faith": "Faith-Based Organization",
+      "education": "Educational Institution",
+      "socialEnterprise": "Social Enterprise",
+      "public": "Public Institution or Agency",
+      "business": "Business with a Community Volunteer Program",
+      "other": "Other"
+    },
+    "geoScopes": {
+      "local": "Local Community",
+      "regional": "Municipal/Regional",
+      "provincial": "Saskatchewan-Wide",
+      "western": "Western Canada",
+      "national": "National",
+      "international": "International"
+    },
+    "populations": {
+      "children": "Children",
+      "youth": "Youth",
+      "youngAdults": "Young Adults",
+      "adults": "Adults",
+      "seniors": "Seniors",
+      "families": "Families",
+      "caregivers": "Care Partners/Caregivers",
+      "disabilities": "Individuals Living with Disabilities",
+      "indigenous": "Indigenous Peoples and Communities",
+      "newcomers": "Newcomers and Refugees",
+      "financialHardship": "Individuals Experiencing Financial Hardship",
+      "rural": "Rural or Remote Communities",
+      "generalPublic": "General Public",
+      "other": "Other"
+    },
+    "serviceLanguages": {
+      "french": "French",
+      "cree": "Cree",
+      "dene": "Dene",
+      "michif": "Michif",
+      "tagalog": "Tagalog",
+      "other": "Other"
+    },
+    "updateContacts": {
+      "submitter": "Person submitting this form",
+      "coordinator": "Volunteer Coordinator",
+      "communications": "Communications Representative",
+      "other": "Other"
+    },
+    "reviewFrequencies": {
+      "threeMonths": "Every 3 Months",
+      "sixMonths": "Every 6 Months",
+      "annually": "Annually",
+      "whenChanged": "Only When Changes Occur"
+    },
+    "engagement": {
+      "recruitment": "Volunteer Recruitment Events",
+      "collaboration": "Community Collaboration Opportunities",
+      "networking": "Non-Profit Networking",
+      "training": "Training and Education",
+      "funding": "Funding or Grant Opportunities",
+      "none": "None at This Time"
     }
   },
   "orgPage": {
@@ -525,7 +690,7 @@
     "details": "Details",
     "serviceAreas": "Service areas",
     "website": "Website",
-    "categories": "Categories",
+    "categories": "Areas of focus",
     "roles": {
       "heading": "Volunteer Roles",
       "interested": "I'm interested",
@@ -552,7 +717,22 @@
         "consent": "Please agree to share your details.",
         "unavailable": "We couldn't send your message right now. Please try again later."
       }
-    }
+    },
+    "mission": "Mission",
+    "vision": "Vision",
+    "values": "Core values",
+    "story": "Our story",
+    "unique": "What makes us unique",
+    "goals": "Goals and priorities",
+    "orgType": "Organization type",
+    "established": "Established",
+    "location": "Location",
+    "geoScope": "Area served",
+    "communities": "Communities served",
+    "additionalLocations": "Other locations",
+    "populations": "Who we serve",
+    "languages": "Services in other languages",
+    "social": "Social media"
   },
   "directory": {
     "eyebrow": "Directory",
@@ -781,11 +961,11 @@
     "typeLabel": "Registration type",
     "types": {
       "Charity": "Registered charity",
-      "Nonprofit": "Non-profit corporation"
+      "Nonprofit": "Non-profit corporation",
+      "none": "We don't have one"
     },
     "numberLabel": "Registration number",
     "hints": {
-      "choose": "Choose a type to see the number format.",
       "Charity": "Your charity number from the Canada Revenue Agency, like 123456789RR0001.",
       "Nonprofit": "Your corporation number from the Saskatchewan Corporate Registry or Corporations Canada (6 to 10 digits)."
     },
@@ -798,7 +978,8 @@
       "cra": "CRA charity list",
       "saskatchewan": "Saskatchewan registry",
       "federal": "Corporations Canada"
-    }
+    },
+    "optional": "Optional. If your organization has a charity or non-profit corporation number, adding it helps us review your organization faster."
   },
   "reset": {
     "forgotHeading": "Forgot Password",

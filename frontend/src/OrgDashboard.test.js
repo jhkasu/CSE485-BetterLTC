@@ -35,9 +35,9 @@ function renderDashboard() {
 
 test('opens on the profile and has no help request sections', async () => {
   renderDashboard();
-  expect(await screen.findByLabelText(/organization name/i)).toBeInTheDocument();
+  expect(await screen.findByLabelText(/legal name of organization/i)).toBeInTheDocument();
   expect(screen.queryByText('Help Requests')).not.toBeInTheDocument();
   expect(screen.queryByText('Accepted Requests')).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Account' }));
-  expect(screen.queryByLabelText(/organization name/i)).not.toBeInTheDocument();
+  expect(screen.queryByLabelText(/legal name of organization/i)).not.toBeInTheDocument();
 });

@@ -323,22 +323,20 @@
     },
     "pending": {
       "heading": "Compte en attente d'approbation",
-      "text": "Votre organisme est en cours d'examen. Un administrateur vérifie votre numéro d'enregistrement avant que votre organisme paraisse dans le répertoire.",
+      "text": "Votre organisme est en cours d'examen. Un administrateur vérifie votre organisme avant qu'il paraisse dans le répertoire.",
       "notify": "Nous vous écrirons une fois l'examen terminé.",
       "rejectedHeading": "Votre organisme doit être revu",
       "rejectedText": "Nous n'avons pas encore pu approuver votre organisme. Veuillez vérifier votre numéro d'enregistrement et le soumettre de nouveau.",
       "reason": "Raison :",
       "sent": "Soumis pour examen. Nous vous écrirons une fois la vérification terminée.",
       "change": "Modifier le numéro d'enregistrement",
-      "missing": "Ajoutez votre numéro d'enregistrement pour que nous puissions examiner votre organisme.",
-      "submit": "Soumettre pour examen"
+      "missing": "Vous pouvez ajouter un numéro d'organisme de bienfaisance ou de société sans but lucratif pour nous aider à examiner votre organisme plus rapidement.",
+      "submit": "Soumettre pour examen",
+      "add": "Ajouter un numéro d'enregistrement"
     },
     "profile": {
       "heading": "Profil de l'organisme",
       "lead": "Gérez les renseignements de votre organisme et la façon dont il apparaît dans le répertoire.",
-      "name": "Nom de l'organisme",
-      "description": "Description",
-      "descriptionPlaceholder": "Expliquez aux bénévoles ce que fait votre organisme.",
       "serviceAreas": "Régions desservies",
       "serviceAreasHint": "Les régions où votre organisme est présent. Les bénévoles peuvent filtrer le répertoire par région.",
       "notificationEmail": "Courriel pour les avis",
@@ -346,7 +344,6 @@
       "save": "Enregistrer",
       "saved": "Enregistré!",
       "saveFailed": "Impossible d'enregistrer votre profil. Veuillez réessayer.",
-      "nameRequired": "Veuillez entrer le nom de votre organisme.",
       "logo": "Logo ou photo",
       "logoPreview": "Logo actuel",
       "noLogo": "Aucun logo",
@@ -363,8 +360,6 @@
       "websiteInvalid": "Veuillez entrer une adresse Web complète, comme https://www.example.org.",
       "viewPublic": "Voir votre page publique",
       "publicPending": "Votre page publique sera visible une fois votre organisme approuvé par un administrateur.",
-      "categories": "Catégories",
-      "categoriesHint": "Les bénévoles s'en servent pour vous trouver dans le répertoire.",
       "intergenerational": "Nous offrons des rôles intergénérationnels",
       "intergenerationalHint": "Jumelages de mentorat, équipes de tous âges ou rôles adaptés aux aînés. Vous figurerez sur la page Entre générations."
     },
@@ -387,6 +382,90 @@
       "saveFailed": "Impossible d'enregistrer le rôle. Veuillez réessayer.",
       "limit": "Vous pouvez indiquer jusqu'à {{count}} rôles."
     }
+  },
+  "orgForm": {
+    "sections": {
+      "identification": "Identification de l'organisme",
+      "about": "À propos de votre organisme",
+      "aboutLead": "Votre histoire, votre raison d'être et votre impact dans la communauté.",
+      "focus": "Domaines d'intervention et populations desservies",
+      "admin": "Gestion et administration du profil",
+      "adminLead": "Cette section sert à l'administration du site Web et ne sera pas publiée.",
+      "consent": "Autorisation et consentement"
+    },
+    "legalName": "Nom légal de l'organisme",
+    "publicName": "Nom public ou d'usage (s'il est différent)",
+    "publicNameHint": "Ce nom paraît dans le répertoire. Laissez ce champ vide pour utiliser le nom légal.",
+    "orgType": "Type d'organisme",
+    "otherSpecify": "Veuillez préciser",
+    "yearEstablished": "Année de fondation",
+    "registration": "Renseignements d'enregistrement",
+    "registrationNone": "Non fourni",
+    "registrationHint": "Vérifié par un administrateur lors de votre inscription.",
+    "geoScope": "Territoire desservi",
+    "communitiesServed": "Communautés ou régions précises desservies",
+    "address": "Adresse principale de l'organisme",
+    "street": "Adresse municipale",
+    "city": "Ville/Village",
+    "province": "Province/Territoire",
+    "postalCode": "Code postal",
+    "additionalLocations": "Autres emplacements ou zones de service",
+    "social": "Comptes de médias sociaux de l'organisme",
+    "socialOther": "Autre",
+    "tagline": "Slogan de l'organisme",
+    "shortDescription": "Brève description de l'organisme",
+    "shortDescriptionHint": "De 50 à 100 mots. Expliquez qui vous êtes, ce que vous faites et qui vous servez. Ce texte paraît dans les résultats du répertoire.",
+    "wordCount_one": "{{count}} mot",
+    "wordCount_other": "{{count}} mots",
+    "fullDescription": "Description complète de l'organisme",
+    "fullDescriptionHint": "De 150 à 300 mots recommandés. Parlez de votre histoire, de votre raison d'être et de votre travail dans la communauté.",
+    "mission": "Quelle est la mission de votre organisme?",
+    "vision": "Quelle est la vision de votre organisme?",
+    "values": "Quelles sont les valeurs fondamentales de votre organisme?",
+    "story": "Qu'est-ce qui a inspiré la création de votre organisme?",
+    "storyHint": "Racontez brièvement l'histoire de la fondation de votre organisme.",
+    "unique": "Qu'est-ce qui rend votre organisme unique?",
+    "uniqueHint": "Décrivez votre approche, vos liens avec la communauté, vos services spécialisés ou d'autres qualités qui distinguent votre travail.",
+    "goals": "Quels sont les principaux objectifs ou priorités de votre organisme?",
+    "focusAreas": "Principaux domaines d'intervention",
+    "focusAreasHint": "Cochez tout ce qui s'applique. Les bénévoles s'en servent pour vous trouver dans le répertoire.",
+    "populations": "Qui votre organisme sert-il principalement?",
+    "populationsHint": "Cochez tout ce qui s'applique.",
+    "languages": "Langues autres que l'anglais dans lesquelles vous offrez des services",
+    "languageServices": "Quels services sont offerts dans ces langues?",
+    "submitter": "Nom de la personne qui remplit ce formulaire",
+    "position": "Poste ou lien avec l'organisme",
+    "adminEmail": "Adresse courriel administrative",
+    "adminEmailHint": "C'est le courriel que vous utilisez pour ouvrir une session.",
+    "adminPhone": "Numéro de téléphone administratif",
+    "updateContact": "Qui devrait-on joindre pour les futures mises à jour du profil?",
+    "updateContactDetails": "Nom et courriel",
+    "reviewFrequency": "À quelle fréquence aimeriez-vous revoir ou mettre à jour votre profil?",
+    "engagement": "Aimeriez-vous recevoir de l'information sur d'autres occasions d'engagement communautaire?",
+    "comments": "Commentaires ou renseignements supplémentaires",
+    "consentAuthorized": "Je confirme que je suis autorisé(e) à soumettre de l'information au nom de cet organisme.",
+    "consentAccurate": "Je confirme que l'information fournie est exacte au meilleur de ma connaissance.",
+    "consentPublication": "J'autorise l'administrateur du site Web à publier l'information approuvée du profil de l'organisme, les liens et les médias soumis dans le répertoire communautaire.",
+    "consentMedia": "Je confirme que les permissions et consentements nécessaires ont été obtenus pour toute photo, vidéo, tout témoignage ou tout renseignement personnel soumis pour publication.",
+    "consentUpdates": "Je comprends que notre organisme doit informer l'administrateur du site Web lorsque l'information change ou n'est plus à jour.",
+    "representative": "Nom du représentant autorisé",
+    "lastConfirmed": "Dernière confirmation le {{date}}.",
+    "errors": {
+      "legalNameRequired": "Veuillez entrer le nom légal de votre organisme.",
+      "orgTypeRequired": "Veuillez choisir un type d'organisme.",
+      "otherRequired": "Veuillez remplir la case « Veuillez préciser » pour chaque choix « Autre » coché.",
+      "yearInvalid": "Veuillez entrer une année valide.",
+      "geoRequired": "Veuillez choisir le territoire que vous desservez.",
+      "addressRequired": "Veuillez entrer l'adresse principale complète.",
+      "socialInvalid": "Les liens de médias sociaux doivent être des adresses complètes, comme https://www.facebook.com/votrepage.",
+      "shortDescriptionWords": "La brève description doit compter de 50 à 100 mots.",
+      "focusRequired": "Veuillez choisir au moins un domaine d'intervention.",
+      "populationRequired": "Veuillez indiquer qui votre organisme sert.",
+      "submitterRequired": "Veuillez entrer le nom de la personne qui remplit ce formulaire.",
+      "consentRequired": "Veuillez cocher toutes les cases d'autorisation et de consentement.",
+      "representativeRequired": "Veuillez entrer le nom du représentant autorisé."
+    },
+    "hideStreetAddress": "Masquer notre adresse municipale et notre code postal sur la page publique (afficher seulement la ville et la province)"
   },
   "adminDashboard": {
     "panel": "Panneau d'administration",
@@ -426,7 +505,13 @@
       "reason": "Raison",
       "reasonPlaceholder": "p. ex. Le numéro d'enregistrement ne correspond pas à cet organisme.",
       "reasonHint": "L'organisme voit cette raison et la reçoit par courriel.",
-      "reasonRequired": "Veuillez indiquer une raison."
+      "reasonRequired": "Veuillez indiquer une raison.",
+      "details": "Détails",
+      "profileTitle": "Profil de {{name}}",
+      "profileIncomplete": "Cet organisme n'a pas encore rempli le formulaire de profil.",
+      "consentedOn": "Confirmé le",
+      "yes": "Oui",
+      "no": "Non"
     },
     "team": {
       "addMember": "Ajouter un membre",
@@ -502,14 +587,94 @@
       "sun": "Dim"
     },
     "orgCategories": {
-      "health": "Santé",
-      "seniors": "Services aux aînés",
-      "youth": "Jeunesse",
-      "education": "Éducation",
-      "environment": "Environnement",
-      "arts": "Arts et culture",
-      "community": "Services communautaires",
+      "seniors": "Aînés et vieillissement en santé",
+      "health": "Soins de santé et mieux-être",
+      "mentalHealth": "Santé mentale et bien-être",
+      "disability": "Services aux personnes handicapées et accessibilité",
+      "childrenYouth": "Enfants et jeunes",
+      "education": "Éducation et alphabétisation",
+      "employment": "Emploi et développement de carrière",
+      "indigenous": "Communautés autochtones et réconciliation",
+      "newcomers": "Soutien aux nouveaux arrivants et aux immigrants",
+      "poverty": "Réduction de la pauvreté",
+      "food": "Sécurité alimentaire",
+      "housing": "Logement et itinérance",
+      "isolation": "Isolement social et liens communautaires",
+      "familyCaregivers": "Soutien aux familles et aux proches aidants",
+      "arts": "Arts, culture et patrimoine",
+      "sports": "Sports et loisirs",
+      "environment": "Environnement et développement durable",
+      "animals": "Bien-être animal",
+      "emergency": "Intervention d'urgence et secours aux sinistrés",
+      "humanRights": "Droits de la personne et justice sociale",
+      "safety": "Sécurité communautaire",
+      "research": "Recherche et innovation",
       "other": "Autre"
+    },
+    "orgTypes": {
+      "charity": "Organisme de bienfaisance enregistré",
+      "nonprofit": "Organisme sans but lucratif constitué en société",
+      "community": "Organisme communautaire",
+      "indigenous": "Organisme dirigé par des Autochtones",
+      "grassroots": "Initiative de base ou dirigée par des bénévoles",
+      "faith": "Organisme confessionnel",
+      "education": "Établissement d'enseignement",
+      "socialEnterprise": "Entreprise sociale",
+      "public": "Institution ou organisme public",
+      "business": "Entreprise ayant un programme de bénévolat communautaire",
+      "other": "Autre"
+    },
+    "geoScopes": {
+      "local": "Communauté locale",
+      "regional": "Municipal ou régional",
+      "provincial": "Toute la Saskatchewan",
+      "western": "Ouest canadien",
+      "national": "National",
+      "international": "International"
+    },
+    "populations": {
+      "children": "Enfants",
+      "youth": "Jeunes",
+      "youngAdults": "Jeunes adultes",
+      "adults": "Adultes",
+      "seniors": "Aînés",
+      "families": "Familles",
+      "caregivers": "Partenaires de soins et proches aidants",
+      "disabilities": "Personnes vivant avec un handicap",
+      "indigenous": "Peuples et communautés autochtones",
+      "newcomers": "Nouveaux arrivants et réfugiés",
+      "financialHardship": "Personnes en situation de précarité financière",
+      "rural": "Communautés rurales ou éloignées",
+      "generalPublic": "Grand public",
+      "other": "Autre"
+    },
+    "serviceLanguages": {
+      "french": "Français",
+      "cree": "Cri",
+      "dene": "Déné",
+      "michif": "Michif",
+      "tagalog": "Tagalog",
+      "other": "Autre"
+    },
+    "updateContacts": {
+      "submitter": "Personne qui remplit ce formulaire",
+      "coordinator": "Coordonnateur des bénévoles",
+      "communications": "Responsable des communications",
+      "other": "Autre"
+    },
+    "reviewFrequencies": {
+      "threeMonths": "Tous les 3 mois",
+      "sixMonths": "Tous les 6 mois",
+      "annually": "Une fois par année",
+      "whenChanged": "Seulement lors de changements"
+    },
+    "engagement": {
+      "recruitment": "Événements de recrutement de bénévoles",
+      "collaboration": "Occasions de collaboration communautaire",
+      "networking": "Réseautage entre organismes sans but lucratif",
+      "training": "Formation et éducation",
+      "funding": "Occasions de financement ou de subventions",
+      "none": "Aucune pour le moment"
     }
   },
   "orgPage": {
@@ -525,7 +690,7 @@
     "details": "Détails",
     "serviceAreas": "Régions desservies",
     "website": "Site Web",
-    "categories": "Catégories",
+    "categories": "Domaines d'intervention",
     "roles": {
       "heading": "Rôles bénévoles",
       "interested": "Ça m'intéresse",
@@ -552,7 +717,22 @@
         "consent": "Veuillez accepter de communiquer vos renseignements.",
         "unavailable": "Impossible d'envoyer votre message pour le moment. Veuillez réessayer plus tard."
       }
-    }
+    },
+    "mission": "Mission",
+    "vision": "Vision",
+    "values": "Valeurs fondamentales",
+    "story": "Notre histoire",
+    "unique": "Ce qui nous distingue",
+    "goals": "Objectifs et priorités",
+    "orgType": "Type d'organisme",
+    "established": "Fondé en",
+    "location": "Emplacement",
+    "geoScope": "Territoire desservi",
+    "communities": "Communautés desservies",
+    "additionalLocations": "Autres emplacements",
+    "populations": "Qui nous servons",
+    "languages": "Services dans d'autres langues",
+    "social": "Médias sociaux"
   },
   "directory": {
     "eyebrow": "Répertoire",
@@ -781,11 +961,11 @@
     "typeLabel": "Type d'enregistrement",
     "types": {
       "Charity": "Organisme de bienfaisance enregistré",
-      "Nonprofit": "Société sans but lucratif"
+      "Nonprofit": "Société sans but lucratif",
+      "none": "Nous n'en avons pas"
     },
     "numberLabel": "Numéro d'enregistrement",
     "hints": {
-      "choose": "Choisissez un type pour voir le format du numéro.",
       "Charity": "Votre numéro d'organisme de bienfaisance de l'Agence du revenu du Canada, comme 123456789RR0001.",
       "Nonprofit": "Votre numéro de société du registre des sociétés de la Saskatchewan ou de Corporations Canada (6 à 10 chiffres)."
     },
@@ -798,7 +978,8 @@
       "cra": "Liste des organismes de l'ARC",
       "saskatchewan": "Registre de la Saskatchewan",
       "federal": "Corporations Canada"
-    }
+    },
+    "optional": "Facultatif. Si votre organisme a un numéro d'organisme de bienfaisance ou de société sans but lucratif, l'ajouter nous aide à examiner votre organisme plus rapidement."
   },
   "reset": {
     "forgotHeading": "Mot de passe oublié",

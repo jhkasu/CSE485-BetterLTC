@@ -14,7 +14,7 @@ function OrgPending({ org, onUpdated, onLogout }) {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
   const [sent, setSent] = useState(false);
-  const showForm = !!org && (editing || rejected || missing);
+  const showForm = !!org && (editing || rejected);
   const typeOption = REGISTRY_TYPES.find(option => option.value === org?.registryType);
   const values = form || { registryType: org?.registryType || '', registryNumber: org?.registryNumber || '' };
 
@@ -72,17 +72,20 @@ function OrgPending({ org, onUpdated, onLogout }) {
 
           {org && !showForm && (
             <div className="org-pending-registry">
-              <p>
-                <strong>{t('registry.numberLabel')}:</strong> {org.registryNumber}
-                {typeOption && <> ({t(typeOption.labelKey)})</>}
-              </p>
-              <button type="button" className="org-pending-link" onClick={startEdit}>{t('orgDashboard.pending.change')}</button>
+              {missing ? (
+                <p>{t('orgDashboard.pending.missing')}</p>
+              ) : (
+                <p>
+                  <strong>{t('registry.numberLabel')}:</strong> {org.registryNumber}
+                  {typeOption && <> ({t(typeOption.labelKey)})</>}
+                </p>
+              )}
+              <button type="button" className="org-pending-link" onClick={startEdit}>{t(missing ? 'orgDashboard.pending.add' : 'orgDashboard.pending.change')}</button>
             </div>
           )}
 
           {showForm && (
             <form className="org-pending-form" onSubmit={submit} noValidate>
-              {missing && !rejected && <p>{t('orgDashboard.pending.missing')}</p>}
               <RegistryFields
                 idPrefix="pending-registry"
                 type={values.registryType}
