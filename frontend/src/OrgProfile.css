@@ -86,13 +86,9 @@
 }
 
 .org-form-consents .org-profile-check input {
-  flex: none;
   margin-top: 3px;
 }
 
-.org-profile-check input[type="radio"] {
-  flex: none;
-}
 
 .org-profile-label,
 .org-profile-group legend {
@@ -163,6 +159,7 @@ textarea.org-profile-input {
 }
 
 .org-profile-check input {
+  flex: none;
   width: 20px;
   height: 20px;
   margin: 0;
