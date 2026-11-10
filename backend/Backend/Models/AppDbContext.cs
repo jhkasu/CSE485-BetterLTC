@@ -21,6 +21,7 @@ public class AppDbContext : DbContext {
     public DbSet<ResourceDownloadDaily> ResourceDownloadDailies { get; set; }
     public DbSet<VolunteerRole> VolunteerRoles { get; set; }
     public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+    public DbSet<EmailVerificationToken> EmailVerificationTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Admin>()
@@ -70,6 +71,13 @@ public class AppDbContext : DbContext {
             .IsUnique();
 
         modelBuilder.Entity<PasswordResetToken>()
+            .HasIndex(t => new { t.Role, t.AccountId });
+
+        modelBuilder.Entity<EmailVerificationToken>()
+            .HasIndex(t => t.TokenHash)
+            .IsUnique();
+
+        modelBuilder.Entity<EmailVerificationToken>()
             .HasIndex(t => new { t.Role, t.AccountId });
     }
 }
