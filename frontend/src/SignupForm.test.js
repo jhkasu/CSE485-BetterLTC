@@ -47,7 +47,7 @@ test('a volunteer email that is already registered shows the message', async () 
   fillForm('amy@example.test');
   fireEvent.click(screen.getByRole('button', { name: /^sign up$/i }));
   expect(await screen.findByText('This email is already registered.')).toBeInTheDocument();
-  expect(global.fetch.mock.calls[0][0]).toMatch(/\/api\/volunteers$/);
+  expect(global.fetch.mock.calls[0][0]).toMatch(/\/api\/volunteers\?language=en$/);
 });
 
 test('an organization email that is already registered shows the message', async () => {

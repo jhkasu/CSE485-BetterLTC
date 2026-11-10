@@ -17,4 +17,5 @@ public class Volunteer : IAccount {
     public List<string> AvailableTimes { get; set; } = [];
     public List<string> Interests { get; set; } = [];
     public List<string> Languages { get; set; } = [];
+    public bool EmailVerified { get; set; }
 }

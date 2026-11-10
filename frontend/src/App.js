@@ -11,6 +11,7 @@ import SignupForm from './SignupForm';
 import SigninForm from './SigninForm';
 import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
+import VerifyEmailPage from './VerifyEmailPage';
 import Dashboard from './Dashboard';
 import Footer from './Footer';
 import MissionPage from './MissionPage';
@@ -103,6 +104,7 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/about/mission" element={<MissionPage />} />
         <Route path="/about/team" element={<OurTeamPage />} />

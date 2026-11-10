@@ -243,9 +243,12 @@
       "orgNameRequired": "Le nom de l'organisme est obligatoire.",
       "invalidCredentials": "Courriel ou mot de passe invalide.",
       "signUpFailed": "L'inscription a échoué. Veuillez réessayer.",
-      "emailRegistered": "Ce courriel est déjà enregistré."
+      "emailRegistered": "Ce courriel est déjà enregistré.",
+      "emailNotVerified": "Veuillez confirmer votre courriel avant d'ouvrir une session. Vérifiez votre boîte de réception pour trouver le lien que nous avons envoyé."
     },
-    "accountCreated": "Compte créé avec succès. Veuillez ouvrir une session.",
+    "checkEmail": "Votre compte a été créé. Nous avons envoyé un lien à {{email}}. Confirmez votre courriel, puis ouvrez une session.",
+    "resendVerification": "Envoyer le lien de nouveau",
+    "verificationSent": "Nous avons envoyé un nouveau lien à {{email}}. Il peut prendre quelques minutes à arriver.",
     "sessionExpired": "Votre session a expiré. Veuillez ouvrir une session de nouveau."
   },
   "dashboard": {
@@ -811,5 +814,12 @@
     "invalid": "Ce lien n'est pas valide ou a expiré. Les liens de réinitialisation fonctionnent une seule fois et expirent après une heure.",
     "requestNew": "Demander un nouveau lien",
     "done": "Votre mot de passe a été modifié. Veuillez vous connecter avec votre nouveau mot de passe."
+  },
+  "verify": {
+    "heading": "Confirmer votre courriel",
+    "checking": "Confirmation de votre courriel...",
+    "done": "Votre courriel est confirmé. Vous pouvez maintenant ouvrir une session.",
+    "invalid": "Ce lien est invalide ou a expiré.",
+    "invalidNote": "Les liens fonctionnent une seule fois et expirent après 24 heures. Ouvrez une session avec votre courriel et votre mot de passe pour recevoir un nouveau lien."
   }
 }

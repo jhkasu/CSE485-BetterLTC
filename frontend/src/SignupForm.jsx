@@ -15,7 +15,7 @@ const toSubmitError = (status, message) => {
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -75,13 +75,14 @@ const SignupForm = () => {
         password: formData.password,
       };
       try {
-        const res = await apiFetch(`/api/volunteers`, {
+        const language = encodeURIComponent(i18n.resolvedLanguage || i18n.language || 'en');
+        const res = await apiFetch(`/api/volunteers?language=${language}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
         if (res.ok) {
-          navigate('/signin', { state: { success: 'auth.accountCreated' } });
+          navigate('/signin', { state: { success: 'auth.checkEmail', email: payload.email } });
         } else {
           const message = await res.text();
           setErrors({ submit: toSubmitError(res.status, message) });
@@ -97,6 +98,7 @@ const SignupForm = () => {
         password: formData.password,
         registryType: formData.registryType,
         registryNumber: normalizeRegistryNumber(formData.registryNumber),
+        language: i18n.resolvedLanguage || i18n.language || 'en',
       };
       try {
         const res = await apiFetch(`/api/organizations`, {
@@ -105,7 +107,7 @@ const SignupForm = () => {
           body: JSON.stringify(payload),
         });
         if (res.ok) {
-          navigate('/signin', { state: { success: 'auth.accountCreated' } });
+          navigate('/signin', { state: { success: 'auth.checkEmail', email: payload.email } });
         } else {
           const message = await res.text();
           setErrors({ submit: toSubmitError(res.status, message) });

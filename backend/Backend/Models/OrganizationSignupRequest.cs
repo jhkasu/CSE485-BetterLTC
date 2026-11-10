@@ -9,6 +9,7 @@ public class OrganizationSignupRequest {
     [Required, MinLength(8), MaxLength(200)] public string Password { get; set; } = "";
     [MaxLength(20)] public string RegistryType { get; set; } = "";
     [MaxLength(40)] public string RegistryNumber { get; set; } = "";
+    [MaxLength(10)] public string Language { get; set; } = "en";
 }
 
 public class OrganizationRegistryRequest {

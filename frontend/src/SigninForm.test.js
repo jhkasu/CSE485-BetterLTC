@@ -69,3 +69,18 @@ test('explains why the user was sent back to sign in', () => {
   renderAt('/signin?expired=1');
   expect(screen.getByText(/your session has expired/i)).toBeInTheDocument();
 });
+
+test('asks an unverified account to confirm its email and can send the link again', async () => {
+  global.fetch
+    .mockResolvedValueOnce({ ok: false, status: 403 })
+    .mockResolvedValueOnce({ ok: true, status: 204 });
+  renderAt();
+  fillAndSubmit('new@example.test', 'password123');
+  expect(await screen.findByText(/confirm your email before signing in/i)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /send the link again/i }));
+  expect(await screen.findByText(/we sent a new link to new@example.test/i)).toBeInTheDocument();
+  const [url, options] = global.fetch.mock.calls[1];
+  expect(url).toMatch(/\/api\/auth\/resend-verification$/);
+  expect(JSON.parse(options.body).email).toBe('new@example.test');
+  expect(getSessionRole()).toBeNull();
+});

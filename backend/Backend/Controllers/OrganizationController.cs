@@ -21,10 +21,12 @@ public class OrganizationController : ControllerBase {
 
     private readonly AppDbContext _context;
     private readonly IEmailSender _email;
+    private readonly SiteOrigins _site;
 
-    public OrganizationController(AppDbContext context, IEmailSender email) {
+    public OrganizationController(AppDbContext context, IEmailSender email, SiteOrigins site) {
         this._context = context;
         _email = email;
+        _site = site;
     }
 
     [HttpGet]
@@ -58,6 +60,7 @@ public class OrganizationController : ControllerBase {
             };
             _context.Organizations.Add(org);
             await _context.SaveChangesAsync();
+            await EmailVerifications.SendAfterSignup(_context, _email, _site.For(Request), new UnverifiedAccount(Roles.Organization, org.Id, org.Email), request.Language);
             return Ok(OrganizationResponse.From(org));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);

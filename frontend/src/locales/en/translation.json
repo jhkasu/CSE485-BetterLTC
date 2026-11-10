@@ -243,9 +243,12 @@
       "orgNameRequired": "Organization name is required.",
       "invalidCredentials": "Invalid email or password.",
       "signUpFailed": "Sign up failed. Please try again.",
-      "emailRegistered": "This email is already registered."
+      "emailRegistered": "This email is already registered.",
+      "emailNotVerified": "Please confirm your email before signing in. Check your inbox for the link we sent."
     },
-    "accountCreated": "Account created successfully. Please sign in.",
+    "checkEmail": "Your account was created. We sent a link to {{email}}. Confirm your email, then sign in.",
+    "resendVerification": "Send the link again",
+    "verificationSent": "We sent a new link to {{email}}. It may take a few minutes to arrive.",
     "sessionExpired": "Your session has expired. Please sign in again."
   },
   "dashboard": {
@@ -811,5 +814,12 @@
     "invalid": "This link is invalid or has expired. Reset links work once and expire after one hour.",
     "requestNew": "Request a new link",
     "done": "Your password has been changed. Please sign in with your new password."
+  },
+  "verify": {
+    "heading": "Confirm Your Email",
+    "checking": "Confirming your email...",
+    "done": "Your email is confirmed. You can now sign in.",
+    "invalid": "This link is invalid or has expired.",
+    "invalidNote": "Links work once and expire after 24 hours. Sign in with your email and password to get a new link."
   }
 }

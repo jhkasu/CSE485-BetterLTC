@@ -14,12 +14,15 @@ const HOME_BY_ROLE = {
 const SigninForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const successMessage = location.state?.success || null;
+  const successEmail = location.state?.email || '';
   const sessionExpired = new URLSearchParams(location.search).get('expired') === '1';
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [unverified, setUnverified] = useState(false);
+  const [resent, setResent] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +41,8 @@ const SigninForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    setUnverified(false);
+    setResent(false);
 
     let res;
     try {
@@ -58,6 +63,12 @@ const SigninForm = () => {
       return;
     }
 
+    if (res.status === 403) {
+      setUnverified(true);
+      setErrors({ auth: 'auth.errors.emailNotVerified' });
+      return;
+    }
+
     if (res.status !== 401) {
       setErrors({ auth: 'common.genericError' });
       return;
@@ -66,11 +77,25 @@ const SigninForm = () => {
     setErrors({ auth: 'auth.errors.invalidCredentials' });
   };
 
+  const resendVerification = async () => {
+    try {
+      const res = await apiFetch('/api/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email.trim(), language: i18n.resolvedLanguage || i18n.language || 'en' }),
+      });
+      if (!res.ok) throw new Error('failed');
+      setResent(true);
+    } catch {
+      setErrors({ auth: 'common.genericError' });
+    }
+  };
+
   return (
     <div className="signup-container">
       <div className="signup-box">
         <h2>{t('auth.signInHeading')}</h2>
-          {successMessage && <p className="success-message">{t(successMessage)}</p>}
+          {successMessage && <p className="success-message">{t(successMessage, { email: successEmail })}</p>}
           {sessionExpired && !successMessage && <p className="error" role="status">{t('auth.sessionExpired')}</p>}
         <form onSubmit={handleSubmit} noValidate>
 
@@ -101,6 +126,11 @@ const SigninForm = () => {
           </div>
           {errors.password && <p className="error">{t(errors.password)}</p>}
           {errors.auth && <p className="error">{t(errors.auth)}</p>}
+          {unverified && (
+            resent
+              ? <p className="success-message" role="status">{t('auth.verificationSent', { email: formData.email.trim() })}</p>
+              : <button type="button" className="resend-verification" onClick={resendVerification}>{t('auth.resendVerification')}</button>
+          )}
 
           <p className="forgot-password">
             <Link to="/forgot-password">{t('auth.forgotPassword')}</Link>

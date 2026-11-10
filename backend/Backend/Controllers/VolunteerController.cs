@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend.Email;
 using Backend.Models;
 using Backend.Security;
 
@@ -10,9 +11,13 @@ namespace Backend.Controllers;
 [ApiController]
 public class VolunteerController : ControllerBase {
     private readonly AppDbContext _context;
+    private readonly IEmailSender _email;
+    private readonly SiteOrigins _site;
 
-    public VolunteerController(AppDbContext context) {
+    public VolunteerController(AppDbContext context, IEmailSender email, SiteOrigins site) {
         this._context = context;
+        _email = email;
+        _site = site;
     }
 
     [HttpGet]
@@ -27,13 +32,15 @@ public class VolunteerController : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddVolunteer(Volunteer volunteer) {
+    public async Task<IActionResult> AddVolunteer(Volunteer volunteer, [FromQuery] string language = "en") {
         try {
             volunteer.Email = AccountEmails.Normalize(volunteer.Email);
             if (await AccountEmails.IsTaken(_context, volunteer.Email)) return Conflict(AccountEmails.AlreadyRegistered);
             volunteer.Password = PasswordHashing.Hash(volunteer.Password);
+            volunteer.EmailVerified = false;
             _context.Volunteers.Add(volunteer);
             await _context.SaveChangesAsync();
+            await EmailVerifications.SendAfterSignup(_context, _email, _site.For(Request), new UnverifiedAccount(Roles.Volunteer, volunteer.Id, volunteer.Email), language);
             return Ok(VolunteerResponse.From(volunteer));
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);

@@ -37,6 +37,7 @@ public class AuthController : ControllerBase {
 
             var volunteer = await _context.Volunteers.FirstOrDefaultAsync(v => v.Email.Trim().ToLower() == email);
             if (volunteer is not null && PasswordHashing.Verify(request.Password, volunteer.Password)) {
+                if (!volunteer.EmailVerified) return StatusCode(403, EmailVerifications.NotVerified);
                 var profile = VolunteerResponse.From(volunteer);
                 return Ok(new {
                     token = _tokens.Create(volunteer.Id, Roles.Volunteer, volunteer.Email, $"{volunteer.FirstName} {volunteer.LastName}"),
@@ -46,6 +47,7 @@ public class AuthController : ControllerBase {
 
             var org = await _context.Organizations.FirstOrDefaultAsync(o => o.Email.Trim().ToLower() == email);
             if (org is not null && PasswordHashing.Verify(request.Password, org.Password)) {
+                if (!org.EmailVerified) return StatusCode(403, EmailVerifications.NotVerified);
                 var profile = OrganizationResponse.From(org);
                 return Ok(new {
                     token = _tokens.Create(org.Id, Roles.Organization, org.Email, org.OrgName),
@@ -119,6 +121,41 @@ public class AuthController : ControllerBase {
             account.Password = PasswordHashing.Hash(request.NewPassword);
             reset.UsedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPost("verify-email")]
+    public async Task<IActionResult> VerifyEmail(VerifyEmailRequest request) {
+        try {
+            const string invalid = "This link is invalid or has expired.";
+            string hash = PasswordResets.Hash(request.Token.Trim());
+            var verification = await _context.EmailVerificationTokens.FirstOrDefaultAsync(t => t.TokenHash == hash);
+            if (verification is null || verification.UsedAt is not null || verification.ExpiresAt <= DateTime.UtcNow) return BadRequest(invalid);
+            if (!await EmailVerifications.MarkVerified(_context, verification.Role, verification.AccountId)) return BadRequest(invalid);
+            verification.UsedAt = DateTime.UtcNow;
+            var leftover = await _context.EmailVerificationTokens
+                .Where(t => t.Role == verification.Role && t.AccountId == verification.AccountId && t.UsedAt == null)
+                .ToListAsync();
+            _context.EmailVerificationTokens.RemoveRange(leftover);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        } catch (Exception ex) {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+    [HttpPost("resend-verification")]
+    public async Task<IActionResult> ResendVerification(ResendVerificationRequest request) {
+        try {
+            string normalized = AccountEmails.Normalize(request.Email);
+            if (normalized.Length == 0) return NoContent();
+            var account = await EmailVerifications.FindUnverified(_context, normalized);
+            if (account is null) return NoContent();
+            if (await EmailVerifications.RecentlySent(_context, account.Role, account.Id)) return NoContent();
+            await EmailVerifications.Send(_context, _email, _site.For(Request), account, request.Language);
             return NoContent();
         } catch (Exception ex) {
             return StatusCode(500, ex.Message);
