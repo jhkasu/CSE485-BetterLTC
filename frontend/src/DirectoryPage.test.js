@@ -5,8 +5,8 @@ import DirectoryPage, { directoryQuery } from './DirectoryPage';
 import { AccessibilityProvider } from './accessibility/AccessibilityContext';
 
 const orgs = [
-  { id: 4, orgName: 'Prairie Care', description: 'We help seniors stay connected.', serviceAreas: ['Regina', 'Saskatoon'], categories: ['Seniors Services', 'Health'], website: '', logoVersion: 12 },
-  { id: 7, orgName: 'Green Youth', description: '', serviceAreas: ['Regina'], categories: ['Youth'], offersIntergenerational: true, website: '', logoVersion: null },
+  { id: 4, orgName: 'Prairie Care', description: 'We help seniors stay connected.', serviceAreas: ['Regina', 'Saskatoon'], categories: ['Seniors and Healthy Aging', 'Health Care and Wellness'], website: '', logoVersion: 12 },
+  { id: 7, orgName: 'Green Youth', description: '', serviceAreas: ['Regina'], categories: ['Children and Youth'], offersIntergenerational: true, website: '', logoVersion: null },
 ];
 
 function respond(body) {
@@ -44,7 +44,7 @@ test('lists organizations as cards that link to their profile', async () => {
   expect(link).toHaveAttribute('href', '/organizations/4');
   expect(screen.getByText('2 organizations')).toBeInTheDocument();
   const card = screen.getAllByRole('listitem').find(li => within(li).queryByRole('link', { name: 'Prairie Care' }));
-  expect(within(card).getByText("Seniors' Services")).toBeInTheDocument();
+  expect(within(card).getByText('Seniors and Healthy Aging')).toBeInTheDocument();
   expect(within(card).getByText('Regina, Saskatoon')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'View Green Youth profile' })).toHaveAttribute('href', '/organizations/7');
 });
@@ -54,10 +54,10 @@ test('filters by category through the API', async () => {
   await screen.findByRole('link', { name: 'Prairie Care' });
   global.fetch.mockImplementation(() => respond([orgs[1]]));
   fireEvent.click(screen.getByRole('button', { name: /Category/ }));
-  fireEvent.click(screen.getByRole('checkbox', { name: 'Youth' }));
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Children and Youth' }));
   expect(await screen.findByText('1 organization')).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'Prairie Care' })).not.toBeInTheDocument();
-  expect(global.fetch.mock.calls.at(-1)[0]).toMatch(/\/api\/organizations\/directory\?category=Youth$/);
+  expect(global.fetch.mock.calls.at(-1)[0]).toMatch(/\/api\/organizations\/directory\?category=Children\+and\+Youth$/);
 });
 
 test('says when nothing matches', async () => {

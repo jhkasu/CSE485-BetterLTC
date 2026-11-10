@@ -120,3 +120,27 @@ test('fills in a signed-in volunteer and explains when sending fails', async () 
   fireEvent.click(screen.getByRole('button', { name: 'Send' }));
   expect(await screen.findByRole('alert')).toHaveTextContent("We couldn't send your message right now.");
 });
+
+test('shows the questionnaire answers an organization chose to share', async () => {
+  renderPage(respond({
+    ...org,
+    tagline: 'No senior alone',
+    mission: 'Help seniors stay home.',
+    orgType: 'Other', orgTypeOther: 'Seniors network',
+    yearEstablished: 1998, city: 'Regina', province: 'Saskatchewan',
+    categories: ['Food Security', 'Other'], categoryOther: 'Rides',
+    populationsServed: ['Seniors'], serviceLanguages: ['Cree'], languageServices: 'Home visits',
+    facebook: 'https://facebook.com/prairiecare',
+  }));
+  expect(await screen.findByText('No senior alone')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Mission' })).toBeInTheDocument();
+  expect(screen.getByText('Help seniors stay home.')).toBeInTheDocument();
+  expect(screen.getByText('Seniors network')).toBeInTheDocument();
+  expect(screen.getByText('1998')).toBeInTheDocument();
+  expect(screen.getByText('Regina, Saskatchewan')).toBeInTheDocument();
+  expect(screen.getByText('Food Security')).toBeInTheDocument();
+  expect(screen.getByText('Rides')).toBeInTheDocument();
+  expect(screen.getByText('Cree')).toBeInTheDocument();
+  expect(screen.getByText('Home visits')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Facebook/ })).toHaveAttribute('href', 'https://facebook.com/prairiecare');
+});
