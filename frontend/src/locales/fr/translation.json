@@ -503,7 +503,13 @@
       "reason": "Raison",
       "reasonPlaceholder": "p. ex. Le numéro d'enregistrement ne correspond pas à cet organisme.",
       "reasonHint": "L'organisme voit cette raison et la reçoit par courriel.",
-      "reasonRequired": "Veuillez indiquer une raison."
+      "reasonRequired": "Veuillez indiquer une raison.",
+      "details": "Détails",
+      "profileTitle": "Profil de {{name}}",
+      "profileIncomplete": "Cet organisme n'a pas encore rempli le formulaire de profil.",
+      "consentedOn": "Confirmé le",
+      "yes": "Oui",
+      "no": "Non"
     },
     "team": {
       "addMember": "Ajouter un membre",

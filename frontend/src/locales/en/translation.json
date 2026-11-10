@@ -503,7 +503,13 @@
       "reason": "Reason",
       "reasonPlaceholder": "e.g. The registration number does not match this organization.",
       "reasonHint": "The organization sees this reason and receives it by email.",
-      "reasonRequired": "Please enter a reason."
+      "reasonRequired": "Please enter a reason.",
+      "details": "Details",
+      "profileTitle": "{{name}} profile",
+      "profileIncomplete": "This organization has not completed the profile form yet.",
+      "consentedOn": "Confirmed on",
+      "yes": "Yes",
+      "no": "No"
     },
     "team": {
       "addMember": "Add Member",
