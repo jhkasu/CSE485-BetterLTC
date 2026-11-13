@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { fireEvent, render, screen, within } from '@testing-library/react';
-import DirectoryPage, { directoryQuery } from './DirectoryPage';
+import { fireEvent, render, screen, within, waitFor } from '@testing-library/react';
+import DirectoryPage, { directoryQuery, filtersFromSearch } from './DirectoryPage';
 import { AccessibilityProvider } from './accessibility/AccessibilityContext';
 
 const orgs = [
@@ -76,4 +76,27 @@ test('filters to organizations with intergenerational roles and shows the badge'
   expect(toggle).toHaveAttribute('aria-pressed', 'true');
   expect(await screen.findByText('1 organization')).toBeInTheDocument();
   expect(global.fetch.mock.calls.at(-1)[0]).toMatch(/intergenerational=true$/);
+});
+
+
+test('recognizes the query filters from Find Your Fit', () => {
+  expect(filtersFromSearch('?category=Seniors+Services&area=Regina&intergenerational=true')).toEqual({
+    categories: ['Seniors Services'], areas: ['Regina'], intergenerational: true,
+  });
+  expect(filtersFromSearch('?category=Unknown&area=Invalid')).toEqual({
+    categories: [], areas: [], intergenerational: false,
+  });
+});
+
+test('uses Find Your Fit filters when opening the real directory', async () => {
+  render(
+    <AccessibilityProvider>
+      <MemoryRouter initialEntries={['/organizations?category=Seniors+Services&area=Regina']}>
+        <DirectoryPage />
+      </MemoryRouter>
+    </AccessibilityProvider>,
+  );
+  await waitFor(() => {
+    expect(global.fetch.mock.calls.some(call => String(call[0]).includes('category=Seniors+Services&area=Regina'))).toBe(true);
+  });
 });

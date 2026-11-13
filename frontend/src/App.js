@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import Pillars from './Pillars';
@@ -23,6 +24,7 @@ import OurWorkPage from './OurWorkPage';
 import OrgDashboard from './OrgDashboard';
 import OrganizationPage from './OrganizationPage';
 import DirectoryPage from './DirectoryPage';
+import FindYourFit from './FindYourFit';
 import ResourcesPage from './ResourcesPage';
 import FaqPage from './FaqPage';
 import IntergenerationalPage from './IntergenerationalPage';
@@ -53,12 +55,25 @@ function OrgRoute({ children }) {
 }
 
 function Home() {
+  const { t } = useTranslation();
+  const fitTeaser = {
+    title: t('home.fitTeaser.title'),
+    description: t('home.fitTeaser.description'),
+    button: t('home.fitTeaser.button'),
+  };
   usePageTitle('');
   return (
     <div>
       <Navbar />
       <Hero />
       <HowItWorks />
+      <section className="fit-teaser" aria-labelledby="fit-teaser-title">
+        <div className="container">
+          <h2 id="fit-teaser-title">{fitTeaser.title}</h2>
+          <p>{fitTeaser.description}</p>
+          <Link className="btn btn-primary" to="/find-your-fit">{fitTeaser.button}</Link>
+        </div>
+      </section>
       <Pillars />
       <IntergenerationalTeaser />
       <TestimonialsSection />
@@ -99,6 +114,8 @@ function App() {
       <PageViewTracker />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/find-your-fit" element={<FindYourFit />} />
+        <Route path="/fit" element={<Navigate to="/find-your-fit" replace />} />
         <Route path="/volunteer/*" element={<Navigate to="/organizations" replace />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/signin" element={<SigninPage />} />

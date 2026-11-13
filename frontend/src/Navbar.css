@@ -258,3 +258,10 @@ html[lang^='fr'] nav ul li {
     font-size: 19px;
   }
 }
+
+/* Keep the additional Find Your Fit link readable without crowding desktop navigation. */
+@media (min-width: 1280px) {
+  nav ul { gap: clamp(12px, 1.4vw, 24px); margin-right: clamp(12px, 1.5vw, 24px); }
+  nav ul li { font-size: clamp(18px, 1.45vw, 24px); }
+  html[lang^='fr'] nav ul li { font-size: clamp(17px, 1.3vw, 22px); }
+}

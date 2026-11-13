@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MdLocationOn, MdArrowForward, MdDiversity3 } from 'react-icons/md';
 import Navbar from './Navbar';
@@ -21,13 +21,31 @@ export function directoryQuery(categories, areas, intergenerational = false) {
   return `/api/organizations/directory${query ? `?${query}` : ''}`;
 }
 
+export function filtersFromSearch(search) {
+  const query = new URLSearchParams(search);
+  const validCategories = new Set(ORG_CATEGORIES.map(item => item.value));
+  return {
+    categories: query.getAll('category').filter(value => validCategories.has(value)),
+    areas: query.getAll('area').filter(value => CITIES.includes(value) && value !== 'Other'),
+    intergenerational: query.get('intergenerational') === 'true',
+  };
+}
+
 function DirectoryPage() {
+  const location = useLocation();
   const { t } = useTranslation();
   usePageTitle(t('directory.heading'));
   const [orgs, setOrgs] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [areas, setAreas] = useState([]);
-  const [intergenerational, setIntergenerational] = useState(false);
+  const [categories, setCategories] = useState(() => filtersFromSearch(location.search).categories);
+  const [areas, setAreas] = useState(() => filtersFromSearch(location.search).areas);
+  const [intergenerational, setIntergenerational] = useState(() => filtersFromSearch(location.search).intergenerational);
+
+  useEffect(() => {
+    const next = filtersFromSearch(location.search);
+    setCategories(previous => JSON.stringify(previous) === JSON.stringify(next.categories) ? previous : next.categories);
+    setAreas(previous => JSON.stringify(previous) === JSON.stringify(next.areas) ? previous : next.areas);
+    setIntergenerational(next.intergenerational);
+  }, [location.search]);
 
   useEffect(() => {
     let cancelled = false;

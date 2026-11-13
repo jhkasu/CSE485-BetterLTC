@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+/* Homepage entry point for the Find Your Fit questionnaire. */
+.fit-teaser {
+  padding: 40px 24px;
+  text-align: center;
+  background: var(--color-surface);
+  border-block: 1px solid var(--color-border);
+}
+.fit-teaser h2 { font-size: 32px; margin: 0 0 12px; }
+.fit-teaser p { color: var(--color-text-muted); margin-bottom: 20px; }

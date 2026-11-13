@@ -47,6 +47,7 @@
     "missionVision": "Mission & Vision",
     "ourHistory": "Our History",
     "ourTeam": "Our Team",
+    "findYourFit": "Find Your Fit",
     "volunteer": "Volunteer",
     "ourWork": "Our Work",
     "dashboard": "Dashboard",
@@ -80,6 +81,11 @@
     "explore": "Explore"
   },
   "home": {
+    "fitTeaser": {
+      "title": "Not sure where to start?",
+        "description": "Answer a few questions about your interests and availability to explore volunteering role types.",
+      "button": "Find Your Fit"
+    },
     "hero": {
       "heading": "Care. Connect. Community.",
       "lead": "Connecting volunteers with organizations across Saskatchewan.",

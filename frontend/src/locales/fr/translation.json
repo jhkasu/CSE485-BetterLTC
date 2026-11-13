@@ -47,6 +47,7 @@
     "missionVision": "Mission et vision",
     "ourHistory": "Notre histoire",
     "ourTeam": "Notre équipe",
+    "findYourFit": "Trouvez votre place",
     "volunteer": "Bénévolat",
     "ourWork": "Nos réalisations",
     "dashboard": "Tableau de bord",
@@ -80,6 +81,11 @@
     "explore": "Explorer"
   },
   "home": {
+    "fitTeaser": {
+      "title": "Vous ne savez pas par où commencer ?",
+        "description": "Répondez à quelques questions sur vos intérêts et disponibilités pour découvrir des types de bénévolat.",
+      "button": "Trouvez votre place"
+    },
     "hero": {
       "heading": "Soigner. Relier. Rassembler.",
       "lead": "Relier les bénévoles aux organismes partout en Saskatchewan.",
