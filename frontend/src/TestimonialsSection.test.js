@@ -36,7 +36,7 @@ test('shows one testimonial at a time and moves with the buttons', async () => {
   expect(screen.getByText('Volunteering gave me new friends.')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Previous testimonial' }));
   expect(screen.getByText('2 / 2')).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /Read more stories/ })).toHaveAttribute('href', '/our-work');
+  expect(screen.queryByRole('link', { name: /Read more stories/ })).not.toBeInTheDocument();
 });
 
 test('hides the buttons for a single testimonial and the section when empty', async () => {

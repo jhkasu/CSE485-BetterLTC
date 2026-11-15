@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import './AboutPage.css';
 import usePageTitle from './usePageTitle';
+import { isPageVisible } from './hiddenPages';
 
 const SECTIONS = [
   {
@@ -44,7 +45,7 @@ function AboutPage() {
       </header>
 
       <section className="about-list">
-        {SECTIONS.map(s => (
+        {SECTIONS.filter(s => isPageVisible(s.link)).map(s => (
           <div key={s.link} className="list-row">
             <div className="list-row-text">
               <span className="eyebrow">{t(`about.${s.key}.eyebrow`)}</span>
