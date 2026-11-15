@@ -140,11 +140,46 @@ namespace Backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AdditionalLocations")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AdminComments")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.PrimitiveCollection<List<string>>("Categories")
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("CategoryOther")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CommunitiesServed")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ConsentedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPosition")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CoreValues")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -159,11 +194,50 @@ namespace Backend.Migrations
                     b.Property<bool>("EmailVerified")
                         .HasColumnType("boolean");
 
+                    b.PrimitiveCollection<List<string>>("EngagementInterests")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Facebook")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.PrimitiveCollection<List<string>>("GeographicScope")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Goals")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("HideStreetAddress")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Instagram")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("LanguageServices")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LegalName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LinkedIn")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LogoUpdatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Mission")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("NotificationEmail")
                         .IsRequired()
@@ -176,7 +250,35 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("OrgType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OrgTypeOther")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OtherSocial")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PopulationOther")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.PrimitiveCollection<List<string>>("PopulationsServed")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Province")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -192,11 +294,70 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("RepresentativeName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ReviewFrequency")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.PrimitiveCollection<List<string>>("ServiceAreas")
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("ServiceLanguageOther")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.PrimitiveCollection<List<string>>("ServiceLanguages")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Story")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Tagline")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TikTok")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Uniqueness")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateContact")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateContactDetails")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Vision")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Website")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("YearEstablished")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("YouTube")
                         .IsRequired()
                         .HasColumnType("text");
 

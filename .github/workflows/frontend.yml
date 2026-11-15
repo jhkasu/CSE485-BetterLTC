@@ -37,7 +37,7 @@ jobs:
       - run: npm run build
         env:
           CI: false
-          REACT_APP_API_BASE_URL: https://betterltc-test-api.azurewebsites.net
+          REACT_APP_API_BASE_URL: https://volunteerconnect-sk-api-bgdrfge9ehg3hua4.canadaeast-01.azurewebsites.net
 
       - uses: actions/upload-artifact@v4
         with:
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://betterltc-test-web.azurewebsites.net
+      url: https://volunteerconnect-sk-web-hqdwbeaxe0g0fndk.canadaeast-01.azurewebsites.net
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -59,6 +59,6 @@ jobs:
 
       - uses: azure/webapps-deploy@v3
         with:
-          app-name: betterltc-test-web
+          app-name: volunteerconnect-sk-web
           publish-profile: ${{ secrets.AZURE_WEB_PUBLISH_PROFILE }}
           package: build

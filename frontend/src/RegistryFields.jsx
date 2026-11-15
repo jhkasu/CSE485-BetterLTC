@@ -8,6 +8,7 @@ function RegistryFields({ idPrefix, type, number, error, onChange }) {
   const current = REGISTRY_TYPES.find(option => option.value === type);
   return (
     <div className="registry-fields">
+      <p className="registry-hint">{t('registry.optional')}</p>
       <fieldset className="registry-types">
         <legend>{t('registry.typeLabel')}</legend>
         {REGISTRY_TYPES.map(option => (
@@ -22,19 +23,33 @@ function RegistryFields({ idPrefix, type, number, error, onChange }) {
             <span>{t(option.labelKey)}</span>
           </label>
         ))}
+        <label className="registry-type">
+          <input
+            type="radio"
+            name={`${idPrefix}-type`}
+            value=""
+            checked={!type}
+            onChange={() => onChange({ registryType: '', registryNumber: '' })}
+          />
+          <span>{t('registry.types.none')}</span>
+        </label>
       </fieldset>
-      <label htmlFor={`${idPrefix}-number`}>{t('registry.numberLabel')}</label>
-      <input
-        id={`${idPrefix}-number`}
-        name="registryNumber"
-        value={number}
-        maxLength={40}
-        autoComplete="off"
-        placeholder={current ? current.placeholder : ''}
-        aria-describedby={`${idPrefix}-hint`}
-        onChange={e => onChange({ registryNumber: e.target.value })}
-      />
-      <p id={`${idPrefix}-hint`} className="registry-hint">{t(current ? current.hintKey : 'registry.hints.choose')}</p>
+      {current && (
+        <>
+          <label htmlFor={`${idPrefix}-number`}>{t('registry.numberLabel')}</label>
+          <input
+            id={`${idPrefix}-number`}
+            name="registryNumber"
+            value={number}
+            maxLength={40}
+            autoComplete="off"
+            placeholder={current.placeholder}
+            aria-describedby={`${idPrefix}-hint`}
+            onChange={e => onChange({ registryNumber: e.target.value })}
+          />
+          <p id={`${idPrefix}-hint`} className="registry-hint">{t(current.hintKey)}</p>
+        </>
+      )}
       {error && <p className="error registry-error" role="alert">{t(error)}</p>}
     </div>
   );

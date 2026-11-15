@@ -21,6 +21,10 @@ public static class Registry {
         };
     }
 
+    public static string? ValidateOptional(string type, string normalizedNumber) {
+        return type.Length == 0 && normalizedNumber.Length == 0 ? null : Validate(type, normalizedNumber);
+    }
+
     public static string? Validate(string type, string normalizedNumber) {
         if (type != Charity && type != Nonprofit) return "Choose a registration type.";
         if (!IsValid(type, normalizedNumber)) {
