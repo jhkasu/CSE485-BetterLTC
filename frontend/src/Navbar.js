@@ -6,6 +6,7 @@ import AccessibilityMenu from './accessibility/AccessibilityMenu';
 import LanguageToggle from './i18n/LanguageToggle';
 import './Navbar.css';
 import { clearSession, getCurrentUser } from './auth/session';
+import { isPageVisible } from './hiddenPages';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -56,8 +57,8 @@ function Navbar() {
           {aboutOpen && (
             <div className="about-dropdown">
               <Link to="/about/mission" onClick={() => setAboutOpen(false)}>{t('nav.missionVision')}</Link>
-              <Link to="/about/history" onClick={() => setAboutOpen(false)}>{t('nav.ourHistory')}</Link>
-              <Link to="/about/team" onClick={() => setAboutOpen(false)}>{t('nav.ourTeam')}</Link>
+              {isPageVisible('/about/history') && <Link to="/about/history" onClick={() => setAboutOpen(false)}>{t('nav.ourHistory')}</Link>}
+              {isPageVisible('/about/team') && <Link to="/about/team" onClick={() => setAboutOpen(false)}>{t('nav.ourTeam')}</Link>}
               <Link to="/intergenerational" onClick={() => setAboutOpen(false)}>{t('nav.intergenerational')}</Link>
               <Link to="/faq" onClick={() => setAboutOpen(false)}>{t('nav.faq')}</Link>
             </div>
@@ -65,7 +66,7 @@ function Navbar() {
         </li>
         <li><Link to="/organizations">{t('nav.volunteer')}</Link></li>
         <li><Link to="/resources">{t('nav.resources')}</Link></li>
-        <li><Link to="/our-work">{t('nav.ourWork')}</Link></li>
+        {isPageVisible('/our-work') && <li><Link to="/our-work">{t('nav.ourWork')}</Link></li>}
       </ul>
 
       <div className="nav-actions">

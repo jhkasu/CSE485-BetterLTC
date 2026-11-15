@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Pillars.css';
+import { isPageVisible } from './hiddenPages';
 
 const PILLARS = [
   {
@@ -23,13 +24,14 @@ const PILLARS = [
 
 function Pillars() {
   const { t } = useTranslation();
+  const pillars = PILLARS.filter(p => isPageVisible(p.link));
   return (
     <section className="section pillars">
       <div className="container">
         <span className="eyebrow">{t('home.pillars.eyebrow')}</span>
         <h2 className="section-title">{t('home.pillars.heading')}</h2>
-        <div className="pillars-grid">
-          {PILLARS.map(p => (
+        <div className="pillars-grid" style={{ '--pillar-count': pillars.length }}>
+          {pillars.map(p => (
             <article key={p.key} className="pillar">
               <div className="pillar-image">
                 <img src={p.image} alt="" loading="lazy" />

@@ -5,6 +5,7 @@ import { MdChevronLeft, MdChevronRight, MdFormatQuote } from 'react-icons/md';
 import apiFetch from './api';
 import API_BASE from './config';
 import './TestimonialsSection.css';
+import { isPageVisible } from './hiddenPages';
 
 export function testimonialPhotoUrl(item) {
   return item?.photoVersion ? `${API_BASE}/api/testimonials/${item.id}/photo?v=${item.photoVersion}` : null;
@@ -72,7 +73,9 @@ function TestimonialsSection() {
           )}
         </div>
 
-        <Link className="arrow-link testimonials-more" to="/our-work">{t('testimonials.moreStories')} <span aria-hidden="true">&rarr;</span></Link>
+        {isPageVisible('/our-work') && (
+          <Link className="arrow-link testimonials-more" to="/our-work">{t('testimonials.moreStories')} <span aria-hidden="true">&rarr;</span></Link>
+        )}
       </div>
     </section>
   );
