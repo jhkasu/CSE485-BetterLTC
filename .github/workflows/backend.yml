@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://betterltc-test-api.azurewebsites.net
+      url: https://volunteerconnect-sk-api-bgdrfge9ehg3hua4.canadaeast-01.azurewebsites.net
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -49,6 +49,6 @@ jobs:
 
       - uses: azure/webapps-deploy@v3
         with:
-          app-name: betterltc-test-api
+          app-name: volunteerconnect-sk-api
           publish-profile: ${{ secrets.AZURE_API_PUBLISH_PROFILE }}
           package: publish
