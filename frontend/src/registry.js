@@ -23,6 +23,7 @@ export function normalizeRegistryNumber(value) {
 }
 
 export function registryError(type, number) {
+  if (!type && !normalizeRegistryNumber(number)) return '';
   if (!PATTERNS[type]) return 'registry.errors.type';
   if (!PATTERNS[type].test(normalizeRegistryNumber(number))) return `registry.errors.${type}`;
   return '';

@@ -21,6 +21,7 @@ import AdminStatistics from './AdminStatistics';
 import { DashboardBackdrop, DashboardMenuClose, DashboardTopBar, useDashboardMenu } from './DashboardMenu';
 import usePageTitle from './usePageTitle';
 import { LOOKUP_LINKS, REGISTRY_TYPES } from './registry';
+import AdminOrgProfile from './AdminOrgProfile';
 
 const NAV_ITEMS = [
   { id: 'overview',       labelKey: 'common.overview',                  icon: <MdDashboard /> },
@@ -79,6 +80,7 @@ function AdminDashboard() {
 
   const [organizations, setOrganizations] = useState([]);
   const [rejecting, setRejecting] = useState(null);
+  const [viewingOrg, setViewingOrg] = useState(null);
   const [rejectReason, setRejectReason] = useState('');
   const [rejectError, setRejectError] = useState('');
 
@@ -471,6 +473,9 @@ function AdminDashboard() {
                 </td>
                 <td>
                   <div className="admin-org-actions">
+                    <button className="admin-action-btn details" onClick={() => setViewingOrg(org)}>
+                      {t('adminDashboard.organizations.details')}
+                    </button>
                     {org.isApproved ? (
                       <button className="admin-action-btn revoke" onClick={() => toggleOrgApproval(org)}>
                         {t('adminDashboard.volunteers.revoke')}
@@ -491,6 +496,11 @@ function AdminDashboard() {
             ))}
           </tbody>
         </table>
+      )}
+      {viewingOrg && (
+        <Modal title={t('adminDashboard.organizations.profileTitle', { name: viewingOrg.orgName })} onClose={() => setViewingOrg(null)} wide>
+          <AdminOrgProfile org={viewingOrg} />
+        </Modal>
       )}
       {rejecting && (
         <Modal title={t('adminDashboard.organizations.rejectTitle', { name: rejecting.orgName })} onClose={() => setRejecting(null)}>

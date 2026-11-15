@@ -110,7 +110,7 @@ function DirectoryPage() {
                           {org.categories.map(c => <li key={c} className="dir-tag">{categoryLabel(c)}</li>)}
                         </ul>
                       )}
-                      {org.description && <p className="dir-description">{org.description}</p>}
+                      {(org.shortDescription || org.description) && <p className="dir-description">{org.shortDescription || org.description}</p>}
                       {(org.serviceAreas || []).length > 0 && (
                         <p className="dir-areas"><MdLocationOn aria-hidden="true" /> {org.serviceAreas.map(cityLabel).join(', ')}</p>
                       )}
